@@ -49,39 +49,39 @@ ActiveRecord::Schema.define(version: 20150622113013) do
   end
 
   create_table "countries", force: :cascade do |t|
-    t.string   "name"
-    t.string   "iso3166_a2"
+    t.string   "name",       null: false
+    t.string   "iso3166_a2", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   create_table "snapshots", force: :cascade do |t|
     t.string   "notes"
-    t.integer  "camera_id"
-    t.binary   "data"
-    t.boolean  "is_public"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.integer  "camera_id",                  null: false
+    t.binary   "data",                       null: false
+    t.boolean  "is_public",  default: false, null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
   end
 
   add_index "snapshots", ["camera_id"], name: "index_snapshots_on_camera_id", using: :btree
 
   create_table "users", force: :cascade do |t|
-    t.string   "firstname"
-    t.string   "lastname"
-    t.string   "username"
-    t.string   "password"
+    t.string   "firstname",                          null: false
+    t.string   "lastname",                           null: false
+    t.string   "username",                           null: false
+    t.string   "password",                           null: false
     t.integer  "country_id"
     t.datetime "confirmed_at"
-    t.string   "email"
+    t.string   "email",                              null: false
     t.string   "reset_token"
     t.datetime "token_expires_at"
     t.string   "api_id"
     t.string   "api_key"
-    t.boolean  "is_admin"
+    t.boolean  "is_admin",           default: false, null: false
     t.string   "stripe_customer_id"
-    t.datetime "created_at",         null: false
-    t.datetime "updated_at",         null: false
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
   end
 
   add_index "users", ["country_id"], name: "index_users_on_country_id", using: :btree
