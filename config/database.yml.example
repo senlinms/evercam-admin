@@ -7,12 +7,12 @@ default: &default
 
 development:
   <<: *default
-  database: evercam_dev
+  database: evercam_admin_development
 
 test:
   <<: *default
-    database: evercam_tst
+    database: evercam_admin_test
 
 production:
   <<: *default
-  database: evercam_dev
+  database: evercam_admin_production
