@@ -4,10 +4,10 @@ class CreateVendorModels < ActiveRecord::Migration
       t.belongs_to :vendor, index: true, foreign_key: true
       t.string :name, null: false
       t.json :config, null: false
-      t.string :exid, default: "", null: false
-      t.string :jpg_url, default: "", null: false
-      t.string :h264_url, default: "", null: false
-      t.string :mjpg_url, default: "", null: false
+      t.string :exid,  null: false
+      t.string :jpg_url, null: false
+      t.string :h264_url, null: false
+      t.string :mjpg_url, null: false
 
       t.timestamps null: false
     end

@@ -1,7 +1,8 @@
 default: &default
   adapter: postgresql
-  encoding: unicode
-  pool: 5
+  encoding: utf8
+  schema_search_path: public
+  template: template0
   username: pbrudny
   password: polmuz
 

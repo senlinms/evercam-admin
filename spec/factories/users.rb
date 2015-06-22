@@ -7,6 +7,6 @@ FactoryGirl.define do
     sequence(:email) { |n| "email#{n}@evercam.io" }
     sequence(:api_id) {|n| SecureRandom.hex(10)}
     sequence(:api_key) {|n| SecureRandom.hex(16)}
-    country
+    is_admin false
   end
 end
