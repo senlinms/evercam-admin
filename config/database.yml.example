@@ -2,8 +2,8 @@ default: &default
   adapter: postgresql
   encoding: unicode
   pool: 5
-  username: pbrudny
-  password: polmuz
+  username: postgres
+  password: password
 
 development:
   <<: *default
@@ -11,7 +11,7 @@ development:
 
 test:
   <<: *default
-  database: evercam_tst
+    database: evercam_tst
 
 production:
   <<: *default
