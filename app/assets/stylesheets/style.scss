@@ -1,0 +1,406 @@
+/*
+// Global-Styles
+*/
+input:focus {
+  box-shadow: none;
+}
+
+ul li {
+  padding-left: 0px;
+  margin: 0;
+  padding: 0;
+}
+
+ul, menu, dir {
+  display: block;
+  list-style-type: disc;
+  -webkit-margin-before: 0em;
+  -webkit-margin-after: 0em;
+  -webkit-margin-start: 0px;
+  -webkit-margin-end: 0px;
+  -webkit-padding-start: 0px;
+}
+th {
+  font-weight: normal !important;
+}
+/*/////////////////////
+//HEADER
+/////////////////////*/
+
+.page-header.navbar.navbar-fixed-top {
+  z-index: 100000 !important;
+}
+
+.nav-title a {
+  text-decoration: none;
+  color: #ffffff;
+  float: left;
+  margin-right: 10px;
+}
+
+.nav-title .icon {
+  font-size: 19px;
+  margin: 2px 6px 0px;
+}
+
+
+/*GENERAL */
+.offline {
+  background-color: #DC4C3F;
+  color: #fff;
+}
+.online {
+  background-color: #2ECC71;
+  color: #fff;
+}
+
+.padding-left-20 {
+  padding-left: 20px;
+}
+.padding-left-10 {
+  padding-left: 10px;
+}
+
+.margin-left--10 {
+  margin-left: -10px;
+}
+
+
+/* Vertical menu that slides from the left or right */
+
+.menu-right {
+  right: -60px;
+  position: absolute;
+}
+
+.menu-right.menu-open {
+  right: 0px;
+}
+
+.menu-right2 {
+  right: -60px;
+  position: absolute;
+}
+
+.menu-right2.menu-open {
+  right: 0px;
+}
+
+#offline-menu {
+  float: right;
+}
+#main-content {
+  margin-left: 228px;
+}
+
+.line-break{
+  border-bottom: 1px solid #eee;
+  margin-bottom: 15px;
+  margin-top: 15px;
+}
+
+/* WIDGET */
+#live-widget .control-label {
+  margin-top: 8px;
+}
+[id^=ec-container-] {
+  height: 194%;
+}
+.preview {
+  border:1px solid #f5f5f5;
+  width: 400px;
+  height: 220px;
+}
+#details .preview {
+  border:1px solid #f5f5f5;
+  width: 400px;
+  height: 220px;
+}
+#widget-new .has-error .help-block {
+  position: absolute;
+  font-size: 12px;
+  top: 35px;
+  left: 0;
+}
+.my-row {
+  margin-left: -15px;
+  margin-right: -15px;
+}
+
+#live-widget .help-block {
+  width: 100%;
+  font-size:12px;
+}
+
+
+/* Snapshot Navigator Widget */
+#snapshot-widgets .control-label {
+  margin-top: 8px;
+}
+#snapshot-widgets .help-block {
+  width: 100%;
+  font-size:12px;
+}
+#snapshot-widgets .dropdown-padding-left{
+  padding-left: 0px;
+  padding-right: 1px;
+  float: left;
+}
+#snapshot-widgets #code {
+  min-height: 160px;
+}
+#snapshot-widgets .time-dropdown{
+  min-width: 40px;
+  padding: 6px 4px;
+}
+@media (max-width: 780px) {
+  #snapshot-widgets .time-dropdown{
+    min-width: 82px;
+  }
+}
+#snapshot-widgets #code {
+  min-height: 160px;
+}
+#snapshot-widgets h5 {
+  margin-top: 0px;
+}
+
+/*!
+* Tab drop for Bootstrap
+*
+* Copyright 2012 Stefan Petre
+* Improvements by Jenna Schabdach
+* Licensed under the Apache License v2.0
+* http://www.apache.org/licenses/LICENSE-2.0
+*
+*/
+.nav-tabs,
+.nav-pills {
+  position: relative;
+}
+
+/* adjust as needed so the tab text displays */
+.tabdrop{
+  width: 108px;
+}
+.nav-tabs .dropdown.open > .dropdown-toggle, .nav-pills .dropdown.open > .dropdown-toggle {
+  background-color: #ffffff;
+}
+/* hide any icons found in tabs not on first line */
+.nav-tabs li li i{
+  visibility: hidden;
+}
+
+#camera-single .dropdown-menu li > a {
+  text-align: left;
+  padding: 7px 13px 6px 6px;
+  font-size: 16px;
+  font-family: $regular-family;
+}
+
+#camera-single .tabbable-custom > .nav-tabs > li > a {
+  margin-right: 0;
+  text-align: right;
+}
+
+/*Sidebar Plugin - Blueprints */
+#dev .page-content-wrapper .page-content, #live-widget .page-content-wrapper .page-content, #hikvision-widget .page-content-wrapper .page-content {
+  margin-left: 425px;
+}
+#resources_container {
+  width:100%;
+}
+
+@media only screen and (min-width: 992px) {
+  #mobile-dev-menu {
+    display: none !Important;
+  }
+}
+@media only screen and (max-width: 992px) {
+  .cbp-spmenu-push {
+    display: none;
+  }
+}
+
+/* General styles for all menus */
+#cbp-spmenu-s1 ul {
+  padding-left:0;
+}
+.cbp-spmenu {
+  background: lighten($secondary-color, 5%);
+  position: fixed;
+
+}
+
+.cbp-spmenu h3 {
+  color: #afdefa;
+  font-size: 1.9em;
+  padding: 0px;
+  margin: 0;
+  font-weight: 300;
+  background: $main-color;
+  margin-top: 22px;
+}
+
+.cbp-spmenu a {
+  display: block;
+  color: #bdbdbd;
+  font-size: 16px;
+}
+
+.cbp-spmenu a:hover {
+  background: lighten($secondary-color, 5%);
+  color: #ffffff;
+  text-decoration:none;
+}
+.cbp-spmenu a:focus {
+  text-decoration:none;
+}
+
+.cbp-spmenu a:active {
+  background: $secondary-color;
+}
+.cbp-spmenu-push .active {
+  font-family:'proxima-nova-bold';
+}
+/* Orientation-dependent styles for the content of the menu */
+
+.cbp-spmenu-vertical {
+  width: 190px;
+  height: 100%;
+  top: 0;
+  z-index: 1000;
+}
+
+.cbp-spmenu-vertical a {
+  padding: 13px 15px 12px;
+}
+
+.cbp-spmenu-horizontal {
+  width: 100%;
+  height: 150px;
+  left: 0;
+  z-index: 1000;
+  overflow: hidden;
+}
+
+.cbp-spmenu-horizontal h3 {
+  height: 100%;
+  width: 20%;
+  float: left;
+}
+
+.cbp-spmenu-horizontal a {
+  float: left;
+  width: 20%;
+  padding: 0.8em;
+  border-left: 1px solid #258ecd;
+}
+
+/* Vertical menu that slides from the left or right */
+
+.cbp-spmenu-left {
+  left: 0px;
+}
+
+.cbp-spmenu-right {
+  right: -240px;
+}
+
+.cbp-spmenu-left.cbp-spmenu-open {
+  left: 235px;
+}
+
+.cbp-spmenu-right.cbp-spmenu-open {
+  right: 0px;
+}
+
+/* Horizontal menu that slides from the top or bottom */
+
+.cbp-spmenu-top {
+  top: -150px;
+}
+
+.cbp-spmenu-bottom {
+  bottom: -150px;
+}
+
+.cbp-spmenu-top.cbp-spmenu-open {
+  top: 0px;
+}
+
+.cbp-spmenu-bottom.cbp-spmenu-open {
+  bottom: 0px;
+}
+
+/* Push classes applied to the body */
+
+.cbp-spmenu-push {
+  overflow-x: hidden;
+  position: relative;
+  left: 0;
+}
+.cbp-spmenu-push .sub-menu li a {
+  padding-left:30px;
+}
+.cbp-spmenu-push-toright {
+  left: 240px;
+}
+
+.cbp-spmenu-push-toleft {
+  left: -240px;
+}
+
+/* Transitions */
+
+.cbp-spmenu,
+.cbp-spmenu-push {
+  -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+}
+
+/* Example media queries */
+
+@media screen and (max-width: 55.1875em){
+
+  .cbp-spmenu-horizontal {
+    font-size: 75%;
+    height: 110px;
+  }
+
+  .cbp-spmenu-top {
+    top: -110px;
+  }
+
+  .cbp-spmenu-bottom {
+    bottom: -110px;
+  }
+
+}
+
+@media screen and (max-height: 26.375em){
+
+  .cbp-spmenu-vertical {
+    font-size: 90%;
+    width: 190px;
+  }
+
+  .cbp-spmenu-left,
+  .cbp-spmenu-push-toleft {
+    left: -190px;
+  }
+
+  .cbp-spmenu-right {
+    right: -190px;
+  }
+
+  .cbp-spmenu-push-toright {
+    left: 190px;
+  }
+}
+/*BOOTSTRAP STYLES OVERRIDES*/
+a:hover, a:focus {
+  text-decoration: none;
+}
+

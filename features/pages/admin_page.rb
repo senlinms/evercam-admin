@@ -2,11 +2,11 @@ module Pages
   class AdminPage < Base
 
     def visit
-      page.visit '/admin'
+      page.visit '/'
     end
 
     def sample_content
-      'Total cameras'
+      'Total Cameras'
     end
   end
 end

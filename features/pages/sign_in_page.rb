@@ -14,9 +14,5 @@ module Pages
       fill_in 'Password', with: password
       click_button 'Sign in'
     end
-
-    # fill_in "session_login", :with => user.email
-    # fill_in "Password", :with => 'pass'
-    # click_button "Sign in"
   end
 end
