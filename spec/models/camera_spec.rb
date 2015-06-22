@@ -11,8 +11,8 @@ RSpec.describe Camera, type: :model do
   end
 
   describe 'associations' do
-    it { should belong_to(:user) }
-    it { should belong_to(:vendor_model) }
+    it { should belong_to(:owner).class_name('User') }
+    it { should belong_to(:model).class_name('VendorModel') }
     it { should have_many(:camera_shares) }
   end
 
