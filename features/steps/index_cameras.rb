@@ -1,22 +1,20 @@
 class Spinach::Features::IndexCameras < Spinach::FeatureSteps
+  include SharedSteps::CustomSteps
+
   step 'I am logged in as admin' do
-    User.all(&:destroy)
-    camera_stubs(user)
     sign_in_page.visit
     sign_in_page.login_as(user.email, 'pass')
     expect(page).to have_content('Add a Camera')
   end
 
   step 'I am on admin panel' do
-    FactoryGirl.create(:user)
-    FactoryGirl.create(:camera)
-    visit '/'
-    # admin_page.visit
+    admin_page.visit
     expect(page).to have_content(admin_page.sample_content)
   end
 
   step 'I visit camera section' do
-    click 'Cameras'
+    # click 'Cameras'
+    visit '/cameras'
   end
 
   step 'I should see all cameras' do

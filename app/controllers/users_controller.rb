@@ -1,4 +1,5 @@
 class UsersController < ActionController::Base
+  layout 'admin'
 
   def index
     @users = User.all.includes(:country, :cameras)
@@ -17,7 +18,7 @@ class UsersController < ActionController::Base
                                is_admin: params['is_admin'])
 
       flash[:message] = "User details updated successfully"
-      redirect_to "/admin/users/#{params['id']}"
+      redirect_to "//users/#{params['id']}"
     rescue => error
       env["airbrake.error_id"] = notify_airbrake(error)
       Rails.logger.error "Exception caught updating User details.\nCause: #{error}\n" +
@@ -28,7 +29,7 @@ class UsersController < ActionController::Base
         flash[:message] = "An error occurred updating User details. "\
                           "Please try again and, if this problem persists, contact support."
       end
-      redirect_to "/admin/users/#{params['id']}"
+      redirect_to "//users/#{params['id']}"
     end
   end
 

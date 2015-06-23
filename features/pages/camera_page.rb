@@ -2,7 +2,7 @@ module Pages
   class CameraPage < Base
 
     def visit
-      page.visit '/admin/cameras'
+      page.visit '/cameras'
     end
 
     def sample_content

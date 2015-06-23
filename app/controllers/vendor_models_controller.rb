@@ -1,4 +1,5 @@
 class VendorModelsController < ActionController::Base
+  layout 'admin'
 
   def index
     @total_vendors = Vendor.all.count
@@ -52,7 +53,7 @@ class VendorModelsController < ActionController::Base
       @vendor.update_attribute(:name, params['vendor_name'])
 
       flash[:message] = 'Vendor Model updated successfully'
-      redirect_to "/admin/models/#{params['id']}"
+      redirect_to "/models/#{params['id']}"
     rescue => error
       env["airbrake.error_id"] = notify_airbrake(error)
       Rails.logger.error "Exception caught updating vendor model details.\nCause: #{error}\n" +
@@ -60,7 +61,7 @@ class VendorModelsController < ActionController::Base
       flash[:message] = "An error occurred updating the vendor model details. "\
                         "Please try again and, if this problem persists, contact "\
                         "support."
-      redirect_to "/admin/models/#{params['id']}"
+      redirect_to "/models/#{params['id']}"
     end
   end
 

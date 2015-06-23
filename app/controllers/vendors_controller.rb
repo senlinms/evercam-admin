@@ -1,4 +1,5 @@
 class VendorsController < ActionController::Base
+  layout 'admin'
 
   def index
 
