@@ -1,7 +1,7 @@
 class CamerasController < ActionController::Base
 
   def index
-    @cameras = Camera.all.includes(:owner, vendor_model: [:vendor])
+    @cameras = Camera.all.includes(:user, vendor_model: [:vendor])
   end
 
   def show

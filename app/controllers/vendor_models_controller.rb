@@ -1,4 +1,4 @@
-class VendorModelController < ActionController::Base
+class VendorModelsController < ActionController::Base
 
   def index
     @total_vendors = Vendor.all.count

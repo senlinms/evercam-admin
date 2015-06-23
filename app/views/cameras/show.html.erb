@@ -58,7 +58,7 @@
                           <tbody>
                             <tr>
                               <td>Owner</td>
-                              <td><%= link_to @camera.owner.fullname, user_path(@camera.owner) %></td>
+                              <td><%= link_to @camera.user.fullname, user_path(@camera.user) %></td>
                             </tr>
                             <tr>
                               <td>Name</td>
@@ -70,11 +70,11 @@
                             </tr>
                             <tr>
                               <td>Model</td>
-                              <td><%= @camera.vendor_model.name if @camera.model_id %></td>
+                              <td><%= @camera.vendor_model.name if @camera.vendor_model_id %></td>
                             </tr>
                             <tr>
                               <td>Vendor</td>
-                              <td><%= @camera.vendor_model.vendor.name if @camera.model_id %></td>
+                              <td><%= @camera.vendor_model.vendor.name if @camera.vendor_model_id %></td>
                             </tr>
                             <tr>
                               <td>Public</td>
