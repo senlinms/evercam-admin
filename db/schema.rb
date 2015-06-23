@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150622113013) do
+ActiveRecord::Schema.define(version: 20150623162529) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -30,7 +30,7 @@ ActiveRecord::Schema.define(version: 20150622113013) do
 
   create_table "cameras", force: :cascade do |t|
     t.string   "exid",                           null: false
-    t.integer  "owner_id",                       null: false
+    t.integer  "user_id",                        null: false
     t.boolean  "is_public",                      null: false
     t.json     "config",                         null: false
     t.string   "name",                           null: false

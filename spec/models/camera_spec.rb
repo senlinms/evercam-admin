@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Camera, type: :model do
   describe 'validations' do
     it { should validate_presence_of :exid }
-    it { should validate_presence_of :owner_id }
+    it { should validate_presence_of :user }
     it { should validate_presence_of :is_public }
     it { should validate_presence_of :config }
     it { should validate_presence_of :name }
@@ -11,8 +11,8 @@ RSpec.describe Camera, type: :model do
   end
 
   describe 'associations' do
-    it { should belong_to(:owner).class_name('User') }
-    it { should belong_to(:vendor_model).class_name('VendorModel') }
+    it { should belong_to(:user) }
+    it { should belong_to(:vendor_model) }
     it { should have_many(:camera_shares) }
   end
 

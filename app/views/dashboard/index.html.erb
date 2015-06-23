@@ -192,6 +192,14 @@
                 </tr>
                 </thead>
                 <tbody>
+                <% @new_users.each do |user| %>
+                    <tr>
+                      <td><%= link_to user.fullname, user_path(user) %></td>
+                      <td><%= user.email %></td>
+                      <td><%= user.country.name unless user.country.blank? %></td>
+                      <td><%= user.created_at.strftime("%d/%m/%y") %></td>
+                    </tr>
+                <% end %>
                 </tbody>
               </table>
             </div>
