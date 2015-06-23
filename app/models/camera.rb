@@ -1,6 +1,6 @@
 class Camera < ActiveRecord::Base
   belongs_to :user
-  belongs_to :vendor_model, foreign_key: :model_id
+  belongs_to :vendor_model
   has_many :camera_shares
 
   validates :exid, presence: true

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150623162529) do
+ActiveRecord::Schema.define(version: 20150623163156) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -29,23 +29,23 @@ ActiveRecord::Schema.define(version: 20150623162529) do
   add_index "camera_shares", ["user_id"], name: "index_camera_shares_on_user_id", using: :btree
 
   create_table "cameras", force: :cascade do |t|
-    t.string   "exid",                           null: false
-    t.integer  "user_id",                        null: false
-    t.boolean  "is_public",                      null: false
-    t.json     "config",                         null: false
-    t.string   "name",                           null: false
+    t.string   "exid",                            null: false
+    t.integer  "user_id",                         null: false
+    t.boolean  "is_public",                       null: false
+    t.json     "config",                          null: false
+    t.string   "name",                            null: false
     t.datetime "last_polled_at"
     t.boolean  "is_online"
     t.string   "timezone"
     t.datetime "last_online_at"
     t.text     "location"
     t.macaddr  "mac_address"
-    t.integer  "model_id"
-    t.boolean  "discoverable",   default: false, null: false
+    t.integer  "vendor_model_id"
+    t.boolean  "discoverable",    default: false, null: false
     t.binary   "preview"
     t.string   "thumbnail_url"
-    t.datetime "created_at",                     null: false
-    t.datetime "updated_at",                     null: false
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
   end
 
   create_table "countries", force: :cascade do |t|
