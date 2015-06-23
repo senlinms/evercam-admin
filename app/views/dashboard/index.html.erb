@@ -7,7 +7,7 @@
         <ul class="page-breadcrumb breadcrumb">
           <li>
             <i class="fa fa-home"></i>
-            <a href="/">Home</a>
+            <a href="/public">Home</a>
             <i class="fa fa-angle-right"></i>
           </li>
           <li>
@@ -148,7 +148,7 @@
                 <% @new_cameras.each do |camera| %>
                     <tr>
                       <td>
-                        <%= link_to camera.name, admin_camera_path(camera) %>
+                        <%= link_to camera.name, camera_path(camera) %>
                       </td>
                       <td>
                         <%= camera.vendor_model.name if camera.vendor_model %>
@@ -192,14 +192,6 @@
                 </tr>
                 </thead>
                 <tbody>
-                <% @new_users.each do |user| %>
-                    <tr>
-                      <td><%= link_to user.fullname, admin_user_path(user) %></td>
-                      <td><%= user.email %></td>
-                      <td><%= user.country.name unless user.country.blank? %></td>
-                      <td><%= user.created_at.strftime("%d/%m/%y") %></td>
-                    </tr>
-                <% end %>
                 </tbody>
               </table>
             </div>

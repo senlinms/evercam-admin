@@ -1,27 +1,37 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
   <meta charset="utf-8">
   <%= csrf_meta_tags %>
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>EvercamAdmin</title>
-  <%= stylesheet_link_tag    "admin/admin", media: "all" %>
-  <%= javascript_include_tag "admin/admin" %>
-  <link href="//fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <title><%= yield(:title) %></title>
+
+
+  <%= stylesheet_link_tag "application", media: "all" %>
+  <%= javascript_include_tag "application" %>
   <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!--[if lt IE 9]>
   <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
   <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
   <![endif]-->
+  <%= render 'shared/mixpanel' %>
 </head>
-<body class="page-header-fixed page-quick-sidebar-over-content" id='<%= "#{params[:controller].parameterize}-#{params[:action]}" %>'>
-<%= render 'admin/shared/header' %>
+<body class="page-header-fixed page-quick-sidebar-over-content page-sidebar-fixed page-header-fixed-mobile page-footer-fixed1">
+
+<%= render :partial => "shared/header" %>
 <div class="page-container">
-  <%= render 'admin/shared/sidebar' %>
+  <%= render :partial => "shared/sidebar" %>
   <%= yield %>
 </div>
+
+<div class="bb-alert alert alert-info" style="display:none;">
+  <span></span>
+</div>
+<%= render 'shared/google_analytics' %>
 <script>
+    notifyMessage = '<%= flash[:message] %>';
+
     if (!window.Evercam) {
         window.Evercam = {};
     }
@@ -31,6 +41,24 @@
         api_id: '<%= current_user.api_id %>',
         api_key: '<%= current_user.api_key %>'
     };
+
+    <% params_subpath = params.fetch('subpath', '') %>
+    <% params_format = params.fetch('format', '') %>
+    <% params_subpath = "#{params_subpath}.#{params_format}" unless params_format.blank? %>
+    window.Evercam.request = {
+        url: '<%= request.url %>',
+        path: '<%= request.path %>',
+        subpath: '<%= params_subpath %>',
+        tabpath: '<%= params_subpath.split('/').first %>',
+        rootpath: '<%= request.path.sub(params_subpath, '').chomp('/') %>'
+    };
+
+    window.Evercam.Pusher = new Pusher('<%= ENV['PUSHER_KEY'] %>');
+
+    Metronic.init();
+    Layout.init();
+    QuickSidebar.init();
 </script>
+
 </body>
 </html>

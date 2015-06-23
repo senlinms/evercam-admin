@@ -28,8 +28,31 @@ module EvercamAdmin
     # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
+    GC::Profiler.enable
 
-    # Do not swallow errors in after_commit/after_rollback callbacks.
-    config.active_record.raise_in_transactional_callbacks = true
+    # Enable the asset pipeline
+    config.assets.enabled = true
+    config.assets.initialize_on_precompile = true
+
+    config.assets.paths << "#{Rails.root.to_s}/vendor/assets/fonts"
+    config.assets.paths << "#{Rails.root.to_s}/vendor/assets/javascripts"
+    config.assets.paths << "#{Rails.root.to_s}/lib/assets/javascripts"
+    config.assets.precompile << /\.(?:svg|eot|woff|ttf)$/
+    config.assets.precompile += %w[*.png *.jpg *.jpeg *.gif *.svg]
+    config.assets.precompile += %w[
+      snapshot_navigator_widget.js
+      admin/admin.js
+      admin/admin.css
+      views/widgets/widget.css
+      views/widgets/add_camera.css
+      bare-bones.js
+      widgets.js
+      widgets/add_camera.js
+      widgets/localstorage_widget.js
+      jquery.js
+      phoenix.js
+      swagger.js
+      swagger.css
+    ]
   end
 end
