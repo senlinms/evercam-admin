@@ -8,7 +8,10 @@ class Spinach::Features::IndexCameras < Spinach::FeatureSteps
   end
 
   step 'I am on admin panel' do
-    admin_page.visit
+    FactoryGirl.create(:user)
+    FactoryGirl.create(:camera)
+    visit '/'
+    # admin_page.visit
     expect(page).to have_content(admin_page.sample_content)
   end
 
@@ -21,6 +24,6 @@ class Spinach::Features::IndexCameras < Spinach::FeatureSteps
   end
 
   def user
-    @user ||= FactoryGirl.create(:active_user, is_admin: true, password: 'pass')
+    @user ||= FactoryGirl.create(:user, is_admin: true, password: 'pass')
   end
 end
