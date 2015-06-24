@@ -11,6 +11,7 @@ RSpec.describe User, type: :model do
 
   describe 'associations' do
     it { should belong_to(:country) }
+    it { should have_many(:camera_shares) }
   end
 
   it 'has a valid factory' do

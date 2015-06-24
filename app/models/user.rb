@@ -3,6 +3,7 @@ class User < ActiveRecord::Base
   has_many :cameras
   has_many :snapshots
   has_many :vendors
+  has_many :camera_shares
 
   validates :firstname, presence: true
   validates :lastname, presence: true

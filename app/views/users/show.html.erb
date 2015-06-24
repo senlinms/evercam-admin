@@ -90,7 +90,7 @@
             <%= link_to @user.fullname, user_path(@user) %>
             </li>
             <li class="pull-right">
-              <%= link_to impersonate_path(@user) do %>
+              <%= link_to impersonate_user_path(@user) do %>
                 <%= "Sign in as #{@user.fullname}" %>
                 <i class="fa fa-sign-in"></i>
               <% end %>
@@ -244,10 +244,10 @@
                           <td><%= camera.exid %></td>
                           <td><%= camera.name %></td>
                           <td>
-                            <%= camera.vendor_model.name if camera.model_id %>
+                            <%= camera.vendor_model.name if camera.vendor_model_id %>
                           </td>
                           <td>
-                            <%= camera.vendor_model.vendor.name if camera.model_id %>
+                            <%= camera.vendor_model.vendor.name if camera.vendor_model_id %>
                           </td>
                           <td><%= human_boolean(camera.is_online) %></td>
                           <td><%= human_boolean(camera.is_public) %></td>

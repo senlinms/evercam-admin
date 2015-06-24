@@ -27,7 +27,7 @@ class UsersController < ApplicationController
         flash[:message] = "An error occurred updating User details. "\
                           "Please try again and, if this problem persists, contact support."
       end
-      redirect_to "//users/#{params['id']}"
+      redirect_to "/users/#{params['id']}"
     end
   end
 

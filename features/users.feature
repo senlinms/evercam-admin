@@ -11,3 +11,10 @@ Feature: Index users
   Scenario: Index users
     When I visit users section
     Then I should see all users
+
+  Scenario: Show user with one camera
+    Given that user has one camera
+    When I visit users section
+    And I choose the user
+    Then I should see user details
+    And I should see user's cameras

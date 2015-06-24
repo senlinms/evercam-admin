@@ -10,3 +10,8 @@ Feature: Index cameras
   Scenario: Index cameras
     When I visit camera section
     Then I should see all cameras
+
+  Scenario: Show camera
+    When I visit camera section
+    And I choose a camera
+    Then I should see camera details

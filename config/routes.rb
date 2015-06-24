@@ -1,7 +1,10 @@
 Rails.application.routes.draw do
   root 'dashboard#index'
 
-  resources :users
+  resources :users do
+    get :impersonate, on: :member
+  end
+
   resources :cameras
   resources :vendors
   resources :vendor_models
