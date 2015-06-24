@@ -13,20 +13,20 @@
     </tr>
     </thead>
     <tbody>
-    <% @user.cameras.each do |camera| %>
+    <% @user.cameras.decorate.each do |camera| %>
         <tr>
           <td><%= camera.exid %></td>
           <td><%= camera.name %></td>
           <td>
-            <%= camera.vendor_model.name if camera.vendor_model_id %>
+            <%= camera.vendor_model_name %>
           </td>
           <td>
-            <%= camera.vendor_model.vendor.name if camera.vendor_model_id %>
+            <%= camera.vendor_name %>
           </td>
-          <td><%= human_boolean(camera.is_online) %></td>
-          <td><%= human_boolean(camera.is_public) %></td>
-          <td><%= camera.created_at.strftime("%d/%m/%y") %></td>
-          <td><%= camera.last_polled_at.strftime("%d/%m/%y") if camera.last_polled_at %></td>
+          <td><%= camera.is_online %></td>
+          <td><%= camera.is_public %></td>
+          <td><%= camera.creation_date %></td>
+          <td><%= camera.last_poll_date %></td>
         </tr>
     <% end %>
     </tbody>
