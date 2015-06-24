@@ -1,6 +1,4 @@
-class VendorModelsController < ActionController::Base
-  layout 'admin'
-
+class VendorModelsController < ApplicationController
   def index
     @total_vendors = Vendor.all.count
     @total_cameras = Camera.all.count

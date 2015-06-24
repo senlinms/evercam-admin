@@ -1,6 +1,4 @@
-class UsersController < ActionController::Base
-  layout 'admin'
-
+class UsersController < ApplicationController
   def index
     @users = User.all.includes(:country, :cameras)
   end

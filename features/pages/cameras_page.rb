@@ -1,8 +1,9 @@
 module Pages
-  class CameraPage < Base
+  class CamerasPage < Base
 
     def visit
-      page.visit '/cameras'
+      page.visit '/'
+      click_link 'Cameras'
     end
 
     def sample_content

@@ -1,9 +1,11 @@
 class Spinach::Features::IndexUsers < Spinach::FeatureSteps
+  include SharedSteps::LoginSteps
+
   step 'I visit users section' do
-    visit '/users'
+    users_page.visit
   end
 
   step 'I should see all users' do
-    show_page
+    expect(page).to have_content(users_page.sample_content)
   end
 end

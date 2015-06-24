@@ -3,6 +3,10 @@ Feature: Index users
   As an admin
   I want to be able to access admin section and index users
 
+  Background:
+    Given I am logged in as admin
+    And I am on admin dashboard
+
   Scenario: Index users
     When I visit users section
     Then I should see all users

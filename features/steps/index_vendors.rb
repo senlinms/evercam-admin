@@ -1,9 +1,11 @@
 class Spinach::Features::IndexVendors < Spinach::FeatureSteps
+  include SharedSteps::LoginSteps
+
   step 'I visit vendors section' do
-    visit '/vendors'
+    vendors_page.visit
   end
 
   step 'I should see all vendors' do
-    show_page
+    expect(page).to have_content(vendors_page.sample_content)
   end
 end

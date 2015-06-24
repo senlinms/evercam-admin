@@ -1,6 +1,4 @@
-class DashboardController < ActionController::Base
-  layout 'admin'
-
+class DashboardController < ApplicationController
   def index
     @users = User.all.includes(:country, :cameras)
     @cameras = Camera.all.includes(:user, vendor_model: [:vendor])

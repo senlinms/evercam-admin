@@ -1,6 +1,4 @@
-class VendorsController < ActionController::Base
-  layout 'admin'
-
+class VendorsController < ApplicationController
   def index
 
   end
