@@ -1,0 +1,65 @@
+<div id="user-rights-modal" class="modal fade">
+  <div class="modal-dialog" style="width:400px;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+        <h5>User Details</h5>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <table class="user-table">
+            <tr>
+              <td class="col-md-4"><label class="control-label">First Name:</label></td>
+              <td><input data-validation-error-msg="Cannot be blank" type="text" data-validation="length" data-validation-length="min1" id="firstname" name="firstname" class="form-control" value="<%= @user.firstname %>"/></td>
+            </tr>
+            <tr>
+              <td class="col-md-4"><label class="control-label">Last Name:</label></td>
+              <td><input data-validation-error-msg="Cannot be blank" type="text" data-validation="length" data-validation-length="min1" id="lastname" name="lastname" class="form-control" value="<%= @user.lastname %>"/></td>
+            </tr>
+            <tr>
+              <td class="col-md-4"><label class="control-label">Email:</label></td>
+              <td><input data-validation="email" type="text" id="email" name="email" class="form-control" value="<%= @user.email %>"/></td>
+            </tr>
+            <tr>
+              <td class="col-md-4"><label class="control-label">Country:</label></td>
+              <td>
+                <select id="country_id" name="country_id" class="form-control is-required">
+                  <% @countries.each do |c| %>
+                      <option value="<%= c.id -%>" <% if !@user.country.blank? &&c.name == @user.country.name %>selected="selected"<% end %>>
+                        <%= c.name -%>
+                      </option>
+                  <% end %>
+                </select>
+              </td>
+            </tr>
+            <tr>
+              <td class="col-md-4"><label class="control-label">Permissions:</label></td>
+              <td>
+                <div class="radio-list">
+                  <label class="radio-inline">
+                    <input type="radio" name="is_admin" id="user-rights-radios1" value="true" <%= "checked" if @user.is_admin? %>>
+                    Allow admin permissions</small>
+                  </label>
+
+                  <label class="radio-inline">
+                    <input type="radio" name="is_admin" id="user-rights-radios2" value="false" <%= "checked" if !@user.is_admin? %>>
+                    Do not allow admin permissions</small>
+                  </label>
+                </div>
+              </td>
+            </tr>
+          </table>
+
+        </div>
+      </div>
+
+      <fieldset>
+        <div class="modal-footer">
+          <input name="_method" type="hidden" value="put" />
+          <button type="submit" id="save-user-rights" name="save-user-rights" class="push btn btn-primary">Save</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+        </div>
+      </fieldset>
+    </div>
+  </div>
+</div>

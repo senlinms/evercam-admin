@@ -1,7 +1,18 @@
 class UserDecorator < Draper::Decorator
-  delegate :is_admin?, :username, :firstname, :lastname, :fullname, :email, :cameras, :country
+  delegate :username,
+           :firstname,
+           :lastname,
+           :fullname,
+           :email,
+           :is_admin?,
+           :cameras,
+           :country,
+           :created_at,
+           :camera_shares,
+           :api_id,
+           :api_key
 
-  def admin
+  def is_admin
     h.human_boolean(object.is_admin?)
   end
 

@@ -1,16 +1,16 @@
 class UsersController < ApplicationController
+  before_action :set_user, except: :index
+
   def index
     @users = User.all.includes(:country, :cameras).decorate
   end
 
   def show
-    @user = User.find(params[:id])
     @countries = Country.all
   end
 
   def update
     begin
-      @user = User.find(params[:id])
       @user.update_attributes(firstname: params['firstname'], lastname: params['lastname'],
                                email: params['email'], country_id: params['country_id'],
                                is_admin: params['is_admin'])
@@ -32,7 +32,6 @@ class UsersController < ApplicationController
   end
 
   def impersonate
-    user = User[params[:id]]
     if user
       sign_out
       sign_in user
@@ -42,5 +41,11 @@ class UsersController < ApplicationController
     end
   rescue ActionController::RedirectBackError
     redirect_to admin_path
+  end
+
+  private
+
+  def set_user
+    @user ||= User.find(params[:id]).decorate
   end
 end
