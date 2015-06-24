@@ -1,25 +1,10 @@
-<!-- BEGIN CONTENT -->
 <div class="page-content-wrapper">
   <div class="page-content">
-    <!-- BEGIN PAGE HEADER-->
     <div class="row">
       <div class="col-md-12">
-        <!-- BEGIN PAGE TITLE & BREADCRUMB-->
-        <ul class="page-breadcrumb breadcrumb">
-          <li>
-            <i class="fa fa-home"></i>
-            <a href="/">Home</a>
-            <i class="fa fa-angle-right"></i>
-          </li>
-          <li>
-            <a href="#">Users</a>
-          </li>
-        </ul>
-        <!-- END PAGE TITLE & BREADCRUMB-->
+        <%= render 'breadcrumb' %>
       </div>
     </div>
-    <!-- END PAGE HEADER-->
-    <!-- BEGIN PAGE CONTENT-->
     <div id="user-list-row" class="row hide">
       <div class="col-md-12">
         <table class="table table-striped table-bordered table-hover user-list-table" id="datatable_ajax">
@@ -36,26 +21,14 @@
             </tr>
           </thead>
           <tbody>
-            <% @users.each do |user| %>
-            <tr>
-              <td><%= user.admin %></td>
-              <td><%= user.username %></td>
-              <td><%= link_to user.fullname, user_path(user) %></td>
-              <td><%= user.email %></td>
-              <td><%= link_to user.cameras.length, "#{user_path(user)}#tab_1_12" %></td>
-              <td><%= user.country_name %></td>
-              <td><%= user.registered_at %></td>
-              <td><%= user.confirmed_email %></td>
-            </tr>
-            <% end %>
+            <%= render @users %>
           </tbody>
         </table>
       </div>
     </div>
-    <!-- END PAGE CONTENT-->
   </div>
 </div>
-<!-- END CONTENT -->
+
 <script>
   $(".user-list-table").dataTable({
     aaSorting: [1, "asc"],
