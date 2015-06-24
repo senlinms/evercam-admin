@@ -37,19 +37,7 @@
             </tr>
           </thead>
           <tbody>
-            <% @cameras.each do |camera| %>
-            <tr>
-              <td><%= link_to camera.exid, camera_path(camera) %></td>
-              <td><%= link_to camera.user.fullname, user_path(camera.user) %></td>
-              <td><%= camera.name %></td>
-              <td><%= camera.vendor_model.name if camera.vendor_model_id %></td>
-              <td><%= camera.vendor_model.vendor.name if camera.vendor_model_id %></td>
-              <td><%= human_boolean(camera.is_online) %></td>
-              <td><%= human_boolean(camera.is_public) %></td>
-              <td><%= camera.created_at.strftime("%d/%m/%y") %></td>
-              <td><%= camera.last_polled_at.strftime("%d/%m/%y") if camera.last_polled_at %></td>
-            </tr>
-            <% end %>
+            <%= render @cameras %>
           </tbody>
         </table>
       </div>

@@ -6,7 +6,7 @@ module Pages
     end
 
     def sample_content
-      'Owner'
+      'Camera Information'
     end
   end
 end

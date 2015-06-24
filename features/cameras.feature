@@ -12,6 +12,7 @@ Feature: Index cameras
     Then I should see all cameras
 
   Scenario: Show camera
+    Given there is one camera
     When I visit camera section
     And I choose a camera
     Then I should see camera details
