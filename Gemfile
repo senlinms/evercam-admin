@@ -62,6 +62,9 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
+# Use Draper for decorators
+gem 'draper'
+
 group :development, :test do
   gem 'pry'
   gem 'factory_girl_rails', require: false

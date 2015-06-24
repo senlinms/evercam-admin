@@ -6,6 +6,7 @@ Feature: Index users
   Background:
     Given I am logged in as admin
     And I am on admin dashboard
+    And there is one regular user
 
   Scenario: Index users
     When I visit users section

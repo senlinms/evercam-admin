@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   def index
-    @users = User.all.includes(:country, :cameras)
+    @users = User.all.includes(:country, :cameras).decorate
   end
 
   def show

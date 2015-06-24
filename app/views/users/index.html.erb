@@ -38,20 +38,14 @@
           <tbody>
             <% @users.each do |user| %>
             <tr>
-              <td>
-                <% if user.is_admin? %>
-                  Yes
-                <% else %>
-                  No
-                <% end %>
-              </td>
+              <td><%= user.admin %></td>
               <td><%= user.username %></td>
               <td><%= link_to user.fullname, user_path(user) %></td>
               <td><%= user.email %></td>
               <td><%= link_to user.cameras.length, "#{user_path(user)}#tab_1_12" %></td>
-              <td><%= user.country.name unless user.country.blank? %></td>
-              <td><%= user.created_at.strftime("%d/%m/%y") %></td>
-              <td><%= human_boolean(user.confirmed_at.present?) %></td>
+              <td><%= user.country_name %></td>
+              <td><%= user.registered_at %></td>
+              <td><%= user.confirmed_email %></td>
             </tr>
             <% end %>
           </tbody>
