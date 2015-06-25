@@ -17,3 +17,5 @@
 /tmp
 .idea
 /public/capybara.html
+
+config/database.yml

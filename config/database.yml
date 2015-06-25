@@ -3,7 +3,7 @@ default: &default
   encoding: utf8
   schema_search_path: public
   template: template0
-  username: pbrudny
+  username: admin
   password: polmuz
 
 development:
