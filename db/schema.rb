@@ -88,14 +88,14 @@ ActiveRecord::Schema.define(version: 20150623163156) do
 
   create_table "vendor_models", force: :cascade do |t|
     t.integer  "vendor_id"
-    t.string   "name",                    null: false
-    t.json     "config",                  null: false
-    t.string   "exid",       default: "", null: false
-    t.string   "jpg_url",    default: "", null: false
-    t.string   "h264_url",   default: "", null: false
-    t.string   "mjpg_url",   default: "", null: false
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
+    t.string   "name",       null: false
+    t.json     "config",     null: false
+    t.string   "exid",       null: false
+    t.string   "jpg_url",    null: false
+    t.string   "h264_url",   null: false
+    t.string   "mjpg_url",   null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   add_index "vendor_models", ["vendor_id"], name: "index_vendor_models_on_vendor_id", using: :btree

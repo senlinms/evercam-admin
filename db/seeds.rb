@@ -11,7 +11,7 @@ User.create!(
 
 Camera.create!(
   exid: "exid1",
-  owner_id: 1,
+  user_id: 1,
   is_public: true,
   config: {"snapshots"=>{"jpg"=>"/onvif/snapshot"}, "auth"=>{"basic"=>{"username"=>"abcd", "password"=>"wxyz"}}, "external_host"=>"www.evercam.test", "external_http_port"=>80},
   name: "name1",
