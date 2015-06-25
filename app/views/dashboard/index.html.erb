@@ -5,14 +5,7 @@
       <div class="col-md-12">
         <!-- BEGIN PAGE TITLE & BREADCRUMB-->
         <ul class="page-breadcrumb breadcrumb">
-          <li>
-            <i class="fa fa-home"></i>
-            <a href="/public">Home</a>
-            <i class="fa fa-angle-right"></i>
-          </li>
-          <li>
-            <a href="#">Dashboard</a>
-          </li>
+          <%= render 'shared/breadcrumb_basic', current_section: 'Dashboard' %>
           <li class="pull-right">
             <div id="dashboard-report-range" class="dashboard-date-range tooltips" data-placement="top" data-original-title="Change dashboard date range">
               <i class="icon-calendar"></i>

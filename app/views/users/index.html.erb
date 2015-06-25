@@ -2,7 +2,9 @@
   <div class="page-content">
     <div class="row">
       <div class="col-md-12">
-        <%= render 'breadcrumb' %>
+        <ul class="page-breadcrumb breadcrumb">
+          <%= render 'shared/breadcrumb_basic', current_section: 'Users' %>
+        </ul>
       </div>
     </div>
     <div id="user-list-row" class="row hide">
