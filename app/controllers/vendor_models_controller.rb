@@ -1,7 +1,7 @@
 class VendorModelsController < ApplicationController
   def index
-    @total_vendors = Vendor.all.count
-    @total_cameras = Camera.all.count
+    @total_vendors = Vendor.count
+    @total_cameras = Camera.count
   end
 
   def load_vendor_model

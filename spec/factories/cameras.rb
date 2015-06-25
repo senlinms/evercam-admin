@@ -4,6 +4,7 @@ FactoryGirl.define do
     sequence(:name) { |n| "name#{n}" }
     mac_address "c8:f7:33:ca:4f:ea"
     association :user
+    association :vendor_model
     is_public true
     is_online true
     discoverable true

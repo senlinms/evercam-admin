@@ -9,4 +9,8 @@ class Camera < ActiveRecord::Base
   validates :config, presence: true
   validates :name, presence: true
   validates :discoverable, presence: true
+
+  def vendor
+    vendor_model.vendor
+  end
 end

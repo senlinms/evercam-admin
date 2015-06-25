@@ -1,7 +1,7 @@
 FactoryGirl.define do
   factory :vendor_model do
     association :vendor
-    sequence(:name) { |n| "name#{n}" }
+    sequence(:name) { |n| "model#{n}" }
     config {{'some' => 'value'}}
     exid '21'
     jpg_url 'http://somewhere'
