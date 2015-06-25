@@ -14,4 +14,9 @@ class User < ActiveRecord::Base
   def fullname
     "#{firstname} #{lastname}"
   end
+
+  def self.created_months_ago(number)
+    given_date = number.months.ago
+    User.where(created_at: given_date.beginning_of_month..given_date.end_of_month)
+  end
 end

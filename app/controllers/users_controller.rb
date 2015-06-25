@@ -16,7 +16,8 @@ class UsersController < ApplicationController
                                is_admin: params['is_admin'])
 
       flash[:message] = "User details updated successfully"
-      redirect_to "//users/#{params['id']}"
+      redirect_to "/users/#{params['id']}"
+
     rescue => error
       env["airbrake.error_id"] = notify_airbrake(error)
       Rails.logger.error "Exception caught updating User details.\nCause: #{error}\n" +

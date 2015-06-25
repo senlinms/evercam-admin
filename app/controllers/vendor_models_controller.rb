@@ -7,8 +7,8 @@ class VendorModelsController < ApplicationController
   def load_vendor_model
     condition = "lower(vendor_models.name) like lower('%#{params[:vendor_model]}%') OR
                  lower(vendors.name) like lower('%#{params[:vendor]}%') "
-    dash_vendors_models = VendorModel.joins(:vendor).where(condition)
-    total_records = dash_vendors_models.count
+    vendors_models = VendorModel.joins(:vendor).where(condition)
+    total_records = vendors_models.count
     display_length = params[:length].to_i
     display_length = display_length < 0 ? total_records : display_length
     display_start = params[:start].to_i
@@ -20,25 +20,25 @@ class VendorModelsController < ApplicationController
 
     (display_start..index_end).each do |index|
       records[:data][records[:data].count] = [
-        dash_vendors_models[index].vendor.exid,
-        dash_vendors_models[index].exid,
-        dash_vendors_models[index].vendor.name,
-        dash_vendors_models[index].name,
-        dash_vendors_models[index].config.deep_fetch('snapshots', 'jpg') { '' },
-        dash_vendors_models[index].config.deep_fetch('snapshots', 'h264') { '' },
-        dash_vendors_models[index].config.deep_fetch('snapshots', 'mjpg') { '' },
-        dash_vendors_models[index].config.deep_fetch('snapshots', 'mpeg4') { '' },
-        dash_vendors_models[index].config.deep_fetch('snapshots', 'mobile') { '' },
-        dash_vendors_models[index].config.deep_fetch('snapshots', 'lowres') { '' },
-        dash_vendors_models[index].config.deep_fetch('auth', 'basic', 'username') { '' },
-        dash_vendors_models[index].config.deep_fetch('auth', 'basic', 'password') { '' }]
+        vendors_models[index].vendor.exid,
+        vendors_models[index].exid,
+        vendors_models[index].vendor.name,
+        vendors_models[index].name,
+        vendors_models[index].config.deep_fetch('snapshots', 'jpg') { '' },
+        vendors_models[index].config.deep_fetch('snapshots', 'h264') { '' },
+        vendors_models[index].config.deep_fetch('snapshots', 'mjpg') { '' },
+        vendors_models[index].config.deep_fetch('snapshots', 'mpeg4') { '' },
+        vendors_models[index].config.deep_fetch('snapshots', 'mobile') { '' },
+        vendors_models[index].config.deep_fetch('snapshots', 'lowres') { '' },
+        vendors_models[index].config.deep_fetch('auth', 'basic', 'username') { '' },
+        vendors_models[index].config.deep_fetch('auth', 'basic', 'password') { '' }]
     end
 
     render json: records
   end
 
   def show
-    @dash_vendor_model = VendorModel.includes(:vendor).find(params[:id])
+    @vendor_model = VendorModel.includes(:vendor).find(params[:id])
     @total_cameras = Camera.where(model_id: params[:id])
   end
 

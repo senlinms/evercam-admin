@@ -37,7 +37,7 @@ class Spinach::Features::IndexUsers < Spinach::FeatureSteps
   step "I should see user's cameras" do
     expect(page).to have_content 'Cameras Owned 1'
     expect_table_to_have_items_count 'datatable_ajax', 1
-    expect(page).to have_content("#{camera.exid}	#{camera.name} Yes	Yes	#{camera.created_at.strftime("%d/%m/%y")}")
+    expect(page).to have_content("#{camera.exid}	#{camera.name} #{camera.vendor_model.name} #{camera.vendor.name} Yes	Yes	#{camera.created_at.strftime("%d/%m/%y")}")
   end
 
   def user

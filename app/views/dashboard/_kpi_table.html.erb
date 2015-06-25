@@ -20,7 +20,7 @@
     </td>
     <% 11.downto(0) do |i| %>
       <td>
-        <%= Camera.where(created_at: i.months.ago.beginning_of_month..i.months.ago.end_of_month).count %>
+        <%= Camera.created_months_ago(i).count %>
       </td>
     <% end %>
   </tr>
@@ -62,7 +62,7 @@
     </td>
     <% 11.downto(0) do |i| %>
       <td>
-        <%= User.where(created_at: i.month.ago.beginning_of_month..i.month.ago.end_of_month).count %>
+        <%= User.created_months_ago(i).count %>
       </td>
     <% end %>
   </tr>
