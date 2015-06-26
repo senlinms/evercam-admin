@@ -6,7 +6,7 @@ class CameraDecorator < Draper::Decorator
   end
 
   def vendor_name
-    object.vendor_model.vendor.name if camera.vendor_model.present?
+    object.vendor.name if camera.vendor_model.present?
   end
 
   def creation_date

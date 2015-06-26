@@ -144,12 +144,12 @@
                         <%= link_to camera.name, camera_path(camera) %>
                       </td>
                       <td>
-                        <%= camera.vendor_model.name if camera.vendor_model %>
+                        <%= camera.vendor_model_name %>
                       </td>
                       <td>
-                        <%= camera.vendor_model.vendor.name if camera.vendor_model and camera.vendor_model.vendor %>
+                        <%= camera.vendor_name %>
                       </td>
-                      <td><%= camera.created_at.strftime("%d/%m/%y") %></td>
+                      <td><%= camera.creation_date %></td>
                     </tr>
                 <% end %>
                 </tbody>
@@ -189,8 +189,8 @@
                     <tr>
                       <td><%= link_to user.fullname, user_path(user) %></td>
                       <td><%= user.email %></td>
-                      <td><%= user.country.name unless user.country.blank? %></td>
-                      <td><%= user.created_at.strftime("%d/%m/%y") %></td>
+                      <td><%= user.country_name %></td>
+                      <td><%= user.registered_at %></td>
                     </tr>
                 <% end %>
                 </tbody>
