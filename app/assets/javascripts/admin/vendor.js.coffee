@@ -81,7 +81,7 @@ handleAddNewModel = ->
 
     data = {}
     data.name = $("#vendor_name").val()
-    data.macs = $("#vendor_known_macs").val() unless $("#vendor_known_macs").val() is ''
+    data.known_macs = $("#vendor_known_macs").val() unless $("#vendor_known_macs").val() is ''
 
     onError = (jqXHR, status, error) ->
       $(".vendor-alert").html(jqXHR.responseJSON.message)
@@ -96,13 +96,13 @@ handleAddNewModel = ->
       true
     vendor_exid = ''
     if method is 'POST'
-      data.id = $("#vendor_exid").val()
+      data.exid = $("#vendor_exid").val()
     else
       vendor_exid = "/#{$("#vendor_exid").val()}"
 
     settings =
       cache: false
-      data: data
+      data: {vendor: data}
       dataType: 'json'
       error: onError
       success: onSuccess
