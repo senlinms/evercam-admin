@@ -1,0 +1,60 @@
+<div class="tab-pane active row col-md-9" id="tab_1_1">
+  <div class="row">
+    <div class="col-md-8 profile-info">
+      <h1><%= @user.fullname %></h1>
+      <p></p>
+      <ul class="list-inline">
+        <li><i class="fa fa-map-marker"></i> <%= @user.country_name %></li>
+        <li><i class="fa fa-calendar"></i> Registered on <%= @user.registered_at %></li>
+      </ul>
+    </div><!--end col-md-8-->
+    <div class="col-md-4">
+      <div class="portlet sale-summary">
+        <div class="portlet-title">
+          <div class="caption">
+            User Summary
+          </div>
+          <div class="tools">
+            <a class="reload" href="javascript:;">
+            </a>
+          </div>
+        </div>
+        <div class="portlet-body">
+          <ul class="list-unstyled">
+            <li>
+              <span class="sale-info">
+                Cameras Owned
+                <i class="fa fa-img-up"></i>
+              </span>
+              <span class="sale-num">
+                <%= @user.cameras.count %>
+              </span>
+            </li>
+            <li>
+              <span class="sale-info">
+                Cameras shared with this User
+                <i class="fa fa-img-down"></i>
+              </span>
+              <span class="sale-num">
+                <%= @user.camera_shares.count %>
+              </span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div><!--end row-->
+  <div class="tabbable tabbable-custom tabbable-custom-profile">
+    <ul class="nav nav-tabs">
+      <li class="active">
+        <a data-toggle="tab" href="#tab_1_11">User's Information</a>
+      </li>
+      <li class="">
+        <a data-toggle="tab" href="#tab_1_12">User's Cameras</a>
+      </li>
+    </ul>
+    <div class="tab-content">
+      <%= render 'user_information' %>
+      <%= render 'user_cameras' %>
+    </div>
+  </div>

@@ -1,0 +1,116 @@
+<!-- BEGIN CONTENT -->
+<div class="page-content-wrapper">
+  <div class="page-content">
+    <!-- BEGIN PAGE HEADER-->
+    <div class="row">
+      <div class="col-md-12">
+        <!-- BEGIN PAGE TITLE & BREADCRUMB-->
+        <ul class="page-breadcrumb breadcrumb">
+          <li>
+            <i class="fa fa-home"></i>
+            <a href="/">Home</a>
+            <i class="fa fa-angle-right"></i>
+          </li>
+          <li>
+            <a href="/cameras">Cameras</a>
+            <i class="fa fa-angle-right"></i>
+          </li>
+          <li>
+            <%= link_to @camera.exid, camera_path(@camera) %>
+          </li>
+        </ul>
+        <!-- END PAGE TITLE & BREADCRUMB-->
+      </div>
+    </div>
+    <!-- END PAGE HEADER-->
+    <!-- BEGIN PAGE CONTENT-->
+    <div class="row">
+      <div class="col-md-12">
+        <div class="tabbable tabbable-custom tabbable-full-width">
+          <ul class="nav nav-tabs">
+            <li class="active">
+              <a data-toggle="tab" href="#tab_1_1">Overview</a>
+            </li>
+          </ul>
+          <div class="tab-content">
+            <div class="tab-pane active" id="tab_1_1">
+              <div class="row">
+                <div class="col-md-3">
+                  <ul class="list-unstyled profile-nav">
+                    <li>
+                      <% if @camera.preview %>
+                      <img class="img-responsive" src="data:image/jpeg;base64,<%= Base64.encode64(@camera.preview) %>" />
+                      <% else %>
+                      <img class="img-responsive" src="<%= image_path 'noise.png' %>" />
+                      <% end %>
+                    </ul>
+                  </div>
+                  <div class="col-md-9">
+                   <div class="tabbable tabbable-custom tabbable-custom-profile">
+                    <ul class="nav nav-tabs">
+                      <li class="active">
+                        <a data-toggle="tab" href="#tab_1_11">Camera Information</a>
+                      </li>
+                    </ul>
+                    <div class="tab-content">
+                      <div class="tab-pane active portlet-body" id="tab_1_11">
+                        <table class="table table-striped table-bordered table-advance table-hover">
+                          <tbody>
+                            <tr>
+                              <td>Owner</td>
+                              <td><%= link_to @camera.user.fullname, user_path(@camera.user) %></td>
+                            </tr>
+                            <tr>
+                              <td>Name</td>
+                              <td><%= @camera.name %></td>
+                            </tr>
+                            <tr>
+                              <td>ID</td>
+                              <td><%= @camera.exid %></td>
+                            </tr>
+                            <tr>
+                              <td>Model</td>
+                              <td><%= @camera.vendor_model_name %></td>
+                            </tr>
+                            <tr>
+                              <td>Vendor</td>
+                              <td><%= @camera.vendor_name %></td>
+                            </tr>
+                            <tr>
+                              <td>Public</td>
+                              <td><%= @camera.is_online %></td>
+                            </tr>
+                            <tr>
+                              <td>Discoverable</td>
+                              <td><%= @camera.is_discoverable %></td>
+                            </tr>
+                            <tr>
+                              <td>Online</td>
+                              <td><%= @camera.is_public %></td>
+                            </tr>
+                            <tr>
+                              <td>Created At</td>
+                              <td><%= @camera.creation_date %></td>
+                            </tr>
+                            <tr>
+                              <td>Last Polled</td>
+                              <td><%= @camera.last_poll_date %></td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div><!--tab-pane-->
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div><!--tab_1_2-->
+            <!--end tab-pane-->
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <!-- END PAGE CONTENT-->
+  </div>
+</div>
+<!-- END CONTENT -->

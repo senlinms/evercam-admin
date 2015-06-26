@@ -1,0 +1,18 @@
+#logs {
+  .checkbox-inline {
+    padding-left: 0 !important;
+  }
+}
+#apply-types {
+  margin: 20px 0px;
+}
+
+.checkbox-inline input[type="checkbox"] {
+  float: left;
+  margin-top: 4px;
+}
+@media (max-width: 480px) {
+  .checkbox-list {
+    padding-left: 35px;
+  }
+}

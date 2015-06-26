@@ -1,0 +1,18 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: 5
+  username: postgres
+  password: password
+
+development:
+  <<: *default
+  database: evercam_admin_development
+
+test:
+  <<: *default
+    database: evercam_admin_test
+
+production:
+  <<: *default
+  database: evercam_admin_production

@@ -1,0 +1,78 @@
+<div class="bb-alert alert alert-info" style="display:none;">
+  <span></span>
+</div>
+
+<form action="" method="post">
+  <%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
+  <%= render 'user_modal' %>
+
+  <!-- BEGIN CONTENT -->
+  <div class="page-content-wrapper">
+    <div class="page-content">
+      <!-- BEGIN PAGE HEADER-->
+      <div class="row">
+        <div class="col-md-12">
+          <ul class="page-breadcrumb breadcrumb">
+            <li>
+              <i class="fa fa-home"></i>
+              <a href="/">Home</a>
+              <i class="fa fa-angle-right"></i>
+            </li>
+            <li>
+              <a href="/users">Users</a>
+              <i class="fa fa-angle-right"></i>
+            </li>
+            <li>
+            <%= link_to @user.fullname, user_path(@user) %>
+            </li>
+            <li class="pull-right">
+              <%= link_to impersonate_user_path(@user) do %>
+                <%= "Sign in as #{@user.fullname}" %>
+                <i class="fa fa-sign-in"></i>
+              <% end %>
+            </li>
+          </ul>
+          <!-- END PAGE TITLE & BREADCRUMB-->
+        </div>
+      </div>
+      <!-- END PAGE HEADER-->
+      <!-- BEGIN PAGE CONTENT-->
+      <div class="row">
+        <div class="col-md-12">
+          <div class="tabbable tabbable-custom tabbable-full-width">
+            <ul class="nav nav-tabs">
+              <li class="active">
+                <a data-toggle="tab" href="#tab_1_1">Overview</a>
+              </li>
+              <li class="">
+                <a data-toggle="tab" href="#tab_1_3">Snapshots</a>
+              </li>
+            </ul>
+            <div class="tab-content">
+              <%= render 'overview' %>
+            </div>
+            <%= render 'snapshots' %>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- END PAGE CONTENT-->
+  </div>
+  </div>
+  <!-- END CONTENT -->
+</form>
+<% if flash[:message] %>
+  <%= flash[:message] %>
+<% end %>
+
+<script type="text/javascript">
+  $(function(){
+    $.validate();
+
+    // Notifications
+    Notification.init(".bb-alert");
+    <% if flash[:message] %>
+    Notification.show('<%= flash[:message] %>');
+    <% end %>
+  });
+</script>
