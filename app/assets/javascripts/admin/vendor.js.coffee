@@ -58,7 +58,7 @@ clearForm = ->
   $("#vendor_exid").val('')
   $("#vendor_exid").removeAttr("disabled")
   $("#name").val('')
-  $("#known-macs").val('')
+  $("#vendor_known_macs").val('')
   $(".thumbnail-img").hide()
   $(".thumbnail-img").attr("src","camera.svg")
   $(".center-thumbnail").css("min-height", "160px")
@@ -73,15 +73,15 @@ handleAddNewModel = ->
       $(".vendor-alert").html('Vendor id can not be empty.')
       $(".vendor-alert").slideDown()
       return
-    if $("#name").val() is ''
+    if $("#vendor_name").val() is ''
       $(".vendor-alert").html('Vendor name can not be empty.')
       $(".vendor-alert").slideDown()
       return
     $(".vendor-alert").slideUp()
 
     data = {}
-    data.name = $("#name").val()
-    data.macs = $("#known-macs").val() unless $("#known-macs").val() is ''
+    data.name = $("#vendor_name").val()
+    data.macs = $("#vendor_known_macs").val() unless $("#vendor_known_macs").val() is ''
 
     onError = (jqXHR, status, error) ->
       $(".vendor-alert").html(jqXHR.responseJSON.message)
@@ -119,8 +119,8 @@ onModelClose = ->
 $(".edit-vandor").live 'click', ->
   $("#vendor_exid").val($(this).attr("val-id"))
   $("#vendor_exid").attr("disabled", true)
-  $("#name").val($(this).attr("val-name"))
-  $("#known-macs").val($(this).attr("val-macs"))
+  $("#vendor_name").val($(this).attr("val-name"))
+  $("#vendor_known_macs").val($(this).attr("val-macs"))
   $(".thumbnail-img").attr("src", "http://evercam-public-assets.s3.amazonaws.com/#{$(this).attr("val-id")}/logo.jpg")
   $(".center-thumbnail").css("min-height", "30px")
   $(".thumbnail-img").show()
