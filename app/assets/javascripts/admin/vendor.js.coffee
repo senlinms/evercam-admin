@@ -17,7 +17,7 @@ initializeDataTable = ->
 
   vendor_table = $('#datatable_vendors').DataTable({
     ajax: {
-      url: "#{Evercam.API_URL}vendors",
+      url: "/vendors",
       'headers': headers
       dataSrc: 'vendors',
       error: (xhr, error, thrown) ->
@@ -55,8 +55,8 @@ showMacs = (macs, type, row) ->
   return "<span style='word-wrap: break-word;'>#{known_macs.replace(RegExp(",", "g"), ", ")}</span>"
 
 clearForm = ->
-  $("#vendor-id").val('')
-  $("#vendor-id").removeAttr("disabled")
+  $("#vendor_exid").val('')
+  $("#vendor_exid").removeAttr("disabled")
   $("#name").val('')
   $("#known-macs").val('')
   $(".thumbnail-img").hide()
@@ -69,7 +69,7 @@ clearForm = ->
 handleAddNewModel = ->
   $("#save-vendor").on 'click', ->
 
-    if $("#vendor-id").val() is ''
+    if $("#vendor_exid").val() is ''
       $(".vendor-alert").html('Vendor id can not be empty.')
       $(".vendor-alert").slideDown()
       return
@@ -94,11 +94,11 @@ handleAddNewModel = ->
       method = 'POST'
       clearForm()
       true
-    vendor_id = ''
+    vendor_exid = ''
     if method is 'POST'
-      data.id = $("#vendor-id").val()
+      data.id = $("#vendor_exid").val()
     else
-      vendor_id = "/#{$("#vendor-id").val()}"
+      vendor_exid = "/#{$("#vendor_exid").val()}"
 
     settings =
       cache: false
@@ -108,7 +108,7 @@ handleAddNewModel = ->
       success: onSuccess
       contentType: "application/x-www-form-urlencoded"
       type: method
-      url: "#{Evercam.API_URL}vendors#{vendor_id}?api_id=#{Evercam.User.api_id}&api_key=#{Evercam.User.api_key}"
+      url: "vendors"
 
     sendAJAXRequest(settings)
 
@@ -117,8 +117,8 @@ onModelClose = ->
     clearForm()
 
 $(".edit-vandor").live 'click', ->
-  $("#vendor-id").val($(this).attr("val-id"))
-  $("#vendor-id").attr("disabled", true)
+  $("#vendor_exid").val($(this).attr("val-id"))
+  $("#vendor_exid").attr("disabled", true)
   $("#name").val($(this).attr("val-name"))
   $("#known-macs").val($(this).attr("val-macs"))
   $(".thumbnail-img").attr("src", "http://evercam-public-assets.s3.amazonaws.com/#{$(this).attr("val-id")}/logo.jpg")
