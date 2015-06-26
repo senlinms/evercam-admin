@@ -12,3 +12,8 @@ Feature: Edit user
     Given I am on user's page
     When I try to grant admin rights
     Then the user should become admin
+
+  Scenario: Rename user
+    Given I am on user's page
+    When I try to rename user
+    Then user's name should be changed

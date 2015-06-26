@@ -2,11 +2,20 @@ require 'rails_helper'
 
 RSpec.describe User, type: :model do
   describe 'validations' do
+    it { should validate_presence_of :email }
     it { should validate_presence_of :firstname }
     it { should validate_presence_of :lastname }
     it { should validate_presence_of :username }
     it { should validate_presence_of :password }
-    it { should validate_presence_of :email }
+
+    describe 'email uniqueness' do
+      before { create :user, email: 'foo@bar.com' }
+      let(:user) { build :user, email: 'foo@bar.com' }
+      it do
+        user.valid?
+        expect(user.errors[:email]).to be == ['has already been taken']
+      end
+    end
   end
 
   describe 'associations' do

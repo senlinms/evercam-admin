@@ -9,7 +9,7 @@ class User < ActiveRecord::Base
   validates :lastname, presence: true
   validates :username, presence: true
   validates :password, presence: true
-  validates :email, presence: true
+  validates :email, presence: true, uniqueness: true
 
   def fullname
     "#{firstname} #{lastname}"

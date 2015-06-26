@@ -7,29 +7,21 @@ class UsersController < ApplicationController
 
   def show
     @countries = Country.all
+    @user = @user.decorate
   end
 
   def update
-    begin
-      @user.update_attributes(firstname: params['firstname'], lastname: params['lastname'],
-                               email: params['email'], country_id: params['country_id'],
-                               is_admin: params['is_admin'])
-
-      flash[:message] = "User details updated successfully"
-      redirect_to "/users/#{params['id']}"
-
-    rescue => error
-      env["airbrake.error_id"] = notify_airbrake(error)
-      Rails.logger.error "Exception caught updating User details.\nCause: #{error}\n" +
-                             error.backtrace.join("\n")
-      if(error.message.index("ux_users_email"))
-        flash[:message] = "The email address specified is already registered for an Evercam account."
-      else
-        flash[:message] = "An error occurred updating User details. "\
-                          "Please try again and, if this problem persists, contact support."
-      end
-      redirect_to "/users/#{params['id']}"
+    if @user.update(user_params)
+      redirect_to user_path(@user), notice: 'User details updated successfully'
+    else
+      redirect_to user_path(@user)
     end
+  rescue => error
+    env["airbrake.error_id"] = notify_airbrake(error)
+    Rails.logger.error "Exception caught updating User details.\nCause: #{error}\n" +
+                           error.backtrace.join("\n")
+    flash[:message] = "An error occurred updating User details. "\
+                          "Please try again and, if this problem persists, contact support."
   end
 
   def impersonate
@@ -47,10 +39,10 @@ class UsersController < ApplicationController
   private
 
   def user_params
-
+    params.require(:user).permit(:firstname, :lastname, :email, :country_id, :is_admin)
   end
 
   def set_user
-    @user ||= User.find(params[:id]).decorate
+    @user ||= User.find(params[:id])
   end
 end

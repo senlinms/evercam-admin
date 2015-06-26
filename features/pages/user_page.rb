@@ -10,7 +10,12 @@ module Pages
     end
 
     def allow_admin_permissions
-      choose 'user-rights-radios1'
+      choose 'Allow admin permissions'
+      click_button 'Save'
+    end
+
+    def rename_to(name)
+      fill_in 'user_firstname', with: name
       click_button 'Save'
     end
 

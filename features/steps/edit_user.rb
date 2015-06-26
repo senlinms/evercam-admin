@@ -16,8 +16,16 @@ class Spinach::Features::EditUser < Spinach::FeatureSteps
     user_page.allow_admin_permissions
   end
 
+  step 'I try to rename user' do
+    user_page.rename_to('Krzysiek')
+  end
+
   step 'the user should become admin' do
-    pending 'step not implemented'
+    expect(page).to have_content 'Is Admin Yes Change'
+  end
+
+  step 'user\'s name should be changed' do
+    expect(page).to have_content 'First Name	Krzysiek'
   end
 
   def user
