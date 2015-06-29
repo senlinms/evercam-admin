@@ -17,15 +17,15 @@ initializeDataTable = ->
 
   vendor_table = $('#datatable_vendors').DataTable({
     ajax: {
-      url: "/vendors",
+      url: "vendors",
       'headers': headers
-      dataSrc: 'vendors',
+      dataSrc: '',
       error: (xhr, error, thrown) ->
         console.log(xhr.responseJSON.message)
     },
     columns: [
-      {data: "id", width: '20%', 'render': showLogo },
-      {data: "id", width: '20%', 'render': editVendor },
+      {data: "exid", width: '20%', 'render': showLogo },
+      {data: "exid", width: '20%', 'render': editVendor },
       {data: "name", width: '20%'},
       {data: "known_macs", width: '40%', 'render': showMacs }
     ],
@@ -38,7 +38,7 @@ initializeDataTable = ->
   })
 
 editVendor = (id, type, row) ->
-  return "<a style='cursor:pointer;' class='edit-vandor' val-id='#{row.id}' val-name='#{row.name}' val-macs='#{row.known_macs}'>#{row.id}</a>"
+  return "<a style='cursor:pointer;' class='edit-vandor' val-id='#{row.exid}' val-name='#{row.name}' val-macs='#{row.known_macs}'>#{row.exid}</a>"
 
 showLogo = (id, type, row) ->
   img = new Image()
@@ -46,9 +46,9 @@ showLogo = (id, type, row) ->
   img.onload = ->
 
   img.onerror = ->
-    $("#image-#{row.id}").remove()
+    $("#image-#{row.exid}").remove()
   img.src = image_url
-  return "<img id='image-#{row.id}' style='width:100%;' src='#{image_url}'/>"
+  return "<img id='image-#{row.exid}' style='width:100%;' src='#{image_url}'/>"
 
 showMacs = (macs, type, row) ->
   known_macs = "#{macs}"
@@ -57,7 +57,7 @@ showMacs = (macs, type, row) ->
 clearForm = ->
   $("#vendor_exid").val('')
   $("#vendor_exid").removeAttr("disabled")
-  $("#name").val('')
+  $("#vendor_name").val('')
   $("#vendor_known_macs").val('')
   $(".thumbnail-img").hide()
   $(".thumbnail-img").attr("src","camera.svg")
@@ -68,23 +68,13 @@ clearForm = ->
 
 handleAddNewModel = ->
   $("#save-vendor").on 'click', ->
-
-    if $("#vendor_exid").val() is ''
-      $(".vendor-alert").html('Vendor id can not be empty.')
-      $(".vendor-alert").slideDown()
-      return
-    if $("#vendor_name").val() is ''
-      $(".vendor-alert").html('Vendor name can not be empty.')
-      $(".vendor-alert").slideDown()
-      return
     $(".vendor-alert").slideUp()
-
     data = {}
     data.name = $("#vendor_name").val()
     data.known_macs = $("#vendor_known_macs").val() unless $("#vendor_known_macs").val() is ''
 
     onError = (jqXHR, status, error) ->
-      $(".vendor-alert").html(jqXHR.responseJSON.message)
+      $(".vendor-alert").html(jqXHR.responseJSON[0])
       $(".vendor-alert").slideDown()
       false
 

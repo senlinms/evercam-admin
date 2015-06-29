@@ -1,6 +1,11 @@
 class VendorsController < ApplicationController
+
   def index
-    @vendors = Vendor.all.decorate
+    @vendors = Vendor.all
+    respond_to do |format|
+      format.html
+      format.json { render json: @vendors.to_json }
+    end
   end
 
   def create
@@ -8,23 +13,25 @@ class VendorsController < ApplicationController
     respond_to do |format|
       if @vendor.save
         format.html { redirect_to vendors_path, notice: 'Vendor successfully created' }
-        format.json
+        format.json { render json: @vendor }
       else
-        # TODO: decide whether to use this json thing
-        # or use jquery only for validations but creation on rails form
-        # puts @vendor.errors.full_messages
-        format.json { render json: @vendor.errors, status: :unprocessable_entity }
+        format.html { redirect_to vendors_path }
+        format.json { render json: @vendor.errors.full_messages, status: :unprocessable_entity }
       end
     end
   end
 
   private
 
+  def vendor_raw_params
+    params.require(:vendor).permit(:exid, :name, :known_macs)
+  end
+
   def vendor_params
-    params.require(:vendor).permit(:exid, :name).merge(known_macs: known_macs.split(','))
+    vendor_raw_params.merge(known_macs: known_macs)
   end
 
   def known_macs
-    params.require(:vendor)[:known_macs]
+    vendor_raw_params[:known_macs].try(:split,',')
   end
 end

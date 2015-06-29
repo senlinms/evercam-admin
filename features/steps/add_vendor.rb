@@ -7,11 +7,11 @@ class Spinach::Features::AddVendor < Spinach::FeatureSteps
   end
 
   step 'I try to add new vendor' do
-    vendors_page.add_vendor(exid: 'fooid', name: 'fooname', known_macs: ['00:0E:53', '00:11:22'])
+    vendors_page.add_vendor(exid: 'fooid', name: 'fooname', known_macs: '00:0E:53, 00:11:22')
   end
 
   step 'the new vendor should be added' do
-    pending 'step not implemented'
+    expect(page).to have_content 'fooname'
   end
 
 end
