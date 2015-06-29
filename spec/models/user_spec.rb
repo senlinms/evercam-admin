@@ -6,7 +6,7 @@ RSpec.describe User, type: :model do
     it { should validate_presence_of :firstname }
     it { should validate_presence_of :lastname }
     it { should validate_presence_of :username }
-    it { should validate_presence_of :password }
+    it { should validate_presence_of :encrypted_password }
 
     describe 'email uniqueness' do
       before { create :user, email: 'foo@bar.com' }

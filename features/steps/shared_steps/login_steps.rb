@@ -3,9 +3,8 @@ module SharedSteps
     include Spinach::DSL
 
     step 'I am logged in as admin' do
-      # TODO: uncomment when authentication is ready
-      # sign_in_page.visit
-      # sign_in_page.login_as(user.email, 'pass')
+      sign_in_page.visit
+      sign_in_page.login_as(admin.email, 'pass')
       admin
     end
 
@@ -15,7 +14,7 @@ module SharedSteps
     end
 
     def admin
-      @admin ||= FactoryGirl.create(:user, is_admin: true, password: 'pass')
+      @admin ||= FactoryGirl.create(:user, is_admin: true, password: 'password')
     end
   end
 end

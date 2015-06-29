@@ -1,4 +1,6 @@
 class DashboardController < ApplicationController
+  before_action :authenticate_user!
+
   def index
     @users = User.all.includes(:country, :cameras)
     @cameras = Camera.all.includes(:user, vendor_model: [:vendor])

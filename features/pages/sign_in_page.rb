@@ -2,7 +2,7 @@ module Pages
   class SignInPage < Base
 
     def visit
-      page.visit '/v1/users/signin'
+      page.visit '/users/sign_in'
     end
 
     def sample_content

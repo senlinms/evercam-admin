@@ -1,9 +1,11 @@
 Rails.application.routes.draw do
   root 'dashboard#index'
 
-  resources :users do
-    get :impersonate, on: :member
-  end
+  # resources :users do
+  #   get :impersonate, on: :member
+  # end
+
+  devise_for :users, controllers: { sessions: 'users/sessions' }
 
   resources :cameras
   resources :vendors

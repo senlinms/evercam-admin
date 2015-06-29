@@ -67,6 +67,8 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 # Use Draper for decorators
 gem 'draper'
 
+gem 'devise'
+
 group :development, :test do
   gem 'pry'
   gem 'factory_girl_rails', require: false
