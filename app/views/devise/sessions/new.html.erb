@@ -16,13 +16,12 @@
     </div>
     <div id="sign-in" class="col-md-4 col-md-offset-4">
       <h3 class="text-center">Sign in</h3>
-
-      <%= form_for(:session, url: session_path(resource_name), :html => { :id => "user-sign-in" }) do |f| %>
+      <%= form_for(resource, as: resource_name, url: session_path(resource_name), :html => { :id => "user-sign-in" }) do |f| %>
           <div class="grey col-md-8 col-md-offset-2 text-center">
-            <%= f.label :email %> or <%= f.label :username %>
+            <%= f.label :email %>
             <div class="input-icon right">
               <i class="icon-user"></i>
-              <%= f.text_field :login, value: params.fetch(session, {})[:login] %>
+              <%= f.text_field :email %>
             </div>
           </div>
 
@@ -45,7 +44,6 @@
               I've <%= link_to "forgotten my password", new_password_path(resource_name) %>
             </div>
           </div>
-          <input type="hidden" id="session_anchor" name="session[anchor]">
       <% end %>
     </div>
 
