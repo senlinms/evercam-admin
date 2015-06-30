@@ -14,7 +14,6 @@ class User < ActiveRecord::Base
   validates :lastname, presence: true
   validates :username, presence: true
   validates :encrypted_password, presence: true
-  validates :email, presence: true, uniqueness: true
 
   def fullname
     "#{firstname} #{lastname}"

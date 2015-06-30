@@ -1,11 +1,13 @@
 Rails.application.routes.draw do
-  root 'dashboard#index'
+  root to: 'dashboard#index'
 
-  # resources :users do
-  #   get :impersonate, on: :member
-  # end
+  devise_for :users
 
-  devise_for :users, controllers: { sessions: 'users/sessions' }
+  scope '/admin' do
+    resources :users, only: [:show, :index, :update] do
+      get :impersonate, on: :member
+    end
+  end
 
   resources :cameras
   resources :vendors

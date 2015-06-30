@@ -14,52 +14,52 @@
       </li>
       <!-- BEGIN FRONTEND THEME LINKS -->
       <li>
-        <a href="/users">
-          <i class="icon-users"></i>
-          <span class="title">
-            Users
-          </span>
-        </a>
+        <%= link_to users_path do %>
+            <i class="icon-users"></i>
+            <span class="title">
+                Users
+            </span>
+        <% end %>
       </li>
       <li>
-        <a href="/cameras">
+        <%= link_to cameras_path do %>
           <i class="icon-camera"></i>
           <span class="title">
             Cameras
           </span>
-        </a>
+        <% end %>
       </li>
       <li>
-        <a href="/vendors">
+        <%= link_to vendors_path do %>
           <i class="icon-camera"></i>
           <span class="title">
             Vendors
           </span>
-        </a>
+        <% end %>
       </li>
       <li>
-        <a href="/vendor_models">
+        <%= link_to vendor_models_path do %>
           <i class="icon-camera"></i>
           <span class="title">
             Vendors & Models
           </span>
-        </a>
+        <% end %>
       </li>
       <li>
-        <a href="/map">
+        <%= link_to map_path do %>
           <i class="icon-map"></i>
           <span class="title">
             Map
           </span>
-        </a>
+        <% end %>
       </li>
       <li class="last ">
-        <a href="/kpi">
+        <%= link_to kpi_path do %>
           <i class="icon-graph"></i>
           <span class="title">
             KPI
           </span>
-        </a>
+        <% end %>
       </li>
     </ul>
     <!-- END SIDEBAR MENU -->
