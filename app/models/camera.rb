@@ -19,7 +19,12 @@ class Camera < ActiveRecord::Base
     Camera.where(created_at: given_date.beginning_of_month..given_date.end_of_month)
   end
 
-  def self.paid_months_ago(number)
+  #TODO: this should be implemented
+  def self.new_paid_cameras(months_ago)
+    []
+  end
 
+  def self.total_paid_cameras(months_ago)
+    []
   end
 end

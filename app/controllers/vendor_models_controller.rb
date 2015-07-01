@@ -1,5 +1,5 @@
 class VendorModelsController < ApplicationController
-  before_action :authenticate_user!
+  before_action :authorize_admin
 
   def index
     @total_vendors = Vendor.count

@@ -18,33 +18,12 @@
   <![endif]-->
 </head>
 <body class="page-header-fixed page-quick-sidebar-over-content" id='<%= "#{params[:controller].parameterize}-#{params[:action]}" %>'>
-
-<% if current_user.present? %>
-    <%= render 'shared/header' %>
-
+  <%= render 'shared/header' %>
 <p class="notice"><%= notice %></p>
 <p class="alert"><%= alert %></p>
 <div class="page-container">
   <%= render 'shared/sidebar' %>
   <%= yield %>
 </div>
-<script>
-    if (!window.Evercam) {
-        window.Evercam = {};
-    }
-    window.Evercam.API_URL = '<%= EVERCAM_API %>';
-    window.Evercam.User = {
-        username: '<%= current_user.username %>',
-        api_id: '<%= current_user.api_id %>',
-        api_key: '<%= current_user.api_key %>'
-    };
-</script>
-<% else %>
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
-
-    <%= yield %>
-<% end %>
-
 </body>
 </html>

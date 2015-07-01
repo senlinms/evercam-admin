@@ -4,7 +4,7 @@ module SharedSteps
 
     step 'I am logged in as admin' do
       sign_in_page.visit
-      sign_in_page.login_as(admin.email, 'pass')
+      sign_in_page.login_as(admin.email, 'password')
       admin
     end
 

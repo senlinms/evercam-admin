@@ -3,7 +3,7 @@
   lastname: 'Brudnix',
   username: 'admin',
   password: 'password1',
-  email: 'email1@evercam.io',
+  email: 'admin@evercam.io',
   api_id: '7168504232c9cbaf57c5f',
   api_key: 'd46c9f9ca22451c6670f2435c9235cb',
   is_admin: true

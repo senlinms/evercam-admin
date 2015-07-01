@@ -1,6 +1,5 @@
 class UsersController < ApplicationController
-  before_action :authenticate_user!
-
+  before_action :authorize_admin
   before_action :set_user, only: [:show, :update, :impersonate]
 
   def index
@@ -27,15 +26,13 @@ class UsersController < ApplicationController
   end
 
   def impersonate
-    if user
+    if @user
       sign_out
-      sign_in user
+      sign_in @user
       redirect_to root_path
     else
       redirect_to :back
     end
-  rescue ActionController::RedirectBackError
-    redirect_to admin_path
   end
 
   private

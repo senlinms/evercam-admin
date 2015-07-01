@@ -1,9 +1,14 @@
 Rails.application.routes.draw do
   root to: 'dashboard#index'
 
-  devise_for :users
+  devise_options = {
+      controllers: {
+          registrations: 'registrations'
+      }
+  }
+  devise_for :users, devise_options
 
-  scope '/admin' do
+  scope '/dashboard' do
     resources :users, only: [:show, :index, :update] do
       get :impersonate, on: :member
     end
@@ -15,4 +20,5 @@ Rails.application.routes.draw do
 
   get '/map' => 'dashboard#map'
   get '/kpi' => 'dashboard#kpi'
+  get '/no_access' => 'home#no_access'
 end
