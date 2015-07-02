@@ -18,7 +18,6 @@
 .idea
 /public/capybara.html
 
-config/database.yml
 # Elastic Beanstalk Files
 .elasticbeanstalk/*
 !.elasticbeanstalk/*.cfg.yml

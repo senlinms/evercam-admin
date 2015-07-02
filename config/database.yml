@@ -7,7 +7,6 @@ default: &default
   host: <%= ENV['RDS_HOSTNAME'] %>
   port: <%= ENV['RDS_PORT'] %>
 
-
 development:
   <<: *default
   database: evercam_admin_development
