@@ -23,19 +23,12 @@ handlePusherEventIndex = ->
   channel = Evercam.Pusher.subscribe(Evercam.User.username)
   channel.bind 'user_cameras_changed', (data) ->
     $('#camera-index.page-content').load "#{Evercam.request.rootpath} #camera-index.page-content > *", ->
-      showOfflineCamerasBox()
       window.refreshThumbnails()
 
 initNotification = ->
   Notification.init(".bb-alert");
   if notifyMessage
     Notification.show notifyMessage
-
-showOfflineCamerasBox = ->
-  if $.cookie("show-offline-cameras")
-    $("#camera-index div.camera-offline").removeClass("hide")
-  else
-    $("#camera-index div.camera-offline").removeClass("hide").addClass("hide")
 
 window.initializeCameraIndex = ->
   Metronic.init()
@@ -45,4 +38,3 @@ window.initializeCameraIndex = ->
   refreshImages()
   onRefreshImage()
   handlePusherEventIndex()
-  showOfflineCamerasBox()

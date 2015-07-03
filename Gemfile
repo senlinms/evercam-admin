@@ -17,8 +17,8 @@ gem 'coffee-rails', '~> 4.1.0'
 
 gem 'sprockets'
 gem 'sprockets-es6', require: 'sprockets/es6'
-gem 'fog'
-gem 'asset_sync'
+# gem 'fog'
+# gem 'asset_sync'
 gem 'autoprefixer-rails', '~> 5.2.0.1'
 
 source 'https://rails-assets.org' do
