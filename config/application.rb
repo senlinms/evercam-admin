@@ -42,7 +42,6 @@ module EvercamAdmin
     config.assets.precompile += %w[
       snapshot_navigator_widget.js
       admin/admin.js
-      admin/admin.css
       views/widgets/widget.css
       views/widgets/add_camera.css
       bare-bones.js

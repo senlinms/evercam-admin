@@ -1,7 +1,7 @@
 //= require bootstrap
 //= require ladda
 //= require datetimepicker
-//= require uniform.default.min.css
+//= require uniform.default.min.scss
 //= require bootstrap-datepicker
 //= require videojs
 //= require datatables/jquery.dataTables
@@ -39,6 +39,8 @@
 
 @import "style";
 
+@import "views/cameras/cameras";
+@import "views/cameras/single";
 @import "views/cameras/add_camera";
 @import "views/public/index";
 @import "views/public/single";
@@ -49,3 +51,6 @@
 @import "views/users/sessions";
 @import "views/users/password_reset";
 @import "views/api_docs";
+
+@import "subscriptions";
+

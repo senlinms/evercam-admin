@@ -34,6 +34,7 @@
 //= require cameras.js
 //= require cameras/single.js
 //= require cameras/add_camera.js
+//= require user_account.js
 //=
 //= require metronic/respond.min.js
 //= require metronic/metronic.js
@@ -43,3 +44,4 @@
 //= require metronic/modernizr.custom.js
 //= require metronic/icheck.min.js
 //=
+//= require subscriptions.js

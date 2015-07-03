@@ -51156,16 +51156,14 @@ $(function() {
 
 
 (function() {
-  var handlePusherEventUser, handleSidebarToggle, showOfflineCameras;
+  var handlePusherEventUser, handleSidebarToggle;
 
   handlePusherEventUser = function() {
     var channel;
     if (Evercam && Evercam.Pusher) {
       channel = Evercam.Pusher.subscribe(Evercam.User.username);
       return channel.bind('user_cameras_changed', function(data) {
-        return $('.sidebar-cameras-list').load('/v1/cameras/new .sidebar-cameras-list > *', function() {
-          return showOfflineCameras();
-        });
+        return $('.sidebar-cameras-list').load('/v1/cameras/new .sidebar-cameras-list > *');
       });
     }
   };
@@ -51178,17 +51176,8 @@ $(function() {
     });
   };
 
-  showOfflineCameras = function() {
-    if ($.cookie("show-offline-cameras")) {
-      return $(".sidebar-cameras-list li.sidebar-offline").removeClass("hide");
-    } else {
-      return $(".sidebar-cameras-list li.sidebar-offline").removeClass("hide").addClass("hide");
-    }
-  };
-
   $(function() {
-    handleSidebarToggle();
-    return showOfflineCameras();
+    return handleSidebarToggle();
   });
 
   $(window).load(function() {
@@ -54347,6 +54336,145 @@ $(function () {
   };
 
 }).call(this);
+(function() {
+  var handleEditable, handlePasswordChange, initialize, initializeiCheck, onDeleteClick, showHideMessage;
+
+  handleEditable = function() {
+    $('.makeNonEditable').on('click', function() {
+      $('#userProfile input:text').attr('readonly', 'readonly');
+      $('select').attr('disabled', 'disabled');
+    });
+    return $('.makeEditable').on('click', function() {
+      $('#userProfile input:text').removeAttr('readonly');
+      $('select').removeAttr('disabled');
+    });
+  };
+
+  showHideMessage = function() {
+    $('#hide').click(function() {
+      return $('.hide-p').fadeOut();
+    });
+    $('#hide-2').click(function() {
+      return $('.hide-p').fadeOut();
+    });
+    return $('#show').click(function() {
+      return $('.hide-p').fadeIn();
+    });
+  };
+
+  handlePasswordChange = function() {
+    return $('#change-password').on('click', function() {
+      if ($('#new-password').val() !== $('#password_again').val()) {
+        $('#wrong-confirm-password').show();
+        $('#password_again').addClass('border-red');
+        return false;
+      }
+      $('#wrong-confirm-password').hide();
+      $('#password_again').removeClass('border-red');
+      return true;
+    });
+  };
+
+  initializeiCheck = function() {
+    return $("input[type=radio], input[type=checkbox]").iCheck({
+      checkboxClass: "icheckbox_flat-blue",
+      radioClass: "iradio_flat-blue"
+    });
+  };
+
+  onDeleteClick = function() {
+    return $("#close-account").on('click', function() {
+      var is_checked;
+      is_checked = true;
+      $(".camera-delete").each(function() {
+        if (!$(this).is(":checked")) {
+          is_checked = false;
+        }
+      });
+      if (!is_checked) {
+        $(".bb-alert").removeClass("alert-info").addClass("alert-danger");
+        Notification.show("Please tick the box(es) to confirm you would like to delete each of your cameras");
+        return false;
+      }
+      if ($("#delete-camera").val().toLowerCase() !== 'delete') {
+        $(".bb-alert").removeClass("alert-info").addClass("alert-danger");
+        Notification.show("Please type 'Delete' to confirm delete your account");
+        return false;
+      }
+      return true;
+    });
+  };
+
+  window.initializeUserAccount = function() {
+    $.validate();
+    Metronic.init();
+    Layout.init();
+    QuickSidebar.init();
+    Notification.init(".bb-alert");
+    handleEditable();
+    showHideMessage();
+    handlePasswordChange();
+    initializeiCheck();
+    return onDeleteClick();
+  };
+
+  initialize = function() {
+    var defaultBounds, input, map, markers, searchBox;
+    markers = [];
+    map = new google.maps.Map(document.getElementById('map-canvas'), {
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    });
+    defaultBounds = new google.maps.LatLngBounds(new google.maps.LatLng(-33.8902, 151.1759), new google.maps.LatLng(-33.8474, 151.2631));
+    map.fitBounds(defaultBounds);
+    input = document.getElementById('pac-input');
+    map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+    searchBox = new google.maps.places.SearchBox(input);
+    google.maps.event.addListener(searchBox, 'places_changed', function() {
+      var marker;
+      var i;
+      var bounds, i, image, marker, place, places;
+      places = searchBox.getPlaces();
+      if (places.length === 0) {
+        return;
+      }
+      i = 0;
+      marker = void 0;
+      while (marker = markers[i]) {
+        marker.setMap(null);
+        i++;
+      }
+      markers = [];
+      bounds = new google.maps.LatLngBounds;
+      i = 0;
+      place = void 0;
+      while (place = places[i]) {
+        image = {
+          url: place.icon,
+          size: new google.maps.Size(71, 71),
+          origin: new google.maps.Point(0, 0),
+          anchor: new google.maps.Point(17, 34),
+          scaledSize: new google.maps.Size(25, 25)
+        };
+        marker = new google.maps.Marker({
+          map: map,
+          icon: image,
+          title: place.name,
+          position: place.geometry.location
+        });
+        markers.push(marker);
+        bounds.extend(place.geometry.location);
+        i++;
+      }
+      map.fitBounds(bounds);
+    });
+    google.maps.event.addListener(map, 'bounds_changed', function() {
+      var bounds;
+      bounds = map.getBounds();
+      searchBox.setBounds(bounds);
+    });
+  };
+
+}).call(this);
 /*! matchMedia() polyfill - Test a CSS media type/query in JS. Authors & copyright (c) 2012: Scott Jehl, Paul Irish, Nicholas Zakas. Dual MIT/BSD license */
 /*! NOTE: If you're already including a window.matchMedia polyfill via Modernizr or otherwise, you don't need this part */
 
@@ -55969,6 +56097,207 @@ b=c.id,g=-p+"%",d=100+2*p+"%",d={position:"absolute",top:g,left:g,display:"block
 'aria-labelledby="';this.id?h+=this.id:(this.id=y,h+=y);h+='"'});h=a.wrap(h+"/>")[_callback]("ifCreated").parent().append(e.insert);d=f('<ins class="'+C+'"/>').css(d).appendTo(h);a.data(m,{o:e,s:a.attr("style")}).css(g);e.inheritClass&&h[_add](c.className||"");e.inheritID&&b&&h.attr("id",m+"-"+b);"static"==h.css("position")&&h.css("position","relative");A(a,!0,_update);if(z.length)z.on(_click+".i mouseover.i mouseout.i "+_touch,function(b){var d=b[_type],e=f(this);if(!c[n]){if(d==_click){if(f(b.target).is("a"))return;
 A(a,!1,!0)}else B&&(/ut|nd/.test(d)?(h[_remove](v),e[_remove](w)):(h[_add](v),e[_add](w)));if(_mobile)b.stopPropagation();else return!1}});a.on(_click+".i focus.i blur.i keyup.i keydown.i keypress.i",function(b){var d=b[_type];b=b.keyCode;if(d==_click)return!1;if("keydown"==d&&32==b)return c[_type]==r&&c[k]||(c[k]?q(a,k):x(a,k)),!1;if("keyup"==d&&c[_type]==r)!c[k]&&x(a,k);else if(/us|ur/.test(d))h["blur"==d?_remove:_add](s)});d.on(_click+" mousedown mouseup mouseover mouseout "+_touch,function(b){var d=
 b[_type],e=/wn|up/.test(d)?t:v;if(!c[n]){if(d==_click)A(a,!1,!0);else{if(/wn|er|in/.test(d))h[_add](e);else h[_remove](e+" "+t);if(z.length&&B&&e==v)z[/ut|nd/.test(d)?_remove:_add](w)}if(_mobile)b.stopPropagation();else return!1}})})}})(window.jQuery||window.Zepto);
+(function() {
+  var centerModal, changePlan, clearModal, createAddOns, onCheckoutConfirmCard, onUpgradeDownGrade, sendAJAXRequest, showConfirmation;
+
+  sendAJAXRequest = function(settings) {
+    var headers, token, xhrRequestChangeMonth;
+    token = $('meta[name="csrf-token"]');
+    if (token.size() > 0) {
+      headers = {
+        "X-CSRF-Token": token.attr("content")
+      };
+      settings.headers = headers;
+    }
+    xhrRequestChangeMonth = jQuery.ajax(settings);
+    return true;
+  };
+
+  createAddOns = function() {
+    $(".create-add-ons").on('click', function() {
+      var control_id;
+      control_id = $(this).attr("data-val");
+      return $("#" + control_id).click();
+    });
+    return $(".remove-add-on").on('click', function() {
+      var control_id, quantity;
+      control_id = $(this).attr("data-val");
+      quantity = $("#" + control_id + "-qty").val();
+      if (quantity === "0") {
+        $(".user-add-ons-table").hide();
+        if ($("." + control_id + "-table").length > 0) {
+          if ($("." + control_id + "-table").length === 1) {
+            $("." + control_id + "-table a").click();
+          } else {
+            $("." + control_id + "-table").show();
+            $('#cancelAddOnsModal').modal('show');
+          }
+        }
+        return false;
+      } else {
+        return true;
+      }
+    });
+  };
+
+  showConfirmation = function() {
+    return $('.delete-add-ons').on('click', function() {
+      return confirm('Are you sure you wish to cancel this add-on?');
+    });
+  };
+
+  onCheckoutConfirmCard = function() {
+    return $(".add-card-to-continue").on('click', function() {
+      var has_credit_card;
+      has_credit_card = $("#has-credit-card").val();
+      if (has_credit_card === "false") {
+        $("#plan-descprition").html('Add a credit card before changing your plan.');
+        $("#change-plan-action").val("");
+        $("#btn-change-plan").val($(".stripe-button-el span").text());
+        $('.modal').modal('show');
+        $(".modal").on("show.bs.modal", function() {
+          return centerModal(this);
+        });
+        return false;
+      }
+    });
+  };
+
+  onUpgradeDownGrade = function() {
+    return $('.change-plan').on('click', function() {
+      var has_credit_card, plan_change_to, plan_control;
+      clearModal();
+      plan_control = $(this);
+      plan_change_to = plan_control.val();
+      has_credit_card = $("#has-credit-card").val();
+      $("#change-plan-id").val(plan_control.attr('data-plan-id'));
+      $(".modal").on("show.bs.modal", function() {
+        if (has_credit_card === "false") {
+          $("#plan-descprition").html('Add a credit card before changing your plan.');
+          $("#change-plan-action").val("");
+          $("#btn-change-plan").val($(".stripe-button-el span").text());
+        } else {
+          if (plan_change_to === "Upgrade") {
+            $("#section-downgrade").hide();
+            $("#change-plan-action").val("upgrade");
+            $("#btn-change-plan").val("Upgrade my plan");
+            $("#plan-descprition").html(("The " + (plan_control.attr('data-period')) + " cost for you to upgrade ") + ("to the " + (plan_control.attr('data-plan')) + " will be " + (plan_control.attr('data-price')) + " " + (plan_control.attr('data-period')) + ". We will credit you for any time you have not used on your current plan against the cost of this."));
+          } else if (plan_change_to === "Switch to Monthly" || plan_change_to === "Switch to Annual") {
+            $("#change-plan-action").val("switch");
+            $("#btn-change-plan").val(plan_change_to);
+            $("#plan-descprition").html(("Your plan and add-ons switch to " + (plan_control.attr('data-period')) + " billing and cost ") + ("to the " + (plan_control.attr('data-plan')) + " will be " + (plan_control.attr('data-price')) + " " + (plan_control.attr('data-period')) + ". We will credit you for any time you have not used on your current plan against the cost of this."));
+          } else {
+            $("#change-plan-action").val("downgrade");
+            $("#btn-change-plan").val("Downgrade my plan");
+            $("#plan-descprition").html(("The " + (plan_control.attr('data-plan')) + " plan will change your ") + ((plan_control.attr('data-period')) + " cost to " + (plan_control.attr('data-price')) + ". We will credit you for any time you have not used on your current plan against the cost of this."));
+            $("#section-downgrade").show();
+          }
+        }
+        return centerModal(this);
+      });
+      return true;
+    });
+  };
+
+  clearModal = function() {
+    $("#change-plan-id").val("");
+    $("#change-plan-action").val("");
+    $("#plan-descprition").show();
+    $(".modal-footer").show();
+    $("#confirm-upgrading").hide();
+    $("#section-downgrade").hide();
+    return true;
+  };
+
+  changePlan = function() {
+    return $("#btn-change-plan").on('click', function() {
+      var action, data, onError, onSuccess, settings;
+      if ($("#has-credit-card").val() === "false") {
+        $(".stripe-button-el").click();
+        $('.modal').modal('hide');
+        return;
+      }
+      action = $("#change-plan-action").val();
+      if (action === "downgrade" && $("#downgrade-plan").val() === '') {
+        Notification.show("Please type 'downgrade' to confirm.");
+        return;
+      }
+      if ($("#change-plan-id").val() === "") {
+        Notification.show("Empty plan id.");
+        return;
+      }
+      if (action === "upgrade") {
+        $(".change-plan-desc").text("One moment while we upgrade your account...");
+      } else if (action === "switch") {
+        $(".change-plan-desc").text("One moment while we switch your plan and add-ons...");
+      }
+      if (action === "upgrade" || action === "switch") {
+        $("#plan-descprition").hide();
+        $(".modal-footer").hide();
+        $("#confirm-upgrading").show();
+      }
+      data = {};
+      data.plan_id = $("#change-plan-id").val();
+      onError = function(jqXHR, status, error) {
+        if (action === "upgrade") {
+          $("#plan-descprition").show();
+          $(".modal-footer").show();
+          $("#confirm-upgrading").hide();
+        }
+        return false;
+      };
+      onSuccess = function(result, status, jqXHR) {
+        if (result.success) {
+          Notification.show("Your account has been successfully " + action + "d.");
+          return location.reload();
+        } else {
+          Notification.show("Failed to " + action + " plan.");
+          return $('.modal').modal('hide');
+        }
+      };
+      settings = {
+        cache: false,
+        data: data,
+        dataType: 'json',
+        error: onError,
+        success: onSuccess,
+        contentType: "application/x-www-form-urlencoded",
+        type: 'POST',
+        url: "/v1/users/" + Evercam.User.username + "/billing/plans/change"
+      };
+      return sendAJAXRequest(settings);
+    });
+  };
+
+  centerModal = function(model) {
+    var $dialog, offset;
+    $(model).css("display", "block");
+    $dialog = $(model).find(".modal-dialog");
+    offset = ($(window).height() - $dialog.height()) / 2;
+    return $dialog.css("margin-top", offset);
+  };
+
+  window.initializeSubscription = function() {
+    Notification.init(".bb-alert");
+    showConfirmation();
+    onUpgradeDownGrade();
+    onCheckoutConfirmCard();
+    createAddOns();
+    return changePlan();
+  };
+
+  window.initializeChangePlan = function() {
+    onUpgradeDownGrade();
+    onCheckoutConfirmCard();
+    createAddOns();
+    return changePlan();
+  };
+
+  $(function() {
+    $('[data-toggle="tooltip"]').tooltip();
+  });
+
+}).call(this);
 
 
 
@@ -56005,12 +56334,14 @@ b[_type],e=/wn|up/.test(d)?t:v;if(!c[n]){if(d==_click)A(a,!1,!0);else{if(/wn|er|
 
 
 
-//=
-
-
-
-
-
-
 
 //=
+
+
+
+
+
+
+
+//=
+
