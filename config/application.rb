@@ -42,21 +42,6 @@ module EvercamAdmin
     config.assets.precompile += %w[
       snapshot_navigator_widget.js
       admin/admin.js
-      metronic/components.css
-      metronic/plugins.css
-      metronic/layout.css
-      metronic/profile.css
-      metronic/default.css
-      metronic/jquery.gritter.css
-      metronic/uniform.default.css
-      metronic/bootstrap-switch.min.css
-      metronic/daterangepicker-bs3.css
-      metronic/fullcalendar.css
-      metronic/dataTables.bootstrap.css
-      metronic/jqvmap.css
-      metronic/tasks.css
-      metronic/custom.css
-      metronic/portfolio.css
       admin/admin.css
       views/widgets/widget.css
       views/widgets/add_camera.css
