@@ -29,7 +29,7 @@ Rails.application.configure do
   config.assets.css_compressor = :yui
 
   config.assets.false = true
-  config.assets.enabled = false
+  config.assets.enabled = true
 
   # Generate digests for assets URLs.
   # config.assets.digest = true
