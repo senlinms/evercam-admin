@@ -12,6 +12,8 @@ Feature: Edit user
     Given I am on user's page
     When I try to grant admin rights
     Then the user should become admin
+    When I impersonate the user
+    Then I should have access to admin dashboard
 
   Scenario: Rename user
     Given I am on user's page

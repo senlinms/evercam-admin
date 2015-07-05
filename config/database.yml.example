@@ -11,8 +11,12 @@ development:
 
 test:
   <<: *default
-    database: evercam_admin_test
+  database: evercam_admin_test
 
 production:
   <<: *default
-  database: evercam_admin_production
+  database: <%= ENV['RDS_DB_NAME'] %>
+  username: <%= ENV['RDS_USERNAME'] %>
+  password: <%= ENV['RDS_PASSWORD'] %>
+  host: <%= ENV['RDS_HOSTNAME'] %>
+  port: <%= ENV['RDS_PORT'] %>

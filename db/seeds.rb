@@ -1,15 +1,15 @@
-@user = User.create!(
-  firstname: 'Pedro',
-  lastname: 'Brudnix',
+@user = User.create(
+  firstname: 'Super',
+  lastname: 'Admin',
   username: 'admin',
-  password: 'password1',
-  email: 'email1@evercam.io',
-  api_id: '7168504232c9cbaf57c5f',
-  api_key: 'd46c9f9ca22451c6670f2435c9235cb',
+  password: ENV['ADMIN_PASSWORD'],
+  email: ENV['ADMIN_EMAIL'],
+  api_id: ENV['ADMIN_API_ID'],
+  api_key: ENV['ADMIN_API_KEY'],
   is_admin: true
 )
 
-Camera.create!(
+Camera.create(
   exid: "exid1",
   user_id: @user.id,
   is_public: true,

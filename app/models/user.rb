@@ -1,4 +1,9 @@
 class User < ActiveRecord::Base
+  # Include default devise modules. Others available are:
+  # :confirmable, :lockable, :timeoutable and :omniauthable
+  devise :database_authenticatable, :registerable,
+         :recoverable, :rememberable, :trackable, :validatable
+
   belongs_to :country
   has_many :cameras
   has_many :snapshots
@@ -8,8 +13,7 @@ class User < ActiveRecord::Base
   validates :firstname, presence: true
   validates :lastname, presence: true
   validates :username, presence: true
-  validates :password, presence: true
-  validates :email, presence: true, uniqueness: true
+  validates :encrypted_password, presence: true
 
   def fullname
     "#{firstname} #{lastname}"

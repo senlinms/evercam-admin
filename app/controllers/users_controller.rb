@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
-  before_action :set_user, except: :index
+  before_action :authorize_admin
+  before_action :set_user, only: [:show, :update, :impersonate]
 
   def index
     @users = User.all.includes(:country, :cameras).decorate
@@ -25,15 +26,13 @@ class UsersController < ApplicationController
   end
 
   def impersonate
-    if user
+    if @user
       sign_out
-      sign_in user
+      sign_in @user
       redirect_to root_path
     else
       redirect_to :back
     end
-  rescue ActionController::RedirectBackError
-    redirect_to admin_path
   end
 
   private

@@ -20,4 +20,8 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  activerecord:
+    attributes:
+      vendor:
+        exid: 'Vendor ID'
+        known_macs: 'Known Macs'

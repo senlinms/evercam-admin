@@ -1,4 +1,6 @@
 class VendorModelsController < ApplicationController
+  before_action :authorize_admin
+
   def index
     @total_vendors = Vendor.count
     @total_cameras = Camera.count

@@ -51,8 +51,6 @@ module EvercamAdmin
       widgets/localstorage_widget.js
       jquery.js
       phoenix.js
-      swagger.js
-      swagger.css
     ]
   end
 end

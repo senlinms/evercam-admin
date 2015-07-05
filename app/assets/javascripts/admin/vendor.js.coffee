@@ -17,15 +17,15 @@ initializeDataTable = ->
 
   vendor_table = $('#datatable_vendors').DataTable({
     ajax: {
-      url: "#{Evercam.API_URL}vendors",
+      url: "vendors",
       'headers': headers
-      dataSrc: 'vendors',
+      dataSrc: '',
       error: (xhr, error, thrown) ->
         console.log(xhr.responseJSON.message)
     },
     columns: [
-      {data: "id", width: '20%', 'render': showLogo },
-      {data: "id", width: '20%', 'render': editVendor },
+      {data: "exid", width: '20%', 'render': showLogo },
+      {data: "exid", width: '20%', 'render': editVendor },
       {data: "name", width: '20%'},
       {data: "known_macs", width: '40%', 'render': showMacs }
     ],
@@ -38,7 +38,7 @@ initializeDataTable = ->
   })
 
 editVendor = (id, type, row) ->
-  return "<a style='cursor:pointer;' class='edit-vandor' val-id='#{row.id}' val-name='#{row.name}' val-macs='#{row.known_macs}'>#{row.id}</a>"
+  return "<a style='cursor:pointer;' class='edit-vandor' val-id='#{row.exid}' val-name='#{row.name}' val-macs='#{row.known_macs}'>#{row.exid}</a>"
 
 showLogo = (id, type, row) ->
   img = new Image()
@@ -46,19 +46,19 @@ showLogo = (id, type, row) ->
   img.onload = ->
 
   img.onerror = ->
-    $("#image-#{row.id}").remove()
+    $("#image-#{row.exid}").remove()
   img.src = image_url
-  return "<img id='image-#{row.id}' style='width:100%;' src='#{image_url}'/>"
+  return "<img id='image-#{row.exid}' style='width:100%;' src='#{image_url}'/>"
 
 showMacs = (macs, type, row) ->
   known_macs = "#{macs}"
   return "<span style='word-wrap: break-word;'>#{known_macs.replace(RegExp(",", "g"), ", ")}</span>"
 
 clearForm = ->
-  $("#vendor-id").val('')
-  $("#vendor-id").removeAttr("disabled")
-  $("#name").val('')
-  $("#known-macs").val('')
+  $("#vendor_exid").val('')
+  $("#vendor_exid").removeAttr("disabled")
+  $("#vendor_name").val('')
+  $("#vendor_known_macs").val('')
   $(".thumbnail-img").hide()
   $(".thumbnail-img").attr("src","camera.svg")
   $(".center-thumbnail").css("min-height", "160px")
@@ -68,23 +68,13 @@ clearForm = ->
 
 handleAddNewModel = ->
   $("#save-vendor").on 'click', ->
-
-    if $("#vendor-id").val() is ''
-      $(".vendor-alert").html('Vendor id can not be empty.')
-      $(".vendor-alert").slideDown()
-      return
-    if $("#name").val() is ''
-      $(".vendor-alert").html('Vendor name can not be empty.')
-      $(".vendor-alert").slideDown()
-      return
     $(".vendor-alert").slideUp()
-
     data = {}
-    data.name = $("#name").val()
-    data.macs = $("#known-macs").val() unless $("#known-macs").val() is ''
+    data.name = $("#vendor_name").val()
+    data.known_macs = $("#vendor_known_macs").val() unless $("#vendor_known_macs").val() is ''
 
     onError = (jqXHR, status, error) ->
-      $(".vendor-alert").html(jqXHR.responseJSON.message)
+      $(".vendor-alert").html(jqXHR.responseJSON[0])
       $(".vendor-alert").slideDown()
       false
 
@@ -94,21 +84,21 @@ handleAddNewModel = ->
       method = 'POST'
       clearForm()
       true
-    vendor_id = ''
+    vendor_exid = ''
     if method is 'POST'
-      data.id = $("#vendor-id").val()
+      data.exid = $("#vendor_exid").val()
     else
-      vendor_id = "/#{$("#vendor-id").val()}"
+      vendor_exid = "/#{$("#vendor_exid").val()}"
 
     settings =
       cache: false
-      data: data
+      data: {vendor: data}
       dataType: 'json'
       error: onError
       success: onSuccess
       contentType: "application/x-www-form-urlencoded"
       type: method
-      url: "#{Evercam.API_URL}vendors#{vendor_id}?api_id=#{Evercam.User.api_id}&api_key=#{Evercam.User.api_key}"
+      url: "vendors"
 
     sendAJAXRequest(settings)
 
@@ -117,10 +107,10 @@ onModelClose = ->
     clearForm()
 
 $(".edit-vandor").live 'click', ->
-  $("#vendor-id").val($(this).attr("val-id"))
-  $("#vendor-id").attr("disabled", true)
-  $("#name").val($(this).attr("val-name"))
-  $("#known-macs").val($(this).attr("val-macs"))
+  $("#vendor_exid").val($(this).attr("val-id"))
+  $("#vendor_exid").attr("disabled", true)
+  $("#vendor_name").val($(this).attr("val-name"))
+  $("#vendor_known_macs").val($(this).attr("val-macs"))
   $(".thumbnail-img").attr("src", "http://evercam-public-assets.s3.amazonaws.com/#{$(this).attr("val-id")}/logo.jpg")
   $(".center-thumbnail").css("min-height", "30px")
   $(".thumbnail-img").show()

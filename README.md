@@ -18,4 +18,47 @@ After that, you'll want to go here: https://github.com/evercam/evercam-devops
 
 Any questions, drop us a line: http://www.evercam.io/contact
 
+## Setup
+``
+$ bundle install
+``
 
+Create ``database.yml`` based on ``database.yml.example``
+
+Prepare database:
+
+``
+$ rake db:setup
+``
+
+## Running
+Start server:
+
+``
+$ rails s
+``
+
+Visit ``localhost:3000``
+
+Sign in as default admin using credentials from  ``db/seeds.rb``
+
+``
+email: admin@evercam.io
+``
+
+``
+password: password1
+``
+
+## Testing
+Integration tests:
+
+``
+$ spinach
+``
+
+Unit tests:
+
+``
+$ rspec
+``

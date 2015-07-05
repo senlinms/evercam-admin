@@ -51,17 +51,6 @@ onDeleteClick = ->
       return false
     return true
 
-saveUserSettings = ->
-  if $.cookie("show-offline-cameras")
-    $("#show-offline-cameras").prop("checked", true)
-    $("#lbl-for-show-cameras span").addClass("checked")
-  $("#show-offline-cameras").on "click", ->
-    hide_cameras = $(this).prop("checked")
-    if hide_cameras
-      $.cookie("show-offline-cameras", $(this).prop("checked"), { expires: 365, path: "/" })
-    else
-      $.removeCookie("show-offline-cameras", { path: "/" })
-
 window.initializeUserAccount = ->
   $.validate()
   Metronic.init()
@@ -71,7 +60,7 @@ window.initializeUserAccount = ->
   handleEditable()
   showHideMessage()
   handlePasswordChange()
-  saveUserSettings()
+  initializeiCheck()
   onDeleteClick()
 
 initialize = ->

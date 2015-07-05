@@ -28,8 +28,8 @@ class Spinach::Features::Dashboard < Spinach::FeatureSteps
   step 'I should see kpi' do
     expect(page).to have_content "New Cameras	0	0	0	0	0	0	0	0	0	0	0	1"
     expect(page).to have_content "Total Cameras	0	0	0	0	0	0	0	0	0	0	0	1"
-    expect(page).to have_content "New Paid Cameras	0	2	0	1	0	0	0	0	0	0	0	0"
-    expect(page).to have_content "Total Paid Cameras	0	2	2	3	3	3	3	3	3	3	3	3"
+    expect(page).to have_content "New Paid Cameras	0	0	0	0	0	0	0	0	0	0	0	0"
+    expect(page).to have_content "Total Paid Cameras	0	0	0	0	0	0	0	0	0	0	0	0"
     expect(page).to have_content "New Users	0	0	0	0	0	0	0	0	0	0	0	2"
     expect(page).to have_content "Total Users	0	0	0	0	0	0	0	0	0	0	0	0"
   end

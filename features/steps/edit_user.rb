@@ -28,6 +28,15 @@ class Spinach::Features::EditUser < Spinach::FeatureSteps
     expect(page).to have_content 'First Name	Krzysiek'
   end
 
+  step 'I impersonate the user' do
+    user_page.visit(user.id)
+    user_page.impersonate
+  end
+
+  step 'I should have access to admin dashboard' do
+    expect(page).to have_content(admin_page.sample_content)
+  end
+
   def user
     @user ||= FactoryGirl.create(:user, firstname: 'Peter', lastname: 'Dirty')
   end

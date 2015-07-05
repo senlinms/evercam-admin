@@ -2,7 +2,7 @@ module Pages
   class UserPage < Base
 
     def visit(user_id)
-      page.visit "/users/#{user_id}"
+      page.visit "/dashboard/users/#{user_id}"
     end
 
     def click_change
@@ -17,6 +17,10 @@ module Pages
     def rename_to(name)
       fill_in 'user_firstname', with: name
       click_button 'Save'
+    end
+
+    def impersonate
+      click_link 'Sign in as'
     end
 
     def sample_content
