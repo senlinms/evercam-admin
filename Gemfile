@@ -3,7 +3,7 @@ source 'https://rubygems.org'
 ruby '2.2.2'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.2.1'
+gem 'rails', '4.2.3'
 
 # Use postgresql as the database for Active Record
 gem 'pg'
@@ -21,7 +21,7 @@ gem 'sprockets'
 gem 'sprockets-es6', require: 'sprockets/es6'
 # gem 'fog'
 # gem 'asset_sync'
-gem 'autoprefixer-rails', '~> 5.2.0.1'
+gem 'autoprefixer-rails', '~> 5.2.1.1'
 
 source 'https://rails-assets.org' do
   gem 'rails-assets-bootbox', '~> 4.3.0'
@@ -67,8 +67,8 @@ gem 'devise'
 group :development, :test do
   gem 'pry'
   gem 'factory_girl_rails', require: false
-  gem 'rspec-rails'
-  gem 'rspec'
+  gem 'rspec-rails', '~> 3.3.3'
+  gem 'rspec', '~> 3.3.0'
   gem 'spinach-rails'
   gem 'database_cleaner'
   gem 'launchy'
