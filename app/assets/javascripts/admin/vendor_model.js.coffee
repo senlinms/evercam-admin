@@ -198,7 +198,7 @@ handleAddNewModel = ->
       success: onSuccess
       contentType: "application/x-www-form-urlencoded"
       type: method
-      url: "#{Evercam.API_URL}models#{model_id}?api_id=#{Evercam.User.api_id}&api_key=#{Evercam.User.api_key}"
+      url: "vendor_models"
 
     sendAJAXRequest(settings)
 

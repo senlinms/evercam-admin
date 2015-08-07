@@ -44,6 +44,19 @@ class VendorModelsController < ApplicationController
     @total_cameras = Camera.where(model_id: params[:id])
   end
 
+  def create
+    @vendor_model = VendorModel.new()
+    respond_to do |format|
+      if @vendor.save
+        format.html { redirect_to vendors_path, notice: 'Model successfully created' }
+        format.json { render json: @vendor }
+      else
+        format.html { redirect_to vendors_path }
+        format.json { render json: @vendor.errors.full_messages, status: :unprocessable_entity }
+      end
+    end
+  end
+
   def update
     begin
       @vendor_model = VendorModel.find(params[:id])

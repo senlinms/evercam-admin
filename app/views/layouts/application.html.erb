@@ -19,11 +19,19 @@
 </head>
 <body class="page-header-fixed page-quick-sidebar-over-content" id='<%= "#{params[:controller].parameterize}-#{params[:action]}" %>'>
   <%= render 'shared/header' %>
-<p class="notice"><%= notice %></p>
-<p class="alert"><%= alert %></p>
-<div class="page-container">
-  <%= render 'shared/sidebar' %>
-  <%= yield %>
-</div>
+  <div class="alert bb-alert alert-danger hide"><span></span></div>
+  <div class="page-container">
+    <%= render 'shared/sidebar' %>
+    <%= yield %>
+  </div>
 </body>
+<script>
+  Notification.init(".bb-alert");
+  <% if alert %>
+  Notification.show("<%= alert %>");
+  <% end %>
+  <% if notice %>
+  Notification.show("<%= notice %>");
+  <% end %>
+</script>
 </html>

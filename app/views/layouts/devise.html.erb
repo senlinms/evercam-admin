@@ -19,10 +19,17 @@
   <![endif]-->
 </head>
 <body class="page-header-fixed page-quick-sidebar-over-content page-sidebar-fixed page-header-fixed-mobile page-footer-fixed1">
-<% if notice || alert %>
-<p class="notice"><%= notice %></p>
-<p class="alert"><%= alert %></p>
-<% end %>
-<%= yield %>
+  <div class="alert bb-alert alert-danger hide"><span></span></div>
+
+  <%= yield %>
 </body>
+<script>
+  Notification.init(".bb-alert");
+  <% if alert %>
+    Notification.show("<%= alert %>");
+  <% end %>
+  <% if notice %>
+  Notification.show("<%= notice %>");
+  <% end %>
+</script>
 </html>
