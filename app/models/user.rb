@@ -5,7 +5,7 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   belongs_to :country
-  has_many :cameras
+  has_many :cameras, :foreign_key => 'owner_id', :class_name => 'Camera'
   has_many :snapshots
   has_many :vendors
   has_many :camera_shares

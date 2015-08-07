@@ -41,7 +41,7 @@ initializeDataTable = ->
       'ajax':
         'method': 'GET'
         'headers': headers
-        'url': 'models/load.vendor.model'
+        'url': 'vendor_models/load.vendor.model'
       columns: [
         {data: "0", 'render': showLogo },
         {data: "1", visible: false},
@@ -104,7 +104,7 @@ loadVendors = ->
     false
 
   onSuccess = (result, status, jqXHR) ->
-    vendors = sortByKey(result.vendors, "name")
+    vendors = sortByKey(result, "name")
     for vendor in vendors
       if vendor.id is 'other'
         selected = 'selected="selected"'
@@ -120,7 +120,7 @@ loadVendors = ->
     success: onSuccess
     contentType: "application/json; charset=utf-8"
     type: 'GET'
-    url: "#{Evercam.API_URL}vendors.json"
+    url: "vendors"
 
   sendAJAXRequest(settings)
   true

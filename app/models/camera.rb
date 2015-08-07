@@ -1,5 +1,5 @@
 class Camera < ActiveRecord::Base
-  belongs_to :user
+  belongs_to :user, :foreign_key => 'owner_id', :class_name => 'User'
   belongs_to :vendor_model
   has_many :camera_shares
 

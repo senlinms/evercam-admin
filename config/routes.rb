@@ -17,6 +17,7 @@ Rails.application.routes.draw do
   resources :cameras
   resources :vendors
   resources :vendor_models
+  get '/vendor_models/load.vendor.model' => 'vendor_models#load_vendor_model'
 
   get '/map' => 'dashboard#map'
   get '/kpi' => 'dashboard#kpi'
