@@ -9,11 +9,11 @@ default: &default
 
 development:
   <<: *default
-  database: evercam_admin_development
+  database: evercam_dev
 
 test:
   <<: *default
-  database: evercam_admin_test
+  database: evercam_tst
 
 production:
   <<: *default
