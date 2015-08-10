@@ -9,7 +9,7 @@ class VendorModelsController < ApplicationController
   def load_vendor_model
     condition = "lower(vendor_models.name) like lower('%#{params[:vendor_model]}%') OR
                  lower(vendors.name) like lower('%#{params[:vendor]}%') "
-    vendors_models = VendorModel.joins(:vendor).where(condition)
+    vendors_models = VendorModel.joins(:vendor).where(condition).order('vendor_models.name')
     total_records = vendors_models.count
     display_length = params[:length].to_i
     display_length = display_length < 0 ? total_records : display_length
@@ -45,36 +45,74 @@ class VendorModelsController < ApplicationController
   end
 
   def create
-    @vendor_model = VendorModel.new()
+    vendor_model = VendorModel.new(
+      exid: params[:id],
+      name: params[:name],
+      vendor_id: params[:vendor_id],
+      jpg_url: params[:jpg_url],
+      mjpg_url: params[:mjpg_url],
+      h264_url: params[:h264_url],
+      config: {}
+    )
+
+    [:jpg, :mjpg, :mpeg4, :mobile, :h264, :lowres].each do |resource|
+      url_name = "#{resource}_url"
+      unless params[url_name].blank?
+        if vendor_model.config.has_key?('snapshots')
+          vendor_model.config['snapshots'].merge!({resource => params[url_name]})
+        else
+          vendor_model.config.merge!({'snapshots' => { resource => params[url_name]}})
+        end
+      end
+    end
+
+    if params[:default_username] or params[:default_password]
+      vendor_model.values[:config].merge!({'auth' => {'basic' => {'username' => params[:default_username], 'password' => params[:default_password] }}})
+    end
+
     respond_to do |format|
-      if @vendor.save
-        format.html { redirect_to vendors_path, notice: 'Model successfully created' }
-        format.json { render json: @vendor }
+      if vendor_model.save
+        format.html { redirect_to vendor_models_path, notice: 'Model successfully created' }
+        format.json { render json: vendor_model }
       else
-        format.html { redirect_to vendors_path }
-        format.json { render json: @vendor.errors.full_messages, status: :unprocessable_entity }
+        format.html { redirect_to vendor_models_path }
+        format.json { render json: vendor_model.errors.full_messages, status: :unprocessable_entity }
       end
     end
   end
 
   def update
+    saved = false
     begin
-      @vendor_model = VendorModel.find(params[:id])
-      @vendor_model.update_attributes(name: params['name'], jpg_url: params['jpg_url'])
+      config = {}
+      [:jpg, :mjpg, :mpeg4, :mobile, :h264, :lowres].each do |resource|
+        url_name = "#{resource}_url"
+        unless params[url_name].blank?
+          if config.has_key?('snapshots')
+            config['snapshots'].merge!({resource => params[url_name]})
+          else
+            config.merge!({'snapshots' => { resource => params[url_name]}})
+          end
+        end
+      end
+      vendor_model = VendorModel.find_by_exid(params[:id])
+      vendor_model.update_attributes(name: params['name'],jpg_url: params['jpg_url'],
+                                    h264_url: params['h264_url'],mjpg_url: params['mjpg_url'],
+                                    config: config)
 
-      @vendor = Vendor.find(params['vendor_id'])
-      @vendor.update_attribute(:name, params['vendor_name'])
-
-      flash[:message] = 'Vendor Model updated successfully'
-      redirect_to "/models/#{params['id']}"
+      message = 'Model updated successfully'
+      saved = true
     rescue => error
-      env["airbrake.error_id"] = notify_airbrake(error)
-      Rails.logger.error "Exception caught updating vendor model details.\nCause: #{error}\n" +
-                             error.backtrace.join("\n")
-      flash[:message] = "An error occurred updating the vendor model details. "\
-                        "Please try again and, if this problem persists, contact "\
-                        "support."
-      redirect_to "/models/#{params['id']}"
+      message = error.message
+    end
+    respond_to do |format|
+      if saved
+        format.html { redirect_to vendor_models_path, notice: message }
+        format.json { render json: vendor_model }
+      else
+        format.html { redirect_to vendor_models_path }
+        format.json { render json: message, status: :unprocessable_entity }
+      end
     end
   end
 

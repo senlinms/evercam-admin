@@ -18,6 +18,7 @@ Rails.application.routes.draw do
   resources :vendors
   resources :vendor_models
   get '/vendor_models/load.vendor.model' => 'vendor_models#load_vendor_model'
+  patch '/vendor_models' => 'vendor_models#update'
 
   get '/map' => 'dashboard#map'
   get '/kpi' => 'dashboard#kpi'
