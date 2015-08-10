@@ -33,6 +33,10 @@ class VendorsController < ApplicationController
   end
 
   def known_macs
-    vendor_raw_params[:known_macs].try(:split,',')
+    if params[:known_macs]
+      vendor_raw_params[:known_macs].try(:split,',')
+    else
+      ['']
+    end
   end
 end

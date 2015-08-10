@@ -106,11 +106,11 @@ loadVendors = ->
   onSuccess = (result, status, jqXHR) ->
     vendors = sortByKey(result, "name")
     for vendor in vendors
-      if vendor.id is 'other'
+      if vendor.exid is 'other'
         selected = 'selected="selected"'
-        $("#vendor").prepend("<option value='#{vendor.id}' #{selected}>#{vendor.name}</option>")
+        $("#vendor").prepend("<option value='#{vendor.exid}' #{selected}>#{vendor.name}</option>")
       else
-        $("#vendor").append("<option value='#{vendor.id}' #{selected}>#{vendor.name}</option>")
+        $("#vendor").append("<option value='#{vendor.exid}'>#{vendor.name}</option>")
 
   settings =
     cache: false
@@ -164,6 +164,7 @@ handleAddNewModel = ->
 
     data = {}
     data.name = $("#name").val()
+    data.vendor_id = $("#vendor").val()
     data.jpg_url = $("#jpg-url").val() unless $("#jpg-url").val() is ''
     data.mjpg_url = $("#mjpg-url").val() unless $("#mjpg-url").val() is ''
     data.mpeg4_url = $("#mpeg4-url").val() unless $("#mpeg4-url").val() is ''
@@ -174,7 +175,7 @@ handleAddNewModel = ->
     data.default_password = $("#default-password").val() unless $("#default-password").val() is ''
 
     onError = (jqXHR, status, error) ->
-      $(".model-alert").html(jqXHR.responseJSON.message)
+      $(".model-alert").html(jqXHR.responseJSON[0])
       $(".model-alert").slideDown()
       false
 
@@ -186,7 +187,6 @@ handleAddNewModel = ->
     model_id = ''
     if method is 'POST'
       data.id = $("#model-id").val()
-      data.vendor_id = $("#vendor").val()
     else
       model_id = "/#{$("#model-id").val()}"
 
@@ -198,7 +198,7 @@ handleAddNewModel = ->
       success: onSuccess
       contentType: "application/x-www-form-urlencoded"
       type: method
-      url: "#{Evercam.API_URL}models#{model_id}?api_id=#{Evercam.User.api_id}&api_key=#{Evercam.User.api_key}"
+      url: "vendor_models#{model_id}"
 
     sendAJAXRequest(settings)
 

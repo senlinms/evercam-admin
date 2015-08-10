@@ -30,7 +30,6 @@ $ ->
   Metronic.init()
   Layout.init()
   QuickSidebar.init()
-  Notification.init(".bb-alert");
   $(".table-datatable").dataTable
     aaSorting: [1, "asc"]
     aLengthMenu: [
