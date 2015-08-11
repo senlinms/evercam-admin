@@ -1,11 +1,9 @@
 default: &default
   adapter: postgresql
-  host: localhost
-  port: 5432
-  schema_search_path: public
-  template: template0
   encoding: unicode
   pool: 5
+  username: pbrudny
+  password: polmuz
 
 evercam_db_development:
   <<: *default
