@@ -1,4 +1,6 @@
 class VendorModel < ActiveRecord::Base
+  establish_connection "evercam_db_#{Rails.env}"
+
   belongs_to :vendor
 
   validates :name, presence: true

@@ -3,7 +3,7 @@ class UsersController < ApplicationController
   before_action :set_user, only: [:show, :update, :impersonate]
 
   def index
-    @users = User.all.includes(:country, :cameras).decorate
+    @users = EvercamUser.all.includes(:country, :cameras).decorate
   end
 
   def show
@@ -42,6 +42,6 @@ class UsersController < ApplicationController
   end
 
   def set_user
-    @user ||= User.find(params[:id])
+    @user ||= EvercamUser.find(params[:id])
   end
 end
