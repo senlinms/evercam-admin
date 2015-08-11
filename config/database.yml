@@ -7,13 +7,17 @@ default: &default
   encoding: unicode
   pool: 5
 
-development:
+evercam_db_development:
   <<: *default
   database: evercam_dev
 
+development:
+  <<: *default
+  database: evercam_admin_development
+
 test:
   <<: *default
-  database: evercam_tst
+  database: evercam_admin_test
 
 production:
   <<: *default
@@ -22,3 +26,11 @@ production:
   password: <%= ENV['RDS_PASSWORD'] %>
   host: <%= ENV['RDS_HOSTNAME'] %>
   port: <%= ENV['RDS_PORT'] %>
+
+evercam_db_production:
+  <<: *default
+  database: <%= ENV['EVERCAM_DB_NAME'] %>
+  username: <%= ENV['EVERCAM_DB_USERNAME'] %>
+  password: <%= ENV['EVERCAM_DB_PASSWORD'] %>
+  host: <%= ENV['EVERCAM_DB_HOSTNAME'] %>
+  port: <%= ENV['EVERCAM_DB_PORT'] %>
