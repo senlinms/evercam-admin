@@ -32,22 +32,6 @@
                 </select>
               </td>
             </tr>
-            <tr>
-              <td class="col-md-4"><label class="control-label">Permissions:</label></td>
-              <td>
-                <div class="radio-list">
-                  <label class="radio-inline">
-                    <input type="radio" name="user[is_admin]" id="user_is_admin" value="true" <%= "checked" if @user.is_admin? %>>
-                    Allow admin permissions</small>
-                  </label>
-
-                  <label class="radio-inline">
-                    <input type="radio" name="user[is_admin]" id="user_is_admin" value="false" <%= "checked" if !@user.is_admin? %>>
-                    Do not allow admin permissions</small>
-                  </label>
-                </div>
-              </td>
-            </tr>
           </table>
         </div>
       </div>
