@@ -1,5 +1,5 @@
 class CameraShare < ActiveRecord::Base
-  establish_connection "evercam_db_#{Rails.env}"
+  # establish_connection "evercam_db_#{Rails.env}"
 
   belongs_to :camera
   belongs_to :user, :foreign_key => 'user_id', :class_name => 'EvercamUser'
