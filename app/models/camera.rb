@@ -1,5 +1,5 @@
 class Camera < ActiveRecord::Base
-  # establish_connection "evercam_db_#{Rails.env}"
+  establish_connection "evercam_db_#{Rails.env}"
 
   belongs_to :user, :foreign_key => 'owner_id', :class_name => 'EvercamUser'
   belongs_to :vendor_model

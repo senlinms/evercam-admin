@@ -1,5 +1,5 @@
 class EvercamUser < ActiveRecord::Base
-  # establish_connection "evercam_db_#{Rails.env}"
+  establish_connection "evercam_db_#{Rails.env}"
 
   self.table_name = "users"
   belongs_to :country
