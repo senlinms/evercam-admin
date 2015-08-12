@@ -8,10 +8,8 @@ Rails.application.routes.draw do
   }
   devise_for :users, devise_options
 
-  scope '/dashboard' do
-    resources :users, only: [:show, :index, :update] do
-      get :impersonate, on: :member
-    end
+  resources :users, only: [:show, :index, :update] do
+    get :impersonate, on: :member
   end
 
   resources :cameras
