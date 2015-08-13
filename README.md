@@ -62,3 +62,11 @@ Unit tests:
 ``
 $ rspec
 ``
+
+## Create an Account
+
+Go to ``http://admin.evercam.io/`` and click on "Create an Account".
+
+Register with your email.
+
+Then send email to ``marco@evercam.io`` to activate account.
