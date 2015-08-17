@@ -21,6 +21,7 @@
 //= require iCheck/skins/line/_all.css
 //= require iCheck/skins/polaris/polaris.css
 //= require iCheck/skins/futurico/futurico.css
+//= require views/cameras/cameras.css
 //= require_self
 
 .page-header.navbar .top-menu .navbar-nav > li.dropdown-user .dropdown-toggle > img {
@@ -233,4 +234,8 @@ div.radio {
 .thumbnail-img {
   height: auto;
   width: 100%;
+}
+
+.page-content-wrapper .page-content {
+  padding: 5px 15px;
 }

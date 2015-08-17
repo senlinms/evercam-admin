@@ -1,5 +1,5 @@
 /*CAMERA INDEX PAGE*/
-#camera-index {
+#user-cameras-snapshots {
   .camera-name a {
     color:#aaa;
     transition:all 0s linear 0.2s,all 0.3s linear;
@@ -65,16 +65,16 @@ border-bottom: 1px solid #e5e5e5;
   color: #333333;
 }
 .nav-tabs li a:hover, .nav-tabs li a:active  {
-  color: $main-color;
+  color: #428bca;
 }
 .nav-tabs > li > a:hover {
   border:1px solid transparent;
 }
 
 .tabbable-custom > .tab-content {
-  border: none;
+  /*border: none;*/
 }
-#camera-index{
+#user-cameras-snapshots{
   padding:0;
 }
 .margin-top-3 {
@@ -107,7 +107,7 @@ border-bottom: 1px solid #e5e5e5;
   }
 }
 .add-camera-info {
-  @include vertical-align;
+
 }
 .add-camera-icon {
   font-size: 46px;
@@ -133,7 +133,7 @@ border-bottom: 1px solid #e5e5e5;
   height: 100%;
 }
 
-#camera-index .page-content{
+#user-cameras-snapshots .page-content{
   overflow-y:hidden !important;
   overflow-x:hidden !important;
 }
