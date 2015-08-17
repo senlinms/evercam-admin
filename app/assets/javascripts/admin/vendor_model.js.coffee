@@ -41,7 +41,7 @@ initializeDataTable = ->
       'ajax':
         'method': 'GET'
         'headers': headers
-        'url': 'vendor_models/load.vendor.model'
+        'url': 'models/load.vendor.model'
       columns: [
         {data: "0", 'render': showLogo },
         {data: "1", visible: false},
@@ -198,7 +198,7 @@ handleAddNewModel = ->
       success: onSuccess
       contentType: "application/x-www-form-urlencoded"
       type: method
-      url: "vendor_models#{model_id}"
+      url: "models#{model_id}"
 
     sendAJAXRequest(settings)
 

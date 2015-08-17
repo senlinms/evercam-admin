@@ -43,16 +43,20 @@
           <div class="tabbable tabbable-custom tabbable-full-width">
             <ul class="nav nav-tabs">
               <li class="active">
-                <a data-toggle="tab" href="#tab_1_1">Overview</a>
+                <a data-toggle="tab" href="#user-detail">Overview</a>
               </li>
               <li class="">
-                <a data-toggle="tab" href="#tab_1_3">Snapshots</a>
+                <a data-toggle="tab" href="#snapshots">Snapshots</a>
               </li>
             </ul>
             <div class="tab-content">
-              <%= render 'overview' %>
+              <div id="user-detail" class="tab-pane active">
+                <%= render 'overview' %>
+              </div>
+              <div id="snapshots" class="tab-pane">
+                <%= render 'snapshots' %>
+              </div>
             </div>
-            <%= render 'snapshots' %>
           </div>
         </div>
       </div>
@@ -68,8 +72,6 @@
 
 <script type="text/javascript">
   $(function(){
-    $.validate();
-
     // Notifications
     Notification.init(".bb-alert");
     <% if flash[:message] %>
