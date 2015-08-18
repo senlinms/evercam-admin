@@ -19,12 +19,14 @@
 #= require metronic/datatable.js
 #= require metronic/layout.js
 #= require metronic/quick-sidebar.js
+#= require ui.dropdownchecklist-1.4-min.js
 #= require iCheck
 #= require metronic/icheck.min.js
 #= require alerts.js
 #= require evercam.js.coffee
 #= require admin/vendor_model.js
 #= require admin/vendor.js
+#= require admin/cameras.js
 
 $ ->
   Metronic.init()
