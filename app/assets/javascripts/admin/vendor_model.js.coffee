@@ -72,7 +72,8 @@ initializeDataTable = ->
       'order': [ [ 1, 'asc' ] ]
       initComplete: ->
         $('#vendor-model-list-row').removeClass 'hide'
-        return
+        $("#div-dropdown-checklist").css('visibility', 'visible')
+
   vendor_models_table.getTableWrapper().on 'keyup', '.table-group-action-input', (e) ->
     e.preventDefault()
     action = $('.table-group-action-input', vendor_models_table.getTableWrapper())

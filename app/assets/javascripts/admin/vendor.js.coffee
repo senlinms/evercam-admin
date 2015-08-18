@@ -24,7 +24,7 @@ initializeDataTable = ->
         console.log(xhr.responseJSON.message)
     },
     columns: [
-      {data: "exid", width: '20%', 'render': showLogo },
+      {data: "exid", visible: false, width: '20%', 'render': showLogo },
       {data: "exid", width: '20%', 'render': editVendor },
       {data: "name", width: '20%'},
       {data: "known_macs", width: '40%', 'render': showMacs }
@@ -34,8 +34,20 @@ initializeDataTable = ->
       [25, 50, 100, 200, -1]
       [25, 50, 100, 200, "All"]
     ]
-    aaSorting: [1, "asc"]
+    aaSorting: [1, "asc"],
+    initComplete: ->
+      $("#vendor-list-row").removeClass('hide')
+      $("#datatable_vendors_length label").hide()
+      $("#div-dropdown-checklist").css('visibility', 'visible')
   })
+
+columnsDropdown = ->
+  $('#ddl-vendors-columns').dropdownchecklist
+    icon: {}
+    width: 230
+    onItemClick: (checkbox, selector) ->
+      column = vendor_table.column(checkbox.val())
+      column.visible !column.visible()
 
 editVendor = (id, type, row) ->
   return "<a style='cursor:pointer;' class='edit-vandor' val-id='#{row.exid}' val-name='#{row.name}' val-macs='#{row.known_macs}'>#{row.exid}</a>"
@@ -120,5 +132,6 @@ $(".edit-vandor").live 'click', ->
 
 window.initializeVendors = ->
   initializeDataTable()
+  columnsDropdown()
   handleAddNewModel()
   onModelClose()

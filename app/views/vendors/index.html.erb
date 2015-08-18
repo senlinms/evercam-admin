@@ -11,7 +11,16 @@
 
     <%= render 'vendor_modal' %>
 
-    <div id="vendor-list-row" class="row hide1">
+    <div class="dropdown-checklist" id="div-dropdown-checklist">
+      Toggle column:
+      <select id="ddl-vendors-columns" class="s1" multiple="multiple">
+        <option value="0">Logo</option>
+        <option value="1" selected="selected">ID</option>
+        <option value="2" selected="selected">Vendor</option>
+        <option value="3" selected="selected">Known Macs</option>
+      </select>
+    </div>
+    <div id="vendor-list-row" class="row hide">
       <input type="hidden" id="total_vendors" value=""/>
       <input type="hidden" id="total_cameras" value=""/>
       <div class="col-md-12 table-container">
