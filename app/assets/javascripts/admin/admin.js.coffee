@@ -27,6 +27,7 @@
 #= require admin/vendor_model.js
 #= require admin/vendor.js
 #= require admin/cameras.js
+#= require admin/users.js
 
 $ ->
   Metronic.init()

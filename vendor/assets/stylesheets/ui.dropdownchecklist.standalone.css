@@ -19,7 +19,9 @@
 }
 
 .ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
-	border: 1px solid #d3d3d3;
+  border-bottom: 1px solid #d3d3d3;
+  border-left: 1px solid #d3d3d3;
+  border-right: 1px solid #d3d3d3;
 	font-weight: normal;
 }
 
@@ -53,7 +55,7 @@
 }
 .ui-dropdownchecklist-text {
 	margin-top: 3px;
-	
+	padding-top: 1px;
 	padding-left: 3px;
 }
 .ui-dropdownchecklist-group {
