@@ -22,25 +22,39 @@
     <!-- END PAGE HEADER-->
     <%= render 'vendor_model_modal' %>
     <!-- BEGIN PAGE CONTENT-->
+    <div class="margin-bottom-20" id="div-dropdown-checklist" style="visibility: hidden;">
+      Toggle column:
+      <select id="ddl-models-columns" class="s1" multiple="multiple">
+        <option value="0">Logo</option>
+        <option value="1" selected="selected">Model ID</option>
+        <option value="2" selected="selected">Vendor</option>
+        <option value="3" selected="selected">Model</option>
+        <option value="4" selected="selected">Snapshot</option>
+        <option value="5" selected="selected">H264</option>
+        <option value="6" selected="selected">MJPG</option>
+        <option value="7" selected="selected">MPEG4</option>
+        <option value="8" selected="selected">Mobile</option>
+        <option value="9" selected="selected">Low Res</option>
+        <option value="10" selected="selected">Username</option>
+        <option value="11" selected="selected">Password</option>
+
+        <option value="12">Audio</option>
+        <option value="13">POE</option>
+        <option value="14">Wifi</option>
+        <option value="15">Onvif</option>
+        <option value="16">PSIA</option>
+        <option value="17">PTZ</option>
+        <option value="18">Infrared</option>
+        <option value="19">Varifocal</option>
+        <option value="20">SD card</option>
+        <option value="21">UPNP</option>
+        <option value="22">Audio IO</option>
+        <option value="23">Shape</option>
+      </select>
+    </div>
     <div id="vendor-model-list-row" class="row">
       <input type="hidden" id="total_vendors" value="<%= @total_vendors %>"/>
       <input type="hidden" id="total_cameras" value="<%= @total_cameras %>"/>
-      <ul id="columns-vis" class="nav navbar-nav" style="display:none">
-        <li class="dropdown">
-          <a id="columns-toggle" class="dropdown-toggle" data-toggle="dropdown" title="Select columns" href="#">Columns <span class="caret"></span></a>
-          <ul id="columns-list" class="dropdown-menu">
-            <li><input type="checkbox" class="columns-visible" data-column="0" checked="true" /> Model ID</li>
-            <li><input type="checkbox" class="columns-visible" data-column="2" checked="true" /> Vendor</li>
-            <li><input type="checkbox" class="columns-visible" data-column="3" checked="true" /> Model</li>
-            <li><input type="checkbox" class="columns-visible" data-column="4" checked="true" /> Snapshot</li>
-            <li><input type="checkbox" class="columns-visible" data-column="5" checked="true" /> H264</li>
-            <li><input type="checkbox" class="columns-visible" data-column="6" checked="true" /> MJPG</li>
-            <li><input type="checkbox" class="columns-visible" data-column="7" checked="true" /> MPEG4</li>
-            <li><input type="checkbox" class="columns-visible" data-column="8" checked="true" /> Mobile</li>
-            <li><input type="checkbox" class="columns-visible" data-column="9" checked="true" /> Low Res</li>
-          </ul>
-        </li>
-      </ul>
       <div class="col-md-12 table-container">
         <div class="table-actions-wrapper">
           <span></span>
@@ -59,8 +73,21 @@
             <th width="20%" name="order_mpeg_url" class="sorting">MPEG4</th>
             <th width="20%" name="order_mobile_url" class="sorting">Mobile</th>
             <th width="20%" name="order_lowres_url" class="sorting">Low Res</th>
-            <th width="20%" name="order_lowres_url" class="sorting">Username</th>
-            <th width="20%" name="order_lowres_url" class="sorting">Password</th>
+            <th width="20%" name="order_username" class="sorting">Username</th>
+            <th width="20%" name="order_password" class="sorting">Password</th>
+
+            <th name="order_audio_url" class="sorting">Audio</th>
+            <th name="order_poe" class="sorting">POE</th>
+            <th name="order_wifi" class="sorting">Wifi</th>
+            <th name="order_onvif" class="sorting">Onvif</th>
+            <th name="order_psia" class="sorting">PSIA</th>
+            <th name="order_ptz" class="sorting">PTZ</th>
+            <th name="order_infrared" class="sorting">Infrared</th>
+            <th name="order_varifocal" class="sorting">Varifocal</th>
+            <th name="order_sd_card" class="sorting">SD card</th>
+            <th name="order_upnp" class="sorting">UPNP</th>
+            <th name="order_audio_io" class="sorting">Audio IO</th>
+            <th name="order_shape" class="sorting">Shape</th>
           </tr>
           </thead>
           <tbody>

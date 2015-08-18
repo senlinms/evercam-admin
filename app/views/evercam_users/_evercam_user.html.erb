@@ -2,6 +2,8 @@
   <td><%= evercam_user.username %></td>
   <td><%= link_to evercam_user.fullname, user_path(evercam_user) %></td>
   <td><%= evercam_user.email %></td>
+  <td><%= evercam_user.api_id %></td>
+  <td><%= evercam_user.api_key %></td>
   <td><%= link_to evercam_user.cameras.length, "#{user_path(evercam_user)}#tab_1_12" %></td>
   <td><%= evercam_user.country_name %></td>
   <td><%= evercam_user.registered_at %></td>

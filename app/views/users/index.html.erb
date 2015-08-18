@@ -7,14 +7,30 @@
         </ul>
       </div>
     </div>
+    <div class="dropdown-checklist" id="div-dropdown-checklist">
+      Toggle column:
+      <select id="ddl-users-columns" class="s1" multiple="multiple">
+        <option value="0" selected="selected">Username</option>
+        <option value="1" selected="selected">Name</option>
+        <option value="2" selected="selected">Email</option>
+        <option value="3" selected="selected">API ID</option>
+        <option value="4" selected="selected">API Key</option>
+        <option value="5" selected="selected">Cameras</option>
+        <option value="6" selected="selected">Country</option>
+        <option value="7" selected="selected">Registered</option>
+        <option value="8">Confirmed Email</option>
+      </select>
+    </div>
     <div id="user-list-row" class="row hide">
       <div class="col-md-12">
-        <table class="table table-striped table-bordered table-hover user-list-table" id="datatable_ajax">
+        <table class="table table-striped table-bordered table-hover user-list-table" id="users_datatables">
           <thead>
             <tr role="row" class="heading">
               <th name="order_username" class="sorting">Username</th>
               <th name="order_name" class="sorting">Name</th>
               <th name="order_email" class="sorting">Email</th>
+              <th name="order_api_id" class="sorting">API ID</th>
+              <th name="order_api_key" class="sorting">API Key</th>
               <th name="order_camera_count" class="sorting">Cameras</th>
               <th name="order_country" class="sorting">Country</th>
               <th name="order_registered" class="sorting datatable-date">Registered</th>
@@ -31,7 +47,7 @@
 </div>
 
 <script>
-  $(".user-list-table").dataTable({
+  /*$(".user-list-table").dataTable({
     aaSorting: [1, "asc"],
     aLengthMenu: [[25, 50, 100, 200, -1], [25, 50, 100, 200, "All"]],
     iDisplayLength: 50,
@@ -44,6 +60,8 @@
     initComplete: function(){
       $("#user-list-row").removeClass('hide');
     }
+  });*/
+  $(document).ready(function () {
+    window.initializeusers();
   });
-
 </script>

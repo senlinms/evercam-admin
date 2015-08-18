@@ -1,8 +1,9 @@
 <tr>
-  <td><%= user.is_admin %></td>
   <td><%= user.username %></td>
   <td><%= link_to user.fullname, user_path(user) %></td>
   <td><%= user.email %></td>
+  <td><%= user.api_id %></td>
+  <td><%= user.api_key %></td>
   <td><%= link_to user.cameras.length, "#{user_path(user)}#tab_1_12" %></td>
   <td><%= user.country_name %></td>
   <td><%= user.registered_at %></td>

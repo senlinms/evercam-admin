@@ -32,7 +32,7 @@ initializeDataTable = ->
       return
     loadingMessage: 'Loading...'
     dataTable:
-      'bStateSave': true
+      'bStateSave': false
       'lengthMenu': [
         [ 25, 50, 100, 150 ]
         [ 25, 50, 100, 150 ]
@@ -43,7 +43,7 @@ initializeDataTable = ->
         'headers': headers
         'url': 'models/load.vendor.model'
       columns: [
-        {data: "0", 'render': showLogo },
+        {data: "0", visible: false, 'render': showLogo },
         {data: "1", visible: false},
         {data: "2"},
         {data: "3", 'render': editModel },
@@ -55,11 +55,25 @@ initializeDataTable = ->
         {data: "9"},
         {data: "10"},
         {data: "11"},
+        {data: "12", visible: false, 'render': humanBool},
+        {data: "13", visible: false, 'render': humanBool},
+        {data: "14", visible: false, 'render': humanBool},
+        {data: "15", visible: false, 'render': humanBool},
+        {data: "16", visible: false, 'render': humanBool},
+        {data: "17", visible: false, 'render': humanBool},
+        {data: "18", visible: false, 'render': humanBool},
+        {data: "19", visible: false, 'render': humanBool},
+        {data: "20", visible: false, 'render': humanBool},
+        {data: "21", visible: false, 'render': humanBool},
+        {data: "22", visible: false, 'render': humanBool},
+        {data: "23", visible: false}
+
       ],
       'order': [ [ 1, 'asc' ] ]
       initComplete: ->
         $('#vendor-model-list-row').removeClass 'hide'
-        return
+        $("#div-dropdown-checklist").css('visibility', 'visible')
+
   vendor_models_table.getTableWrapper().on 'keyup', '.table-group-action-input', (e) ->
     e.preventDefault()
     action = $('.table-group-action-input', vendor_models_table.getTableWrapper())
@@ -74,6 +88,20 @@ initializeDataTable = ->
     column = vendor_models_table.column($(this).attr('data-column'))
     # Toggle the visibility
     column.visible !column.visible()
+
+columnsDropdown = ->
+  $('#ddl-models-columns').dropdownchecklist
+    icon: {}
+    width: 230
+    onItemClick: (checkbox, selector) ->
+      column = vendor_models_table.getDataTable().column(checkbox.val())
+      column.visible !column.visible()
+
+humanBool = (id, type, row) ->
+  if id
+    return 'Yes'
+  else
+    return 'No'
 
 showLogo = (id, type, row) ->
   img = new Image()
@@ -228,6 +256,7 @@ $(".edit-model").live 'click', ->
 
 window.initializeVendorModel = ->
   initializeDataTable()
+  columnsDropdown()
   loadVendors()
   handleAddNewModel()
   onModelClose()
