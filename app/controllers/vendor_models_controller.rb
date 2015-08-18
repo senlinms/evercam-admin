@@ -33,7 +33,21 @@ class VendorModelsController < ApplicationController
         vendors_models[index].config.deep_fetch('snapshots', 'mobile') { '' },
         vendors_models[index].config.deep_fetch('snapshots', 'lowres') { '' },
         vendors_models[index].config.deep_fetch('auth', 'basic', 'username') { '' },
-        vendors_models[index].config.deep_fetch('auth', 'basic', 'password') { '' }]
+        vendors_models[index].config.deep_fetch('auth', 'basic', 'password') { '' },
+
+        vendors_models[index].audio_url,
+        vendors_models[index].poe,
+        vendors_models[index].wifi,
+        vendors_models[index].onvif,
+        vendors_models[index].psia,
+        vendors_models[index].ptz,
+        vendors_models[index].infrared,
+        vendors_models[index].varifocal,
+        vendors_models[index].sd_card,
+        vendors_models[index].upnp,
+        vendors_models[index].audio_io,
+        vendors_models[index].shape,
+      ]
     end
 
     render json: records

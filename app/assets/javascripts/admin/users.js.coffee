@@ -1,7 +1,7 @@
-cameras_table = undefined
+users_table = undefined
 
 initializeDataTable = ->
-  cameras_table = $("#users_datatables").DataTable
+  users_table = $("#users_datatables").DataTable
     aaSorting: [1, "asc"]
     aLengthMenu: [
       [25, 50, 100, 200, -1]
@@ -33,7 +33,7 @@ columnsDropdown = ->
     icon: {}
     width: 230
     onItemClick: (checkbox, selector) ->
-      column = cameras_table.column(checkbox.val())
+      column = users_table.column(checkbox.val())
       column.visible !column.visible()
 
 window.initializeusers = ->
