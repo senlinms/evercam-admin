@@ -4,6 +4,8 @@ class VendorModelsController < ApplicationController
   def index
     @total_vendors = Vendor.count
     @total_cameras = Camera.count
+    @types = ['audio_url', 'poe', 'wifi', 'onvif', 'psia', 'audio_io',
+              'ptz', 'infrared', 'varifocal', 'sd_card', 'upnp']
   end
 
   def load_vendor_model
@@ -47,6 +49,7 @@ class VendorModelsController < ApplicationController
         vendors_models[index].upnp,
         vendors_models[index].audio_io,
         vendors_models[index].shape,
+        vendors_models[index].resolution
       ]
     end
 

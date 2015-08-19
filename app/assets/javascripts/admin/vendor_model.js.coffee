@@ -1,5 +1,7 @@
 vendor_models_table = null
 method = 'POST'
+types = ['audio_url', 'poe', 'wifi', 'onvif', 'psia', 'audio_io',
+         'ptz', 'infrared', 'varifocal', 'sd_card', 'upnp']
 
 sendAJAXRequest = (settings) ->
   token = $('meta[name="csrf-token"]')
@@ -66,7 +68,8 @@ initializeDataTable = ->
         {data: "20", visible: false, 'render': humanBool},
         {data: "21", visible: false, 'render': humanBool},
         {data: "22", visible: false, 'render': humanBool},
-        {data: "23", visible: false}
+        {data: "23", visible: false},
+        {data: "24", visible: false}
 
       ],
       'order': [ [ 1, 'asc' ] ]
@@ -82,12 +85,6 @@ initializeDataTable = ->
     vendor_models_table.getDataTable().ajax.reload()
     vendor_models_table.clearAjaxParams()
     return
-  $('#columns-vis').on 'change', (e) ->
-    e.preventDefault()
-    # Get the column API object
-    column = vendor_models_table.column($(this).attr('data-column'))
-    # Toggle the visibility
-    column.visible !column.visible()
 
 columnsDropdown = ->
   $('#ddl-models-columns').dropdownchecklist
@@ -114,7 +111,14 @@ showLogo = (id, type, row) ->
   return "<img id='image_#{row[1]}' src='#{image_url}'/>"
 
 editModel = (name, type, row) ->
-  return "<a style='cursor:pointer;' class='edit-model' val-vendor-id='#{row[0]}' val-model-id='#{row[1]}' val-vendor-name='#{row[2]}' val-model-name='#{row[3]}'  val-jpg='#{row[4]}' val-h264='#{row[5]}' val-mjpg='#{row[6]}' val-mpeg4='#{row[7]}' val-mobile='#{row[8]}' val-lowres='#{row[9]}' val-username='#{row[10]}' val-password='#{row[11]}'>#{name}</a>"
+  return "<a style='cursor:pointer;' class='edit-model' val-vendor-id='#{row[0]}' " +
+   "val-model-id='#{row[1]}' val-vendor-name='#{row[2]}' val-model-name='#{row[3]}'  " +
+   "val-jpg='#{row[4]}' val-h264='#{row[5]}' val-mjpg='#{row[6]}' val-mpeg4='#{row[7]}' " +
+   "val-mobile='#{row[8]}' val-lowres='#{row[9]}' val-username='#{row[10]}' val-password='#{row[11]}' " +
+   "val-audio-url='#{row[12]}' val-poe='#{row[13]}' val-wifi='#{row[14]}' val-onvif='#{row[15]}' val-psia='#{row[16]}' " +
+   "val-ptz='#{row[17]}' val-infrared='#{row[18]}' val-varifocal='#{row[19]}' val-sd-card='#{row[20]}' " +
+   "val-upnp='#{row[21]}' val-audio-io='#{row[22]}' val-shape='#{row[23]}' val-resolution='#{row[24]}'>" +
+   "#{name}</a>"
 
 numberWithCommas = (x) ->
   x.toString().replace /\B(?=(\d{3})+(?!\d))/g, ','
@@ -252,6 +256,7 @@ $(".edit-model").live 'click', ->
   $(".center-thumbnail").css("min-height", "30px")
   $('#add-vendor-modal').modal('show')
   $("#add-vendor-modal div.caption").text("Edit Model");
+  types.each
   method = 'PATCH'
 
 window.initializeVendorModel = ->

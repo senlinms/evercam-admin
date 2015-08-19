@@ -2,11 +2,11 @@ class CameraDecorator < Draper::Decorator
   delegate :exid, :name, :user, :preview, :config, :mac_address
 
   def vendor_model_name
-    object.vendor_model.try(:name)
+    camera.vendor_model.try(:name)
   end
 
   def vendor_name
-    object.vendor.name if camera.vendor_model.present?
+    camera.vendor_model.vendor.name if camera.vendor_model.present?
   end
 
   def creation_date

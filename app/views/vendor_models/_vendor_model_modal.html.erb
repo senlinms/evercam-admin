@@ -54,6 +54,20 @@
                   <td><input type="text" id="default-password" name="default-password" class="form-control" /></td>
                 </tr>
                 <tr>
+                  <td><label class="control-label">Features:</label></td>
+                  <td>
+                    <div class="checkbox-list">
+                    <% @types.each do |t| %>
+                      <div class="input-group checkbox col-md-5">
+                        <input id="type-<%= t %>" name="type" class="" type="checkbox" value="<%= t %>"
+                               <% if params[:types] and params[:types].include?(t) %> checked<% end %> >
+                        <label class="type-label" for="type-<%= t %>"><%= t.capitalize %></label>
+                      </div>
+                    <% end %>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
                   <td colspan="2">
                     <div class="alert alert-danger model-alert" style="display:none;">
 
