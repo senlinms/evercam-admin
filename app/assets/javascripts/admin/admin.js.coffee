@@ -45,8 +45,8 @@ $ ->
       targets: 'datatable-date'
     ]
   $("input[type=radio], input[type=checkbox]").iCheck
-    checkboxClass: "icheckbox_flat-blue"
-    radioClass: "iradio_flat-blue"
+    #checkboxClass: "icheckbox_flat-blue"
+    #radioClass: "iradio_flat-blue"
 
 
 $.extend $.fn.dataTableExt.oSort,

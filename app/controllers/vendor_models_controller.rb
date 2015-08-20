@@ -4,6 +4,8 @@ class VendorModelsController < ApplicationController
   def index
     @total_vendors = Vendor.count
     @total_cameras = Camera.count
+    @types = ['poe', 'wifi', 'onvif', 'psia', 'audio_io',
+              'ptz', 'infrared', 'varifocal', 'sd_card', 'upnp']
   end
 
   def load_vendor_model
@@ -47,6 +49,7 @@ class VendorModelsController < ApplicationController
         vendors_models[index].upnp,
         vendors_models[index].audio_io,
         vendors_models[index].shape,
+        vendors_models[index].resolution
       ]
     end
 
@@ -59,13 +62,28 @@ class VendorModelsController < ApplicationController
   end
 
   def create
+    vendor = Vendor.find_by_exid(params[:vendor_id])
     vendor_model = VendorModel.new(
       exid: params[:id],
       name: params[:name],
-      vendor_id: params[:vendor_id],
+      vendor: vendor,
       jpg_url: params[:jpg_url],
       mjpg_url: params[:mjpg_url],
       h264_url: params[:h264_url],
+      audio_url: params['audio_url'],
+      poe: params['poe'],
+      wifi: params['wifi'],
+      onvif: params['onvif'],
+      psia: params['psia'],
+      audio_io: params['audio_io'],
+      ptz: params['ptz'],
+      infrared: params['infrared'],
+      varifocal: params['varifocal'],
+      sd_card: params['sd_card'],
+      upnp: params['upnp'],
+      resolution: params['resolution'],
+      username: params[:default_username],
+      password: params[:default_password],
       config: {}
     )
 
@@ -81,7 +99,7 @@ class VendorModelsController < ApplicationController
     end
 
     if params[:default_username] or params[:default_password]
-      vendor_model.values[:config].merge!({'auth' => {'basic' => {'username' => params[:default_username], 'password' => params[:default_password] }}})
+      vendor_model.config.merge!({'auth' => {'basic' => {'username' => params[:default_username], 'password' => params[:default_password] }}})
     end
 
     respond_to do |format|
@@ -109,10 +127,33 @@ class VendorModelsController < ApplicationController
           end
         end
       end
+      if params[:default_username] or params[:default_password]
+        config.merge!({'auth' => {'basic' => {'username' => params[:default_username], 'password' => params[:default_password] }}})
+      end
+      vendor = Vendor.find_by_exid(params[:vendor_id])
       vendor_model = VendorModel.find_by_exid(params[:id])
-      vendor_model.update_attributes(name: params['name'],jpg_url: params['jpg_url'],
-                                    h264_url: params['h264_url'],mjpg_url: params['mjpg_url'],
-                                    config: config)
+      vendor_model.update_attributes(
+        name: params['name'],
+        vendor: vendor,
+        jpg_url: params['jpg_url'],
+        h264_url: params['h264_url'],
+        mjpg_url: params['mjpg_url'],
+        audio_url: params['audio_url'],
+        poe: params['poe'],
+        wifi: params['wifi'],
+        onvif: params['onvif'],
+        psia: params['psia'],
+        audio_io: params['audio_io'],
+        ptz: params['ptz'],
+        infrared: params['infrared'],
+        varifocal: params['varifocal'],
+        sd_card: params['sd_card'],
+        upnp: params['upnp'],
+        resolution: params['resolution'],
+        username: params[:default_username],
+        password: params[:default_password],
+        config: config
+      )
 
       message = 'Model updated successfully'
       saved = true

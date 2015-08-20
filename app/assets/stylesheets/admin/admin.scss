@@ -257,4 +257,53 @@ div.radio {
   top: 35px;
   z-index: 999;
   visibility: hidden;
+  width: 70%;
+}
+
+/* Checkbox styles */
+.page-content .checkbox .chk-span {
+  border: 1px solid #aaaaaa;
+  color: #aaaaaa;
+  cursor: pointer;
+  display: inline-block;
+  float: left;
+  height: 14px;
+  margin: 5px 10px 10px 1px;
+  outline-color: #eaeaea;
+  padding: 0;
+  position: relative;
+  top: 0;
+  transition: all 0.2s ease-in-out 0s;
+  width: 14px;
+  z-index: 1;
+}
+
+.page-content .checkbox .chk-span.checked {
+  border-bottom-color: #428bca;
+  border-left-color: #428bca;
+}
+.page-content .checkbox .chk-span.checked {
+  border-color: transparent transparent #428bca #428bca;
+  border-style: solid;
+  border-width: 1px 1px 4px 2px;
+  top: -2px;
+  transform: rotate(-45deg) scaleY(0.5);
+}
+
+.page-content .checkbox {
+  display: inline-block;
+  margin-right: 15px;
+}
+/* Checkbox styles */
+
+.checkbox label {
+  padding-left: 0px;
+}
+
+#add-vendor-modal .table, #add-vendor-modal .form-group {
+  margin-bottom: 0;
+}
+
+.modal {
+  margin-right: -16px;
 }

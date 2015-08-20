@@ -14,6 +14,8 @@ Rails.application.routes.draw do
 
   resources :cameras
   resources :vendors
+  patch '/vendors' => 'vendors#update'
+
   resources :vendor_models, path: :models
   get '/models/load.vendor.model' => 'vendor_models#load_vendor_model'
   patch '/models' => 'vendor_models#update'

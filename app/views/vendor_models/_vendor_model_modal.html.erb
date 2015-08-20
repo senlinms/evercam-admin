@@ -46,12 +46,34 @@
                   <td><input type="text" id="lowres-url" name="lowres-url" class="form-control" /></td>
                 </tr>
                 <tr>
+                  <td class="col-md-5"><label class="control-label">Audio Url:</label></td>
+                  <td><input type="text" id="audio-url" name="audio-url" class="form-control" /></td>
+                </tr>
+                <tr>
                   <td class="col-md-5"><label class="control-label">Default Username:</label></td>
                   <td><input type="text" id="default-username" name="default-username" class="form-control" /></td>
                 </tr>
                 <tr>
                   <td class="col-md-5"><label class="control-label">Default Password:</label></td>
                   <td><input type="text" id="default-password" name="default-password" class="form-control" /></td>
+                </tr>
+                <tr>
+                  <td class="col-md-5"><label class="control-label">Resolution:</label></td>
+                  <td><input type="text" id="resolution" name="resolution" class="form-control" /></td>
+                </tr>
+                <tr>
+                  <td><label class="control-label">Features:</label></td>
+                  <td>
+                    <div class="checkbox-list">
+                    <% @types.each do |t| %>
+                      <div class="input-group checkbox col-md-5">
+                        <input id="type-<%= t %>" name="type" class="" type="checkbox" value="<%= t %>"
+                               <% if params[:types] and params[:types].include?(t) %> checked<% end %> >
+                        <label class="type-label" for="type-<%= t %>"><%= t.capitalize %></label>
+                      </div>
+                    <% end %>
+                    </div>
+                  </td>
                 </tr>
                 <tr>
                   <td colspan="2">

@@ -67,10 +67,10 @@ showMacs = (macs, type, row) ->
   return "<span style='word-wrap: break-word;'>#{known_macs.replace(RegExp(",", "g"), ", ")}</span>"
 
 clearForm = ->
-  $("#vendor_exid").val('')
-  $("#vendor_exid").removeAttr("disabled")
-  $("#vendor_name").val('')
-  $("#vendor_known_macs").val('')
+  $("#exid").val('')
+  $("#exid").removeAttr("disabled")
+  $("#name").val('')
+  $("#known_macs").val('')
   $(".thumbnail-img").hide()
   $(".thumbnail-img").attr("src","camera.svg")
   $(".center-thumbnail").css("min-height", "160px")
@@ -82,8 +82,9 @@ handleAddNewModel = ->
   $("#save-vendor").on 'click', ->
     $(".vendor-alert").slideUp()
     data = {}
-    data.name = $("#vendor_name").val()
-    data.known_macs = $("#vendor_known_macs").val() unless $("#vendor_known_macs").val() is ''
+    data.exid = $("#exid").val()
+    data.name = $("#name").val()
+    data.known_macs = $("#known_macs").val() unless $("#known_macs").val() is ''
 
     onError = (jqXHR, status, error) ->
       $(".vendor-alert").html(jqXHR.responseJSON[0])
@@ -96,15 +97,10 @@ handleAddNewModel = ->
       method = 'POST'
       clearForm()
       true
-    vendor_exid = ''
-    if method is 'POST'
-      data.exid = $("#vendor_exid").val()
-    else
-      vendor_exid = "/#{$("#vendor_exid").val()}"
 
     settings =
       cache: false
-      data: {vendor: data}
+      data: data
       dataType: 'json'
       error: onError
       success: onSuccess
@@ -118,20 +114,22 @@ onModelClose = ->
   $(".modal").on "hide.bs.modal", ->
     clearForm()
 
-$(".edit-vandor").live 'click', ->
-  $("#vendor_exid").val($(this).attr("val-id"))
-  $("#vendor_exid").attr("disabled", true)
-  $("#vendor_name").val($(this).attr("val-name"))
-  $("#vendor_known_macs").val($(this).attr("val-macs"))
-  $(".thumbnail-img").attr("src", "http://evercam-public-assets.s3.amazonaws.com/#{$(this).attr("val-id")}/logo.jpg")
-  $(".center-thumbnail").css("min-height", "30px")
-  $(".thumbnail-img").show()
-  method = 'PATCH'
-  $('#add-vendor').modal('show')
-  $("#add-vendor div.caption").text("Edit Vendor");
+onEditVendor = ->
+  $("#datatable_vendors").on 'click', '.edit-vandor', ->
+    $("#exid").val($(this).attr("val-id"))
+    $("#exid").attr("disabled", true)
+    $("#name").val($(this).attr("val-name"))
+    $("#known_macs").val($(this).attr("val-macs"))
+    $(".thumbnail-img").attr("src", "http://evercam-public-assets.s3.amazonaws.com/#{$(this).attr("val-id")}/logo.jpg")
+    $(".center-thumbnail").css("min-height", "30px")
+    $(".thumbnail-img").show()
+    method = 'PATCH'
+    $('#add-vendor').modal('show')
+    $("#add-vendor div.caption").text("Edit Vendor");
 
 window.initializeVendors = ->
   initializeDataTable()
   columnsDropdown()
   handleAddNewModel()
   onModelClose()
+  onEditVendor()
