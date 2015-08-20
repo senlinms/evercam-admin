@@ -10,33 +10,77 @@ class VendorsController < ApplicationController
   end
 
   def create
-    @vendor = Vendor.new(vendor_params)
+    known_macs = ['']
+    if params.include?(:known_macs) && params[:known_macs]
+      known_macs = params[:known_macs].split(",").inject([]) { |list, entry| list << entry.strip }
+    end
+    unless validateMac(known_macs)
+      respond_to do |format|
+        format.html { redirect_to vendors_path }
+        format.json { render json: ["Mac address is invalid"], status: :unprocessable_entity }
+      end
+    else
+      @vendor = Vendor.new(
+        exid: params[:exid],
+        name: params[:name],
+        known_macs: known_macs
+      )
+      respond_to do |format|
+        if @vendor.save
+          format.html { redirect_to vendors_path, notice: 'Vendor successfully created' }
+          format.json { render json: @vendor }
+        else
+          format.html { redirect_to vendors_path }
+          format.json { render json: @vendor.errors.full_messages, status: :unprocessable_entity }
+        end
+      end
+    end
+  end
+
+  def update
+    begin
+      known_macs = ['']
+      saved = true
+      message = ['Vendor updated successfully']
+      if params.include?(:known_macs) && params[:known_macs]
+        known_macs = params[:known_macs].split(",").inject([]) { |list, entry| list << entry.strip }
+      end
+      unless validateMac(known_macs)
+        saved = false
+        message = ["Mac address is invalid"]
+      else
+        vendor = Vendor.find_by_exid(params[:exid])
+        vendor.update_attributes(
+          name: params[:name],
+          known_macs: known_macs
+        )
+        pry
+      end
+    rescue => error
+      message = error.message
+    end
     respond_to do |format|
-      if @vendor.save
-        format.html { redirect_to vendors_path, notice: 'Vendor successfully created' }
+      if saved
+        format.html { redirect_to vendors_path, notice: message }
         format.json { render json: @vendor }
       else
         format.html { redirect_to vendors_path }
-        format.json { render json: @vendor.errors.full_messages, status: :unprocessable_entity }
+        format.json { render json: message, status: :unprocessable_entity }
       end
     end
   end
 
   private
 
-  def vendor_raw_params
-    params.require(:vendor).permit(:exid, :name, :known_macs)
-  end
-
-  def vendor_params
-    vendor_raw_params.merge(known_macs: known_macs)
-  end
-
-  def known_macs
-    if params[:known_macs]
-      vendor_raw_params[:known_macs].try(:split,',')
-    else
-      ['']
+  def validateMac known_macs
+    is_valid_mac = true
+    unless known_macs.blank?
+      known_macs.each do |resource|
+        if resource && resource != '' && !(resource =~ /^([0-9A-Fa-f]{2}[:-]){2}([0-9A-Fa-f]{2})$/)
+          is_valid_mac = false
+        end
+      end
     end
+    is_valid_mac
   end
 end

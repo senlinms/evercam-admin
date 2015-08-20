@@ -1,6 +1,6 @@
 vendor_models_table = null
 method = 'POST'
-types = ['audio_url', 'poe', 'wifi', 'onvif', 'psia', 'audio_io',
+types = ['poe', 'wifi', 'onvif', 'psia', 'audio_io',
          'ptz', 'infrared', 'varifocal', 'sd_card', 'upnp']
 
 sendAJAXRequest = (settings) ->
@@ -57,7 +57,7 @@ initializeDataTable = ->
         {data: "9"},
         {data: "10"},
         {data: "11"},
-        {data: "12", visible: false, 'render': humanBool},
+        {data: "12", visible: false},
         {data: "13", visible: false, 'render': humanBool},
         {data: "14", visible: false, 'render': humanBool},
         {data: "15", visible: false, 'render': humanBool},
@@ -115,9 +115,9 @@ editModel = (name, type, row) ->
    "val-model-id='#{row[1]}' val-vendor-name='#{row[2]}' val-model-name='#{row[3]}'  " +
    "val-jpg='#{row[4]}' val-h264='#{row[5]}' val-mjpg='#{row[6]}' val-mpeg4='#{row[7]}' " +
    "val-mobile='#{row[8]}' val-lowres='#{row[9]}' val-username='#{row[10]}' val-password='#{row[11]}' " +
-   "val-audio-url='#{row[12]}' val-poe='#{row[13]}' val-wifi='#{row[14]}' val-onvif='#{row[15]}' val-psia='#{row[16]}' " +
-   "val-ptz='#{row[17]}' val-infrared='#{row[18]}' val-varifocal='#{row[19]}' val-sd-card='#{row[20]}' " +
-   "val-upnp='#{row[21]}' val-audio-io='#{row[22]}' val-shape='#{row[23]}' val-resolution='#{row[24]}'>" +
+   "val-audio='#{row[12]}' val-poe='#{row[13]}' val-wifi='#{row[14]}' val-onvif='#{row[15]}' val-psia='#{row[16]}' " +
+   "val-ptz='#{row[17]}' val-infrared='#{row[18]}' val-varifocal='#{row[19]}' val-sd_card='#{row[20]}' " +
+   "val-upnp='#{row[21]}' val-audio_io='#{row[22]}' val-shape='#{row[23]}' val-resolution='#{row[24]}'>" +
    "#{name}</a>"
 
 numberWithCommas = (x) ->
@@ -172,8 +172,13 @@ clearForm = ->
   $("#default-password").val('')
   $(".thumbnail-img").hide()
   $(".thumbnail-img").attr("src","")
+  $("#resolution").val("")
+  $("#audio-url").val("")
   $(".center-thumbnail").css("min-height", "160px")
   $(".model-alert").slideUp()
+  for type in types
+    $("#type-#{type}").prop("checked", false)
+    $("#uniform-type-#{type} span").removeClass('checked')
   $("#add-vendor-modal div.caption").text("Add a Model");
   method = 'POST'
 
@@ -205,6 +210,19 @@ handleAddNewModel = ->
     data.lowres_url = $("#lowres-url").val() unless $("#lowres-url").val() is ''
     data.default_username = $("#default-username").val() unless $("#default-username").val() is ''
     data.default_password = $("#default-password").val() unless $("#default-password").val() is ''
+
+    data.audio_url = $("#audio-url").val() unless $("#audio-url").val() is ''
+    data.poe = $("#type-poe").is(":checked")
+    data.wifi = $("#type-wifi").is(":checked")
+    data.onvif = $("#type-onvif").is(":checked")
+    data.psia = $("#type-psia").is(":checked")
+    data.audio_io = $("#type-audio_io").is(":checked")
+    data.ptz = $("#type-ptz").is(":checked")
+    data.infrared = $("#type-infrared").is(":checked")
+    data.varifocal = $("#type-varifocal").is(":checked")
+    data.sd_card = $("#type-sd_card").is(":checked")
+    data.upnp = $("#type-upnp").is(":checked")
+    data.resolution = $("#resolution").val() unless $("#resolution").val() is ''
 
     onError = (jqXHR, status, error) ->
       $(".model-alert").html(jqXHR.responseJSON[0])
@@ -238,26 +256,32 @@ onModelClose = ->
   $(".modal").on "hide.bs.modal", ->
     clearForm()
 
-$(".edit-model").live 'click', ->
-  $("#model-id").val($(this).attr("val-model-id"))
-  $("#model-id").attr("disabled", true)
-  $("#vendor").val($(this).attr("val-vendor-id"))
-  $("#name").val($(this).attr("val-model-name"))
-  $("#jpg-url").val($(this).attr("val-jpg"))
-  $("#mjpg-url").val($(this).attr("val-mjpg"))
-  $("#mpeg4-url").val($(this).attr("val-mpeg4"))
-  $("#mobile-url").val($(this).attr("val-mobile"))
-  $("#h264-url").val($(this).attr("val-h264"))
-  $("#lowres-url").val($(this).attr("val-lowres"))
-  $("#default-username").val($(this).attr("val-username"))
-  $("#default-password").val($(this).attr("val-password"))
-  $(".thumbnail-img").attr("src", "http://evercam-public-assets.s3.amazonaws.com/#{$(this).attr("val-vendor-id")}/#{$(this).attr("val-model-id")}/thumbnail.jpg")
-  $(".thumbnail-img").show()
-  $(".center-thumbnail").css("min-height", "30px")
-  $('#add-vendor-modal').modal('show')
-  $("#add-vendor-modal div.caption").text("Edit Model");
-  types.each
-  method = 'PATCH'
+onEditModel = ->
+  $("#datatable_vendor_models").on 'click', '.edit-model', ->
+    $("#model-id").val($(this).attr("val-model-id"))
+    $("#model-id").attr("disabled", true)
+    $("#vendor").val($(this).attr("val-vendor-id"))
+    $("#name").val($(this).attr("val-model-name"))
+    $("#jpg-url").val($(this).attr("val-jpg"))
+    $("#mjpg-url").val($(this).attr("val-mjpg"))
+    $("#mpeg4-url").val($(this).attr("val-mpeg4"))
+    $("#mobile-url").val($(this).attr("val-mobile"))
+    $("#h264-url").val($(this).attr("val-h264"))
+    $("#audio-url").val($(this).attr("val-audio")) unless $(this).attr("val-audio") is 'null'
+    $("#lowres-url").val($(this).attr("val-lowres"))
+    $("#default-username").val($(this).attr("val-username"))
+    $("#default-password").val($(this).attr("val-password"))
+    $("#resolution").val($(this).attr("val-resolution")) unless $(this).attr("val-resolution") is 'null'
+    $(".thumbnail-img").attr("src", "http://evercam-public-assets.s3.amazonaws.com/#{$(this).attr("val-vendor-id")}/#{$(this).attr("val-model-id")}/thumbnail.jpg")
+    $(".thumbnail-img").show()
+    $(".center-thumbnail").css("min-height", "30px")
+    $('#add-vendor-modal').modal('show')
+    for type in types
+      if $(this).attr("val-#{type}") is "true"
+        $("#type-#{type}").prop("checked", $(this).attr("val-#{type}"))
+        $("#uniform-type-#{type} span").addClass('checked')
+    $("#add-vendor-modal div.caption").text("Edit Model");
+    method = 'PATCH'
 
 window.initializeVendorModel = ->
   initializeDataTable()
@@ -265,3 +289,4 @@ window.initializeVendorModel = ->
   loadVendors()
   handleAddNewModel()
   onModelClose()
+  onEditModel()
