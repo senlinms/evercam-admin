@@ -14,7 +14,7 @@ class VendorsController < ApplicationController
     if params.include?(:known_macs) && params[:known_macs]
       known_macs = params[:known_macs].split(",").inject([]) { |list, entry| list << entry.strip }
     end
-    unless validateMac(known_macs)
+    if !validateMac(known_macs)
       respond_to do |format|
         format.html { redirect_to vendors_path }
         format.json { render json: ["Mac address is invalid"], status: :unprocessable_entity }
