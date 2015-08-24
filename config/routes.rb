@@ -13,7 +13,7 @@ Rails.application.routes.draw do
   end
 
   resources :cameras
-  resources :camera_share_requests, path: :shares
+  resources :camera_share_requests, path: "share-requests"
   resources :vendors
   patch '/vendors' => 'vendors#update'
 

@@ -7,7 +7,7 @@
 }
 .ui-dropdownchecklist-selector {
 	height: 34px;
-	border: 1px solid #ddd;
+	border: none !important;
 	background: #fff;
 }
 
