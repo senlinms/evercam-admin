@@ -19,8 +19,7 @@ class CameraShareRequestDecorator < Draper::Decorator
   end
 
   def share_rights
-    rights = []
-    if object.rights.eql?('list,snapshot')
+    if object.rights.eql?("list,snapshot")
       "Read Only"
     else
       "Full Rights"
