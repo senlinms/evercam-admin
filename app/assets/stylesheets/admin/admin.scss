@@ -15,13 +15,6 @@
 //= require metronic/profile.css
 //= require metronic/default.css
 //= require metronic/custom.css
-//= require ui.dropdownchecklist.standalone.css
-//= require iCheck/skins/minimal/_all.scss
-//= require iCheck/skins/square/_all.css
-//= require iCheck/skins/flat/_all.css
-//= require iCheck/skins/line/_all.css
-//= require iCheck/skins/polaris/polaris.css
-//= require iCheck/skins/futurico/futurico.css
 //= require views/cameras/cameras.css
 //= require_self
 
@@ -257,7 +250,13 @@ div.radio {
   top: 35px;
   z-index: 999;
   visibility: hidden;
-  width: 70%;
+  width: 50px;
+}
+
+.dropdown-checklist-models {
+  display: inline-block;
+  visibility: hidden;
+  width: 50px;
 }
 
 /* Checkbox styles */
@@ -306,4 +305,54 @@ div.radio {
 
 .modal {
   margin-right: -16px;
+}
+
+ul.columns {
+  list-style: none;
+}
+
+#toggle-datatable-columns .modal-header {
+  background-color: #f3f3f3;
+  background-image: linear-gradient(to bottom, white, #e1e1e1);
+  background-repeat: repeat-x;
+  border-bottom: 1px solid #ccc;
+  border-radius: 6px 6px 0 0;
+  padding: 10px;
+}
+
+#toggle-datatable-columns .cancel_link {
+  color: #cccccc;
+  font-size: 16px;
+  font-weight: bolder;
+  position: absolute;
+  right: 16px;
+  top: 16px;
+
+}
+
+.modal-header strong {
+  line-height: 34px;
+  margin-left: 10px;
+}
+
+#toggle-datatable-columns .form-group {
+  margin-top: 10px;
+}
+
+#toggle-datatable-columns .modal-body {
+  padding: 8px 15px;
+}
+
+#toggle-datatable-columns .column-checkbox {
+  margin-bottom: 5px;
+}
+
+#toggle-datatable-columns .column-checkbox label {
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+#toggle-datatable-columns .column-checkbox input[type="checkbox"] {
+  cursor: pointer;
 }

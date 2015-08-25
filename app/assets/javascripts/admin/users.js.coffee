@@ -23,18 +23,18 @@ initializeDataTable = ->
       type: "date-uk"
       targets: 'datatable-date'
     ],
+    "oLanguage": {
+      "sSearch": "Filter:"
+    },
     initComplete: ->
       $("#user-list-row").removeClass('hide')
       $("#users_datatables_length label").hide()
       $("#div-dropdown-checklist").css('visibility', 'visible')
 
 columnsDropdown = ->
-  $('#ddl-users-columns').dropdownchecklist
-    icon: {}
-    width: 230
-    onItemClick: (checkbox, selector) ->
-      column = users_table.column(checkbox.val())
-      column.visible !column.visible()
+  $(".users-column").on "click", ->
+    column = users_table.column($(this).attr("data-val"))
+    column.visible !column.visible()
 
 window.initializeusers = ->
   columnsDropdown()

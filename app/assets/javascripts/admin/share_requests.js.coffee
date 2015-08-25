@@ -21,18 +21,18 @@ initializeDataTable = ->
       type: "date-uk"
       targets: 'datatable-date'
     ],
+    "oLanguage": {
+      "sSearch": "Filter:"
+    },
     initComplete: ->
       $("#shares-list-row").removeClass('hide')
       $("#shares_datatables_length label").hide()
       $("#div-dropdown-checklist").css('visibility', 'visible')
 
 columnsDropdown = ->
-  $('#ddl-shares-columns').dropdownchecklist
-    icon: {}
-    width: 230
-    onItemClick: (checkbox, selector) ->
-      column = shares_table.column(checkbox.val())
-      column.visible !column.visible()
+  $(".share-requests-column").on "click", ->
+    column = shares_table.column($(this).attr("data-val"))
+    column.visible !column.visible()
 
 window.initializeShareRequests = ->
   initializeDataTable()

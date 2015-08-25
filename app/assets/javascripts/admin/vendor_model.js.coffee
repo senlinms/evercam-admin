@@ -76,6 +76,7 @@ initializeDataTable = ->
       initComplete: ->
         $('#vendor-model-list-row').removeClass 'hide'
         $("#div-dropdown-checklist").css('visibility', 'visible')
+        $("#datatable_vendor_models_wrapper .row .col-md-8").first().prepend($("#div-dropdown-checklist"))
 
   vendor_models_table.getTableWrapper().on 'keyup', '.table-group-action-input', (e) ->
     e.preventDefault()
@@ -87,12 +88,9 @@ initializeDataTable = ->
     return
 
 columnsDropdown = ->
-  $('#ddl-models-columns').dropdownchecklist
-    icon: {}
-    width: 230
-    onItemClick: (checkbox, selector) ->
-      column = vendor_models_table.getDataTable().column(checkbox.val())
-      column.visible !column.visible()
+  $(".vendor-models-column").on "click", ->
+    column = vendor_models_table.getDataTable().column($(this).attr("data-val"))
+    column.visible !column.visible()
 
 humanBool = (id, type, row) ->
   if id
