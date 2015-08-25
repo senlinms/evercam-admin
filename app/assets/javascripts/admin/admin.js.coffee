@@ -19,9 +19,6 @@
 #= require metronic/datatable.js
 #= require metronic/layout.js
 #= require metronic/quick-sidebar.js
-#= require ui.dropdownchecklist-1.4-min.js
-#= require iCheck
-#= require metronic/icheck.min.js
 #= require alerts.js
 #= require evercam.js.coffee
 #= require admin/vendor_model.js
@@ -45,10 +42,7 @@ $ ->
       type: "date-uk"
       targets: 'datatable-date'
     ]
-  $("input[type=radio], input[type=checkbox]").iCheck
-    #checkboxClass: "icheckbox_flat-blue"
-    #radioClass: "iradio_flat-blue"
-
+  handleModelEvents()
 
 $.extend $.fn.dataTableExt.oSort,
   "date-uk-pre": (a) ->
@@ -60,3 +54,18 @@ $.extend $.fn.dataTableExt.oSort,
 
   "date-uk-desc": (a, b) ->
     (if (a < b) then 1 else ((if (a > b) then -1 else 0)))
+
+handleModelEvents = ->
+  $(".modal").on "show.bs.modal", centerModal
+  $(window).on "resize", ->
+    $(".modal:visible").each centerModal
+
+  $(".modal").on "hidden.bs.modal", ->
+    #$(this).closest("form")[0].reset()
+
+centerModal = ->
+  $(this).css "display", "block"
+  $dialog = $(this).find(".modal-dialog")
+  offset = ($(window).height() - $dialog.height()) / 2
+  if $(window).height() > $dialog.height()
+    $dialog.css "margin-top", offset
