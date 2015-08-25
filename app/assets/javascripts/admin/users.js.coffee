@@ -29,12 +29,9 @@ initializeDataTable = ->
       $("#div-dropdown-checklist").css('visibility', 'visible')
 
 columnsDropdown = ->
-  $('#ddl-users-columns').dropdownchecklist
-    icon: {}
-    width: 230
-    onItemClick: (checkbox, selector) ->
-      column = users_table.column(checkbox.val())
-      column.visible !column.visible()
+  $(".users-column").on "click", ->
+    column = users_table.column($(this).attr("data-val"))
+    column.visible !column.visible()
 
 window.initializeusers = ->
   columnsDropdown()

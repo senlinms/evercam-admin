@@ -7,19 +7,11 @@
         </ul>
       </div>
     </div>
+    <%= render 'columns_modal' %>
     <div class="dropdown-checklist" id="div-dropdown-checklist">
-      Toggle column:
-      <select id="ddl-users-columns" class="s1" multiple="multiple">
-        <option value="0" selected="selected">Username</option>
-        <option value="1" selected="selected">Name</option>
-        <option value="2" selected="selected">Email</option>
-        <option value="3" selected="selected">API ID</option>
-        <option value="4" selected="selected">API Key</option>
-        <option value="5" selected="selected">Cameras</option>
-        <option value="6" selected="selected">Country</option>
-        <option value="7" selected="selected">Registered</option>
-        <option value="8">Confirmed Email</option>
-      </select>
+      <div href="#" class="btn btn-default grey" data-toggle="modal" data-target="#toggle-datatable-columns">
+        <i class="fa fa-columns"></i>
+      </div>
     </div>
     <div id="user-list-row" class="row hide">
       <div class="col-md-12">

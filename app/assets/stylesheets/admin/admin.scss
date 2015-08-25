@@ -312,7 +312,7 @@ ul.columns {
   list-style: none;
 }
 
-#share-request-columns .modal-header {
+#toggle-datatable-columns .modal-header {
   background-color: #f3f3f3;
   background-image: linear-gradient(to bottom, white, #e1e1e1);
   background-repeat: repeat-x;
@@ -321,7 +321,7 @@ ul.columns {
   padding: 10px;
 }
 
-#share-request-columns .cancel_link {
+#toggle-datatable-columns .cancel_link {
   color: #cccccc;
   font-size: 16px;
   font-weight: bolder;
@@ -336,24 +336,24 @@ ul.columns {
   margin-left: 10px;
 }
 
-#share-request-columns .form-group {
+#toggle-datatable-columns .form-group {
   margin-top: 10px;
 }
 
-#share-request-columns .modal-body {
+#toggle-datatable-columns .modal-body {
   padding: 8px 15px;
 }
 
-#share-request-columns .column-checkbox {
+#toggle-datatable-columns .column-checkbox {
   margin-bottom: 5px;
 }
 
-#share-request-columns .column-checkbox label {
+#toggle-datatable-columns .column-checkbox label {
   font-size: 18px;
   font-weight: 500;
   cursor: pointer;
 }
 
-#share-request-columns .column-checkbox input[type="checkbox"] {
+#toggle-datatable-columns .column-checkbox input[type="checkbox"] {
   cursor: pointer;
 }
