@@ -307,3 +307,53 @@ div.radio {
 .modal {
   margin-right: -16px;
 }
+
+ul.columns {
+  list-style: none;
+}
+
+#share-request-columns .modal-header {
+  background-color: #f3f3f3;
+  background-image: linear-gradient(to bottom, white, #e1e1e1);
+  background-repeat: repeat-x;
+  border-bottom: 1px solid #ccc;
+  border-radius: 6px 6px 0 0;
+  padding: 10px;
+}
+
+#share-request-columns .cancel_link {
+  color: #cccccc;
+  font-size: 16px;
+  font-weight: bolder;
+  position: absolute;
+  right: 16px;
+  top: 16px;
+
+}
+
+.modal-header strong {
+  line-height: 34px;
+  margin-left: 10px;
+}
+
+#share-request-columns .form-group {
+  margin-top: 10px;
+}
+
+#share-request-columns .modal-body {
+  padding: 8px 15px;
+}
+
+#share-request-columns .column-checkbox {
+  margin-bottom: 5px;
+}
+
+#share-request-columns .column-checkbox label {
+  font-size: 18px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+#share-request-columns .column-checkbox input[type="checkbox"] {
+  cursor: pointer;
+}

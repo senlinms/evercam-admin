@@ -1,50 +1,40 @@
 <div id="share-request-columns" class="modal fade">
-  <div class="modal-dialog" style="width:600px;">
+  <div class="modal-dialog" style="width:300px;">
     <div class="modal-content">
       <div class="modal-header">
-        <div class="caption">Show / Hide Columns</div>
+        <div class="caption"><strong>Show / Hide Columns</strong></div>
+        <div class="cancel">
+          <a class="cancel_link" href="#" data-dismiss="modal">X</a>
+        </div>
       </div>
       <div class="modal-body">
         <div class="form-group">
-          <div class="row">
-            <table class="table table-fixed table-borderless">
-              <tr>
-                <td>
-                  <label><input type="checkbox"> Email</label>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <label><input type="checkbox"> Camera</label>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <label><input type="checkbox"> Sharer Email</label>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <label><input type="checkbox"> Message</label>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <label><input type="checkbox"> Rights</label>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <label><input type="checkbox"> Status</label>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <label><input type="checkbox"> Created At</label>
-                </td>
-              </tr>
-            </table>
+          <div class="column-checkbox">
+            <label><input class="share-requests-column" type="checkbox" data-val="0" checked> Email</label>
           </div>
+          <div class="column-checkbox">
+            <label><input class="share-requests-column" type="checkbox" data-val="1" checked> Camera</label>
+          </div>
+          <div class="column-checkbox">
+            <label><input class="share-requests-column" type="checkbox" data-val="2" checked> Sharer Email</label>
+          </div>
+          <div class="column-checkbox">
+            <label><input class="share-requests-column" type="checkbox" data-val="3" checked> Message</label>
+          </div>
+          <div class="column-checkbox">
+            <label><input class="share-requests-column" type="checkbox" data-val="4" checked> Rights</label>
+          </div>
+          <div class="column-checkbox">
+            <label><input class="share-requests-column" type="checkbox" data-val="5" checked> Status</label>
+          </div>
+          <div class="column-checkbox">
+            <label><input class="share-requests-column" type="checkbox" data-val="6" checked> Created At</label>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div class="pull-right">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         </div>
       </div>
     </div>

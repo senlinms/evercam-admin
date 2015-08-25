@@ -27,12 +27,9 @@ initializeDataTable = ->
       $("#div-dropdown-checklist").css('visibility', 'visible')
 
 columnsDropdown = ->
-  $('#ddl-shares-columns').dropdownchecklist
-    icon: {}
-    width: 230
-    onItemClick: (checkbox, selector) ->
-      column = shares_table.column(checkbox.val())
-      column.visible !column.visible()
+  $(".share-requests-column").on "click", ->
+    column = shares_table.column($(this).attr("data-val"))
+    column.visible !column.visible()
 
 window.initializeShareRequests = ->
   initializeDataTable()
