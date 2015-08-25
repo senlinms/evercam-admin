@@ -257,7 +257,13 @@ div.radio {
   top: 35px;
   z-index: 999;
   visibility: hidden;
-  width: 70%;
+  width: 50px;
+}
+
+.dropdown-checklist-models {
+  display: inline-block;
+  visibility: hidden;
+  width: 50px;
 }
 
 /* Checkbox styles */

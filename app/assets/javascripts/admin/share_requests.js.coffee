@@ -21,6 +21,9 @@ initializeDataTable = ->
       type: "date-uk"
       targets: 'datatable-date'
     ],
+    "oLanguage": {
+      "sSearch": "Filter:"
+    },
     initComplete: ->
       $("#shares-list-row").removeClass('hide')
       $("#shares_datatables_length label").hide()

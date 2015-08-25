@@ -11,14 +11,11 @@
 
     <%= render 'vendor_modal' %>
 
+    <%= render 'columns_modal' %>
     <div class="dropdown-checklist" id="div-dropdown-checklist">
-      Toggle column:
-      <select id="ddl-vendors-columns" class="s1" multiple="multiple">
-        <option value="0">Logo</option>
-        <option value="1" selected="selected">ID</option>
-        <option value="2" selected="selected">Vendor</option>
-        <option value="3" selected="selected">Known Macs</option>
-      </select>
+      <div href="#" class="btn btn-default grey" data-toggle="modal" data-target="#toggle-datatable-columns">
+        <i class="fa fa-columns"></i>
+      </div>
     </div>
     <div id="vendor-list-row" class="row hide">
       <input type="hidden" id="total_vendors" value=""/>

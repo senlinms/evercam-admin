@@ -29,18 +29,18 @@ initializeDataTable = ->
       type: "date-uk"
       targets: 'datatable-date'
     ],
+    "oLanguage": {
+      "sSearch": "Filter:"
+    },
     initComplete: ->
       $("#cameras-list-row").removeClass('hide')
       $("#cameras_datatables_length label").hide()
       $("#div-dropdown-checklist").css('visibility', 'visible')
 
 columnsDropdown = ->
-  $('#ddl-camera-columns').dropdownchecklist
-    icon: {}
-    width: 230
-    onItemClick: (checkbox, selector) ->
-      column = cameras_table.column(checkbox.val())
-      column.visible !column.visible()
+  $(".cameras-column").on "click", ->
+    column = cameras_table.column($(this).attr("data-val"))
+    column.visible !column.visible()
 
 window.initializeCameras = ->
   columnsDropdown()

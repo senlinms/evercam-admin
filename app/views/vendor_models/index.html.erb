@@ -22,36 +22,11 @@
     <!-- END PAGE HEADER-->
     <%= render 'vendor_model_modal' %>
     <!-- BEGIN PAGE CONTENT-->
-    <div class="margin-bottom-20" id="div-dropdown-checklist" style="visibility: hidden;">
-      Toggle column:
-      <select id="ddl-models-columns" class="s1" multiple="multiple">
-        <option value="0">Logo</option>
-        <option value="1" selected="selected">Model ID</option>
-        <option value="2" selected="selected">Vendor</option>
-        <option value="3" selected="selected">Model</option>
-        <option value="4" selected="selected">Snapshot</option>
-        <option value="5" selected="selected">H264</option>
-        <option value="6" selected="selected">MJPG</option>
-        <option value="7" selected="selected">MPEG4</option>
-        <option value="8" selected="selected">Mobile</option>
-        <option value="9" selected="selected">Low Res</option>
-        <option value="10" selected="selected">Username</option>
-        <option value="11" selected="selected">Password</option>
-
-        <option value="12">Audio</option>
-        <option value="13">POE</option>
-        <option value="14">Wifi</option>
-        <option value="15">Onvif</option>
-        <option value="16">PSIA</option>
-        <option value="17">PTZ</option>
-        <option value="18">Infrared</option>
-        <option value="19">Varifocal</option>
-        <option value="20">SD card</option>
-        <option value="21">UPNP</option>
-        <option value="22">Audio IO</option>
-        <option value="23">Shape</option>
-        <option value="24">Resolution</option>
-      </select>
+    <%= render 'columns_modal' %>
+    <div class="dropdown-checklist-models" id="div-dropdown-checklist">
+      <div href="#" class="btn btn-default grey" data-toggle="modal" data-target="#toggle-datatable-columns">
+        <i class="fa fa-columns"></i>
+      </div>
     </div>
     <div id="vendor-model-list-row" class="row">
       <input type="hidden" id="total_vendors" value="<%= @total_vendors %>"/>
@@ -59,7 +34,7 @@
       <div class="col-md-12 table-container">
         <div class="table-actions-wrapper">
           <span></span>
-          Search: <input type="text" placeholder="Vendor/Model" class="table-group-action-input form-control input-inline input-small input-sm"/>
+          Filter: <input type="text" placeholder="Vendor/Model" class="table-group-action-input form-control input-inline input-small input-sm"/>
         </div>
         <table class="table table-striped table-bordered table-hover" id="datatable_vendor_models">
           <thead>

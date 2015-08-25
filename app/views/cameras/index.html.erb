@@ -13,27 +13,11 @@
     </div>
     <!-- END PAGE HEADER-->
     <!-- BEGIN PAGE CONTENT-->
+    <%= render 'columns_modal' %>
     <div class="dropdown-checklist" id="div-dropdown-checklist">
-      Toggle column:
-      <select id="ddl-camera-columns" class="s1" multiple="multiple">
-        <option value="0" selected="selected">ID</option>
-        <option value="1" selected="selected">Owner</option>
-        <option value="2" selected="selected">Name</option>
-        <option value="3" selected="selected">Camera IP</option>
-
-        <option value="4" selected="selected">Http Port</option>
-        <option value="5" selected="selected">Rtsp Port</option>
-        <option value="6" selected="selected">Username</option>
-        <option value="7" selected="selected">Password</option>
-
-        <option value="8" selected="selected">Mac Address</option>
-        <option value="9" selected="selected">Model</option>
-        <option value="10" selected="selected">Vendor</option>
-        <option value="11" selected="selected">Public</option>
-        <option value="12" selected="selected">Online</option>
-        <option value="13" selected="selected">Created At</option>
-        <option value="14">Last Polled</option>
-      </select>
+      <div href="#" class="btn btn-default grey" data-toggle="modal" data-target="#toggle-datatable-columns">
+        <i class="fa fa-columns"></i>
+      </div>
     </div>
     <div id="cameras-list-row" class="row hide">
       <div class="col-md-12">

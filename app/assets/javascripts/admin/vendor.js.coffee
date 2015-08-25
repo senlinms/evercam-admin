@@ -29,6 +29,9 @@ initializeDataTable = ->
       {data: "name", width: '20%'},
       {data: "known_macs", width: '40%', 'render': showMacs }
     ],
+    "oLanguage": {
+      "sSearch": "Filter:"
+    },
     iDisplayLength: 50
     aLengthMenu: [
       [25, 50, 100, 200, -1]
@@ -42,12 +45,9 @@ initializeDataTable = ->
   })
 
 columnsDropdown = ->
-  $('#ddl-vendors-columns').dropdownchecklist
-    icon: {}
-    width: 230
-    onItemClick: (checkbox, selector) ->
-      column = vendor_table.column(checkbox.val())
-      column.visible !column.visible()
+  $(".vendors-column").on "click", ->
+    column = vendor_table.column($(this).attr("data-val"))
+    column.visible !column.visible()
 
 editVendor = (id, type, row) ->
   return "<a style='cursor:pointer;' class='edit-vandor' val-id='#{row.exid}' val-name='#{row.name}' val-macs='#{row.known_macs}'>#{row.exid}</a>"
