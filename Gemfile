@@ -3,7 +3,7 @@ source 'https://rubygems.org'
 ruby '2.2.2'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.2.3'
+gem 'rails', '4.2.4'
 
 # Use postgresql as the database for Active Record
 gem 'pg'
@@ -11,7 +11,7 @@ gem 'pg'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets
-gem 'uglifier', '>= 1.3.0'
+gem 'uglifier', '>= 2.7.2'
 gem 'yui-compressor'
 
 # Use CoffeeScript for .coffee assets and views
@@ -21,7 +21,7 @@ gem 'sprockets'
 gem 'sprockets-es6', require: 'sprockets/es6'
 # gem 'fog'
 # gem 'asset_sync'
-gem 'autoprefixer-rails', '~> 5.2.1.1'
+gem 'autoprefixer-rails', '~> 5.2.1.3'
 
 source 'https://rails-assets.org' do
   gem 'rails-assets-bootbox', '~> 4.3.0'
