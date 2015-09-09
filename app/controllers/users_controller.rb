@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_action :authorize_admin
-  before_action :set_user, only: [:show, :update, :impersonate]
+  before_action :set_user, only: [:show, :update]
 
   def index
     @users = EvercamUser.all.includes(:country, :cameras).decorate
@@ -8,6 +8,9 @@ class UsersController < ApplicationController
 
   def show
     @countries = Country.all
+    if @user.api_id.blank? && @user.api_key.blank?
+      add_user_credential(@user)
+    end
     @user = @user.decorate
   end
 
@@ -25,17 +28,13 @@ class UsersController < ApplicationController
                           "Please try again and, if this problem persists, contact support."
   end
 
-  def impersonate
-    if @user
-      sign_out
-      sign_in @user
-      redirect_to root_path
-    else
-      redirect_to :back
-    end
-  end
-
   private
+
+  def add_user_credential(user)
+    user.api_id  = SecureRandom.hex(4)
+    user.api_key = SecureRandom.hex
+    user.save
+  end
 
   def user_params
     params.require(:user).permit(:firstname, :lastname, :email, :country_id, :is_admin)
