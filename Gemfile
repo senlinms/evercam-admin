@@ -56,7 +56,7 @@ gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 
 gem 'geocoder'
-gem 'georuby', '~> 2.3.0'
+gem 'georuby'
 # Use Puma as the app server
 gem 'puma'
 

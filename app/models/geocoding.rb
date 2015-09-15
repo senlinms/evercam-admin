@@ -2,6 +2,7 @@ class Geocoding
 
   require 'georuby'
   require 'geocoder'
+  require 'geo_ruby/ewk'
   include GeoRuby::SimpleFeatures
 
   HEX_REGEX = /^[0-9A-F]+$/
