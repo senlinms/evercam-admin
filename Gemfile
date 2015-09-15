@@ -21,7 +21,7 @@ gem 'sprockets'
 gem 'sprockets-es6', require: 'sprockets/es6'
 # gem 'fog'
 # gem 'asset_sync'
-gem 'autoprefixer-rails', '~> 5.2.1.3'
+gem 'autoprefixer-rails'
 
 source 'https://rails-assets.org' do
   gem 'rails-assets-bootbox', '~> 4.3.0'
@@ -56,7 +56,7 @@ gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 
 gem 'geocoder'
-gem 'georuby', '~> 2.3.0'
+gem 'georuby'
 # Use Puma as the app server
 gem 'puma'
 
