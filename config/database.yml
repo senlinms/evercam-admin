@@ -11,6 +11,10 @@ evercam_db_development:
   <<: *default
   database: evercam_dev
 
+evercam_snapshot_db_development:
+  <<: *default
+  database: evercam_dev
+
 development:
   <<: *default
   database: evercam_admin_development
@@ -34,3 +38,11 @@ evercam_db_production:
   password: <%= ENV['EVERCAM_DB_PASSWORD'] %>
   host: <%= ENV['EVERCAM_DB_HOSTNAME'] %>
   port: <%= ENV['EVERCAM_DB_PORT'] %>
+
+evercam_snapshot_db_production:
+  <<: *default
+  database: <%= ENV['EVERCAM_SNAPSHOT_DB_NAME'] %>
+  username: <%= ENV['EVERCAM_SNAPSHOT_DB_USERNAME'] %>
+  password: <%= ENV['EVERCAM_SNAPSHOT_DB_PASSWORD'] %>
+  host: <%= ENV['EVERCAM_SNAPSHOT_DB_HOSTNAME'] %>
+  port: <%= ENV['EVERCAM_SNAPSHOT_DB_PORT'] %>

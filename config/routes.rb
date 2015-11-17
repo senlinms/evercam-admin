@@ -14,6 +14,7 @@ Rails.application.routes.draw do
 
   resources :cameras
   resources :camera_share_requests, path: "share-requests"
+  resources :snapshots
   resources :vendors
   patch '/vendors' => 'vendors#update'
 
