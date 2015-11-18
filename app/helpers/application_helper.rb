@@ -10,47 +10,48 @@ module ApplicationHelper
 
   def get_hours(schedule)
     total_hours = 0
+    Time.zone = "UTC"
     if schedule
       hours = schedule["Monday"].first.to_s.split("-")
       if hours.present?
-        from = Time.parse(hours.first)
-        to = Time.parse(hours[1])
+        from = Time.zone.parse(hours.first)
+        to = Time.zone.parse(hours[1])
         total_hours += ((to - from) / 1.hour).round
       end
       hours = schedule["Tuesday"].first.to_s.split("-")
       if hours.present?
-        from = Time.parse(hours.first)
-        to = Time.parse(hours[1])
+        from = Time.zone.parse(hours.first)
+        to = Time.zone.parse(hours[1])
         total_hours += ((to - from) / 1.hour).round
       end
       hours = schedule["Wednesday"].first.to_s.split("-")
       if hours.present?
-        from = Time.parse(hours.first)
-        to = Time.parse(hours[1])
+        from = Time.zone.parse(hours.first)
+        to = Time.zone.parse(hours[1])
         total_hours += ((to - from) / 1.hour).round
       end
       hours = schedule["Thursday"].first.to_s.split("-")
       if hours.present?
-        from = Time.parse(hours.first)
-        to = Time.parse(hours[1])
+        from = Time.zone.parse(hours.first)
+        to = Time.zone.parse(hours[1])
         total_hours += ((to - from) / 1.hour).round
       end
       hours = schedule["Friday"].first.to_s.split("-")
       if hours.present?
-        from = Time.parse(hours.first)
-        to = Time.parse(hours[1])
+        from = Time.zone.parse(hours.first)
+        to = Time.zone.parse(hours[1])
         total_hours += ((to - from) / 1.hour).round
       end
       hours = schedule["Saturday"].first.to_s.split("-")
       if hours.present?
-        from = Time.parse(hours.first)
-        to = Time.parse(hours[1])
+        from = Time.zone.parse(hours.first)
+        to = Time.zone.parse(hours[1])
         total_hours += ((to - from) / 1.hour).round
       end
       hours = schedule["Sunday"].first.to_s.split("-")
       if hours.present?
-        from = Time.parse(hours.first)
-        to = Time.parse(hours[1])
+        from = Time.zone.parse(hours.first)
+        to = Time.zone.parse(hours[1])
         total_hours += ((to - from) / 1.hour).round
       end
     end

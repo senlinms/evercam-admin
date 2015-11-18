@@ -21,11 +21,11 @@ class Camera < ActiveRecord::Base
   # end
 
   def cloud_recording
-    CloudRecording.where(camera_id: id).first
+    CloudRecording.find_by(camera_id: id)
   end
 
   def oldes_snapshot
-    #Snapshot.where(camera_id: id).order(:created_at).last
+    # Snapshot.where(camera_id: id).order(:created_at).last
   end
   
   def self.created_months_ago(number)
