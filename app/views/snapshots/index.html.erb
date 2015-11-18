@@ -84,7 +84,14 @@
                   <%   end %>
                 <% end %>
               </td>
-              <td></td>
+              <td>
+                <% if camera.cloud_recording %>
+                  <% unless raw(camera.cloud_recording.schedule.to_json).eql?({"Monday":["0:0-23:59"],"Tuesday":["0:0-23:59"],"Wednesday":["0:0-23:59"],"Thursday":["0:0-23:59"],"Friday":["0:0-23:59"],"Saturday":["0:0-23:59"],"Sunday":["0:0-23:59"]}) %>
+                    <% schedule = camera.cloud_recording.schedule %>
+                    <%= get_hours(schedule) %> Hours per week
+                  <% end %>
+                <% end %>
+              </td>
               <td></td>
             </tr>
           <% end %>
