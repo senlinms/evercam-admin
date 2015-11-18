@@ -1,0 +1,111 @@
+<!-- BEGIN CONTENT -->
+<div class="page-content-wrapper">
+  <div class="page-content" id="snapshots-report">
+    <!-- BEGIN PAGE HEADER-->
+    <div class="row">
+      <div class="col-md-12">
+        <!-- BEGIN PAGE TITLE & BREADCRUMB-->
+        <ul class="page-breadcrumb breadcrumb">
+          <%= render 'shared/breadcrumb_basic', current_section: 'Snapshots' %>
+        </ul>
+        <!-- END PAGE TITLE & BREADCRUMB-->
+      </div>
+    </div>
+    <!-- END PAGE HEADER-->
+    <!-- BEGIN PAGE CONTENT-->
+    <%= render 'columns_modal' %>
+    <div class="dropdown-checklist" id="div-dropdown-checklist">
+      <div href="#" class="btn btn-default grey" data-toggle="modal" data-target="#toggle-datatable-columns">
+        <i class="fa fa-columns"></i>
+      </div>
+    </div>
+    <div id="snapshots-list-row" class="row hide">
+      <div class="col-md-12">
+        <table class="table table-striped table-bordered table-hover" id="snapshots_datatables">
+          <thead>
+          <tr role="row" class="heading">
+            <th name="order_name" class="sorting">Name</th>
+            <th name="order_owner" class="sorting">Owner</th>
+            <th name="order_count" class="sorting">Count</th>
+            <th name="order_oldest_snapshot" class="sorting">Oldest Snapshot</th>
+            <th name="order_cr_status" class="sorting">CR Status</th>
+            <th name="order_cr_duration" class="sorting">CR Duration</th>
+            <th name="order_cr_interval" class="sorting">CR Interval</th>
+            <th name="order_cr_schedule_hpw" class="sorting">CR Schedule HPW</th>
+            <th name="order_new_60min" class="sorting">New in last 60min</th>
+          </tr>
+          </thead>
+          <tbody>
+          <% @cameras.each do |camera| %>
+            <tr>
+              <td><%= link_to camera.name, camera_path(camera) %></td>
+              <td><%= link_to camera.user.fullname, user_path(camera.user) %></td>
+              <td>0</td>
+              <td></td>
+              <td>
+                <% if camera.cloud_recording %>
+                  <% if raw(camera.cloud_recording.schedule.to_json).eql?({"Monday":["0:0-23:59"],"Tuesday":["0:0-23:59"],"Wednesday":["0:0-23:59"],"Thursday":["0:0-23:59"],"Friday":["0:0-23:59"],"Saturday":["0:0-23:59"],"Sunday":["0:0-23:59"]}) %>
+                    <% if camera.cloud_recording.frequency.equal?(1) %>
+                      Off
+                    <% else %>
+                      On
+                    <% end %>
+                  <% else %>
+                    On (Scheduled)
+                  <% end %>
+                <% else %>
+                  Off
+                <% end %>
+              </td>
+              <td>
+                <% if camera.cloud_recording %>
+                  <% if camera.cloud_recording.storage_duration.equal?(-1) %>
+                    Infinity
+                  <% elsif camera.cloud_recording.storage_duration.equal?(1) %>
+                      24 hours recording
+                  <% else %>
+                    <%= camera.cloud_recording.storage_duration %> days recording
+                  <% end %>
+                <% end %>
+              </td>
+              <td>
+                <% if camera.cloud_recording %>
+                  <% case camera.cloud_recording.frequency
+                       when 60 %>
+                        60 (1 per second)
+                  <%   when 30 %>
+                        30 (1 every 2 seconds)
+                  <%   when 12 %>
+                        12 (1 every 5 seconds)
+                  <%   when 6 %>
+                        6 (1 every 10 seconds)
+                  <%   when 30 %>
+                        1 (1 every 60 seconds)
+                  <%   end %>
+                <% end %>
+              </td>
+              <td>
+                <% if camera.cloud_recording %>
+                  <% unless raw(camera.cloud_recording.schedule.to_json).eql?({"Monday":["0:0-23:59"],"Tuesday":["0:0-23:59"],"Wednesday":["0:0-23:59"],"Thursday":["0:0-23:59"],"Friday":["0:0-23:59"],"Saturday":["0:0-23:59"],"Sunday":["0:0-23:59"]}) %>
+                    <% schedule = camera.cloud_recording.schedule %>
+                    <%= get_hours(schedule) %> Hours per week
+                  <% end %>
+                <% end %>
+              </td>
+              <td></td>
+            </tr>
+          <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <!-- END PAGE CONTENT-->
+  </div>
+</div>
+<!-- END CONTENT -->
+
+<script>
+  $(document).ready(function () {
+    window.initializSnapshots();
+  });
+</script>

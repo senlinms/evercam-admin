@@ -15,6 +15,18 @@ class Camera < ActiveRecord::Base
   def vendor
     vendor_model.vendor
   end
+
+  # def snapshot_count
+  #   Snapshot.where(camera_id: id).count
+  # end
+
+  def cloud_recording
+    CloudRecording.find_by(camera_id: id)
+  end
+
+  def oldes_snapshot
+    # Snapshot.where(camera_id: id).order(:created_at).last
+  end
   
   def self.created_months_ago(number)
     given_date = number.months.ago
