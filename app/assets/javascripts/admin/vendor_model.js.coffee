@@ -39,7 +39,7 @@ initializeDataTable = ->
         [ 25, 50, 100, 150 ]
         [ 25, 50, 100, 150 ]
       ]
-      'pageLength': 50
+      'pageLength': 200
       'ajax':
         'method': 'GET'
         'headers': headers
