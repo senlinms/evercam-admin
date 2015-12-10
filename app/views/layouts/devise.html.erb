@@ -25,7 +25,7 @@
 </body>
 <script>
   Notification.init(".bb-alert");
-  <% if alert %>
+  <% if !alert.blank? %>
     Notification.show("<%= alert %>");
   <% end %>
   <% if notice %>
