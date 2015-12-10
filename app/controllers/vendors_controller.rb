@@ -88,7 +88,7 @@ class VendorsController < ApplicationController
     end
     is_valid_mac
   end
-  
+
   def validate_id(exid)
     is_valid_id = true
     if exid =~ /[+*?. ]/
