@@ -97,7 +97,6 @@ class VendorModelsController < ApplicationController
         end
       end
     end
-
     if params[:default_username] or params[:default_password]
       vendor_model.config.merge!({'auth' => {'basic' => {'username' => params[:default_username], 'password' => params[:default_password] }}})
     end
