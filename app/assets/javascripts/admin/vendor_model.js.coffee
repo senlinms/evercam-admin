@@ -181,10 +181,15 @@ clearForm = ->
   method = 'POST'
 
 handleAddNewModel = ->
+  idpattern = /[+*?. ]/
   $("#save-model").on 'click', ->
 
     if $("#model-id").val() is ''
       $(".model-alert").html('Model id can not be empty.')
+      $(".model-alert").slideDown()
+      return
+    if $("#model-id").val().match idpattern
+      $(".model-alert").html('Model id can not contain spaces and dots.')
       $(".model-alert").slideDown()
       return
     if $("#vendor").val() is ''

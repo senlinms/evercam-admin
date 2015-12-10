@@ -19,6 +19,11 @@ class VendorsController < ApplicationController
         format.html { redirect_to vendors_path }
         format.json { render json: ["Mac address is invalid"], status: :unprocessable_entity }
       end
+    elsif !validateId(params[:exid])
+      respond_to do |format|
+        format.html { redirect_to vendors_path }
+        format.json { render json: ["Id is invalid"], status: :unprocessable_entity }
+      end
     else
       @vendor = Vendor.new(
         exid: params[:exid],
@@ -72,7 +77,7 @@ class VendorsController < ApplicationController
 
   private
 
-  def validateMac known_macs
+  def validate_mac(known_macs)
     is_valid_mac = true
     unless known_macs.blank?
       known_macs.each do |resource|
@@ -82,5 +87,13 @@ class VendorsController < ApplicationController
       end
     end
     is_valid_mac
+  end
+
+  def validate_id(exid)
+    is_valid_id = true
+    if exid =~ /[+*?. ]/
+      is_valid_id = false
+    end
+    is_valid_id
   end
 end
