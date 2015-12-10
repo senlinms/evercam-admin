@@ -9,5 +9,4 @@ class VendorModel < ActiveRecord::Base
   validates :jpg_url, presence: true
   validates :mjpg_url, presence: true
   validates :h264_url, presence: true
-
 end

@@ -77,7 +77,7 @@ class VendorsController < ApplicationController
 
   private
 
-  def validateMac known_macs
+  def validate_mac(known_macs)
     is_valid_mac = true
     unless known_macs.blank?
       known_macs.each do |resource|
@@ -88,7 +88,8 @@ class VendorsController < ApplicationController
     end
     is_valid_mac
   end
-  def validateId exid
+  
+  def validate_id(exid)
     is_valid_id = true
     if exid =~ /[+*?. ]/
       is_valid_id = false
