@@ -59,7 +59,6 @@ class VendorsController < ApplicationController
           name: params[:name],
           known_macs: known_macs
         )
-        pry
       end
     rescue => error
       message = error.message
