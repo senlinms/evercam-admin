@@ -14,12 +14,12 @@ class VendorsController < ApplicationController
     if params.include?(:known_macs) && params[:known_macs]
       known_macs = params[:known_macs].split(",").inject([]) { |list, entry| list << entry.strip }
     end
-    if !validateMac(known_macs)
+    if !validate_mac(known_macs)
       respond_to do |format|
         format.html { redirect_to vendors_path }
         format.json { render json: ["Mac address is invalid"], status: :unprocessable_entity }
       end
-    elsif !validateId(params[:exid])
+    elsif !validate_id(params[:exid])
       respond_to do |format|
         format.html { redirect_to vendors_path }
         format.json { render json: ["Id is invalid"], status: :unprocessable_entity }
@@ -50,7 +50,7 @@ class VendorsController < ApplicationController
       if params.include?(:known_macs) && params[:known_macs]
         known_macs = params[:known_macs].split(",").inject([]) { |list, entry| list << entry.strip }
       end
-      unless validateMac(known_macs)
+      unless validate_mac(known_macs)
         saved = false
         message = ["Mac address is invalid"]
       else
