@@ -32,7 +32,7 @@ initializeDataTable = ->
     "oLanguage": {
       "sSearch": "Filter:"
     },
-    iDisplayLength: 50
+    iDisplayLength: 200
     aLengthMenu: [
       [25, 50, 100, 200, -1]
       [25, 50, 100, 200, "All"]
