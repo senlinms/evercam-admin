@@ -3,7 +3,7 @@ source 'https://rubygems.org'
 ruby '2.2.2'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.2.4'
+gem 'rails', '4.2.5'
 
 # Use postgresql as the database for Active Record
 gem 'pg'
@@ -68,8 +68,8 @@ gem 'devise'
 group :development, :test do
   gem 'pry'
   gem 'factory_girl_rails', require: false
-  gem 'rspec-rails', '~> 3.3.3'
-  gem 'rspec', '~> 3.3.0'
+  gem 'rspec-rails', '~> 3.4.0'
+  gem 'rspec', '~> 3.4.0'
   gem 'spinach-rails'
   gem 'database_cleaner'
   gem 'launchy'
