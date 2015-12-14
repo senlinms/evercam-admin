@@ -26,6 +26,5 @@ Rails.application.routes.draw do
   get '/map' => 'dashboard#map'
   get '/kpi' => 'dashboard#kpi'
   get '/no_access' => 'home#no_access'
-
-  #get "/reset", :to => "devise/passwords#new"
+  
 end
