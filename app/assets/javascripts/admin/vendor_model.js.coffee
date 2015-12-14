@@ -39,7 +39,7 @@ initializeDataTable = ->
         [ 25, 50, 100, 150 ]
         [ 25, 50, 100, 150 ]
       ]
-      'pageLength': 50
+      'pageLength': 200
       'ajax':
         'method': 'GET'
         'headers': headers
@@ -181,10 +181,15 @@ clearForm = ->
   method = 'POST'
 
 handleAddNewModel = ->
+  idpattern = /[+*?. ]/
   $("#save-model").on 'click', ->
 
     if $("#model-id").val() is ''
       $(".model-alert").html('Model id can not be empty.')
+      $(".model-alert").slideDown()
+      return
+    if $("#model-id").val().match idpattern
+      $(".model-alert").html('Model id can not contain spaces and dots.')
       $(".model-alert").slideDown()
       return
     if $("#vendor").val() is ''

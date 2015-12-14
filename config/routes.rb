@@ -3,7 +3,8 @@ Rails.application.routes.draw do
 
   devise_options = {
       controllers: {
-          registrations: 'registrations'
+          registrations: "registrations",
+          passwords: "passwords"
       }
   }
   devise_for :users, devise_options
