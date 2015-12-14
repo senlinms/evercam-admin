@@ -3,7 +3,7 @@ Rails Application for Admin Area for User &amp; Camera Management
 
 | Name   | Evercam Admin Client  |
 | --- | --- |
-| Owner   | [@azharmalik3](https://github.com/azharmalik3)   |
+| Owner   | [@ijunaidfarooq](https://github.com/ijunaidfarooq)   |
 | Dependencies Status   | [![Dependency Status](https://gemnasium.com/evercam/evercam-admin.svg)](https://gemnasium.com/evercam/evercam-admin)  |
 | Code Climate   | [![Code Climate](https://codeclimate.com/github/evercam/evercam-admin/badges/gpa.svg)](https://codeclimate.com/github/evercam/evercam-admin)   |
 | Travis Test   | [![Dependency Status](https://travis-ci.org/evercam/evercam-admin.svg?branch=master)](https://travis-ci.org/evercam/evercam-admin)   |
