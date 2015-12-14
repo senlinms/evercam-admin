@@ -68,8 +68,8 @@ gem 'devise'
 group :development, :test do
   gem 'pry'
   gem 'factory_girl_rails', require: false
-  gem 'rspec-rails', '~> 3.3.3'
-  gem 'rspec', '~> 3.3.0'
+  gem 'rspec-rails', '~> 3.4.0'
+  gem 'rspec', '~> 3.4.0'
   gem 'spinach-rails'
   gem 'database_cleaner'
   gem 'launchy'
