@@ -5,11 +5,15 @@ initializeDataTable = ->
     aaSorting: [1, "asc"]
     fnRowCallback: (nRow, aData, iDisplayIndex, iDisplayIndexFull) ->
       if aData[12] is "Yes"
-        $('td:eq(12)', nRow).html("Y")
-        $('td:eq(12)', nRow).css "color" , "green"
+        $('td:eq(12)', nRow)
+          .html "Y"
+          .css "color" , "Green"
+          .css "text-align" , "center"
       else
-        $('td:eq(12)', nRow).html("N")
-        $('td:eq(12)', nRow).css "color" , "red"
+        $('td:eq(12)', nRow)
+          .html "N"
+          .css "color" , "red"
+          .css "text-align" , "center"
     aLengthMenu: [
       [25, 50, 100, 200, -1]
       [25, 50, 100, 200, "All"]
