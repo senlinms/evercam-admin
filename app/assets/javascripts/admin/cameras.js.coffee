@@ -7,13 +7,11 @@ initializeDataTable = ->
       if aData[12] is "Yes"
         $('td:eq(12)', nRow)
           .html "Y"
-          .css "color" , "Green"
-          .css "text-align" , "center"
+          .css { "color" : "green", "text-align" : "center" }
       else
         $('td:eq(12)', nRow)
           .html "N"
-          .css "color" , "red"
-          .css "text-align" , "center"
+          .css { "color" : "Red", "text-align" : "center" }
     aLengthMenu: [
       [25, 50, 100, 200, -1]
       [25, 50, 100, 200, "All"]
