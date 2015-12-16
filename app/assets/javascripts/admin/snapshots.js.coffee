@@ -3,6 +3,19 @@ snapshots_table = undefined
 initializeDataTable = ->
   snapshots_table = $("#snapshots_datatables").DataTable
     aaSorting: [1, "asc"]
+    fnRowCallback: (nRow, aData, iDisplayIndex, iDisplayIndexFull) ->
+      console.log(aData[9])
+      if aData[9] is "true"
+        $('td:eq(6)', nRow)
+          .html "Y"
+          .css { "color": "green", "text-align": "center" }
+      else if aData[9] is "false"
+        $('td:eq(6)', nRow)
+          .html "N"
+          .css { "color": "Red", "text-align": "center" }
+      else
+        $('td:eq(6)', nRow)
+          .html ""
     aLengthMenu: [
       [25, 50, 100, 200, -1]
       [25, 50, 100, 200, "All"]
@@ -16,7 +29,8 @@ initializeDataTable = ->
       {data: "5" },
       {data: "6" },
       {data: "7" },
-      {data: "8", visible: false }
+      {data: "8", visible: false },
+      {data: "9" }
     ],
     iDisplayLength: 50
     columnDefs: [
