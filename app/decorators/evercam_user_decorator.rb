@@ -17,7 +17,7 @@ class EvercamUserDecorator < Draper::Decorator
   end
 
   def registered_at
-    object.created_at.strftime("%d/%m/%y")
+    object.created_at.strftime("%d/%m/%y %I:%M %p")
   end
 
   def confirmed_email
