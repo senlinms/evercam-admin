@@ -33,6 +33,7 @@
             <th name="order_cr_interval" class="sorting">CR Interval</th>
             <th name="order_cr_schedule_hpw" class="sorting">CR Schedule HPW</th>
             <th name="order_new_60min" class="sorting">New in last 60min</th>
+            <th name="order_cam_status" class="sorting">Online</th>
           </tr>
           </thead>
           <tbody>
@@ -93,6 +94,7 @@
                 <% end %>
               </td>
               <td></td>
+              <td> <%= camera.is_online %> </td>
             </tr>
           <% end %>
           </tbody>
