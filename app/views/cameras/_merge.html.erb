@@ -1,0 +1,13 @@
+<% if @cameras.present? %>
+	<% @cameras.each do |camera| %>
+		<tr>
+			<td><%= camera["external_host"] %></td>
+			<td><%= camera["external_http_port"] %></td>
+			<td><%= camera["jpg"] %></td>
+			<td class="text-center"><%= camera["count"] %></td>
+			<td class="text-center">
+				<a href="#" class="action-cam"><i class="fa fa-power-off"></i></a>
+			</td>
+		</tr>
+	<% end %>
+<% end %>

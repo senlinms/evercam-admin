@@ -41,4 +41,8 @@ class Camera < ActiveRecord::Base
   def self.total_paid_cameras(months_ago)
     []
   end
+
+  def self.run_sql(sql)
+    Camera.connection.select_all(sql).to_hash
+  end
 end

@@ -13,7 +13,11 @@ Rails.application.routes.draw do
     get :impersonate, on: :member
   end
 
-  resources :cameras
+  resources :cameras do
+    collection do 
+      get "merge"
+    end
+  end
   resources :camera_share_requests, path: "share-requests"
   resources :snapshots
   resources :vendors
@@ -26,4 +30,5 @@ Rails.application.routes.draw do
   get '/map' => 'dashboard#map'
   get '/kpi' => 'dashboard#kpi'
   get '/no_access' => 'home#no_access'
+  #get "/merge_camera" => "cameras#merge"
 end

@@ -27,6 +27,7 @@
 #= require admin/snapshots.js
 #= require admin/users.js
 #= require admin/share_requests.js
+#= require admin/merges.js
 
 $ ->
   Metronic.init()

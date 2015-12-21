@@ -36,7 +36,6 @@ source 'https://rails-assets.org' do
   gem 'rails-assets-jquery-form-validator', '~> 2.1.47'
   gem 'rails-assets-jquery.browser', '~> 0.0.7'
   gem 'rails-assets-jquery.nicescroll', '~> 3.5.6'
-  gem 'rails-assets-jquery.slimscroll', '~> 1.3.3'
   gem 'rails-assets-jquery.uniform', '~> 2.1.2'
   gem 'rails-assets-ladda', '~> 0.8.0'
   gem 'rails-assets-moment', '~> 2.8'
