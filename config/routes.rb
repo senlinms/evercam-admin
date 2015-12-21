@@ -14,7 +14,7 @@ Rails.application.routes.draw do
   end
 
   resources :cameras do
-    collection do 
+    collection do
       get "merge"
     end
   end
@@ -30,5 +30,4 @@ Rails.application.routes.draw do
   get '/map' => 'dashboard#map'
   get '/kpi' => 'dashboard#kpi'
   get '/no_access' => 'home#no_access'
-  #get "/merge_camera" => "cameras#merge"
 end
