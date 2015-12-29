@@ -12,7 +12,7 @@ class CamerasController < ApplicationController
   def merge
     @cameras = Camera.run_sql("select count(nullif(is_online = false, true)) as online, config->>'external_http_port' as external_http_port, config->>'external_host' as external_host, config->'snapshots'->>'jpg'   as jpg, count(*) as count from cameras group by config->>'external_http_port', config->>'external_host', config->'snapshots'->>'jpg' HAVING (COUNT(*)>1)")
     if params[:port] && params[:host] && params[:jpg]
-      cameras = filter_camera(params[:port],params[:host],params[:jpg])
+      cameras = filter_camera(params[:port], params[:host], params[:jpg])
       records = []
       cameras.each do |camera|
         records[records.length] = [
@@ -33,7 +33,7 @@ class CamerasController < ApplicationController
 
   private
 
-  def filter_camera(port,host,jpg)
+  def filter_camera(port, host, jpg)
     if !port.blank? && !host.blank? && !jpg.blank?
       Camera.where("config->> 'external_http_port' = ? and config->> 'external_host' = ? and config->'snapshots'->>'jpg' = ?", port, host, jpg)
     elsif port.blank? && host.blank? && jpg.blank?
