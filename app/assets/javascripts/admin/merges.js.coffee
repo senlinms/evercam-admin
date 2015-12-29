@@ -48,9 +48,9 @@ onCameraAction = ->
   jpg  = ''
   $("#merge_datatables").on 'click', '.action-cam', ->
     $('#loading-popup').show()
-    host = $(this).parents('tr').find('td:nth-child(1)').html()
-    port = $(this).parents('tr').find('td:nth-child(2)').html()
-    jpg  = $(this).parents('tr').find('td:nth-child(3)').html()
+    host = $(this).parents('tr').find('td:nth-child(1)').text()
+    port = $(this).parents('tr').find('td:nth-child(2)').text()
+    jpg  = $(this).parents('tr').find('td:nth-child(3)').text()
     d = {}
     d.host = host
     d.port = port
