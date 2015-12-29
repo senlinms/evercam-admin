@@ -47,6 +47,7 @@ onCameraAction = ->
   port = ''
   jpg  = ''
   $("#merge_datatables").on 'click', '.action-cam', ->
+    $('#loading-popup').show()
     host = $(this).parents('tr').find('td:nth-child(1)').html()
     port = $(this).parents('tr').find('td:nth-child(2)').html()
     jpg  = $(this).parents('tr').find('td:nth-child(3)').html()
@@ -59,6 +60,7 @@ onCameraAction = ->
       data: d
       type: 'get'
       success: (data) ->
+        $('#loading-popup').hide()
         content = "<table class='table table-striped'>"
         content += "<thead>"
         content += "<tr>"
@@ -74,7 +76,6 @@ onCameraAction = ->
 
 colorMe = (status) ->
   if status is true or status is "t"
-    console.log(status)
     return "<span style='color:green;'>Y</span>"
   else
     return "<span style='color:red;'>N</span>"
