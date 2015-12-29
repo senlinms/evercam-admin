@@ -69,7 +69,7 @@ onCameraAction = ->
                           <td>' + cam[2] + '</td><td>' + cam[1] + '</td><td>' + colorMe(cam[6]) + '</td><td>' + cam[3] + ' ' + cam[4] + '</td><td>' + colorMe(cam[8]) + '</td><td>' + cam[5] + '</td><td>' + cam[7] + '</td>
                       </tr>'
         content += '</table>'
-        $('#dat').append(content);
+        $('#dat').append content
     $('#add-action').modal('show')
 
 colorMe = (status) ->
