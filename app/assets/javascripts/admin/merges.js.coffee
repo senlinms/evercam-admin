@@ -68,7 +68,7 @@ onCameraAction = ->
         content += "</tr>"
         data.forEach (cam) ->
           content += '<tr>
-                          <td>' + cam[2] + '</td><td>' + cam[1] + '</td><td>' + colorMe(cam[6]) + '</td><td>' + cam[3] + ' ' + cam[4] + '</td><td>' + colorMe(cam[8]) + '</td><td>' + cam[5] + '</td><td>' + cam[7] + '</td>
+                          <td><a href="/cameras/'+ cam[1] + '">' + cam[2] + '</a></td><td>' + cam[1] + '</td><td>' + colorMe(cam[6]) + '</td><td><a href="/users/'+ cam[9] + '">' + cam[3] + ' ' + cam[4] + '</a></td><td>' + colorMe(cam[8]) + '</td><td>' + cam[5] + '</td><td>' + cam[7] + '</td>
                       </tr>'
         content += '</table>'
         $('#dat').append content
