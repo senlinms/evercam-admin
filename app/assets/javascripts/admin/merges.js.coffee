@@ -99,8 +99,10 @@ onCameraDelete = ->
           tr.remove()
           count--
           action.find('td:nth-child(5)').text(count)
+        error: (xhr, status, error) ->
+          $(".alert-danger").text(xhr.responseText)
     else
-      $(".alert-info")
+      $(".alert-danger")
         .delay(200)
         .fadeIn()
         .delay(4000)
