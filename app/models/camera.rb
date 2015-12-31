@@ -3,7 +3,7 @@ class Camera < ActiveRecord::Base
 
   belongs_to :user, :foreign_key => 'owner_id', :class_name => 'EvercamUser'
   belongs_to :vendor_model, :foreign_key => 'model_id', :class_name => 'VendorModel'
-  has_many :camera_shares
+  has_many :camera_shares, dependent: :delete_all
 
   validates :exid, presence: true
   validates :user, presence: true

@@ -1,4 +1,6 @@
 merge_table = undefined
+count = 0
+action = undefined
 
 initializeDataTable = ->
   merge_table = $("#merge_datatables").DataTable
@@ -51,6 +53,8 @@ onCameraAction = ->
     host = $(this).parents('tr').find('td:nth-child(1)').text()
     port = $(this).parents('tr').find('td:nth-child(2)').text()
     jpg  = $(this).parents('tr').find('td:nth-child(3)').text()
+    count = parseInt($(this).parents('tr').find('td:nth-child(5)').text(),10)
+    action = $(this).parents('tr')
     d = {}
     d.host = host
     d.port = port
@@ -68,11 +72,41 @@ onCameraAction = ->
         content += "</tr>"
         data.forEach (cam) ->
           content += '<tr>
-                          <td><a href="/cameras/'+ cam[1] + '">' + cam[2] + '</a></td><td>' + cam[1] + '</td><td>' + colorMe(cam[6]) + '</td><td><a href="/users/'+ cam[9] + '">' + cam[3] + ' ' + cam[4] + '</a></td><td>' + colorMe(cam[8]) + '</td><td>' + cam[5] + '</td><td>' + cam[7] + '</td>
+                          <td><a href="/cameras/'+ cam[0] + '">' + cam[2] + '</a></td><td>' + cam[1] + '</td><td>' + colorMe(cam[6]) + '</td><td><a href="/users/'+ cam[9] + '">' + cam[3] + ' ' + cam[4] + '</a></td><td>' + colorMe(cam[8]) + '</td><td>' + cam[5] + '</td><td>' + cam[7] + '</td><td><a href="#" class="delete-cam">Delete</a></td>
                       </tr>'
         content += '</table>'
         $('#dat').append content
     $('#add-action').modal('show')
+
+onCameraDelete = ->
+  exid = ''
+  tr = ''
+  $("#dat").on 'click', '.delete-cam', ->
+    $('#deleteModal').modal('show')
+    tr = $(this).parents('tr')
+    exid = tr.find('td:nth-child(2)').text()
+    $(".col-md-12 > p > #id").append exid
+  $("#delete-camera").on "click", ->
+    if exid == $("#camera_specified_id").val()
+      $('#deleteModal').modal('hide')
+      del = {}
+      del.exid = exid
+      $.ajax
+        url: 'merge'
+        data: del
+        type: 'get'
+        success: ->
+          tr.remove()
+          count--
+          action.find('td:nth-child(5)').text(count)
+        error: (xhr, status, error) ->
+          $(".alert-danger").text(xhr.responseText)
+    else
+      $(".alert-danger")
+        .delay(200)
+        .fadeIn()
+        .delay(4000)
+        .fadeOut()
 
 colorMe = (status) ->
   if status is true or status is "t"
@@ -83,12 +117,19 @@ colorMe = (status) ->
 clearModal = ->
   $('#dat').html("")
 
+clearFeilds = ->
+  $(".col-md-12 > p > #id").text("")
+  $("#camera_specified_id").val("")
+
 onModelClose = ->
   $("#add-action").on "hidden.bs.modal", ->
     clearModal()
+  $("#deleteModal").on "hidden.bs.modal", ->
+    clearFeilds()
 
 window.initializeMerges = ->
   initializeDataTable()
   columnsDropdown()
   onCameraAction()
+  onCameraDelete()
   onModelClose()
