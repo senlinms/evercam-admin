@@ -105,19 +105,19 @@ onCameraDelete = ->
         error: (xhr, status, error) ->
           $(".alert-danger").text(xhr.responseText)
     else if $("#camera_specified_id").val() is ""
-        $(".alert-danger")
-        .text("Please specify your camera id!")
-        .delay(200)
-        .fadeIn()
-        .delay(4000)
-        .fadeOut()
+      $(".alert-danger")
+      .text("Please specify your camera id!")
+      .delay(200)
+      .fadeIn()
+      .delay(4000)
+      .fadeOut()
     else
-        $(".alert-danger")
-        .text("Invalid camera id!")
-        .delay(200)
-        .fadeIn()
-        .delay(4000)
-        .fadeOut()
+      $(".alert-danger")
+      .text("Invalid camera id!")
+      .delay(200)
+      .fadeIn()
+      .delay(4000)
+      .fadeOut()
 
 colorMe = (status) ->
   if status is true or status is "t"
