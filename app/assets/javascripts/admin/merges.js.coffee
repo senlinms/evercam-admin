@@ -68,12 +68,15 @@ onCameraAction = ->
         content = "<table class='table table-striped'>"
         content += "<thead>"
         content += "<tr>"
-        content += "<th>Name</th><th>exid</th><th>Online</th><th>Owner Name</th><th>Public</th><th>Shared Count</th><th>Created At</th>"
+        content += "<th>Name</th><th>exid</th><th>Online</th><th>Owner Name</th><th>Public</th><th>Shared Count</th><th>Created At</th><th class='center'>Action</th>"
         content += "</tr>"
+        content += "</thead>"
+        content += "<tbody>"
         data.forEach (cam) ->
           content += '<tr>
-                          <td><a href="/cameras/'+ cam[0] + '">' + cam[2] + '</a></td><td>' + cam[1] + '</td><td>' + colorMe(cam[6]) + '</td><td><a href="/users/'+ cam[9] + '">' + cam[3] + ' ' + cam[4] + '</a></td><td>' + colorMe(cam[8]) + '</td><td>' + cam[5] + '</td><td>' + cam[7] + '</td><td><a href="#" class="delete-cam">Delete</a></td>
+                          <td><a href="/cameras/'+ cam[0] + '">' + cam[2] + '</a></td><td>' + cam[1] + '</td><td>' + colorMe(cam[6]) + '</td><td><a href="/users/'+ cam[9] + '">' + cam[3] + ' ' + cam[4] + '</a></td><td>' + colorMe(cam[8]) + '</td><td>' + cam[5] + '</td><td>' + cam[7] + '</td><td class="center"><i class="fa fa-trash-o delete-cam"></i></td>
                       </tr>'
+        content += "</tbody>"
         content += '</table>'
         $('#dat').append content
     $('#add-action').modal('show')
@@ -101,8 +104,16 @@ onCameraDelete = ->
           action.find('td:nth-child(5)').text(count)
         error: (xhr, status, error) ->
           $(".alert-danger").text(xhr.responseText)
+    else if $("#camera_specified_id").val() is ""
+        $(".alert-danger")
+        .text("Please specify your camera id!")
+        .delay(200)
+        .fadeIn()
+        .delay(4000)
+        .fadeOut()
     else
-      $(".alert-danger")
+        $(".alert-danger")
+        .text("Invalid camera id!")
         .delay(200)
         .fadeIn()
         .delay(4000)
