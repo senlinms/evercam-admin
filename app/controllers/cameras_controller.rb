@@ -11,6 +11,9 @@ class CamerasController < ApplicationController
 
   def merge
     @cameras = Camera.run_sql("select count(nullif(is_online = false, true)) as online, config->>'external_http_port' as external_http_port, config->>'external_host' as external_host, LOWER(config->'snapshots'->>'jpg')   as jpg, count(*) as count from cameras group by config->>'external_http_port', config->>'external_host', LOWER(config->'snapshots'->>'jpg') HAVING (COUNT(*)>1)")
+    if params[:exid]
+      delete_camera(params[:exid])
+    end
     if params[:port] && params[:host] && params[:jpg]
       cameras = filter_camera(params[:port], params[:host], params[:jpg])
       records = []
@@ -54,5 +57,9 @@ class CamerasController < ApplicationController
     elsif jpg.blank? && !host.blank? && !port.blank?
       Camera.where("config->> 'external_http_port' = ? and config->> 'external_host' = ? and (config->'snapshots'->>'jpg') IS NULL", port, host)
     end
+  end
+
+  def delete_camera(exid)
+    Camera.find_by_exid(exid).destroy
   end
 end
