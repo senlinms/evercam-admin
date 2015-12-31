@@ -104,7 +104,7 @@ onCameraDelete = ->
         .delay(200)
         .fadeIn()
         .delay(4000)
-        .fadeOut();
+        .fadeOut()
 
 colorMe = (status) ->
   if status is true or status is "t"
