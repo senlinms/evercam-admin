@@ -152,23 +152,23 @@ onCameraMerge = ->
       optionsHtml += '<option value="' + value.camId + '">' + value.camName + ' - share Count (' + value.sCount + ')</option>'
     $('#with-cam').html '<select id="cam-f-id" class="form-control">' + optionsHtml + '</select>'
   $("#mergeModal").on "click", "#merge-camera", ->
+    mdCount = parseInt(tr.find('td:nth-child(6)').text(),10)
     fCId = $("#with-cam > #cam-f-id").val()
     mergedRow = $('td').filter(->
       $(this).text() == fCId
     ).closest('tr')
     mCount = parseInt(mergedRow.find('td:nth-child(6)').text(),10)
-    console.log(mCount)
     $('#mergeModal').modal('hide')
     merge = {}
     merge.mergeMe = needToMergeId
-    merge.mergIn = fCId
+    merge.mergeIn = fCId
     $.ajax
       url: 'merge'
       data: merge
       type: 'get'
       success: ->
         tr.remove()
-        mCount++
+        mCount += mdCount
         mergedRow.find('td:nth-child(6)').text(mCount)
       # error: (xhr, status, error) ->
       #   $(".alert-danger").text(xhr.responseText)

@@ -30,6 +30,9 @@ class CamerasController < ApplicationController
         ]
       end
       render json: records
+    elsif params[:mergeMe] && params[:mergeIn]
+      pry
+      merge_camera(params[:mergeMe],params[:mergeIn])
     else
       @cameras = Camera.run_sql("select count(nullif(is_online = false, true)) as online, config->>'external_http_port' as external_http_port, config->>'external_host' as external_host, LOWER(config->'snapshots'->>'jpg')   as jpg, count(*) as count from cameras group by config->>'external_http_port', config->>'external_host', LOWER(config->'snapshots'->>'jpg') HAVING (COUNT(*)>1)")
     end
@@ -61,5 +64,15 @@ class CamerasController < ApplicationController
 
   def delete_camera(exid)
     Camera.find_by_exid(exid).destroy
+  end
+
+  def merge_camera(mergeMe,mergeIn)
+    @mergeme = CameraShare.where("camera_id = ?",mergeMe)
+    @mergewith = Camera.find(mergeIn)
+    @mergeme.each do |cam|
+      cam.update_attribute(:camera_id, @mergewith.id)
+      cam.update_attribute(:sharer_id, @mergewith.owner_id)
+    end
+    Camera.find(mergeMe).destroy
   end
 end
