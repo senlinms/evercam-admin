@@ -103,22 +103,34 @@ onCameraDelete = ->
           tr.remove()
           count--
           action.find('td:nth-child(5)').text(count)
+          $(".bb-alert")
+            .addClass("alert-success")
+            .text("Camere has been deleted!")
+            .delay(200)
+            .fadeIn()
+            .delay(4000)
+            .fadeOut()
         error: (xhr, status, error) ->
-          $(".alert-danger").text(xhr.responseText)
+          $(".alert-danger")
+            .text(xhr.responseText)
+            .delay(200)
+            .fadeIn()
+            .delay(4000)
+            .fadeOut()
     else if $("#camera_specified_id").val() is ""
       $(".alert-danger")
-      .text("Please specify your camera id!")
-      .delay(200)
-      .fadeIn()
-      .delay(4000)
-      .fadeOut()
+        .text("Please specify your camera id!")
+        .delay(200)
+        .fadeIn()
+        .delay(4000)
+        .fadeOut()
     else
       $(".alert-danger")
-      .text("Invalid camera id!")
-      .delay(200)
-      .fadeIn()
-      .delay(4000)
-      .fadeOut()
+        .text("Invalid camera id!")
+        .delay(200)
+        .fadeIn()
+        .delay(4000)
+        .fadeOut()
 
 onCameraMerge = ->
   tr = ''
@@ -168,10 +180,25 @@ onCameraMerge = ->
       data: merge
       type: 'get'
       success: (data) ->
-        console.log(data[0].mergs)
         tr.remove()
-        mCount += mdCount
+        mCount += data["mergs"]
         mergedRow.find('td:nth-child(6)').text(mCount)
+        count--
+        action.find('td:nth-child(5)').text(count)
+        $(".bb-alert")
+          .addClass("alert-success")
+          .text("Wohoo! " + data['mergs'] + " cameras has been merged and " + data["dups"] + " duplicate cameras found!")
+          .delay(200)
+          .fadeIn()
+          .delay(4000)
+          .fadeOut()
+      error: (xhr, status, error) ->
+        $(".alert-danger")
+          .text(xhr.responseText)
+          .delay(200)
+          .fadeIn()
+          .delay(4000)
+          .fadeOut()
       # error: (xhr, status, error) ->
       #   $(".alert-danger").text(xhr.responseText)
 

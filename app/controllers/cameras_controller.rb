@@ -79,7 +79,7 @@ class CamerasController < ApplicationController
         dups += 1
       end
     end
-    render json: { :mergs => mergs , :dups => dups }
+    render json: { mergs: mergs, dups: dups }
     Camera.find(mergeMe).destroy
   end
 end
