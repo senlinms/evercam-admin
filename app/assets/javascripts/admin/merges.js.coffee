@@ -73,7 +73,6 @@ onCameraAction = ->
         content += "</thead>"
         content += "<tbody>"
         data.forEach (cam) ->
-          console.log(cam)
           content += '<tr>
                           <td><a href="/cameras/'+ cam[0] + '">' + cam[2] + '</a></td><td>' + cam[1] + '</td><td>' + colorMe(cam[6]) + '</td><td><a href="/users/'+ cam[9] + '">' + cam[3] + ' ' + cam[4] + '</a></td><td>' + colorMe(cam[8]) + '</td><td>' + cam[5] + '</td><td>' + cam[7] + '</td><td class="center"><i class="fa fa-trash-o delete-cam"></i>' + shareOp(cam[5]) + '</td><td style="display: none;">' + cam[0] + '</td>
                       </tr>'
@@ -193,14 +192,13 @@ onCameraMerge = ->
           .delay(4000)
           .fadeOut()
       error: (xhr, status, error) ->
-        $(".alert-danger")
+        $(".bb-alert")
+          .addClass("alert-danger")
           .text(xhr.responseText)
           .delay(200)
           .fadeIn()
           .delay(4000)
           .fadeOut()
-      # error: (xhr, status, error) ->
-      #   $(".alert-danger").text(xhr.responseText)
 
 colorMe = (status) ->
   if status is true or status is "t"
@@ -232,7 +230,6 @@ shareOp = (intval) ->
     return ' | <i class="icon-camera merge-cam"></i>'
   else
     return ""
-  console.log(intval)
 
 window.initializeMerges = ->
   initializeDataTable()
