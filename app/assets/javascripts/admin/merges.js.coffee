@@ -88,7 +88,7 @@ onCameraDelete = ->
     $('#deleteModal').modal('show')
     tr = $(this).parents('tr')
     exid = tr.find('td:nth-child(2)').text()
-    $(".col-md-12 > p > #id").append exid
+    $(".modal-body > p > #id").append exid
   $("#delete-camera").on "click", ->
     if exid == $("#camera_specified_id").val()
       $('#deleteModal').modal('hide')
@@ -186,7 +186,7 @@ onCameraMerge = ->
         action.find('td:nth-child(5)').text(count)
         $(".bb-alert")
           .addClass("alert-success")
-          .text("Wohoo! " + data['mergs'] + " cameras has been merged and " + data["dups"] + " duplicate cameras found!")
+          .text(data['mergs'] + " cameras has been merged and " + data["dups"] + " duplicate cameras found!")
           .delay(200)
           .fadeIn()
           .delay(4000)

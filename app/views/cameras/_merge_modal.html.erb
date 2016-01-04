@@ -22,14 +22,13 @@
 <div id="deleteModal" class="modal fade">
   <div class="modal-dialog">
     <div class="modal-content">
+      <div class="modal-header">
+          <div class="caption">Delete Camera</div>
+      </div>
       <div class="modal-body">
-        <div class="col-md-12">
-          <p class="text-left">Are you sure you want to <strong>Delete</strong> this camera?</p>
-        </div>
-        <div class="col-md-12">
-          <p>Enter camera id ( <strong id="id"></strong> ) to confirm that you want to permanently delete this camera</p>
-          <input id="camera_specified_id" name="camera_specified_id" type="text" class="form-control">
-        </div>
+        <p class="text-left">Are you sure you want to <strong>Delete</strong> this camera?</p>
+        <p>Enter camera id ( <strong id="id"></strong> ) to confirm that you want to permanently delete this camera</p>
+        <input id="camera_specified_id" name="camera_specified_id" type="text" class="form-control">
       </div>
       <div class="modal-footer">
         <div class="col-sm-8 margin-top-10">
@@ -49,6 +48,7 @@
       </div>
       <div class="modal-body">
         <p>merge ( <strong id="mc"></strong> ) with <div id="with-cam" class="form-group"></div></p>
+        <p>After Merge, camera will be deleted</p>
       </div>
       <div class="modal-footer">
         <div class="col-sm-8 margin-top-10">
