@@ -45,15 +45,7 @@
               <td></td>
               <td>
                 <% if camera.cloud_recording %>
-                  <% if raw(camera.cloud_recording.schedule.to_json).eql?({"Monday":["0:0-23:59"],"Tuesday":["0:0-23:59"],"Wednesday":["0:0-23:59"],"Thursday":["0:0-23:59"],"Friday":["0:0-23:59"],"Saturday":["0:0-23:59"],"Sunday":["0:0-23:59"]}) %>
-                    <% if camera.cloud_recording.frequency.equal?(1) %>
-                      Off
-                    <% else %>
-                      On
-                    <% end %>
-                  <% else %>
-                    On (Scheduled)
-                  <% end %>
+                  <%= camera.cloud_recording.status.titleize %>
                 <% else %>
                   Off
                 <% end %>

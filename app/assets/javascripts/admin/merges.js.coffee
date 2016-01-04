@@ -74,7 +74,7 @@ onCameraAction = ->
         content += "<tbody>"
         data.forEach (cam) ->
           content += '<tr>
-                          <td><a href="/cameras/'+ cam[0] + '">' + cam[2] + '</a></td><td>' + cam[1] + '</td><td>' + colorMe(cam[6]) + '</td><td><a href="/users/'+ cam[9] + '">' + cam[3] + ' ' + cam[4] + '</a></td><td>' + colorMe(cam[8]) + '</td><td>' + cam[5] + '</td><td>' + cam[7] + '</td><td class="center"><i class="fa fa-trash-o delete-cam"></i></td>
+                          <td><a href="/cameras/'+ cam[0] + '">' + cam[2] + '</a></td><td>' + cam[1] + '</td><td>' + colorMe(cam[6]) + '</td><td><a href="/users/'+ cam[9] + '">' + cam[3] + ' ' + cam[4] + '</a></td><td>' + colorMe(cam[8]) + '</td><td>' + cam[5] + '</td><td>' + cam[7] + '</td><td class="center"><i class="fa fa-trash-o delete-cam"></i>' + shareOp(cam[5]) + '</td><td style="display: none;">' + cam[0] + '</td>
                       </tr>'
         content += "</tbody>"
         content += '</table>'
@@ -88,7 +88,7 @@ onCameraDelete = ->
     $('#deleteModal').modal('show')
     tr = $(this).parents('tr')
     exid = tr.find('td:nth-child(2)').text()
-    $(".col-md-12 > p > #id").append exid
+    $(".modal-body > p > #id").append exid
   $("#delete-camera").on "click", ->
     if exid == $("#camera_specified_id").val()
       $('#deleteModal').modal('hide')
@@ -102,22 +102,103 @@ onCameraDelete = ->
           tr.remove()
           count--
           action.find('td:nth-child(5)').text(count)
+          $(".bb-alert")
+            .addClass("alert-success")
+            .text("Camere has been deleted!")
+            .delay(200)
+            .fadeIn()
+            .delay(4000)
+            .fadeOut()
         error: (xhr, status, error) ->
-          $(".alert-danger").text(xhr.responseText)
+          $(".alert-danger")
+            .text(xhr.responseText)
+            .delay(200)
+            .fadeIn()
+            .delay(4000)
+            .fadeOut()
     else if $("#camera_specified_id").val() is ""
       $(".alert-danger")
-      .text("Please specify your camera id!")
-      .delay(200)
-      .fadeIn()
-      .delay(4000)
-      .fadeOut()
+        .text("Please specify your camera id!")
+        .delay(200)
+        .fadeIn()
+        .delay(4000)
+        .fadeOut()
     else
       $(".alert-danger")
-      .text("Invalid camera id!")
-      .delay(200)
-      .fadeIn()
-      .delay(4000)
-      .fadeOut()
+        .text("Invalid camera id!")
+        .delay(200)
+        .fadeIn()
+        .delay(4000)
+        .fadeOut()
+
+onCameraMerge = ->
+  tr = ''
+  needToMergeId = ''
+  cameraName = ''
+  fCId = ''
+  mergedRow = ''
+  $("#dat").on 'click', '.merge-cam', ->
+    $('#mergeModal').modal('show')
+    tr = $(this).parents('tr')
+    needToMergeId = tr.find('td:nth-child(9)').text()
+    cameraName = tr.find('td:nth-child(1)').text()
+    nCameraCount = tr.find('td:nth-child(6)').text()
+    $("p > #mc").append cameraName + " - share count ( " + nCameraCount + " )"
+    tbl = $('#dat > table > tbody > tr:has(td)').map((i, v) ->
+      $td = $('td', this)
+      {
+        id: ++i
+        camId: $td.eq(8).text()
+        camName: $td.eq(0).text()
+        exId: $td.eq(1).text()
+        sCount: $td.eq(5).text()
+      }
+    ).get()
+    i = 0
+    while i < tbl.length
+      if tbl[i].camId == needToMergeId && tbl[i].camName == cameraName
+        tbl.splice(i,1)
+      i++
+    optionsHtml = ''
+    tbl.forEach (value) ->
+      optionsHtml += '<option value="' + value.camId + '">' + value.camName + ' - share Count (' + value.sCount + ')</option>'
+    $('#with-cam').html '<select id="cam-f-id" class="form-control">' + optionsHtml + '</select>'
+  $("#mergeModal").on "click", "#merge-camera", ->
+    mdCount = parseInt(tr.find('td:nth-child(6)').text(),10)
+    fCId = $("#with-cam > #cam-f-id").val()
+    mergedRow = $('td').filter(->
+      $(this).text() == fCId
+    ).closest('tr')
+    mCount = parseInt(mergedRow.find('td:nth-child(6)').text(),10)
+    $('#mergeModal').modal('hide')
+    merge = {}
+    merge.mergeMe = needToMergeId
+    merge.mergeIn = fCId
+    $.ajax
+      url: 'merge'
+      data: merge
+      type: 'get'
+      success: (data) ->
+        tr.remove()
+        mCount += data["mergs"]
+        mergedRow.find('td:nth-child(6)').text(mCount)
+        count--
+        action.find('td:nth-child(5)').text(count)
+        $(".bb-alert")
+          .addClass("alert-success")
+          .text(data['mergs'] + " cameras has been merged and " + data["dups"] + " duplicate cameras found!")
+          .delay(200)
+          .fadeIn()
+          .delay(4000)
+          .fadeOut()
+      error: (xhr, status, error) ->
+        $(".bb-alert")
+          .addClass("alert-danger")
+          .text(xhr.responseText)
+          .delay(200)
+          .fadeIn()
+          .delay(4000)
+          .fadeOut()
 
 colorMe = (status) ->
   if status is true or status is "t"
@@ -132,15 +213,28 @@ clearFeilds = ->
   $(".col-md-12 > p > #id").text("")
   $("#camera_specified_id").val("")
 
+clearMergeFeilds = ->
+  $("p > #mc").text("")
+  $("p > #with-cam").text("")
+
 onModelClose = ->
   $("#add-action").on "hidden.bs.modal", ->
     clearModal()
   $("#deleteModal").on "hidden.bs.modal", ->
     clearFeilds()
+  $("#mergeModal").on "hidden.bs.modal", ->
+    clearMergeFeilds()
+
+shareOp = (intval) ->
+  if intval > 0
+    return ' | <i class="icon-camera merge-cam"></i>'
+  else
+    return ""
 
 window.initializeMerges = ->
   initializeDataTable()
   columnsDropdown()
   onCameraAction()
   onCameraDelete()
+  onCameraMerge()
   onModelClose()
