@@ -75,7 +75,7 @@ class CamerasController < ApplicationController
         cam.update_attribute(:camera_id, @mergewith.id)
         cam.update_attribute(:sharer_id, @mergewith.owner_id)
         mergs += 1
-      rescue => error
+      rescue
         dups += 1
       end
     end

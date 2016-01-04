@@ -157,7 +157,7 @@ onCameraMerge = ->
     i = 0
     while i < tbl.length
       if tbl[i].camId == needToMergeId && tbl[i].camName == cameraName
-        tbl.splice(i,1);
+        tbl.splice(i,1)
       i++
     optionsHtml = ''
     tbl.forEach (value) ->
