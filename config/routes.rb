@@ -26,6 +26,7 @@ Rails.application.routes.draw do
   resources :vendor_models, path: :models
   get '/models/load.vendor.model' => 'vendor_models#load_vendor_model'
   patch '/models' => 'vendor_models#update'
+  delete "/models" => "vendor_models#delete"
 
   get '/map' => 'dashboard#map'
   get '/kpi' => 'dashboard#kpi'

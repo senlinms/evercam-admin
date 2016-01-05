@@ -2,9 +2,6 @@ class VendorModelsController < ApplicationController
   before_action :authorize_admin
 
   def index
-    if params[:exid]
-      delete_model(params[:exid])
-    end
     @total_vendors = Vendor.count
     @total_cameras = Camera.count
     @types = ["poe", "wifi", "onvif", "psia", "audio_io",
@@ -53,7 +50,7 @@ class VendorModelsController < ApplicationController
         vendors_models[index].audio_io,
         vendors_models[index].shape,
         vendors_models[index].resolution,
-        vendors_models[index].resolution
+        ""
       ]
     end
 
@@ -174,9 +171,15 @@ class VendorModelsController < ApplicationController
     end
   end
 
-  private
-
-  def delete_model(exid)
-    VendorModel.find_by_exid(exid).destroy
+  def delete
+    message = 'Model has been deleted!'
+    if params[:exid]
+      begin
+        VendorModel.find_by_exid(params[:exid]).destroy
+        render json: message
+      rescue Exception => e
+        render json: e
+      end
+    end
   end
 end

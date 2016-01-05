@@ -306,15 +306,22 @@ onDeleteModel = ->
       $('#deleteModal').modal('hide')
       venderm = {}
       venderm.exid = delete_vender_val[3]
+      token = $('meta[name="csrf-token"]')
+      if token.size() > 0
+        headers = 'X-CSRF-Token': token.attr('content')
       $.ajax
         url: 'models'
         data: venderm
-        type: 'get'
+        type: 'delete'
+        dataType: 'text'
+        contentType: "application/x-www-form-urlencoded"
+        headers: headers
+        cache: false
         success: (data) ->
           tr.remove()
           $(".bb-alert")
             .addClass("alert-success")
-            .text("Model has been deleted!")
+            .text(data)
             .delay(200)
             .fadeIn()
             .delay(4000)
