@@ -4,8 +4,8 @@ class VendorModelsController < ApplicationController
   def index
     @total_vendors = Vendor.count
     @total_cameras = Camera.count
-    @types = ['poe', 'wifi', 'onvif', 'psia', 'audio_io',
-              'ptz', 'infrared', 'varifocal', 'sd_card', 'upnp']
+    @types = ["poe", "wifi", "onvif", "psia", "audio_io",
+              "ptz", "infrared", "varifocal", "sd_card", "upnp"]
   end
 
   def load_vendor_model
@@ -49,7 +49,8 @@ class VendorModelsController < ApplicationController
         vendors_models[index].upnp,
         vendors_models[index].audio_io,
         vendors_models[index].shape,
-        vendors_models[index].resolution
+        vendors_models[index].resolution,
+        ""
       ]
     end
 
@@ -170,4 +171,16 @@ class VendorModelsController < ApplicationController
     end
   end
 
+  def delete
+    message = "Model has been deleted!"
+    errors = "Some error has been occured"
+    if params[:exid]
+      begin
+        VendorModel.find_by_exid(params[:exid]).destroy
+        render json: message
+      rescue
+        render json: errors
+      end
+    end
+  end
 end
