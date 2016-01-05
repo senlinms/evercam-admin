@@ -172,13 +172,14 @@ class VendorModelsController < ApplicationController
   end
 
   def delete
-    message = 'Model has been deleted!'
+    message = "Model has been deleted!"
+    errors = "Some error has been occured"
     if params[:exid]
       begin
         VendorModel.find_by_exid(params[:exid]).destroy
         render json: message
-      rescue Exception => e
-        render json: e
+      rescue
+        render json: errors
       end
     end
   end
