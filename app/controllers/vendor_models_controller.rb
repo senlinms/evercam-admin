@@ -5,10 +5,10 @@ class VendorModelsController < ApplicationController
     if params[:exid]
       delete_model(params[:exid])
     end
-      @total_vendors = Vendor.count
-      @total_cameras = Camera.count
-      @types = ['poe', 'wifi', 'onvif', 'psia', 'audio_io',
-                'ptz', 'infrared', 'varifocal', 'sd_card', 'upnp']
+    @total_vendors = Vendor.count
+    @total_cameras = Camera.count
+    @types = ["poe", "wifi", "onvif", "psia", "audio_io",
+              "ptz", "infrared", "varifocal", "sd_card", "upnp"]
   end
 
   def load_vendor_model
