@@ -2,10 +2,13 @@ class VendorModelsController < ApplicationController
   before_action :authorize_admin
 
   def index
-    @total_vendors = Vendor.count
-    @total_cameras = Camera.count
-    @types = ['poe', 'wifi', 'onvif', 'psia', 'audio_io',
-              'ptz', 'infrared', 'varifocal', 'sd_card', 'upnp']
+    if params[:exid]
+      delete_model(params[:exid])
+    end
+      @total_vendors = Vendor.count
+      @total_cameras = Camera.count
+      @types = ['poe', 'wifi', 'onvif', 'psia', 'audio_io',
+                'ptz', 'infrared', 'varifocal', 'sd_card', 'upnp']
   end
 
   def load_vendor_model
@@ -49,6 +52,7 @@ class VendorModelsController < ApplicationController
         vendors_models[index].upnp,
         vendors_models[index].audio_io,
         vendors_models[index].shape,
+        vendors_models[index].resolution,
         vendors_models[index].resolution
       ]
     end
@@ -170,4 +174,9 @@ class VendorModelsController < ApplicationController
     end
   end
 
+  private
+
+  def delete_model(exid)
+    VendorModel.find_by_exid(exid).destroy
+  end
 end

@@ -1,4 +1,5 @@
 vendor_models_table = null
+delete_vender_val = ''
 method = 'POST'
 types = ['poe', 'wifi', 'onvif', 'psia', 'audio_io',
          'ptz', 'infrared', 'varifocal', 'sd_card', 'upnp']
@@ -39,6 +40,13 @@ initializeDataTable = ->
         [ 25, 50, 100, 150 ]
         [ 25, 50, 100, 150 ]
       ]
+      fnRowCallback: (nRow, aData, iDisplayIndex, iDisplayIndexFull) ->
+        $("td:eq(10)", nRow)
+          .html("<i class='fa fa-trash-o delete-venderm'></i>")
+          .css("text-align": "center")
+        # str = $("td:eq(1)", nRow).html()
+        # delete_vender_val = $.map str.split('"'), (substr, i) ->
+        #   if i % 2 then substr else null
       'pageLength': 200
       'ajax':
         'method': 'GET'
@@ -69,7 +77,8 @@ initializeDataTable = ->
         {data: "21", visible: false, 'render': humanBool},
         {data: "22", visible: false, 'render': humanBool},
         {data: "23", visible: false},
-        {data: "24", visible: false}
+        {data: "24", visible: false},
+        {data: "25"}
 
       ],
       'order': [ [ 1, 'asc' ] ]
@@ -109,7 +118,7 @@ showLogo = (id, type, row) ->
   return "<img id='image_#{row[1]}' src='#{image_url}'/>"
 
 editModel = (name, type, row) ->
-  return "<a style='cursor:pointer;' class='edit-model' val-vendor-id='#{row[0]}' " +
+  return "<a style='cursor:pointer;' data-venderm='1' class='edit-model' val-vendor-id='#{row[0]}' " +
    "val-model-id='#{row[1]}' val-vendor-name='#{row[2]}' val-model-name='#{row[3]}'  " +
    "val-jpg='#{row[4]}' val-h264='#{row[5]}' val-mjpg='#{row[6]}' val-mpeg4='#{row[7]}' " +
    "val-mobile='#{row[8]}' val-lowres='#{row[9]}' val-username='#{row[10]}' val-password='#{row[11]}' " +
@@ -286,6 +295,65 @@ onEditModel = ->
     $("#add-vendor-modal div.caption").text("Edit Model");
     method = 'PATCH'
 
+onDeleteModel = ->
+  tr = ''
+  $("#datatable_vendor_models").on 'click', '.delete-venderm', ->
+    $("#deleteModal").modal("show")
+    tr = $(this).parents('tr')
+    str = tr.find('td:nth-child(2)').html()
+    delete_vender_val = $.map str.split('"'), (substr, i) ->
+      if i % 2 then substr else null
+    $("#delete-vm > #id").text(delete_vender_val[4])
+  $("#deleteModal").on 'click', '#delete-model', ->
+    if $("#model_specified_id").val() == delete_vender_val[4]
+      $('#deleteModal').modal('hide')
+      venderm = {}
+      venderm.exid = delete_vender_val[4]
+      $.ajax
+        url: 'models'
+        data: venderm
+        type: 'get'
+        success: (data) ->
+          tr.remove()
+          $(".bb-alert")
+            .addClass("alert-success")
+            .text("Model has been deleted!")
+            .delay(200)
+            .fadeIn()
+            .delay(4000)
+            .fadeOut()
+        error: (xhr, status, error) ->
+          $(".bb-alert")
+            .addClass("alert-danger")
+            .text(xhr.responseText)
+            .delay(200)
+            .fadeIn()
+            .delay(4000)
+            .fadeOut()
+    else if $("#model_specified_id").val() == ""
+      $(".bb-alert")
+        .addClass("alert-danger")
+        .text("Please specify your model id!")
+        .delay(200)
+        .fadeIn()
+        .delay(4000)
+        .fadeOut()
+    else
+      $(".bb-alert")
+        .addClass("alert-danger")
+        .text("Invalid model id!")
+        .delay(200)
+        .fadeIn()
+        .delay(4000)
+        .fadeOut()
+
+clearPopId = ->
+  $("#model_specified_id").val("")
+
+onModelDClose = ->
+  $("#deleteModal").on "hidden.bs.modal", ->
+    clearPopId()
+
 window.initializeVendorModel = ->
   initializeDataTable()
   columnsDropdown()
@@ -293,3 +361,5 @@ window.initializeVendorModel = ->
   handleAddNewModel()
   onModelClose()
   onEditModel()
+  onDeleteModel()
+  onModelDClose()
