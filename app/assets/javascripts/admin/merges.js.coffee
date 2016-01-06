@@ -85,15 +85,15 @@ onCameraDelete = ->
   rows = []
   camids = []
   $("#delete-camera").on "click", ->
-    rows = $('.center > input:checkbox:checked').map(->
+    rows = $('.center > input:checkbox:checked').map( ->
       $(this).parents('tr')
     ).get()
-    camids = $('.center > input:checkbox:checked').map(->
+    camids = $('.center > input:checkbox:checked').map( ->
       $(this).parents('tr').find('td:last-child').text()
     ).get()
     if rows.length > 0
       $("#deleteModal").modal("show")
-  $("#fdelete-camera").on "click",->
+  $("#fdelete-camera").on "click", ->
     $("#deleteModal").modal("hide")
     del = {}
     del.camids = camids
