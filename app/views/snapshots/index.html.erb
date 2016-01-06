@@ -6,7 +6,7 @@
       <div class="col-md-12">
         <!-- BEGIN PAGE TITLE & BREADCRUMB-->
         <ul class="page-breadcrumb breadcrumb">
-          <%= render 'shared/breadcrumb_basic', current_section: 'Snapshots' %>
+          <%= render 'shared/breadcrumb_basic', current_section: "Cloud Recording" %>
         </ul>
         <!-- END PAGE TITLE & BREADCRUMB-->
       </div>
@@ -38,56 +38,56 @@
           </thead>
           <tbody>
           <% @cameras.each do |camera| %>
-            <tr>
-              <td><%= link_to camera.name, camera_path(camera) %></td>
-              <td><%= link_to camera.user.fullname, user_path(camera.user) %></td>
-              <td>0</td>
-              <td></td>
-              <td>
-                <% if camera.cloud_recording %>
-                  <%= camera.cloud_recording.status.titleize %>
-                <% else %>
-                  Off
-                <% end %>
-              </td>
-              <td>
-                <% if camera.cloud_recording %>
-                  <% if camera.cloud_recording.storage_duration.equal?(-1) %>
-                    Infinity
-                  <% elsif camera.cloud_recording.storage_duration.equal?(1) %>
-                      24 hours recording
-                  <% else %>
-                    <%= camera.cloud_recording.storage_duration %> days recording
+            <% if camera.cloud_recording && camera.cloud_recording.status != "off" %>
+              <tr>
+                <td><%= link_to camera.name, camera_path(camera) %></td>
+                <td><%= link_to camera.user.fullname, user_path(camera.user) %></td>
+                <td>0</td>
+                <td></td>
+                <td>
+                  <% if camera.cloud_recording %>
+                    <%= camera.cloud_recording.status.titleize %>
                   <% end %>
-                <% end %>
-              </td>
-              <td>
-                <% if camera.cloud_recording %>
-                  <% case camera.cloud_recording.frequency
-                       when 60 %>
-                        60 (1 per second)
-                  <%   when 30 %>
-                        30 (1 every 2 seconds)
-                  <%   when 12 %>
-                        12 (1 every 5 seconds)
-                  <%   when 6 %>
-                        6 (1 every 10 seconds)
-                  <%   when 30 %>
-                        1 (1 every 60 seconds)
-                  <%   end %>
-                <% end %>
-              </td>
-              <td>
-                <% if camera.cloud_recording %>
-                  <% unless raw(camera.cloud_recording.schedule.to_json).eql?({"Monday":["0:0-23:59"],"Tuesday":["0:0-23:59"],"Wednesday":["0:0-23:59"],"Thursday":["0:0-23:59"],"Friday":["0:0-23:59"],"Saturday":["0:0-23:59"],"Sunday":["0:0-23:59"]}) %>
-                    <% schedule = camera.cloud_recording.schedule %>
-                    <%= get_hours(schedule) %> Hours per week
+                </td>
+                <td>
+                  <% if camera.cloud_recording %>
+                    <% if camera.cloud_recording.storage_duration.equal?(-1) %>
+                      Infinity
+                    <% elsif camera.cloud_recording.storage_duration.equal?(1) %>
+                        24 hours recording
+                    <% else %>
+                      <%= camera.cloud_recording.storage_duration %> days recording
+                    <% end %>
                   <% end %>
-                <% end %>
-              </td>
-              <td></td>
-              <td> <%= camera.is_online %> </td>
-            </tr>
+                </td>
+                <td>
+                  <% if camera.cloud_recording %>
+                    <% case camera.cloud_recording.frequency
+                         when 60 %>
+                          60 (1 per second)
+                    <%   when 30 %>
+                          30 (1 every 2 seconds)
+                    <%   when 12 %>
+                          12 (1 every 5 seconds)
+                    <%   when 6 %>
+                          6 (1 every 10 seconds)
+                    <%   when 30 %>
+                          1 (1 every 60 seconds)
+                    <%   end %>
+                  <% end %>
+                </td>
+                <td>
+                  <% if camera.cloud_recording %>
+                    <% unless raw(camera.cloud_recording.schedule.to_json).eql?({"Monday":["0:0-23:59"],"Tuesday":["0:0-23:59"],"Wednesday":["0:0-23:59"],"Thursday":["0:0-23:59"],"Friday":["0:0-23:59"],"Saturday":["0:0-23:59"],"Sunday":["0:0-23:59"]}) %>
+                      <% schedule = camera.cloud_recording.schedule %>
+                      <%= get_hours(schedule) %> Hours per week
+                    <% end %>
+                  <% end %>
+                </td>
+                <td></td>
+                <td> <%= camera.is_online %> </td>
+              </tr>
+            <% end %>
           <% end %>
           </tbody>
         </table>
