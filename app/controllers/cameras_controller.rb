@@ -10,8 +10,8 @@ class CamerasController < ApplicationController
   end
 
   def merge
-    if params[:exid]
-      delete_camera(params[:exid])
+    if params[:camids]
+      delete_camera(params[:camids])
     elsif params[:port] && params[:host] && params[:jpg]
       cameras = filter_camera(params[:port], params[:host], params[:jpg])
       records = []
@@ -61,8 +61,13 @@ class CamerasController < ApplicationController
     end
   end
 
-  def delete_camera(exid)
-    Camera.find_by_exid(exid).destroy
+  def delete_camera(ids)
+    count = 0
+    ids.each do |id|
+      Camera.find(id).destroy
+      count += 1
+    end
+    render json: count
   end
 
   def merge_camera(mergeMe, mergeIn)

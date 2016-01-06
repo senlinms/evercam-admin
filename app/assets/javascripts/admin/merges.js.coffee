@@ -74,7 +74,7 @@ onCameraAction = ->
         content += "<tbody>"
         data.forEach (cam) ->
           content += '<tr>
-                          <td><a href="/cameras/'+ cam[0] + '">' + cam[2] + '</a></td><td>' + cam[1] + '</td><td>' + colorMe(cam[6]) + '</td><td><a href="/users/'+ cam[9] + '">' + cam[3] + ' ' + cam[4] + '</a></td><td>' + colorMe(cam[8]) + '</td><td>' + cam[5] + '</td><td>' + cam[7] + '</td><td class="center"><i class="fa fa-trash-o delete-cam"></i>' + shareOp(cam[5]) + '</td><td style="display: none;">' + cam[0] + '</td>
+                          <td><a href="/cameras/'+ cam[0] + '">' + cam[2] + '</a></td><td>' + cam[1] + '</td><td>' + colorMe(cam[6]) + '</td><td><a href="/users/'+ cam[9] + '">' + cam[3] + ' ' + cam[4] + '</a></td><td>' + colorMe(cam[8]) + '</td><td>' + cam[5] + '</td><td>' + cam[7] + '</td><td class="center"><input type="checkbox" class="delete-cam" value=""></td><td style="display: none;">' + cam[0] + '</td>
                       </tr>'
         content += "</tbody>"
         content += '</table>'
@@ -82,54 +82,51 @@ onCameraAction = ->
     $('#add-action').modal('show')
 
 onCameraDelete = ->
-  exid = ''
-  tr = ''
-  $("#dat").on 'click', '.delete-cam', ->
-    $('#deleteModal').modal('show')
-    tr = $(this).parents('tr')
-    exid = tr.find('td:nth-child(2)').text()
-    $(".modal-body > p > #id").append exid
+  rows = []
+  camids = []
   $("#delete-camera").on "click", ->
-    if exid == $("#camera_specified_id").val()
-      $('#deleteModal').modal('hide')
-      del = {}
-      del.exid = exid
-      $.ajax
-        url: 'merge'
-        data: del
-        type: 'get'
-        success: ->
-          tr.remove()
-          count--
+    rows = $('.center > input:checkbox:checked').map(->
+      $(this).parents('tr')
+    ).get()
+    camids = $('.center > input:checkbox:checked').map(->
+      $(this).parents('tr').find('td:last-child').text()
+    ).get()
+    if rows.length > 0
+      $("#deleteModal").modal("show")
+  $("#fdelete-camera").on "click",->
+    $("#deleteModal").modal("hide")
+    del = {}
+    del.camids = camids
+    $.ajax
+      url: 'merge'
+      data: del
+      type: 'get'
+      success: (data) ->
+        rows.forEach (row) ->
+          row.remove()
+        count -= data
+        if count == 1 || count < 1
+          action.remove()
+        else
           action.find('td:nth-child(5)').text(count)
-          $(".bb-alert")
-            .addClass("alert-success")
-            .text("Camere has been deleted!")
-            .delay(200)
-            .fadeIn()
-            .delay(4000)
-            .fadeOut()
-        error: (xhr, status, error) ->
-          $(".alert-danger")
-            .text(xhr.responseText)
-            .delay(200)
-            .fadeIn()
-            .delay(4000)
-            .fadeOut()
-    else if $("#camera_specified_id").val() is ""
-      $(".alert-danger")
-        .text("Please specify your camera id!")
-        .delay(200)
-        .fadeIn()
-        .delay(4000)
-        .fadeOut()
-    else
-      $(".alert-danger")
-        .text("Invalid camera id!")
-        .delay(200)
-        .fadeIn()
-        .delay(4000)
-        .fadeOut()
+
+        if $("#dat > table > tbody").html() == ""
+          $("#add-action").modal("hide")
+
+        $(".bb-alert")
+          .addClass("alert-success")
+          .text("Camera has been deleted!")
+          .delay(200)
+          .fadeIn()
+          .delay(4000)
+          .fadeOut()
+      error: (xhr, status, error) ->
+        $(".alert-danger")
+          .text(xhr.responseText)
+          .delay(200)
+          .fadeIn()
+          .delay(4000)
+          .fadeOut()
 
 onCameraMerge = ->
   tr = ''
