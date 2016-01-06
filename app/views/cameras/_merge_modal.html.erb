@@ -12,6 +12,8 @@
         <fieldset>
           <div class="modal-footer">
             <button type="button" id="close-dialog" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-danger pull-right" id="delete-camera">Delete</button>
+            <button type="button" class="btn btn-danger pull-right" id="merge-camera">Merge</button>
           </div>
         </fieldset>
       </div>
@@ -26,14 +28,12 @@
           <div class="caption">Delete Camera</div>
       </div>
       <div class="modal-body">
-        <p class="text-left">Are you sure you want to <strong>Delete</strong> this camera?</p>
-        <p>Enter camera id ( <strong id="id"></strong> ) to confirm that you want to permanently delete this camera</p>
-        <input id="camera_specified_id" name="camera_specified_id" type="text" class="form-control">
+        <p class="text-left">Are you sure you want to <strong>Delete</strong> camera?</p>
       </div>
       <div class="modal-footer">
         <div class="col-sm-8 margin-top-10">
-          <button id="delete-camera" name="delete-camera" class="btn btn-danger pull-left">Delete</button>
-          <button id="delete-camera" name="delete-camera" class="btn btn-danger pull-left" data-dismiss="modal">Close</button>
+          <button id="fdelete-camera" name="delete-camera" class="btn btn-danger pull-left">Delete</button>
+          <button name="delete-camera" class="btn btn-danger pull-left" data-dismiss="modal">Close</button>
         </div>
       </div>
     </div>
