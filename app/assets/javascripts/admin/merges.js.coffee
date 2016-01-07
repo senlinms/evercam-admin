@@ -148,19 +148,6 @@ onCameraMerge = ->
     console.log owner_ids
     if rows.length > 0
       $('#mergeModal').modal('show')
-
-  # tr = ''
-  # needToMergeId = ''
-  # cameraName = ''
-  # fCId = ''
-  # mergedRow = ''
-  # $("#dat").on 'click', '.merge-cam', ->
-  #   $('#mergeModal').modal('show')
-  #   tr = $(this).parents('tr')
-  #   needToMergeId = tr.find('td:nth-child(9)').text()
-  #   cameraName = tr.find('td:nth-child(1)').text()
-  #   nCameraCount = tr.find('td:nth-child(6)').text()
-  #   $("p > #mc").append cameraName + " - share count ( " + nCameraCount + " )"
     tbl = $('#dat > table > tbody > tr:has(td > input:checkbox:checked)').map((i, v) ->
       $td = $('td', this)
       {
@@ -184,12 +171,6 @@ onCameraMerge = ->
     console.log super_cam_index
     super_cam_owner_id = owner_ids[super_cam_index]
     console.log super_cam_owner_id
-  #   mdCount = parseInt(tr.find('td:nth-child(6)').text(),10)
-  #   fCId = $("#with-cam > #cam-f-id").val()
-  #   mergedRow = $('td').filter(->
-  #     $(this).text() == fCId
-  #   ).closest('tr')
-  #   mCount = parseInt(mergedRow.find('td:nth-child(6)').text(),10)
     $('#mergeModal').modal('hide')
     i = 0
     while i < camera_ids.length
@@ -209,6 +190,10 @@ onCameraMerge = ->
       data: merge
       type: 'get'
       success: (data) ->
+        rows.forEach (row) ->
+          row.remove()
+        console.log data
+        count += data
         # tr.remove()
         # mCount += data["mergs"]
         # mergedRow.find('td:nth-child(6)').text(mCount)
