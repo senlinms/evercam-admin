@@ -84,3 +84,8 @@ group :test do
   gem 'selenium-webdriver'
   gem 'phantomjs', :require => 'phantomjs/poltergeist'
 end
+
+group :evercam do
+  gem 'evercam',
+    github: 'evercam/evercam-ruby'
+end
