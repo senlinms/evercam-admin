@@ -83,52 +83,35 @@ class CamerasController < ApplicationController
         end
       end
     end
+
+    super_user = EvercamUser.find(super_cam_owner_id)
+    super_cam_exid = Camera.find(super_cam_id).exid
+    super_owner_api_id = super_user.api_id
+    super_owner_api_key =  super_user.api_key
+    body = {}
+    rights = "Snapshot,View,Edit,List"
+    api = get_evercam_api(super_owner_api_id, super_owner_api_key)
+
+    owner_ids.each do |owner_id|
+      share_with_email = EvercamUser.find(owner_id).email
+      begin
+        api.share_camera(super_cam_exid, share_with_email, rights, body)
+        success += 1
+      rescue
+        # ignoring this
+      end
+    end
     Camera.where(id: camera_ids).destroy_all
     render json: success
-    pry
-    # super_user = EvercamUser.find(super_cam_owner_id)
-    # super_owner_api_id = super_user.api_id
-    # super_owner_api_key =  super_user.api_key
-    # body = {}
-    # body[:message] = ""
-    # body[:grantor] = super_user.username
-    # rights = ["grant~list","grant~edit","edit","grant~view,view","grant~snapshot","snapshot","list"]
-    # api = get_evercam_api(super_owner_api_id, super_owner_api_key)
-
-    # camera_ids.zip(owner_ids).each do |camera_id, owner_id|
-    #   share_with_email = EvercamUser.find(owner_id).email
-    #   begin
-    #     api.share_camera(camera_id, share_with_email, rights, body)
-    #   rescue
-    #     # ignoring this
-    #   end
-    # end
-
-    # render json: success
-    # @mergeme = CameraShare.where("camera_id = ?", mergeMe)
-    # @mergewith = Camera.find(mergeIn)
-    # @mergeme.each do |cam|
-    #   begin
-    #     cam.update_attribute(:camera_id, @mergewith.id)
-    #     cam.update_attribute(:sharer_id, @mergewith.owner_id)
-    #     mergs += 1
-    #   rescue
-    #     dups += 1
-    #   end
-    # end
-    # render json: { mergs: mergs, dups: dups }
-    # Camera.find(mergeMe).destroy
   end
 
   def get_evercam_api(super_owner_api_id, super_owner_api_key)
     configuration = Rails.application.config
-    parameters = {logger: Rails.logger}
-    if current_user
-      parameters = parameters.merge(
-        api_id: super_owner_api_id,
-        api_key: super_owner_api_key
-      )
-    end
+    parameters = { logger: Rails.logger }
+    parameters = parameters.merge(
+      api_id: super_owner_api_id,
+      api_key: super_owner_api_key
+    )
     settings = {}
     begin
       settings = (configuration.evercam_api || {})

@@ -133,6 +133,7 @@ onCameraMerge = ->
   camera_ids = []
   owner_ids = []
   super_cam_index = 0
+  merged_row = ""
   $("#merge-camera").on "click", ->
     rows = $('.center > input:checkbox:checked').map( ->
       $(this).parents('tr')
@@ -143,9 +144,6 @@ onCameraMerge = ->
     owner_ids = $('.center > input:checkbox:checked').map( ->
       $(this).parents('tr').find('td:nth-child(4) > a').attr('href').replace(/\D/g,'')
     ).get()
-    console.log rows
-    console.log camera_ids
-    console.log owner_ids
     if rows.length > 0
       $('#mergeModal').modal('show')
     tbl = $('#dat > table > tbody > tr:has(td > input:checkbox:checked)').map((i, v) ->
@@ -158,28 +156,24 @@ onCameraMerge = ->
         sCount: $td.eq(5).text()
       }
     ).get()
-    console.log tbl
     optionsHtml = ''
     tbl.forEach (value) ->
       optionsHtml += '<option value="' + value.camId + '">' + value.camName + ' - share Count (' + value.sCount + ')</option>'
     $('#with-cam').html '<select id="cam-f-id" class="form-control">' + optionsHtml + '</select>'
   $("#mergeModal").on "click", "#fmerge-camera", ->
-    console.log "hi am here now"
     super_cam_id = $("#with-cam > #cam-f-id").val()
-    console.log super_cam_id
     super_cam_index = $.inArray(super_cam_id, camera_ids)
-    console.log super_cam_index
     super_cam_owner_id = owner_ids[super_cam_index]
-    console.log super_cam_owner_id
     $('#mergeModal').modal('hide')
     i = 0
     while i < camera_ids.length
       if camera_ids[i] == super_cam_id && owner_ids[i] == super_cam_owner_id
         camera_ids.splice(i,1)
         owner_ids.splice(i,1)
+        merged_row = rows[i]
+        rows.splice(i,1)
       i++
-    console.log camera_ids
-    console.log owner_ids
+    mCount = parseInt(merged_row.find('td:nth-child(6)').text(),10)
     merge = {}
     merge.super_cam_id = super_cam_id
     merge.super_cam_owner_id = super_cam_owner_id
@@ -190,22 +184,23 @@ onCameraMerge = ->
       data: merge
       type: 'get'
       success: (data) ->
+        count -= rows.length
+        if count == 1 || count < 1
+          action.remove()
+        else
+          action.find('td:nth-child(5)').text(count)
         rows.forEach (row) ->
           row.remove()
-        console.log data
-        count += data
-        # tr.remove()
-        # mCount += data["mergs"]
-        # mergedRow.find('td:nth-child(6)').text(mCount)
-        # count--
-        # action.find('td:nth-child(5)').text(count)
-        # $(".bb-alert")
-        #   .addClass("alert-success")
-        #   .text(data['mergs'] + " cameras has been merged and " + data["dups"] + " duplicate cameras found!")
-        #   .delay(200)
-        #   .fadeIn()
-        #   .delay(4000)
-        #   .fadeOut()
+        mCount += data
+        merged_row.find('td:nth-child(6)').text(mCount)
+        merged_row.find('td:nth-child(8) > .delete-cam').prop('checked', false)
+        $(".bb-alert")
+          .addClass("alert-success")
+          .text("Cameras has been successfully merged and Shared with full rights!")
+          .delay(200)
+          .fadeIn()
+          .delay(4000)
+          .fadeOut()
       error: (xhr, status, error) ->
         $(".bb-alert")
           .addClass("alert-danger")

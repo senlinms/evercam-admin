@@ -39,4 +39,8 @@ Rails.application.configure do
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
   config.action_mailer.default_url_options = { host: "#{ENV['HOST_URL']}", port: 3000 }
+
+  if ENV['EVERCAM_LOCAL']
+    config.evercam_api = { host: 'localhost', port: 9292, scheme: 'http' }
+  end
 end

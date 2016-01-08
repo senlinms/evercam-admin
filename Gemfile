@@ -85,7 +85,5 @@ group :test do
   gem 'phantomjs', :require => 'phantomjs/poltergeist'
 end
 
-group :evercam do
-  gem 'evercam',
-    github: 'evercam/evercam-ruby'
-end
+gem 'evercam',
+  github: 'evercam/evercam-ruby'
