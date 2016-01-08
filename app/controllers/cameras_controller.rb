@@ -83,7 +83,6 @@ class CamerasController < ApplicationController
         end
       end
     end
-
     super_user = EvercamUser.find(super_cam_owner_id)
     super_cam_exid = Camera.find(super_cam_id).exid
     super_owner_api_id = super_user.api_id
@@ -115,10 +114,10 @@ class CamerasController < ApplicationController
     settings = {}
     begin
       settings = (configuration.evercam_api || {})
-    rescue => _error
+    rescue
       # Deliberately ignored.
     end
-    parameters = parameters.merge(settings) if !settings.empty?
+    parameters = parameters.merge(settings) unless !settings.empty?
     Evercam::API.new(parameters)
   end
 end
