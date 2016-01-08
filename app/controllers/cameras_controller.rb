@@ -30,8 +30,8 @@ class CamerasController < ApplicationController
         ]
       end
       render json: records
-    elsif params[:mergeMe] && params[:mergeIn]
-      merge_camera(params[:mergeMe], params[:mergeIn])
+    elsif params[:super_cam_id] && params[:super_cam_owner_id] && params[:camera_ids] && params[:owner_ids]
+      merge_camera(params[:super_cam_id], params[:super_cam_owner_id], params[:camera_ids], params[:owner_ids])
     else
       @cameras = Camera.run_sql("select count(nullif(is_online = false, true)) as online, config->>'external_http_port' as external_http_port, config->>'external_host' as external_host, LOWER(config->'snapshots'->>'jpg')   as jpg, count(*) as count from cameras group by config->>'external_http_port', config->>'external_host', LOWER(config->'snapshots'->>'jpg') HAVING (COUNT(*)>1)")
     end
@@ -70,21 +70,53 @@ class CamerasController < ApplicationController
     render json: count
   end
 
-  def merge_camera(mergeMe, mergeIn)
-    dups = 0
-    mergs = 0
-    @mergeme = CameraShare.where("camera_id = ?", mergeMe)
-    @mergewith = Camera.find(mergeIn)
-    @mergeme.each do |cam|
-      begin
-        cam.update_attribute(:camera_id, @mergewith.id)
-        cam.update_attribute(:sharer_id, @mergewith.owner_id)
-        mergs += 1
-      rescue
-        dups += 1
+  def merge_camera(super_cam_id, super_cam_owner_id, camera_ids, owner_ids)
+    success = 0
+    camera_ids.each do |camera_id|
+      going_to_merge_camera_share = CameraShare.where("camera_id = ?", camera_id)
+      going_to_merge_camera_share.each do |share|
+        begin
+          share.update_attributes(camera_id: super_cam_id, sharer_id: super_cam_owner_id)
+          success += 1
+        rescue
+          # ignoring
+        end
       end
     end
-    render json: { mergs: mergs, dups: dups }
-    Camera.find(mergeMe).destroy
+    super_user = EvercamUser.find(super_cam_owner_id)
+    super_cam_exid = Camera.find(super_cam_id).exid
+    super_owner_api_id = super_user.api_id
+    super_owner_api_key =  super_user.api_key
+    body = {}
+    rights = "Snapshot,View,Edit,List"
+    api = get_evercam_api(super_owner_api_id, super_owner_api_key)
+    owner_ids.each do |owner_id|
+      share_with_email = EvercamUser.find(owner_id).email
+      begin
+        api.share_camera(super_cam_exid, share_with_email, rights, body)
+        success += 1
+      rescue
+        # ignoring this
+      end
+    end
+    Camera.where(id: camera_ids).destroy_all
+    render json: success
+  end
+
+  def get_evercam_api(super_owner_api_id, super_owner_api_key)
+    configuration = Rails.application.config
+    parameters = { logger: Rails.logger }
+    parameters = parameters.merge(
+      api_id: super_owner_api_id,
+      api_key: super_owner_api_key
+    )
+    settings = {}
+    begin
+      settings = (configuration.evercam_api || {})
+    rescue
+      # Deliberately ignored.
+    end
+    parameters = parameters.merge(settings) unless settings.empty?
+    Evercam::API.new(parameters)
   end
 end
