@@ -187,15 +187,15 @@ clearForm = ->
   method = 'POST'
 
 handleAddNewModel = ->
-  idpattern = /[+*?. ]/
+  idpattern = /^[-_a-z0-9]+$/
   $("#save-model").on 'click', ->
 
     if $("#model-id").val() is ''
       $(".model-alert").html('Model id can not be empty.')
       $(".model-alert").slideDown()
       return
-    if $("#model-id").val().match idpattern
-      $(".model-alert").html('Model id can not contain spaces and dots.')
+    if !$("#model-id").val().match(idpattern)
+      $(".model-alert").html('Model id can not contain capital letters, spaces and dots.')
       $(".model-alert").slideDown()
       return
     if $("#vendor").val() is ''
