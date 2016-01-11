@@ -87,3 +87,4 @@ end
 
 gem 'evercam',
   github: 'evercam/evercam-ruby'
+gem 'whenever', :require => false
