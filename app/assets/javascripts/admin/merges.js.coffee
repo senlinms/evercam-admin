@@ -95,7 +95,7 @@ onCameraDelete = ->
       $("#deleteModal").modal("show")
     else
       $(".bb-alert")
-        .addClass("alert-success")
+        .addClass("alert-danger")
         .text("Please select at least one camera for deletion!")
         .delay(200)
         .fadeIn()
