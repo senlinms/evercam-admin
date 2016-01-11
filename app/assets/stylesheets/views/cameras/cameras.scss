@@ -274,12 +274,12 @@ ul.scroll-menu {
 }
 
 .btn-space {
-    margin-left: 5px;
+  margin-left: 5px;
 }
 
-#loading-indicator {
-  position: fixed;
+#api-wait {
   left: 50%;
+  position: fixed;
   top: 50%;
   z-index: 99999;
 }

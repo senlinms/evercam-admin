@@ -161,7 +161,7 @@ onCameraMerge = ->
       optionsHtml += '<option value="' + value.camId + '">' + value.camName + ' - share Count (' + value.sCount + ')</option>'
     $('#with-cam').html '<select id="cam-f-id" class="form-control">' + optionsHtml + '</select>'
   $("#mergeModal").on "click", "#fmerge-camera", ->
-    $('#loading-indicator').show();
+    $('#api-wait').show()
     super_cam_id = $("#with-cam > #cam-f-id").val()
     super_cam_index = $.inArray(super_cam_id, camera_ids)
     super_cam_owner_id = owner_ids[super_cam_index]
@@ -185,7 +185,7 @@ onCameraMerge = ->
       data: merge
       type: 'get'
       success: (data) ->
-        $('#loading-indicator').hide()
+        $('#api-wait').hide()
         count -= rows.length
         if count == 1 || count < 1
           action.remove()
