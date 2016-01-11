@@ -144,7 +144,7 @@ onCameraMerge = ->
     owner_ids = $('.center > input:checkbox:checked').map( ->
       $(this).parents('tr').find('td:nth-child(4) > a').attr('href').replace(/\D/g,'')
     ).get()
-    if rows.length > 0
+    if rows.length > 1
       $('#mergeModal').modal('show')
     tbl = $('#dat > table > tbody > tr:has(td > input:checkbox:checked)').map((i, v) ->
       $td = $('td', this)
@@ -161,6 +161,7 @@ onCameraMerge = ->
       optionsHtml += '<option value="' + value.camId + '">' + value.camName + ' - share Count (' + value.sCount + ')</option>'
     $('#with-cam').html '<select id="cam-f-id" class="form-control">' + optionsHtml + '</select>'
   $("#mergeModal").on "click", "#fmerge-camera", ->
+    $('#loading-indicator').show();
     super_cam_id = $("#with-cam > #cam-f-id").val()
     super_cam_index = $.inArray(super_cam_id, camera_ids)
     super_cam_owner_id = owner_ids[super_cam_index]
@@ -184,6 +185,7 @@ onCameraMerge = ->
       data: merge
       type: 'get'
       success: (data) ->
+        $('#loading-indicator').hide()
         count -= rows.length
         if count == 1 || count < 1
           action.remove()
@@ -196,7 +198,7 @@ onCameraMerge = ->
         merged_row.find('td:nth-child(8) > .delete-cam').prop('checked', false)
         $(".bb-alert")
           .addClass("alert-success")
-          .text("Cameras has been successfully merged and Shared with full rights!")
+          .text("Cameras have been successfully merged and Shared with full rights!")
           .delay(200)
           .fadeIn()
           .delay(4000)

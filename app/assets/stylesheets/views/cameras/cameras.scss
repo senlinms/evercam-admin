@@ -272,3 +272,14 @@ ul.scroll-menu {
 .merge-cam {
   cursor: pointer;
 }
+
+.btn-space {
+    margin-left: 5px;
+}
+
+#loading-indicator {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  z-index: 99999;
+}

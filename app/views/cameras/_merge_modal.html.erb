@@ -1,3 +1,4 @@
+<img src="<%= image_path 'loader3' %>" id="loading-indicator" style="display:none" />
 <div id="add-action" class="modal fade">
   <div class="vertical-alignment-helper">
     <div class="modal-dialog vertical-align-center" style="width:95%;">
@@ -11,9 +12,9 @@
         </div>
         <fieldset>
           <div class="modal-footer">
-            <button type="button" id="close-dialog" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="button" id="close-dialog" class="btn btn-default pull-right btn-space" data-dismiss="modal">Cancel</button>
             <button type="button" class="btn btn-danger pull-right" id="delete-camera">Delete</button>
-            <button type="button" class="btn btn-danger pull-right" id="merge-camera">Merge</button>
+            <button type="button" class="btn btn-warning pull-right" id="merge-camera">Merge</button>
           </div>
         </fieldset>
       </div>
