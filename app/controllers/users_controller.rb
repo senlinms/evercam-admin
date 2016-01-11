@@ -3,7 +3,13 @@ class UsersController < ApplicationController
   before_action :set_user, only: [:show, :update]
 
   def index
-    @users = EvercamUser.all.includes(:country, :cameras).decorate
+    if params[:q]
+      @user = EvercamUser.find_by_email(params[:q]).decorate
+      @countries = Country.all
+      render "show", params: { user: @user, countries: @countries }
+    else
+      @users = EvercamUser.all.includes(:country, :cameras).decorate
+    end
   end
 
   def show
