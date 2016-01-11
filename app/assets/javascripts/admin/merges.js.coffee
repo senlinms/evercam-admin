@@ -93,6 +93,14 @@ onCameraDelete = ->
     ).get()
     if rows.length > 0
       $("#deleteModal").modal("show")
+    else
+      $(".bb-alert")
+        .addClass("alert-success")
+        .text("Please select at least one camera for deletion!")
+        .delay(200)
+        .fadeIn()
+        .delay(4000)
+        .fadeOut()
   $("#fdelete-camera").on "click", ->
     $("#deleteModal").modal("hide")
     del = {}
@@ -146,6 +154,14 @@ onCameraMerge = ->
     ).get()
     if rows.length > 1
       $('#mergeModal').modal('show')
+    else
+      $(".bb-alert")
+        .addClass("alert-danger")
+        .text("Please select at least 2 cameras for merge!")
+        .delay(200)
+        .fadeIn()
+        .delay(4000)
+        .fadeOut()
     tbl = $('#dat > table > tbody > tr:has(td > input:checkbox:checked)').map((i, v) ->
       $td = $('td', this)
       {
