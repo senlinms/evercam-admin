@@ -18,3 +18,8 @@
 # end
 
 # Learn more: http://github.com/javan/whenever
+
+every 2.minutes do    
+	runner "Snapshot.upitize"
+  # rake "your_task" or "namespace:your_task"
+end
