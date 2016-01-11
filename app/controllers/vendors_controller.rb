@@ -89,9 +89,9 @@ class VendorsController < ApplicationController
   end
 
   def validate_id(exid)
-    is_valid_id = true
-    if exid =~ /[+*?. A-Z]/
-      is_valid_id = false
+    is_valid_id = false
+    if exid =~ /^[0-9a-z-]$/
+      is_valid_id = true
     end
     is_valid_id
   end
