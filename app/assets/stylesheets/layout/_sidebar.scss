@@ -25,9 +25,9 @@
 }
 .page-sidebar .page-sidebar-menu > li > a {
   color: $secondary-color;
+  font-family: $bold-family;
   font-size: 12px;
   padding: 8px 4px 4px;
- font-family: $bold-family;
 }
 #sidebar {
   position: fixed !important;

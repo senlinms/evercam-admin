@@ -185,14 +185,14 @@ div.radio{
   font-size: 11px;
 }
 .btn-edit {
-  font-size: 12px !important;
-  color: #428bca;
-  transition: all .2s linear;
   background-color: #ffffff;
-  border-radius: 2px !important;
   border: 1px solid #428bca;
-  padding: 0px 5px;
+  border-radius: 2px !important;
+  color: #428bca;
+  font-size: 12px !important;
   margin-left: 10px;
+  padding: 0px 5px;
+  transition: all .2s linear;
 }
 .btn-edit:hover {
   transition: all .2s linear;
