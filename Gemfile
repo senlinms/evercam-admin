@@ -5,8 +5,14 @@ ruby '2.2.2'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.5'
 
+group :evercam do
+  gem 'evercam_misc',
+      github: 'evercam/evercam-misc'
+end
+
 # Use postgresql as the database for Active Record
 gem 'pg'
+gem 'sequel'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'

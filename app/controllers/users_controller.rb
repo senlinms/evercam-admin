@@ -8,7 +8,8 @@ class UsersController < ApplicationController
       @countries = Country.all
       render "show", params: { user: @user, countries: @countries }
     else
-      @users = EvercamUser.all.includes(:country, :cameras).decorate
+      @users = UserDecorator.decorate(EvercamUser.all)
+      pry
     end
   end
 

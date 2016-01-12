@@ -1,16 +1,22 @@
-class Camera < ActiveRecord::Base
-  establish_connection "evercam_db_#{Rails.env}"
+class Camera < Sequel::Model
+  # establish_connection "evercam_db_#{Rails.env}"
 
-  belongs_to :user, :foreign_key => 'owner_id', :class_name => 'EvercamUser'
-  belongs_to :vendor_model, :foreign_key => 'model_id', :class_name => 'VendorModel'
-  has_many :camera_shares, dependent: :delete_all
+  # belongs_to :user, :foreign_key => 'owner_id', :class_name => 'EvercamUser'
+  many_to_one :user, class: 'EvercamUser', key: :owner_id
 
-  validates :exid, presence: true
-  validates :user, presence: true
-  validates :is_public, presence: true
-  validates :config, presence: true
-  validates :name, presence: true
-  validates :discoverable, presence: true
+  # belongs_to :vendor_model, :foreign_key => 'model_id', :class_name => 'VendorModel'
+  many_to_one :vendor_model, class: 'VendorModel', key: :model_id
+
+  # has_many :camera_shares, dependent: :delete_all
+  one_to_many :camera_shares, class: 'CameraShare'
+
+
+  # validates :exid, presence: true
+  # validates :user, presence: true
+  # validates :is_public, presence: true
+  # validates :config, presence: true
+  # validates :name, presence: true
+  # validates :discoverable, presence: true
 
   def vendor
     vendor_model.vendor

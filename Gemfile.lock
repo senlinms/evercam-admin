@@ -1,4 +1,11 @@
 GIT
+  remote: git://github.com/evercam/evercam-misc.git
+  revision: 45a9cb02d75378fc3989d9b0f3845dfd86022af0
+  specs:
+    evercam_misc (0.0.11)
+      dotenv (~> 2.0)
+
+GIT
   remote: git://github.com/evercam/evercam-ruby.git
   revision: 9834d2e1a6fe70832ebf392d053c509f2e1e3f9c
   specs:
@@ -87,6 +94,7 @@ GEM
       thread_safe (~> 0.1)
       warden (~> 1.2.3)
     diff-lcs (1.2.5)
+    dotenv (2.0.2)
     draper (2.1.0)
       actionpack (>= 3.0)
       activemodel (>= 3.0)
@@ -250,6 +258,7 @@ GEM
       multi_json (~> 1.0)
       rubyzip (~> 1.0)
       websocket (~> 1.0)
+    sequel (4.26.0)
     shoulda-matchers (3.0.1)
       activesupport (>= 4.0.0)
     slop (3.6.0)
@@ -310,6 +319,7 @@ DEPENDENCIES
   devise
   draper
   evercam!
+  evercam_misc!
   factory_girl_rails
   geocoder
   georuby
@@ -347,6 +357,7 @@ DEPENDENCIES
   sass-rails (~> 5.0)
   sdoc (~> 0.4.0)
   selenium-webdriver
+  sequel
   shoulda-matchers
   spinach-rails
   sprockets

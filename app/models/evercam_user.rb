@@ -1,13 +1,17 @@
-class EvercamUser < ActiveRecord::Base
-  establish_connection "evercam_db_#{Rails.env}"
+class EvercamUser < Sequel::Model(:users)
+  # establish_connection "evercam_db_#{Rails.env}"
 
-  self.table_name = "users"
-  belongs_to :country
-  has_many :cameras, :foreign_key => 'owner_id', :class_name => 'Camera'
-  has_many :snapshots
-  has_many :vendors
-  has_many :camera_shares, :foreign_key => 'user_id', :class_name => 'CameraShare'
+  # self = "users"
+  # belongs_to :country
+  many_to_one :country
 
+  # has_many :cameras, :foreign_key => 'owner_id', :class_name => 'Camera'
+  one_to_many :cameras, class: 'Camera', key: :owner_id
+
+  # has_many :snapshots
+  # has_many :vendors
+  # has_many :camera_shares, :foreign_key => 'user_id', :class_name => 'CameraShare'
+  one_to_many :camera_shares
 
   def fullname
     "#{firstname} #{lastname}"
