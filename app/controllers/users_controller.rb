@@ -9,7 +9,6 @@ class UsersController < ApplicationController
       render "show", params: { user: @user, countries: @countries }
     else
       @users = UserDecorator.decorate(EvercamUser.all)
-      pry
     end
   end
 
