@@ -22,7 +22,7 @@ body {
   color: black;
   direction: ltr;
   font-family: "proxima-nova-regular","Open Sans",Arial,Helvetica,sans-serif;
-  font-size: 15px;
+  font-size: 12px;
 }
 
 .page-header.navbar .top-menu .navbar-nav > li.dropdown-user .dropdown-toggle > img {
@@ -131,6 +131,7 @@ table.dataTable thead .sorting_desc_disabled { background: image-url('metronic/s
   margin-top: 5px;
 }
 .modal-footer {
+  padding: 7px;
   text-align: left;
 }
 #user-rights-modal .form-group {
@@ -184,7 +185,7 @@ div.radio{
   font-size: 11px;
 }
 .btn-edit {
-  font-size: 14px !important;
+  font-size: 12px !important;
   color: #428bca;
   transition: all .2s linear;
   background-color: #ffffff;
@@ -198,7 +199,7 @@ div.radio{
   color: #428bca;
 }
 .caption{
-  font-size: 18px;
+  font-size: 13px;
   font-weight: 400;
 }
 #add-vendor-modal .table-borderless > tbody > tr > td, #add-vendor .table-borderless > tbody > tr > td{
@@ -317,7 +318,7 @@ ul.columns {
   background-repeat: repeat-x;
   border-bottom: 1px solid #ccc;
   border-radius: 6px 6px 0 0;
-  padding: 10px;
+  padding: 6px;
 }
 
 #toggle-datatable-columns .cancel_link {
@@ -349,7 +350,7 @@ ul.columns {
 
 #toggle-datatable-columns .column-checkbox label {
   cursor: pointer;
-  font-size: 18px;
+  font-size: 12px;
   font-weight: 500;
 }
 
