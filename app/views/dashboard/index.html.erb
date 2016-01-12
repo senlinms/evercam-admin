@@ -105,7 +105,51 @@
           </div>
           <div class="portlet-body">
             <div class="task-content">
-              <%= render 'kpi_table' %>
+              <table id="tbl-kpi" class="table table-striped table-bordered table-hover">
+                <thead>
+                <tr role="row" class="heading">
+                  <th>&nbsp;</th>
+
+                </tr>
+                </thead>
+                <tbody>
+                <tr class="new-cameras">
+                  <td>
+                    New Cameras
+                  </td>
+                </tr>
+                <tr class="total-cameras">
+                  <td>
+                    Total Cameras
+                  </td>
+                </tr>
+                <tr class="new-paid-cameras">
+                  <td>
+                    New Paid Cameras
+                  </td>
+
+                </tr>
+                <tr class="total-paid-cameras">
+                  <td>
+                    Total Paid Cameras
+                  </td>
+
+                </tr>
+                <tr class="new-users">
+                  <td>
+                    New Users
+                  </td>
+
+                </tr>
+                <tr class="total-users">
+                  <td>
+                    Total Users
+                  </td>
+
+                </tr>
+                </tbody>
+              </table>
+
             </div>
             <div class="scroller-footer">
               <div class="btn-arrow-link pull-right">
@@ -208,3 +252,8 @@
     </div>
   </div>
 </div>
+<script>
+    $(document).ready(function () {
+        window.initializeDashboard();
+    });
+</script>
