@@ -10,7 +10,7 @@ class CameraDecorator < Draper::Decorator
   end
 
   def creation_date
-    object.created_at.strftime("%d/%m/%y")
+    object.created_at.strftime("%d/%m/%y %I:%M %p")
   end
 
   def last_poll_date

@@ -176,13 +176,13 @@
                 <thead>
                 <tr role="row" class="heading">
                   <th name="order_name" class="sorting">Name</th>
-                  <th name="order_model" class="sorting">Model</th>
+                  <!--<th name="order_model" class="sorting">Model</th>-->
                   <th name="order_vendor" class="sorting">Vendor</th>
                   <th name="order_created" class="sorting datatable-date">Created At</th>
                 </tr>
                 </thead>
                 <tbody>
-                <% @new_cameras.each do |camera| %>
+                  <% @new_cameras.each do |camera| %>
                     <tr>
                       <td>
                         <%= link_to camera.name, camera_path(camera) %>
@@ -190,12 +190,12 @@
                       <td>
                         <%= camera.vendor_model_name %>
                       </td>
-                      <td>
-                        <%= camera.vendor_name %>
-                      </td>
+                      <!--<td>-->
+                        <!--<= camera.vendor_name %>-->
+                      <!--</td>-->
                       <td><%= camera.creation_date %></td>
                     </tr>
-                <% end %>
+                  <% end %>
                 </tbody>
               </table>
             </div>
@@ -233,7 +233,11 @@
                     <tr>
                       <td><%= link_to user.fullname, user_path(user) %></td>
                       <td><%= user.email %></td>
-                      <td><%= user.country_name %></td>
+                      <td>
+                        <% unless user.country_id.nil? %>
+                           <%= @countries[user.country_id - 1].name unless @countries[user.country_id - 1].nil? %>
+                        <% end %>
+                      </td>
                       <td><%= user.registered_at %></td>
                     </tr>
                 <% end %>
