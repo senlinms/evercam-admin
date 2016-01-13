@@ -28,6 +28,7 @@
 #= require admin/users.js
 #= require admin/share_requests.js
 #= require admin/merges.js
+#= require admin/dashboard.js
 
 $ ->
   Metronic.init()

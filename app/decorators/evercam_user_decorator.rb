@@ -6,6 +6,7 @@ class EvercamUserDecorator < Draper::Decorator
            :email,
            :is_admin?,
            :cameras,
+           :country_id,
            :country,
            :created_at,
            :camera_shares,
