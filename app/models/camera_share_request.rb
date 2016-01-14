@@ -1,5 +1,5 @@
 class CameraShareRequest < ActiveRecord::Base
-  establish_connection "evercam_db_#{Rails.env}"
+  establish_connection "evercam_db_#{Rails.env}".to_sym
 
   # Status constants.
   PENDING                   = -1
