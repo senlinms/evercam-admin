@@ -11,7 +11,7 @@ RSpec.describe CameraShare, type: :model do
   describe 'associations' do
     it { should belong_to(:camera) }
     it { should belong_to(:user) }
-    it { should belong_to(:sharer).class_name('EvercamUser') }
+    it { should belong_to(:sharer).class_name("EvercamUser") }
   end
 
   it 'has a valid factory' do
