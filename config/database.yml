@@ -23,6 +23,14 @@ test:
   <<: *default
   database: evercam_admin_test
 
+evercam_db_test:
+  <<: *default
+  database: evercam_tst
+
+evercam_snapshot_db_test:
+  <<: *default
+  database: evercam_tst
+
 production:
   <<: *default
   database: <%= ENV['RDS_DB_NAME'] %>

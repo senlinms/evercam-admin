@@ -1,5 +1,5 @@
 class Vendor < ActiveRecord::Base
-  establish_connection "evercam_db_#{Rails.env}"
+  establish_connection "evercam_db_#{Rails.env}".to_sym
 
   has_many :vendor_models
 
