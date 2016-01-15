@@ -2,7 +2,7 @@ FactoryGirl.define do
   factory :camera_share do
     association :camera
     association :user
-    association :sharer, factory: :user
+    association :sharer
     kind 'public'
 
     factory :public_camera_share do
@@ -14,4 +14,3 @@ FactoryGirl.define do
     end
   end
 end
-

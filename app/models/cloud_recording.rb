@@ -1,5 +1,5 @@
 class CloudRecording < ActiveRecord::Base
-  establish_connection "evercam_db_#{Rails.env}"
+  establish_connection "evercam_db_#{Rails.env}".to_sym
 
   def validate
     super
