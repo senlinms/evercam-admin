@@ -1,0 +1,2 @@
+class SnapshotReportsController < ApplicationController
+end

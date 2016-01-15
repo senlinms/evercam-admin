@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :snapshot_reports
   root to: 'dashboard#index'
 
   devise_options = {
