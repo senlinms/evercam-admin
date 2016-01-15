@@ -32,6 +32,6 @@ columnsDropdown = ->
     column = snapshots_table.column($(this).attr("data-val"))
     column.visible !column.visible()
 
-window.initializSnapshotsNew = ->
+window.initializSnapshotReport = ->
   columnsDropdown()
   initializeDataTable()
