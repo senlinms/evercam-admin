@@ -1,10 +1,10 @@
 language: ruby
-install: bundle install --local
-cache:
-  apt: true
-  bundler: true
-  directories:
-  - vendor/cache
+# install: bundle install --local
+cache: bundler
+  # apt: true
+  # bundler: true
+  # directories:
+  # - vendor/cache
 
 rvm:
 - 2.2.2
@@ -20,6 +20,7 @@ before_script:
   - export DISPLAY=:99.0
   - sh -e /etc/init.d/xvfb start
   - sleep 1
+  - RAILS_ENV=test bundle exec rake db:test:prepare
 
 script:
 - RAILS_ENV=test bundle exec rspec --pattern 'c*/*_spec.rb,h*/*_spec.rb'
