@@ -19,13 +19,13 @@
 
 # Learn more: http://github.com/javan/whenever
 
-every 2.minutes do    
-	# command "echo 'you can use raw cron syntax too'"
-	runner "SnapshotReport.add_report", environment: :production
-	# command "echo 'you can use raw cron syntax too'"
-  # rake "your_task" or "namespace:your_task"
-end
-
-# every 1.day, :at => '12:00 am' do
-#   runner "SnapshotReport.add_report"
+# every 2.minutes do    
+# 	# command "echo 'you can use raw cron syntax too'"
+# 	runner "SnapshotReport.add_report", environment: :production
+# 	# command "echo 'you can use raw cron syntax too'"
+#   # rake "your_task" or "namespace:your_task"
 # end
+
+every 1.day do
+  runner "SnapshotReport.add_report"
+end
