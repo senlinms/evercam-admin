@@ -5,7 +5,7 @@
 
 # Example:
 #
-set :output, "~/Downloads/cron_log.log"
+# set :output, "~/Downloads/cron_log.log"
 #
 # every 2.hours do
 #   command "/usr/bin/some_great_command"
@@ -20,7 +20,12 @@ set :output, "~/Downloads/cron_log.log"
 # Learn more: http://github.com/javan/whenever
 
 every 2.minutes do    
-	command "echo 'you can use raw cron syntax too'"
-	# runner "Snapshot.upitize", environment: :development
+	# command "echo 'you can use raw cron syntax too'"
+	runner "SnapshotReport.add_report", environment: :production
+	# command "echo 'you can use raw cron syntax too'"
   # rake "your_task" or "namespace:your_task"
 end
+
+# every 1.day, :at => '12:00 am' do
+#   runner "SnapshotReport.add_report"
+# end
