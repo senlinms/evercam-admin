@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :snapshot_reports
   root to: 'dashboard#index'
 
   devise_options = {
@@ -31,5 +32,5 @@ Rails.application.routes.draw do
   get '/map' => 'dashboard#map'
   get '/kpi' => 'dashboard#kpi'
   get '/no_access' => 'home#no_access'
-  get "/cloud_recordings" => "snapshots#index"
+  get "/cloud_recordings" => "snapshots#cloud_recordings"
 end
