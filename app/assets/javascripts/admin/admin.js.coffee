@@ -30,6 +30,7 @@
 #= require admin/merges.js
 #= require admin/snapshot_reports.js
 #= require admin/dashboard.js
+#= require admin/jquery.datetimepicker.min.js
 
 $ ->
   Metronic.init()
