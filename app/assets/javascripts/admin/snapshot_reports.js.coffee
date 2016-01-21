@@ -60,7 +60,7 @@ linkMode2 = (name, type, row) ->
 initDatePicker = ->
   html = "<div class='col-md-6 col-sm-12'><label>Date:<input type='text' id='datetimepicker' class='form-control 
     input-small input-inline'></label></div>"
-  $("#snapshots_datatables_wrapper > .row:first-child").prepend(html);
+  $("#snapshots_datatables_wrapper > .row:first-child").prepend(html)
   $('#datetimepicker').datetimepicker
     timepicker:false,
     format:'Y/m/d'
