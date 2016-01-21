@@ -52,10 +52,10 @@ columnsDropdown = ->
     column.visible !column.visible()
 
 linkMode1 = (name, type, row) ->
-  return "<a href=/cameras/#{row[5]}>" + "#{name}</a>"
+  return "<a href=/cameras/#{row[5]}>#{name}</a>"
 
 linkMode2 = (name, type, row) ->
-  return "<a href=/users/#{row[6]}>" + "#{name} #{row[7]}</a>"
+  return "<a href=/users/#{row[6]}>#{name} #{row[7]}</a>"
 
 initDatePicker = ->
   html = "<div class='col-md-6 col-sm-12'><label>Date:<input type='text' id='datetimepicker' class='form-control 
