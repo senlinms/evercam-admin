@@ -52,10 +52,10 @@ columnsDropdown = ->
     column.visible !column.visible()
 
 linkMode1 = (name, type, row) ->
-  return "<a href=/cameras/#{row[5]}>#{name}</a>"
+  return "<a href=/cameras/#{row[6]}>#{name}</a>"
 
 linkMode2 = (name, type, row) ->
-  return "<a href=/users/#{row[6]}>#{name} #{row[7]}</a>"
+  return "<a href=/users/#{row[7]}>#{name} #{row[8]}</a>"
 
 initDatePicker = ->
   html = "<div class='col-md-6 col-sm-12'><label>Date:<input type='text' id='datetimepicker' class='form-control 
@@ -71,11 +71,13 @@ selectDate = ->
     date = $('#datetimepicker').val()
     data = {}
     data.date = date
+    $('#ajx-wait').show()
     $.ajax
         url: 'snapshot_reports'
         data: data
         type: 'get'
         success: (data) ->
+          $('#ajx-wait').hide()
           if typeof data == "object"
             snapshots_table.fnClearTable()
             snapshots_table.fnAddData(data)
