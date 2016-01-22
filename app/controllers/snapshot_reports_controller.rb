@@ -11,7 +11,7 @@ class SnapshotReportsController < ApplicationController
         report.camera["name"],
         report.camera["exid"],
         report.camera.user["firstname"],
-        report.camera.cloud_recording || {"storage_duration" => ""} ["storage_duration"],
+        report.camera.cloud_recording || { "storage_duration" => "" } ["storage_duration"],
         report.camera["is_online"],
         report["snapshot_count"],
         report.camera["id"],

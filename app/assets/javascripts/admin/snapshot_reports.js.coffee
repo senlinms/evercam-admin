@@ -65,8 +65,8 @@ initDatePicker = ->
     input-small input-inline'></label></div>"
   $("#snapshots_datatables_wrapper > .row:first-child").prepend(html)
   $('#datetimepicker').datetimepicker
-    timepicker:false
-    format:'Y/m/d'
+    timepicker: false
+    format: 'Y/m/d'
     onSelectDate: ->
       date = $('#datetimepicker').val()
       data = {}
