@@ -3,10 +3,10 @@ initializeDataTable = ->
   snapshots_table = $("#snapshots_datatables").dataTable
     aaSorting: [1, "asc"]
     fnRowCallback: (nRow, aData, iDisplayIndex, iDisplayIndexFull) ->
-      if aData[3] && aData[3].storage_duration == "-1"
+      if aData[3] && aData[3].storage_duration == -1
         $('td:eq(3)', nRow)
           .html "Infinity"
-      else if aData[3] && aData[3].storage_duration == "1"
+      else if aData[3] && aData[3].storage_duration == 1
         $('td:eq(3)', nRow)
           .html "24 hours recording"
       else if !aData[3]
@@ -82,6 +82,7 @@ initDatePicker = ->
               snapshots_table.fnClearTable()
               snapshots_table.fnAddData(data)
             else
+              snapshots_table.fnClearTable()
               $(".bb-alert")
                 .addClass("alert-danger")
                 .text("There are no records for that date!")
