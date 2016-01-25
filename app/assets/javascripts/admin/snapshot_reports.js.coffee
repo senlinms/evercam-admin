@@ -1,7 +1,7 @@
 snapshots_table = undefined
 initializeDataTable = ->
   snapshots_table = $("#snapshots_datatables").dataTable
-    aaSorting: [1, "asc"]
+    aaSorting: [0, "asc"]
     fnRowCallback: (nRow, aData, iDisplayIndex, iDisplayIndexFull) ->
       if aData[3] && aData[3].storage_duration == -1
         $('td:eq(3)', nRow)
@@ -103,4 +103,3 @@ window.initializSnapshotReport = ->
   columnsDropdown()
   initializeDataTable()
   initDatePicker()
-  selectDate()
