@@ -11,7 +11,8 @@ class EvercamUserDecorator < Draper::Decorator
            :created_at,
            :camera_shares,
            :api_id,
-           :api_key
+           :api_key,
+           :last_login_at
 
   def is_admin
     h.human_boolean(object.is_admin?)
@@ -28,4 +29,7 @@ class EvercamUserDecorator < Draper::Decorator
   def country_name
     evercam_user.country.try(:name)
   end
+  # def last_login
+  #   object.last_login_at.strftime("%d/%m/%y %I:%M %p")
+  # end
 end
