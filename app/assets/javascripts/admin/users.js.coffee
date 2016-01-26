@@ -17,6 +17,7 @@ initializeDataTable = ->
       {data: "6" },
       {data: "7" },
       {data: "8", visible: false },
+      {data: "9" }
     ],
     iDisplayLength: 50
     columnDefs: [
