@@ -3,8 +3,6 @@ class SnapshotReportsController < ApplicationController
   def index
     if params[:date]
       date = params[:date]
-    else
-      date = "2016/01/18"
     end
     @reports = SnapshotReport.includes(camera: [:user]).where(report_date: date)
     records = []
