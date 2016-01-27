@@ -68,38 +68,50 @@ initDatePicker = ->
     timepicker: false
     format: 'Y/m/d'
     onSelectDate: ->
-      date = $('#datetimepicker').val()
-      data = {}
-      data.date = date
-      $('#ajx-wait').show()
-      $.ajax
-          url: 'snapshot_reports'
-          data: data
-          type: 'get'
-          success: (data) ->
-            $('#ajx-wait').hide()
-            if typeof data == "object"
-              snapshots_table.fnClearTable()
-              snapshots_table.fnAddData(data)
-            else
-              snapshots_table.fnClearTable()
-              $(".bb-alert")
-                .addClass("alert-danger")
-                .text("There are no records for that date!")
-                .delay(200)
-                .fadeIn()
-                .delay(4000)
-                .fadeOut()
-          error: (xhr, status, error) ->
-            $(".bb-alert")
-                .addClass("alert-danger")
-                .text(xhr.responseText)
-                .delay(200)
-                .fadeIn()
-                .delay(4000)
-                .fadeOut()
+      ajaxCall($('#datetimepicker').val())
 
+getYesterdaysDate = ->
+  date = new Date
+  date.setDate date.getDate() - 1
+  date.getFullYear() + '/' + date.getMonth() + 1 + '/' + date.getDate()
+
+ajaxCall = (date) ->
+  data = {}
+  data.date = date
+  $('#ajx-wait').show()
+  $.ajax
+      url: 'snapshot_reports'
+      data: data
+      type: 'get'
+      success: (data) ->
+        $('#ajx-wait').hide()
+        if typeof data == "object"
+          snapshots_table.fnClearTable()
+          snapshots_table.fnAddData(data)
+        else
+          snapshots_table.fnClearTable()
+          $(".bb-alert")
+            .addClass("alert-danger")
+            .text("There are no records for that date!")
+            .delay(200)
+            .fadeIn()
+            .delay(4000)
+            .fadeOut()
+      error: (xhr, status, error) ->
+        $(".bb-alert")
+            .addClass("alert-danger")
+            .text(xhr.responseText)
+            .delay(200)
+            .fadeIn()
+            .delay(4000)
+            .fadeOut()
+
+onPageLoad = ->
+  $(window).load ->
+    $('#datetimepicker').val getYesterdaysDate()
+    ajaxCall(getYesterdaysDate())
 window.initializSnapshotReport = ->
   columnsDropdown()
   initializeDataTable()
   initDatePicker()
+  onPageLoad()
