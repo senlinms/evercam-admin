@@ -64,6 +64,7 @@ initDatePicker = ->
   html = "<div class='col-md-6 col-sm-12'><label>Date:<input type='text' id='datetimepicker' class='form-control 
     input-small input-inline'></label></div>"
   $("#snapshots_datatables_wrapper > .row:first-child").prepend(html)
+  $('#datetimepicker').val getYesterdaysDate()
   $('#datetimepicker').datetimepicker
     timepicker: false
     format: 'Y/m/d'
@@ -98,6 +99,11 @@ initDatePicker = ->
                 .fadeIn()
                 .delay(4000)
                 .fadeOut()
+
+getYesterdaysDate = ->
+  date = new Date
+  date.setDate date.getDate() - 1
+  date.getFullYear() + '/' + date.getMonth() + 1 + '/' + date.getDate()
 
 window.initializSnapshotReport = ->
   columnsDropdown()
