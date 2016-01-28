@@ -347,6 +347,7 @@ DEPENDENCIES
   rails-assets-screenfull (~> 2.0)!
   rails-assets-videojs (~> 4.12.7)!
   rails-assets-videojs-contrib-media-sources (~> 1.0.0)!
+  rake (= 10.5.0)
   rspec (~> 3.4.0)
   rspec-rails (~> 3.4.1)
   sass-rails (~> 5.0)

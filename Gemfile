@@ -22,6 +22,7 @@ gem 'sprockets-es6', require: 'sprockets/es6'
 # gem 'fog'
 # gem 'asset_sync'
 gem 'autoprefixer-rails'
+gem 'rake', '10.5.0'
 
 source 'https://rails-assets.org' do
   gem 'rails-assets-bootbox', '~> 4.3.0'
