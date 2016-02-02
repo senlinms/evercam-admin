@@ -72,8 +72,8 @@ initDatePicker = ->
 
 getYesterdaysDate = ->
   date = new Date
-  date.setDate date.getDate() - 1
-  date.getFullYear() + '/' + date.getMonth() + 1 + '/' + date.getDate()
+  date.setDate (date.getDate() - 1)
+  date.getFullYear() + '/' + (date.getMonth() + 1) + '/' + date.getDate()
 
 ajaxCall = (date) ->
   data = {}
