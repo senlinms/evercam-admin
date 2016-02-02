@@ -3,8 +3,8 @@
     <% @user.cameras.each do |camera| %>
       <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12 camera-index <%= "camera-offline" unless camera.is_online %>">
           <div class="snapshot <%= "offline-snapshot" unless camera.is_online %>">
-            <% if camera.preview %>
-              <img class="snapshot-proxy snapshot-refresh" src="data:image/jpeg;base64,<%= Base64.encode64(camera.preview) %>" />
+            <% if camera.thumbnail_url %>
+              <img class="snapshot-proxy snapshot-refresh" src="<%= camera.thumbnail_url %>" />
             <% else %>
               <img class="snapshot-proxy snapshot-refresh" src="<%= image_path 'noise.png' %>" />
             <% end %>
