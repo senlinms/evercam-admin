@@ -1,0 +1,2 @@
+class SnapshotExtractorsController < ApplicationController
+end
