@@ -29,6 +29,7 @@
 #= require admin/share_requests.js
 #= require admin/merges.js
 #= require admin/snapshot_reports.js
+#= require admin/snapshot_extractors.js
 #= require admin/dashboard.js
 #= require admin/jquery.datetimepicker.min.js
 
