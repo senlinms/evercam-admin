@@ -44,3 +44,4 @@
 //= require metronic/icheck.min.js
 //=
 //= require subscriptions.js
+//= require fullcalendar

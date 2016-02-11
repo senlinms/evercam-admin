@@ -32,6 +32,8 @@
 #= require admin/snapshot_extractors.js
 #= require admin/dashboard.js
 #= require admin/jquery.datetimepicker.min.js
+#= require admin/moment.min.js
+#= require admin/fullcalendar.min.js
 
 $ ->
   Metronic.init()

@@ -1,0 +1,41 @@
+#cloud-recording-calendar th {
+  font-size: 1.2em;
+}
+
+#cloud-recording-calendar table {
+  font-size: 0.8em;
+}
+
+#cloud-recording-calendar .fc-toolbar,
+#cloud-recording-calendar .fc-content {
+  display: none;
+}
+
+#cloud-recording-calendar .fc-axis {
+  text-align: center;
+}
+
+#cloud-recording-calendar{
+  max-height: 150px;
+  overflow-y: hidden;
+  position: relative;
+  &.open{
+    max-height: 100%;
+    overflow-y: inherit;
+    position: relative;
+    #cloud-recording-collaps{
+      display: block;
+      width: 100%;
+      padding: 5px 0;
+      text-align: center;
+      position: relative;
+      bottom: 0;
+      z-index: 99;
+    }
+  }
+}
+
+
+#cloud-recording-calendar.open span.glyphicon-chevron-down{
+    transform: rotate(-180deg);
+}
