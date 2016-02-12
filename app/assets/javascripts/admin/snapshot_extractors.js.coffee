@@ -1,3 +1,17 @@
+initDateTime = ->
+  $('#datetimepicker1,#datetimepicker2').datetimepicker
+  	timepicker: false,
+  	mask: true
+  $('#datetimepicker1,#datetimepicker2').val getTodayDate()
+
+getTodayDate = ->
+  date = new Date
+  date.setDate date.getDate()
+  date.getFullYear() + '/' + (date.getMonth() + 1) + '/' + date.getDate()
+
+onConsoleLog = ->
+  console.log "hi its me"
+
 initScheduleCalendar = ->
   scheduleCalendar = $('#cloud-recording-calendar').fullCalendar
     axisFormat: 'HH'
@@ -37,17 +51,37 @@ initScheduleCalendar = ->
     selectable: true
     timezone: 'local'
 
-initDateTime = ->
-  $('#datetimepicker1,#datetimepicker2').datetimepicker
-  	timepicker: false,
-  	mask: true
-  $('#datetimepicker1,#datetimepicker2').val getTodayDate()
+updateScheduleFromCalendar = ->
+  schedule = parseCalendar()
+  console.log schedule
+  frequency = $("#cloud-recording-frequency").val()
+  storage_duration = $("#cloud-recording-duration").val()
+  schedule = JSON.stringify(parseCalendar())
+  console.log schedule
 
-getTodayDate = ->
-  date = new Date
-  date.setDate date.getDate()
-  date.getFullYear() + '/' + (date.getMonth() + 1) + '/' + date.getDate()
+onCollapsRecording = ->
+  $('#cloud-recording-collaps').click ->
+    $('#cloud-recording-calendar').toggleClass 'open'
+
+parseCalendar = ->
+  events = $('#cloud-recording-calendar').fullCalendar('clientEvents')
+  schedule =
+    'Monday': []
+    'Tuesday': []
+    'Wednesday': []
+    'Thursday': []
+    'Friday': []
+    'Saturday': []
+    'Sunday': []
+  _.forEach events, (event) ->
+    startTime = "#{moment(event.start).get('hours')}:#{moment(event.start).get('minutes')}"
+    endTime = "#{moment(event.end).get('hours')}:#{moment(event.end).get('minutes')}"
+    day = moment(event.start).format('dddd')
+    schedule[day] = schedule[day].concat("#{startTime}-#{endTime}")
+  schedule
 
 window.initializSnapshotExtractors = ->
-	initDateTime()
-	initScheduleCalendar()
+  initDateTime()
+  onConsoleLog()
+  initScheduleCalendar()
+  onCollapsRecording()

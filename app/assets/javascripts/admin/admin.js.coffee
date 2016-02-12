@@ -19,6 +19,7 @@
 #= require metronic/datatable.js
 #= require metronic/layout.js
 #= require metronic/quick-sidebar.js
+#= require lib/underscore-min.js
 #= require alerts.js
 #= require evercam.js.coffee
 #= require admin/vendor_model.js
