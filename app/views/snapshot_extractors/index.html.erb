@@ -1,0 +1,83 @@
+<div class="bb-alert alert" style="display: none;"></div>
+<img src="<%= image_path 'loader3.gif' %>" id="ajx-wait" style="display:none" />
+<!-- BEGIN CONTENT -->
+<div class="page-content-wrapper">
+  <div class="page-content" id="snapshots-report">
+    <!-- BEGIN PAGE HEADER-->
+    <div class="row">
+      <div class="col-md-12">
+        <!-- BEGIN PAGE TITLE & BREADCRUMB-->
+        <ul class="page-breadcrumb breadcrumb">
+          <%= render 'shared/breadcrumb_basic', current_section: "Snapshot Extractor Tool" %>
+        </ul>
+        <!-- END PAGE TITLE & BREADCRUMB-->
+      </div>
+    </div>
+    <!-- END PAGE HEADER-->
+    <!-- BEGIN PAGE CONTENT-->
+    <div class="form-horizontal">
+      <div class="form-group">
+        <label for="inputCameraId" class="col-lg-2 control-label">Camera ID</label>
+        <div class="col-xs-3">
+          <%= select_tag "CameraID", options_for_select(@set_cameras), class: "form-control", id: "inputCameraId" %>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="inputFromDate" class="col-lg-2 control-label">From Date/Time</label>
+        <div class="col-xs-3">
+          <input type="text" class="form-control" id="datetimepicker1" placeholder="Date/Time">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="inputFromDate" class="col-lg-2 control-label">To Date/Time</label>
+        <div class="col-xs-3">
+          <input type="text" class="form-control" id="datetimepicker2" placeholder="Date/Time">
+        </div>
+      </div>
+        <% @intervals = [
+            [ "Select Interval", "" ],
+            [ "All", "0" ],
+            [ "1 Frame Every 1 min", "1" ],
+            [ "1 Frame Every 5 min", "5" ],
+            [ "1 Frame Every 10 min", "10" ],
+            [ "1 Frame Every 20 min", "20" ],
+            [ "1 Frame Every 30 min", "30" ],
+            [ "1 Frame Every hour", "60" ],
+            [ "1 Frame Every 2 hours", "120" ],
+            [ "1 Frame Every 6 hours", "360" ],
+            [ "1 Frame Every 12 hours", "720" ],
+            [ "1 Frame Every 24 hours", "1440" ],
+          ]
+        %>
+      <div class="form-group">
+        <label for="inputInterval" class="col-lg-2 control-label">Interval</label>
+        <div class="col-xs-3">
+          <%= select_tag "Interval", options_for_select(@intervals), class: "form-control", id: "interval" %>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="inputSchedule" class="col-lg-2 control-label">Schedule</label>
+        <div class="col-xs-3">
+          <div id="cloud-recording-calendar-wrap form-control">
+            <div id="cloud-recording-calendar">
+              <span id="cloud-recording-collaps"><span class="glyphicon glyphicon-chevron-down"></span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-lg-10 col-lg-offset-2">
+          <button type="submit" id="set" class="btn btn-primary">Search</button>
+        </div>
+      </div>
+    </div>
+    <!-- END PAGE CONTENT-->
+  </div>
+</div>
+<!-- END CONTENT -->
+
+<script>
+  $(document).ready(function () {
+    window.initializSnapshotExtractors();
+  });
+</script>

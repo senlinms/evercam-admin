@@ -19,6 +19,7 @@
 #= require metronic/datatable.js
 #= require metronic/layout.js
 #= require metronic/quick-sidebar.js
+#= require lib/underscore-min.js
 #= require alerts.js
 #= require evercam.js.coffee
 #= require admin/vendor_model.js
@@ -29,8 +30,11 @@
 #= require admin/share_requests.js
 #= require admin/merges.js
 #= require admin/snapshot_reports.js
+#= require admin/snapshot_extractors.js
 #= require admin/dashboard.js
 #= require admin/jquery.datetimepicker.min.js
+#= require admin/moment.min.js
+#= require admin/fullcalendar.min.js
 
 $ ->
   Metronic.init()
