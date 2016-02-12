@@ -110,8 +110,17 @@ onSearchSET = ->
     data.to_date = to_date
     data.interval = interval
     data.schedule = schedule
-
-    putMeInDatabase(data)
+    if camera_id is "" || interval is ""
+      $(".bb-alert")
+        .removeClass("alert-success")
+        .addClass("alert-danger")
+        .text("CameraID Or Interval can't be empty!")
+        .delay(200)
+        .fadeIn()
+        .delay(4000)
+        .fadeOut()
+    else
+      putMeInDatabase(data)
 
 putMeInDatabase = (data) ->
 
@@ -129,7 +138,7 @@ putMeInDatabase = (data) ->
     $(".bb-alert")
       .removeClass("alert-danger")
       .addClass("alert-success")
-      .text("Your Query has been saved! we will ge back to you soon!")
+      .text("Your request has been sent to Admin!. We will get back to you soon!")
       .delay(200)
       .fadeIn()
       .delay(4000)

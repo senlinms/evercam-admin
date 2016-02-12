@@ -19,7 +19,7 @@
       <div class="form-group">
         <label for="inputCameraId" class="col-lg-2 control-label">Camera ID</label>
         <div class="col-xs-3">
-          <input type="text" class="form-control" id="inputCameraId" placeholder="Camera Id">
+          <%= select_tag "CameraID", options_for_select(@set_cameras), class: "form-control", id: "inputCameraId" %>
         </div>
       </div>
       <div class="form-group">
@@ -35,17 +35,18 @@
         </div>
       </div>
         <% @intervals = [
+            [ "Select Interval", "" ],
             [ "All", "0" ],
-            [ "1 per min", "1" ],
-            [ "1 per 5 min", "5" ],
-            [ "1 per 10 min", "10" ],
-            [ "1 per 20 min", "20" ],
-            [ "1 per 30 min", "30" ],
-            [ "1 per hour", "60" ],
-            [ "1 per 2 hours", "120" ],
-            [ "1 per 6 hours", "360" ],
-            [ "1 per 12 hours", "720" ],
-            [ "1 per day", "1440" ],
+            [ "1 Frame Every 1 min", "1" ],
+            [ "1 Frame Every 5 min", "5" ],
+            [ "1 Frame Every 10 min", "10" ],
+            [ "1 Frame Every 20 min", "20" ],
+            [ "1 Frame Every 30 min", "30" ],
+            [ "1 Frame Every hour", "60" ],
+            [ "1 Frame Every 2 hours", "120" ],
+            [ "1 Frame Every 6 hours", "360" ],
+            [ "1 Frame Every 12 hours", "720" ],
+            [ "1 Frame Every 24 hours", "1440" ],
           ]
         %>
       <div class="form-group">

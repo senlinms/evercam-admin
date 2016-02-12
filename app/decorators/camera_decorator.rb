@@ -1,5 +1,5 @@
 class CameraDecorator < Draper::Decorator
-  delegate :exid, :name, :user, :thumbnail_url, :config, :mac_address
+  delegate :exid, :name, :user, :thumbnail_url, :config, :mac_address, :id
 
   def vendor_model_name
     camera.vendor_model.try(:name)
