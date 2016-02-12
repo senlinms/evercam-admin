@@ -3,9 +3,9 @@
 }
 
 #cloud-recording-calendar th {
+  color: #4c7da5;
   font-size: 1.2em;
   padding: 5px 4px;
-  color: #4c7da5;
 }
 
 #cloud-recording-calendar table {
@@ -21,7 +21,7 @@
   text-align: center;
 }
 
-#cloud-recording-calendar{
+#cloud-recording-calendar {
   max-height: 150px;
   overflow-y: hidden;
   position: relative;
@@ -29,28 +29,28 @@
     max-height: 100%;
     overflow-y: inherit;
     position: relative;
-    #cloud-recording-collaps{
-      display: block;
-      width: 100%;
-      padding: 5px 0;
-      text-align: center;
-      position: relative;
+    #cloud-recording-collaps {
       bottom: 0;
+      display: block;
+      padding: 5px 0;
+      position: relative;
+      text-align: center;
+      width: 100%;
       z-index: 99;
     }
   }
 }
 
 
-#cloud-recording-calendar.open span.glyphicon-chevron-down{
-    transform: rotate(-180deg);
+#cloud-recording-calendar.open span.glyphicon-chevron-down {
+  transform: rotate(-180deg);
 }
 
-#cloud-recording-calendar.open span.glyphicon-chevron-down{
-    transform: rotate(-180deg);
-  }
+#cloud-recording-calendar.open span.glyphicon-chevron-down {
+  transform: rotate(-180deg);
+}
 
-#cloud-recording-collaps{
+#cloud-recording-collaps {
   display: block;
   width: 100%;
   padding: 5px 0;
