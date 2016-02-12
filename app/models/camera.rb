@@ -5,6 +5,7 @@ class Camera < ActiveRecord::Base
   belongs_to :vendor_model, :foreign_key => 'model_id', :class_name => 'VendorModel'
   has_many :camera_shares, dependent: :delete_all
   has_many :snapshot_report, foreign_key: "camera_id", class_name: "SnapshotReport"
+  has_many :snapshot_extractors, foreign_key: "camera_id", class_name: "SnapshotExtractor"
 
   validates :exid, presence: true
   validates :user, presence: true
