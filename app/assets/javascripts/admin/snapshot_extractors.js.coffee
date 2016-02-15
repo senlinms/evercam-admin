@@ -114,7 +114,7 @@ onSearchSET = ->
       $(".bb-alert")
         .removeClass("alert-success")
         .addClass("alert-danger")
-        .text("CameraID Or Interval can't be empty!")
+        .text("Camera Id Or Interval can't be empty!")
         .delay(200)
         .fadeIn()
         .delay(4000)
@@ -135,6 +135,7 @@ putMeInDatabase = (data) ->
       .fadeOut()
 
   onSuccess = (data) ->
+    clearForm()
     $(".bb-alert")
       .removeClass("alert-danger")
       .addClass("alert-success")
@@ -155,8 +156,20 @@ putMeInDatabase = (data) ->
 
   sendAJAXRequest(settings)
 
+initChosen = ->
+  $('#inputCameraId').chosen()
+
+clearForm = ->
+  $(".chosen-single span").text "Select Camera"
+  $("#datetimepicker1").val getTodayDate()
+  $("#datetimepicker2").val getTodayDate()
+  $('#interval option:eq(0)').prop('selected', true)
+  $('#cloud-recording-calendar').fullCalendar "removeEvents"
+  $('#cloud-recording-calendar').removeClass "open"
+
 window.initializSnapshotExtractors = ->
   initDateTime()
   initScheduleCalendar()
   onCollapsRecording()
   onSearchSET()
+  initChosen()
