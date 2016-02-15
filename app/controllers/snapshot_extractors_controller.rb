@@ -2,10 +2,10 @@ class SnapshotExtractorsController < ApplicationController
 
   def index
   	@cameras = Camera.all.includes(:user, vendor_model: [:vendor]).decorate
-  	@set_cameras = []
+  	@set_cameras = ["Select Camera",""]
   	@cameras.each do |camera|
   		@set_cameras[@set_cameras.length] = [
-  			camera.name, camera.id
+  			camera.exid, camera.id
   		]
   	end
   	@set_cameras
