@@ -4,7 +4,7 @@ class SnapshotExtractorsController < ApplicationController
   	@cameras = Camera.all.includes(:user, vendor_model: [:vendor]).decorate
   	@set_cameras = ["Select Camera", ""]
   	@cameras.each do |camera|
-  		@set_cameras[@set_cameras.length] = [ camera.exid, camera.id ]
+      @set_cameras[@set_cameras.length] = [camera.exid, camera.id]
   	end
   	@set_cameras
   end
