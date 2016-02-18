@@ -3,7 +3,7 @@ class SnapshotExtractor < ActiveRecord::Base
 
 	belongs_to :camera
 
-	def extract_snapshots
+	def self.extract_snapshots
 		@snapshot_request = SnapshotExtractor.where(status: 0).first
 		camera_id = @snapshot_request.camera_id
 		from_date = @snapshot_request.from_date.strftime("%Y%m%d")
@@ -28,12 +28,14 @@ class SnapshotExtractor < ActiveRecord::Base
 		created_at_spdays = refine_days(created_ats,set_days)
 		created_at_sptime = refine_times(created_at_spdays,set_timings,set_days)
 		created_at = refine_intervals(created_at_sptime,interval)
+		
+		bucket = connect_bucket()
 		created_at
 	end
 
 	private
 
-	def refine_days(created_ats, days)
+	def self.refine_days(created_ats, days)
 		created_at = []
 		index = 0
 		created_ats.each do |single|
@@ -47,7 +49,7 @@ class SnapshotExtractor < ActiveRecord::Base
 		created_at
 	end
 
-	def refine_times(created_ats,timings,days)
+	def self.refine_times(created_ats,timings,days)
 		created_at = []
 		index = 0
 		day_index = 0
@@ -70,14 +72,14 @@ class SnapshotExtractor < ActiveRecord::Base
 		created_at
 	end
 
-	def refine_intervals(created_ats,interval)
+	def self.refine_intervals(created_ats,interval)
 		created_at = [DateTime.parse(created_ats.first)]
 		last_created_at = DateTime.parse(created_ats.last)
 		index = 1
 		index_for_dt = 0
 		length = created_ats.length
 		(1..length).each do |single|
-			if (created_at[index] + interval.minutes) <= last_created_at
+			if (created_at[index_for_dt] + interval.minutes) <= last_created_at
 				created_at[index] = created_at[index_for_dt] + interval.minutes
 				index_for_dt += 1
 				index += 1
