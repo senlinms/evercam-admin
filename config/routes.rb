@@ -34,4 +34,6 @@ Rails.application.routes.draw do
   get '/kpi' => 'dashboard#kpi'
   get '/no_access' => 'home#no_access'
   get "/cloud_recordings" => "snapshots#cloud_recordings"
+
+  resources :licence_reports
 end
