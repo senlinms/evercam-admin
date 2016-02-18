@@ -3,6 +3,10 @@ class LicenceReportsController < ApplicationController
   require "stripe"
 
   def index
-    @customers = Stripe::Customer.all(limit: 200)
+    begin
+      @customers = Stripe::Customer.all(limit: 200)
+    rescue => error
+      notify_airbrake(error)
+    end
   end
 end

@@ -19,4 +19,12 @@ class ApplicationController < ActionController::Base
       u.permit(:firstname, :lastname, :username, :email, :password)
     end
   end
+
+  private
+
+  def render_error(exception)
+    render :file => "#{Rails.root}/public/500.html", :layout => false, :status => 500
+    notify_airbrake(exception)
+  end
 end
+
