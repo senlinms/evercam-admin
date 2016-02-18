@@ -3,5 +3,5 @@ every 1.day, :at => '12:00 am' do
 end
 
 every 30.minutes do
-	runner "SnapshotExtractor.extract_snapshots", environment: :development
+	runner "SnapshotExtractor.extract_snapshots", environment: :production
 end
