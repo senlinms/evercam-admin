@@ -1,4 +1,11 @@
 GIT
+  remote: git://github.com/evercam/evercam-misc.git
+  revision: 45a9cb02d75378fc3989d9b0f3845dfd86022af0
+  specs:
+    evercam_misc (0.0.11)
+      dotenv (~> 2.0)
+
+GIT
   remote: git://github.com/evercam/evercam-ruby.git
   revision: 9834d2e1a6fe70832ebf392d053c509f2e1e3f9c
   specs:
@@ -107,8 +114,6 @@ GEM
     erubis (2.7.0)
     ethon (0.8.1)
       ffi (>= 1.3.0)
-    evercam_misc (0.0.11)
-      dotenv (~> 2.0)
     execjs (2.6.0)
     factory_girl (4.5.0)
       activesupport (>= 3.0.0)
@@ -340,7 +345,7 @@ DEPENDENCIES
   devise
   draper
   evercam!
-  evercam_misc (~> 0.0.11)
+  evercam_misc!
   factory_girl_rails
   geocoder
   georuby

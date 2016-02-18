@@ -91,8 +91,9 @@ group :test do
 end
 
 group :evercam do
-  gem 'evercam_misc', '~> 0.0.11'
+  gem 'evercam_misc',
+    github: 'evercam/evercam-misc'
   gem 'evercam',
-      github: 'evercam/evercam-ruby'
+    github: 'evercam/evercam-ruby'
 end
 gem 'whenever', :require => false
