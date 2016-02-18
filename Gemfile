@@ -24,6 +24,10 @@ gem 'sprockets-es6', require: 'sprockets/es6'
 gem 'autoprefixer-rails'
 gem 'rake', '10.5.0'
 
+gem 'stripe',
+    github: 'stripe/stripe-ruby'
+gem 'stripe_event'
+
 source 'https://rails-assets.org' do
   gem 'rails-assets-bootbox', '~> 4.3.0'
   gem 'rails-assets-bootstrap', '~> 3.3.1'
@@ -86,8 +90,15 @@ group :test do
   gem 'phantomjs', :require => 'phantomjs/poltergeist'
 end
 
-gem 'evercam',
-  github: 'evercam/evercam-ruby'
+group :evercam do
+  gem 'evercam_misc',
+    github: 'evercam/evercam-misc'
+  gem 'evercam',
+    github: 'evercam/evercam-ruby'
+end
 gem 'whenever', :require => false
+
 gem 'aws-sdk', '~> 2'
 gem 'rmega', '~> 0.2.1'
+
+gem 'airbrake'

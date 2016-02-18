@@ -8,6 +8,11 @@ module ApplicationHelper
     "http://gravatar.com/avatar/#{gravatar_id}1.png"
   end
 
+  def get_user(stripe_customer_id)
+    user = EvercamUser.where(email: stripe_customer_id).includes(:country).first # stripe_customer_id: stripe_customer_id)
+    user
+  end
+
   def get_hours(schedule)
     total_hours = 0
     Time.zone = "UTC"

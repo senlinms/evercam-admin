@@ -1,0 +1,103 @@
+<!-- BEGIN CONTENT -->
+<div class="page-content-wrapper">
+  <div class="page-content" id="licences-report">
+    <!-- BEGIN PAGE HEADER-->
+    <div class="row">
+      <div class="col-md-12">
+        <!-- BEGIN PAGE TITLE & BREADCRUMB-->
+        <ul class="page-breadcrumb breadcrumb">
+          <%= render 'shared/breadcrumb_basic', current_section: 'Licences Report' %>
+        </ul>
+        <!-- END PAGE TITLE & BREADCRUMB-->
+      </div>
+    </div>
+    <!-- END PAGE HEADER-->
+    <!-- BEGIN PAGE CONTENT-->
+    <%= render 'columns_modal' %>
+    <div class="dropdown-checklist" id="div-dropdown-checklist">
+      <div href="#" class="btn btn-default grey" data-toggle="modal" data-target="#toggle-datatable-columns">
+        <i class="fa fa-columns"></i>
+      </div>
+    </div>
+    <div id="licences-list-row" class="row hide">
+      <div class="col-md-12">
+        <table class="table table-striped table-bordered table-hover" id="licences_datatables">
+          <thead>
+          <tr role="row" class="heading">
+            <th name="order_email" class="sorting">Email</th>
+            <th name="order_name" class="sorting">Name</th>
+            <th name="order_country" class="sorting">Country</th>
+            <th name="order_licence_description" class="sorting">Licence Desccription</th>
+            <th name="order_cameras" class="sorting">Cameras</th>
+            <th name="order_storage" class="sorting">Storage</th>
+            <th name="order_created_date" class="sorting">Created Date</th>
+            <th name="order_start_date" class="sorting">Start Date</th>
+            <th name="order_end_date" class="sorting">End Date</th>
+            <th name="order_expires_in" class="sorting">Expires In</th>
+            <th name="order_action" class="sorting"></th>
+          </tr>
+          </thead>
+          <tbody>
+          <% @customers.each do |customer| %>
+            <% licences = customer.subscriptions.data %>
+            <% licences.each do |licence| %>
+              <% user = get_user(customer.email) %>
+              <tr>
+                <td>
+                  <% if user.present? %>
+                    <%= link_to customer.email, user_path(user) %>
+                  <% else %>
+                    <%= customer.email %>
+                  <% end %>
+                </td>
+                <td><%= user.fullname if user.present? %></td>
+                <td><%= user.country.name if user.present? && user.country.present? %></td>
+                <td><%= licence.plan['name'] %></td>
+                <td><%= licence.quantity %></td>
+                <td>
+                  <% storage = ''
+                     case licence.plan['id']
+                       when "24-hours-recording", "24-hours-recording-annual"
+                         storage = 24
+                       when "7-days-recording", "7-days-recording-annual"
+                         storage = 7
+                       when "30-days-recording", "30-days-recording-annual"
+                         storage = 30
+                       when "90-days-recording", "90-days-recording-annual"
+                         storage = 90
+                       when "infinity", "infinity-annual"
+                         storage = -1
+                     end
+                  %>
+                  <%= storage %>
+                </td>
+                <td><%= Time.at(licence.plan['created']).strftime('%d/%m/%Y') %></td>
+                <td><%= Time.at(licence.current_period_start).strftime('%d/%m/%Y') %></td>
+                <td><%= Time.at(licence.current_period_end).strftime('%d/%m/%Y') %></td>
+                <td>
+                  <% end_date = Time.at(licence.current_period_end)
+                     expires_in = 1
+                     if end_date >= Time.now
+                       expires_in = (end_date - Time.now).to_i/ (24 * 60 * 60)
+                     end
+                  %>
+                  <%= expires_in %>
+                </td>
+                <td></td>
+              </tr>
+            <% end %>
+          <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <!-- END PAGE CONTENT-->
+  </div>
+</div>
+<!-- END CONTENT -->
+
+<script>
+  $(document).ready(function () {
+    window.initializeLicences();
+  });
+</script>
