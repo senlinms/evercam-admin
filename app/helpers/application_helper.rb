@@ -68,4 +68,9 @@ module ApplicationHelper
     bucket = s3.buckets["evercam-camera-assets"]
     bucket
   end
+
+  def connect_mega
+    storage = Rmega.login("#{MEGA_EMAIL}", "#{MEGA_PASSWORD}")
+    storage
+  end
 end

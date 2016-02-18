@@ -6,6 +6,8 @@ class SnapshotExtractor < ActiveRecord::Base
 	def self.extract_snapshots
 		@snapshot_request = SnapshotExtractor.where(status: 0).first
 		camera_id = @snapshot_request.camera_id
+		exid = Camera.find(camera_id).exid
+		mega_id = @snapshot_request.id
 		from_date = @snapshot_request.from_date.strftime("%Y%m%d")
 		to_date = @snapshot_request.to_date.strftime("%Y%m%d")
 		interval = @snapshot_request.interval
@@ -29,8 +31,24 @@ class SnapshotExtractor < ActiveRecord::Base
 		created_at_sptime = refine_times(created_at_spdays,set_timings,set_days)
 		created_at = refine_intervals(created_at_sptime,interval)
 		
-		bucket = connect_bucket()
-		created_at
+		# filepath = "#{exid}/snapshots/#{created_at.to_i}.jpg"
+		snapshot_bucket = connect_bucket
+		storage = connect_mega
+		new_folder = storage.root.create_folder("#{exid}")
+		folder = storage.nodes.find do |node|
+		  node.type == :folder and node.name == "#{exid}"
+		end
+		folder.create_folder("#{mega_id}")
+		# images = []
+		created_at.each do |snap|
+			s3_object = snapshot_bucket.objects["#{exid}/snapshots/#{snap.to_i}.jpg"]
+			if s3_object.exists?
+				image = s3_object.read
+				data = Base64.encode64(image).gsub("\n", '')
+				folder.upload(data)
+			end
+		end
+		# created_at
 	end
 
 	private
