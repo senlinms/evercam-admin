@@ -97,3 +97,4 @@ group :evercam do
     github: 'evercam/evercam-ruby'
 end
 gem 'whenever', :require => false
+gem 'airbrake'
