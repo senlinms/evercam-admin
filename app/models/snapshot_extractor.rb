@@ -48,6 +48,7 @@ class SnapshotExtractor < ActiveRecord::Base
 				folder.upload(data)
 			end
 		end
+		@snapshot_request.update_attribute(:status, 1)
 		# created_at
 	end
 
