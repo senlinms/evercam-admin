@@ -27,9 +27,8 @@ class SnapshotExtractor < ActiveRecord::Base
 				end
 			end
 
-			created_ats = Snapshot.connection.select_all("SELECT created_at from snapshots WHERE snapshot_id >= '#{from_date}' AND snapshot_id <= '#{to_date}' AND camera_id = #{camera_id}")
-
 			begin
+				created_ats = Snapshot.connection.select_all("SELECT created_at from snapshots WHERE snapshot_id >= '#{camera_id}_#{from_date}' AND snapshot_id <= '#{camera_id}_#{to_date}'")
 				created_at_spdays = refine_days(created_ats,set_days)
 				created_at_sptime = refine_times(created_at_spdays,set_timings,set_days)
 				created_at = refine_intervals(created_at_sptime,interval)
