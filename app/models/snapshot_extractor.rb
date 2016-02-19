@@ -4,59 +4,61 @@ class SnapshotExtractor < ActiveRecord::Base
 	belongs_to :camera
 
 	def self.extract_snapshots
-		@snapshot_request = SnapshotExtractor.where(status: 0).first
-		camera_id = @snapshot_request.camera_id
-		exid = Camera.find(camera_id).exid
-		mega_id = @snapshot_request.id
-		from_date = @snapshot_request.from_date.strftime("%Y%m%d")
-		to_date = @snapshot_request.to_date.strftime("%Y%m%d")
-		interval = @snapshot_request.interval
-		@days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
-		set_days = []
-		set_timings = []
-		# index = Hash[@days.map.with_index.to_a]
-		index = 0
-		@days.each do |day|
-			if @snapshot_request.schedule[day].present?
-				set_days[index] = day
-				set_timings[index] = @snapshot_request.schedule[day]
-				index += 1
-			end
-		end
-		# set_timings.flatten
+		running = SnapshotExtractor.where(status: 1).any?
+		unless running
+			@snapshot_request = SnapshotExtractor.where(status: 0).first
+			@snapshot_request.update_attribute(:status, 1)
+			camera_id = @snapshot_request.camera_id
+			exid = Camera.find(camera_id).exid
+			mega_id = @snapshot_request.id
+			from_date = @snapshot_request.from_date.strftime("%Y%m%d")
+			to_date = @snapshot_request.to_date.strftime("%Y%m%d")
+			interval = @snapshot_request.interval
+			@days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+			set_days = []
+			set_timings = []
 
-		created_ats = Snapshot.connection.select_all("SELECT created_at from snapshots WHERE snapshot_id >= '#{from_date}' AND snapshot_id <= '#{to_date}' AND camera_id = #{camera_id}")
-
-		begin
-			created_at_spdays = refine_days(created_ats,set_days)
-			created_at_sptime = refine_times(created_at_spdays,set_timings,set_days)
-			created_at = refine_intervals(created_at_sptime,interval)
-			@snapshot_request.update_attribute(:status, 9)
-		rescue => error
-			notify_airbrake(error)
-		end
-		
-		# filepath = "#{exid}/snapshots/#{created_at.to_i}.jpg"
-		begin
-			snapshot_bucket = connect_bucket
-			storage = connect_mega
-			new_folder = storage.root.create_folder("#{exid}")
-			folder = storage.nodes.find do |node|
-			  node.type == :folder and node.name == "#{exid}"
-			end
-			folder.create_folder("#{mega_id}")
-			# images = []
-			created_at.each do |snap|
-				s3_object = snapshot_bucket.objects["#{exid}/snapshots/#{snap.to_i}.jpg"]
-				if s3_object.exists?
-					image = s3_object.read
-					data = Base64.encode64(image).gsub("\n", '')
-					folder.upload(data)
+			index = 0
+			@days.each do |day|
+				if @snapshot_request.schedule[day].present?
+					set_days[index] = day
+					set_timings[index] = @snapshot_request.schedule[day]
+					index += 1
 				end
 			end
-			@snapshot_request.update_attribute(:status, 1)
-		rescue => error
-			notify_airbrake(error)
+
+			created_ats = Snapshot.connection.select_all("SELECT created_at from snapshots WHERE snapshot_id >= '#{from_date}' AND snapshot_id <= '#{to_date}' AND camera_id = #{camera_id}")
+
+			begin
+				created_at_spdays = refine_days(created_ats,set_days)
+				created_at_sptime = refine_times(created_at_spdays,set_timings,set_days)
+				created_at = refine_intervals(created_at_sptime,interval)
+				@snapshot_request.update_attribute(:status, 9)
+			rescue => error
+				notify_airbrake(error)
+			end
+
+			begin
+				snapshot_bucket = connect_bucket
+				storage = connect_mega
+				new_folder = storage.root.create_folder("#{exid}")
+				folder = storage.nodes.find do |node|
+				  node.type == :folder and node.name == "#{exid}"
+				end
+				folder.create_folder("#{mega_id}")
+				# images = []
+				created_at.each do |snap|
+					s3_object = snapshot_bucket.objects["#{exid}/snapshots/#{snap.to_i}.jpg"]
+					if s3_object.exists?
+						image = s3_object.read
+						data = Base64.encode64(image).gsub("\n", '')
+						folder.upload(data)
+					end
+				end
+				@snapshot_request.update_attribute(:status, 3)
+			rescue => error
+				notify_airbrake(error)
+			end		
 		end
 		# created_at
 	end
