@@ -254,7 +254,7 @@ div.radio {
   top: 35px;
   z-index: 999;
   visibility: hidden;
-  width: 50px;
+  width: 250px;
 }
 
 .dropdown-checklist-models {
@@ -319,7 +319,8 @@ ul.columns {
   list-style: none;
 }
 
-#toggle-datatable-columns .modal-header {
+#toggle-datatable-columns .modal-header,
+#modal-add-licence .modal-header {
   background-color: #f3f3f3;
   background-image: linear-gradient(to bottom, white, #e1e1e1);
   background-repeat: repeat-x;
@@ -328,7 +329,8 @@ ul.columns {
   padding: 6px;
 }
 
-#toggle-datatable-columns .cancel_link {
+#toggle-datatable-columns .cancel_link,
+#modal-add-licence .cancel_link {
   color: #cccccc;
   font-size: 16px;
   font-weight: bolder;
@@ -379,4 +381,46 @@ ul.columns {
 
 .snap-all {
   width: 250px;
+}
+
+//----- NumericUpDownControl's Style -----
+.numericupdown {}
+
+.val {
+  float: left;
+  margin: 0;
+  padding-bottom: 0;
+  padding-top: 0;
+  width: 94.4%;
+}
+
+.up {
+  background-color: #e5e5e5;
+  border: 1px solid #cccccc;
+  cursor: pointer;
+  height: 17px;
+  overflow: hidden;
+  padding: 1px;
+  vertical-align: top;
+  width: 15px;
+}
+
+.down {
+  background-color: #e5e5e5;
+  border: 1px solid #cccccc;
+  cursor: pointer;
+  height: 17px;
+  overflow: hidden;
+  padding: 1px;
+  width: 15px;
+}
+//----------------------------------------
+
+.xdsoft_datetimepicker {
+  z-index: 99999;
+}
+
+#modal-add-licence input,
+#modal-add-licence select {
+  background-color: #ffffff;
 }

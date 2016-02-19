@@ -14,9 +14,13 @@
     <!-- END PAGE HEADER-->
     <!-- BEGIN PAGE CONTENT-->
     <%= render 'columns_modal' %>
+    <%= render 'add_licence_modal' %>
     <div class="dropdown-checklist" id="div-dropdown-checklist">
       <div href="#" class="btn btn-default grey" data-toggle="modal" data-target="#toggle-datatable-columns">
         <i class="fa fa-columns"></i>
+      </div>
+      <div href="#" class="btn btn-default grey" data-toggle="modal" data-target="#modal-add-licence">
+        <i class="fa fa-plus"></i> Add Licence
       </div>
     </div>
     <div id="licences-list-row" class="row hide">
@@ -38,6 +42,32 @@
           </tr>
           </thead>
           <tbody>
+          <% @custom_licences.each do |custom_licence| %>
+            <% user = custom_licence.user %>
+            <tr>
+              <td><%= link_to user.email, user_path(user) %></td>
+              <td><%= user.fullname %></td>
+              <td><%= user.country.name %></td>
+              <td><%= custom_licence.description %></td>
+              <td><%= custom_licence.total_cameras %></td>
+              <td>
+                <%= custom_licence.storage %>
+              </td>
+              <td><%= Time.at(custom_licence.created_at).strftime('%d/%m/%Y') %></td>
+              <td><%= Time.at(custom_licence.start_date).strftime('%d/%m/%Y') %></td>
+              <td><%= Time.at(custom_licence.end_date).strftime('%d/%m/%Y') %></td>
+              <td>
+                <% end_date = Time.at(custom_licence.end_date)
+                   expires_in = 1
+                   if end_date >= Time.now
+                     expires_in = (end_date - Time.now).to_i/ (24 * 60 * 60)
+                   end
+                %>
+                <%= expires_in %>
+              </td>
+              <td></td>
+            </tr>
+            <% end %>
           <% @customers.each do |customer| %>
             <% licences = customer.subscriptions.data %>
             <% licences.each do |licence| %>

@@ -7,7 +7,7 @@ class EvercamUser < ActiveRecord::Base
   has_many :snapshots
   has_many :vendors
   has_many :camera_shares, :foreign_key => 'user_id', :class_name => 'CameraShare'
-
+  has_many :licences
 
   def fullname
     "#{firstname} #{lastname}"
