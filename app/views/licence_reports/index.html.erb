@@ -47,7 +47,7 @@
             <tr>
               <td><%= link_to user.email, user_path(user) %></td>
               <td><%= user.fullname %></td>
-              <td><%= user.country.name %></td>
+              <td><%= user.country.name if user.country.present? %></td>
               <td><%= custom_licence.description %></td>
               <td><%= custom_licence.total_cameras %></td>
               <td>
