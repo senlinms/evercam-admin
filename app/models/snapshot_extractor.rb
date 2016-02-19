@@ -27,28 +27,37 @@ class SnapshotExtractor < ActiveRecord::Base
 
 		created_ats = Snapshot.connection.select_all("SELECT created_at from snapshots WHERE snapshot_id >= '#{from_date}' AND snapshot_id <= '#{to_date}' AND camera_id = #{camera_id}")
 
-		created_at_spdays = refine_days(created_ats,set_days)
-		created_at_sptime = refine_times(created_at_spdays,set_timings,set_days)
-		created_at = refine_intervals(created_at_sptime,interval)
+		begin
+			created_at_spdays = refine_days(created_ats,set_days)
+			created_at_sptime = refine_times(created_at_spdays,set_timings,set_days)
+			created_at = refine_intervals(created_at_sptime,interval)
+			@snapshot_request.update_attribute(:status, 9)
+		rescue => error
+			notify_airbrake(error)
+		end
 		
 		# filepath = "#{exid}/snapshots/#{created_at.to_i}.jpg"
-		snapshot_bucket = connect_bucket
-		storage = connect_mega
-		new_folder = storage.root.create_folder("#{exid}")
-		folder = storage.nodes.find do |node|
-		  node.type == :folder and node.name == "#{exid}"
-		end
-		folder.create_folder("#{mega_id}")
-		# images = []
-		created_at.each do |snap|
-			s3_object = snapshot_bucket.objects["#{exid}/snapshots/#{snap.to_i}.jpg"]
-			if s3_object.exists?
-				image = s3_object.read
-				data = Base64.encode64(image).gsub("\n", '')
-				folder.upload(data)
+		begin
+			snapshot_bucket = connect_bucket
+			storage = connect_mega
+			new_folder = storage.root.create_folder("#{exid}")
+			folder = storage.nodes.find do |node|
+			  node.type == :folder and node.name == "#{exid}"
 			end
+			folder.create_folder("#{mega_id}")
+			# images = []
+			created_at.each do |snap|
+				s3_object = snapshot_bucket.objects["#{exid}/snapshots/#{snap.to_i}.jpg"]
+				if s3_object.exists?
+					image = s3_object.read
+					data = Base64.encode64(image).gsub("\n", '')
+					folder.upload(data)
+				end
+			end
+			@snapshot_request.update_attribute(:status, 1)
+		rescue => error
+			notify_airbrake(error)
 		end
-		@snapshot_request.update_attribute(:status, 1)
 		# created_at
 	end
 
