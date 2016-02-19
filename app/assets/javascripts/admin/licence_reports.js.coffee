@@ -1,5 +1,13 @@
 licences_table = undefined
 
+sendAJAXRequest = (settings) ->
+  token = $('meta[name="csrf-token"]')
+  if token.size() > 0
+    headers =
+      "X-CSRF-Token": token.attr("content")
+    settings.headers = headers
+  xhrRequestChangeMonth = jQuery.ajax(settings)
+
 initializeDataTable = ->
   licences_table = $("#licences_datatables").DataTable
     aaSorting: [1, "asc"]
@@ -59,12 +67,108 @@ twoDigitDecimal = ->
     $("#licence-amount").val(num.toFixed(2));
 
 initNotify = ->
-  Notification.init("bb-alert");
+  Notification.init(".bb-alert");
 
 initDateTime = ->
   $('.licence-date').datetimepicker
     format: 'Y/m/d'
     timepicker: false
+
+saveLicence = ->
+  $("#save-licence").on "click", ->
+    if $("#users-list").val() is ""
+      Notification.show("Please select user.")
+      return false
+
+    if $("#licence-desc").val().length >= 200
+      Notification.show("Description cannot exceed 200 characters.")
+      return false
+    else if $("#licence-desc").val().length is 0
+      Notification.show("Please enter Description.")
+      return false
+
+    if $("#total-cameras").val() is ""
+      Notification.show('Please enter number of cameras.')
+      return false
+
+    if $("#total-cameras").val() is 0
+      Notification.show('Please enter at least one Camera.')
+      return false
+    else if isNaN($("#total-cameras").val())
+      Notification.show('Only numbers are allowed in cameras.')
+      return false
+
+    if $("#storage-days").val() is "0"
+      Notification.show('Please select days storage.')
+      return false
+    else if isNaN($("#storage-days").val())
+      Notification.show('Only numeric data is allowed in days.')
+      return false
+
+    if $("#licence-amount").val() isnt "" && $("#licence-amount").val() isnt "0.00"
+      if isNaN($("#licence-amount").val())
+        Notification.show("Please enter valid licence amount.")
+        return false
+
+    if $("#from-date").val() is ""
+      Notification.show('Please select From Date.')
+      return false
+    if $("#to-date").val() is ""
+      Notification.show('Please select To Date.')
+      return false
+
+    data = {}
+    data.user_id = $("#users-list").val()
+    data.licence_desc = $("#licence-desc").val()
+    data.total_cameras = $("#total-cameras").val()
+    data.storage = $("#storage-days").val()
+    data.amount = $("#licence-amount").val()
+    data.start_date = $("#from-date").val()
+    data.end_date = $("#to-date").val()
+    data.save = 'true'
+
+    onError = (jqXHR, status, error) ->
+      Notification.show(xhr.responseText)
+      false
+
+    onSuccess = (result, status, jqXHR) ->
+      $('#modal-add-licence').modal('hide')
+      #licences_table.row.add( [
+      #  '.1',
+      #  '.2',
+      #  '.3',
+      #  '.4',
+      #  '.5',
+      #  '.6',
+      #  '.7',
+      #  '.8',
+      #  '.9',
+      #  '.10',
+      #  '11'
+      #]).draw( false );*/
+      clearForm()
+      true
+
+    settings =
+      cache: false
+      data: data
+      dataType: 'json'
+      error: onError
+      success: onSuccess
+      contentType: "application/json; charset=utf-8"
+      type: "GET"
+      url: "licence_reports"
+
+    sendAJAXRequest(settings)
+
+clearForm = ->
+  $("#users-list").val("")
+  $("#licence-desc").val("")
+  $("#total-cameras").val(1)
+  $("#storage-days").val("0")
+  $("#licence-amount").val("0.00")
+  $("#from-date").val("")
+  $("#to-date").val("")
 
 window.initializeLicences = ->
   initChosen()
@@ -74,3 +178,4 @@ window.initializeLicences = ->
   initNotify()
   twoDigitDecimal()
   initDateTime()
+  saveLicence()

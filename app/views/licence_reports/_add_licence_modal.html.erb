@@ -25,7 +25,7 @@
             </tr>
             <tr>
               <td><label class="control-label">Licence Description:</label></td>
-              <td><input data-validation-error-msg="Cannot be blank" type="text" data-validation="length" data-validation-length="min1" id="user_lastname" name="user[lastname]" class="form-control" value=""/></td>
+              <td><input data-validation-error-msg="Cannot be blank" type="text" data-validation="length" data-validation-length="min1" id="licence-desc" name="licence-desc" class="form-control" value=""/></td>
             </tr>
             <tr>
               <td><label class="control-label">Days Storage:</label></td>
@@ -58,14 +58,14 @@
             </tr>
             <tr>
               <td><label class="control-label">VAT Number:</label></td>
-              <td><input id="vat-number" name="vat-number" type="text" class="form-control licence-date"/></td>
+              <td><input id="vat-number" name="vat-number" type="text" class="form-control"/></td>
             </tr>
           </table>
         </div>
       </div>
       <div class="modal-footer">
         <div class="pull-right">
-          <button type="button" class="btn btn-default grey" data-dismiss="modal">Save</button>
+          <button type="button" class="btn btn-default grey" id="save-licence">Save</button>
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         </div>
       </div>
