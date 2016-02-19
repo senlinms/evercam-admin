@@ -56,7 +56,6 @@ class SnapshotExtractor < ActiveRecord::Base
 			end
 
 			begin
-				snapshot_bucket = connect_bucket
 				storage = connect_mega
 				new_folder = storage.root.create_folder("#{exid}")
 				folder = storage.nodes.find do |node|
@@ -64,6 +63,7 @@ class SnapshotExtractor < ActiveRecord::Base
 				end
 				folder.create_folder("#{mega_id}")
 				# images = []
+				snapshot_bucket = connect_bucket
 				created_at.each do |snap|
 					s3_object = snapshot_bucket.objects["#{exid}/snapshots/#{snap.to_i}.jpg"]
 					if s3_object.exists?
