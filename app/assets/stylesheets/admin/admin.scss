@@ -383,14 +383,14 @@ ul.columns {
   width: 250px;
 }
 
-/*----- NumericUpDownControl's Style -----*/
+//----- NumericUpDownControl's Style -----
 .numericupdown {}
 
 .val {
-  float:left;
-  margin:0px;
-  padding-bottom:0px;
-  padding-top:0px;
+  float: left;
+  margin: 0;
+  padding-bottom: 0;
+  padding-top: 0;
   width: 94.4%;
 }
 
@@ -398,23 +398,23 @@ ul.columns {
   background-color: #e5e5e5;
   border: 1px solid #cccccc;
   cursor: pointer;
-  height:17px;
-  overflow:hidden;
+  height: 17px;
+  overflow: hidden;
   padding: 1px;
   vertical-align: top;
-  width:15px;
+  width: 15px;
 }
 
 .down {
   background-color: #e5e5e5;
   border: 1px solid #cccccc;
   cursor: pointer;
-  height:17px;
-  overflow:hidden;
+  height: 17px;
+  overflow: hidden;
   padding: 1px;
-  width:15px;
+  width: 15px;
 }
-/*----------------------------------------*/
+//----------------------------------------
 
 .xdsoft_datetimepicker {
   z-index: 99999;
