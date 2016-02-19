@@ -38,6 +38,39 @@ columnsDropdown = ->
     column = licences_table.column($(this).attr("data-val"))
     column.visible !column.visible()
 
+initChosen = ->
+  $('.chose-select').chosen()
+  $("#total-cameras").NumericUpDown()
+
+onModelShow = ->
+  $("#modal-add-licence").on "show.bs.modal", ->
+    $(".chosen-container").width("100%");
+
+twoDigitDecimal = ->
+  $("#licence-amount").on "change", ->
+    if $("#licence-amount").val() is "" || $("#licence-amount").val() is "0.00"
+      return;
+    num = parseFloat($("#licence-amount").val());
+    if isNaN(num.toFixed(2))
+      Notification.show("Please enter valid licence amount.")
+      $("#licence-amount").focus();
+      $("#"+msgId).show('');
+      return;
+    $("#licence-amount").val(num.toFixed(2));
+
+initNotify = ->
+  Notification.init("bb-alert");
+
+initDateTime = ->
+  $('.licence-date').datetimepicker
+    format: 'Y/m/d'
+    timepicker: false
+
 window.initializeLicences = ->
-  # columnsDropdown()
+  initChosen()
+  onModelShow()
+  columnsDropdown()
   initializeDataTable()
+  initNotify()
+  twoDigitDecimal()
+  initDateTime()

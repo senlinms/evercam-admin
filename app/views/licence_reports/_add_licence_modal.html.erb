@@ -1,0 +1,74 @@
+<div id="modal-add-licence" class="modal fade">
+  <div class="modal-dialog" style="width:500px;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="caption"><strong>Add Licence</strong></div>
+        <div class="cancel">
+          <a class="cancel_link" href="#" data-dismiss="modal">X</a>
+        </div>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <table class="user-table" style="width: 100%;">
+            <tr>
+              <td class="col-md-41"><label class="control-label">User:</label></td>
+              <td>
+                <select id="users-list" name="users-list" class="form-control is-required chose-select">
+                  <option value="">Select User</option>
+                  <% @users.each do |u| %>
+                    <option value="<%= u.id -%>">
+                      <%= u.email -%>
+                    </option>
+                  <% end %>
+                </select>
+              </td>
+            </tr>
+            <tr>
+              <td><label class="control-label">Licence Description:</label></td>
+              <td><input data-validation-error-msg="Cannot be blank" type="text" data-validation="length" data-validation-length="min1" id="user_lastname" name="user[lastname]" class="form-control" value=""/></td>
+            </tr>
+            <tr>
+              <td><label class="control-label">Days Storage:</label></td>
+              <td>
+                <select id="storage-days" name="storage-days" class="form-control chose-select">
+                  <option value="0">Select Storage</option>
+                  <option value="1">24 Hours Recording</option>
+                  <option value="7">7 Days Recording</option>
+                  <option value="30">30 Days Recording</option>
+                  <option value="90">90 Days Recording</option>
+                  <option value="-1">Infinity</option>
+                </select>
+              </td>
+            </tr>
+            <tr>
+              <td><label class="control-label">Cameras:</label></td>
+              <td><input id="total-cameras" name="total-cameras" type="text" class="form-control" value="1"/></td>
+            </tr>
+            <tr>
+              <td><label class="control-label">Amount:</label></td>
+              <td><input id="licence-amount" name="licence-amount" type="text" class="form-control" value="0.00"/></td>
+            </tr>
+            <tr>
+              <td><label class="control-label">From Date:</label></td>
+              <td><input id="from-date" name="from-date" type="text" class="form-control licence-date"/></td>
+            </tr>
+            <tr>
+              <td><label class="control-label">To Date:</label></td>
+              <td><input id="to-date" name="to-date" type="text" class="form-control licence-date"/></td>
+            </tr>
+            <tr>
+              <td><label class="control-label">VAT Number:</label></td>
+              <td><input id="vat-number" name="vat-number" type="text" class="form-control licence-date"/></td>
+            </tr>
+          </table>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div class="pull-right">
+          <button type="button" class="btn btn-default grey" data-dismiss="modal">Save</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

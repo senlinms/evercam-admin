@@ -5,6 +5,7 @@ class LicenceReportsController < ApplicationController
   def index
     begin
       @customers = Stripe::Customer.all(limit: 200)
+      @users = EvercamUser.all
     rescue => error
       notify_airbrake(error)
     end

@@ -14,9 +14,13 @@
     <!-- END PAGE HEADER-->
     <!-- BEGIN PAGE CONTENT-->
     <%= render 'columns_modal' %>
+    <%= render 'add_licence_modal' %>
     <div class="dropdown-checklist" id="div-dropdown-checklist">
       <div href="#" class="btn btn-default grey" data-toggle="modal" data-target="#toggle-datatable-columns">
         <i class="fa fa-columns"></i>
+      </div>
+      <div href="#" class="btn btn-default grey" data-toggle="modal" data-target="#modal-add-licence">
+        <i class="fa fa-plus"></i> Add Licence
       </div>
     </div>
     <div id="licences-list-row" class="row hide">
