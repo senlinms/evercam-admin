@@ -2,6 +2,24 @@ class SnapshotExtractor < ActiveRecord::Base
 	establish_connection "evercam_db_#{Rails.env}".to_sym
 
 	belongs_to :camera
+	require "rmega"
+	require "aws-sdk"
+
+  def self.connect_mega
+    storage = Rmega.login("#{ENV['MEGA_EMAIL']}", "#{ENV['MEGA_PASSWORD']}")
+    storage
+  end
+
+  def self.connect_bucket
+    access_key_id = "#{ENV['AWS_ACCESS_KEY']}"
+    secret_access_key = "#{ENV['AWS_SECRET_KEY']}"
+    s3 = AWS::S3.new(
+      access_key_id: access_key_id,
+      secret_access_key: secret_access_key
+    )
+    bucket = s3.buckets["evercam-camera-assets"]
+    bucket
+  end
 
 	def self.extract_snapshots
 		running = SnapshotExtractor.where(status: 1).any?

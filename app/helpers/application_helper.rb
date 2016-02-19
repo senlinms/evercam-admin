@@ -67,8 +67,8 @@ module ApplicationHelper
   end
 
   def connect_bucket
-    access_key_id = "#{ENV["AWS_ACCESS_KEY"]}"
-    secret_access_key = "#{ENV["AWS_SECRET_KEY"]}"
+    access_key_id = "#{ENV['AWS_ACCESS_KEY']}"
+    secret_access_key = "#{ENV['AWS_SECRET_KEY']}"
     s3 = AWS::S3.new(
       access_key_id: access_key_id,
       secret_access_key: secret_access_key
@@ -78,7 +78,7 @@ module ApplicationHelper
   end
 
   def connect_mega
-    storage = Rmega.login("#{MEGA_EMAIL}", "#{MEGA_PASSWORD}")
+    storage = Rmega.login("#{ENV['MEGA_EMAIL']}", "#{ENV['MEGA_PASSWORD']}")
     storage
   end
 end
