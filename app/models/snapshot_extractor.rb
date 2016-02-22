@@ -96,7 +96,7 @@ class SnapshotExtractor < ActiveRecord::Base
 		created_at
 	end
 
-	def self.refine_times(created_ats,timings,days)
+	def self.refine_times(created_ats, timings, days)
 		created_at = []
 		index = 0
 		day_index = 0
@@ -119,7 +119,7 @@ class SnapshotExtractor < ActiveRecord::Base
 		created_at
 	end
 
-	def self.refine_intervals(created_ats,interval)
+	def self.refine_intervals(created_ats, interval)
 		created_at = [DateTime.parse(created_ats.first)]
 		last_created_at = DateTime.parse(created_ats.last)
 		index = 1
