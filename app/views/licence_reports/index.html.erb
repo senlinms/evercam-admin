@@ -34,10 +34,13 @@
             <th name="order_licence_description" class="sorting">Licence Desccription</th>
             <th name="order_cameras" class="sorting">Cameras</th>
             <th name="order_storage" class="sorting">Storage</th>
+            <th name="order_period" class="sorting">Period</th>
             <th name="order_created_date" class="sorting">Created Date</th>
             <th name="order_start_date" class="sorting">Start Date</th>
             <th name="order_end_date" class="sorting">End Date</th>
             <th name="order_expires_in" class="sorting">Expires In</th>
+            <th name="order_amount" class="sorting">Amount</th>
+            <th name="order_renew" class="sorting">Auto Renew</th>
             <th name="order_action" class="sorting"></th>
           </tr>
           </thead>
@@ -50,9 +53,8 @@
               <td><%= user.country.name if user.country.present? %></td>
               <td><%= custom_licence.description %></td>
               <td><%= custom_licence.total_cameras %></td>
-              <td>
-                <%= custom_licence.storage %>
-              </td>
+              <td><%= custom_licence.storage %></td>
+              <td>Custom</td>
               <td><%= Time.at(custom_licence.created_at).strftime('%d/%m/%Y') %></td>
               <td><%= Time.at(custom_licence.start_date).strftime('%d/%m/%Y') %></td>
               <td><%= Time.at(custom_licence.end_date).strftime('%d/%m/%Y') %></td>
@@ -65,13 +67,15 @@
                 %>
                 <%= expires_in %>
               </td>
-              <td></td>
+              <td>&euro; <%= number_with_precision(custom_licence.amount, precision: 2) %></td>
+              <td><input type="checkbox" class="auto-renewal hide">No</td>
+              <td><i class="fa fa-trash-o"></i></td>
             </tr>
             <% end %>
           <% @customers.each do |customer| %>
             <% licences = customer.subscriptions.data %>
             <% licences.each do |licence| %>
-              <% user = get_user(customer.email) %>
+              <% user = get_user(customer.id) %>
               <tr>
                 <td>
                   <% if user.present? %>
@@ -101,6 +105,7 @@
                   %>
                   <%= storage %>
                 </td>
+                <td><%= licence.plan['interval'].eql?("month") ? "Monthly" : "Annual" %></td>
                 <td><%= Time.at(licence.plan['created']).strftime('%d/%m/%Y') %></td>
                 <td><%= Time.at(licence.current_period_start).strftime('%d/%m/%Y') %></td>
                 <td><%= Time.at(licence.current_period_end).strftime('%d/%m/%Y') %></td>
@@ -113,7 +118,9 @@
                   %>
                   <%= expires_in %>
                 </td>
-                <td></td>
+                <td>&euro; <%= number_with_precision((licence.plan['amount']/100) * licence.quantity, precision: 2) %></td>
+                <td><%= licence.cancel_at_period_end ? "No" : "Yes" %><input customer-id="<%= customer.id %>" subscription-id="<%= licence.id %>" class="auto-renewal hide" type="checkbox" <%= licence.cancel_at_period_end ? "" : "checked" %>/></td>
+                <td><i class="fa fa-trash-o"></i></td>
               </tr>
             <% end %>
           <% end %>
