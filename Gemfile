@@ -98,7 +98,7 @@ group :evercam do
 end
 gem 'whenever', :require => false
 
-gem 'aws-sdk', '~> 2'
+gem 'aws-sdk-v1'
 gem 'rmega', '~> 0.2.1'
 
 gem 'airbrake'
