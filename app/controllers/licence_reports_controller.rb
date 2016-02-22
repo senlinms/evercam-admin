@@ -15,14 +15,14 @@ class LicenceReportsController < ApplicationController
   def create
     begin
       @licence = Licence.new(
-          user_id: params["user_id"],
-          description: params["licence_desc"],
-          total_cameras: params["total_cameras"],
-          storage: params["storage"],
-          amount: params["amount"],
-          start_date: DateTime.parse(params["start_date"]),
-          end_date: DateTime.parse(params["end_date"]),
-          created_at: Time.now
+        user_id: params["user_id"],
+        description: params["licence_desc"],
+        total_cameras: params["total_cameras"],
+        storage: params["storage"],
+        amount: params["amount"],
+        start_date: DateTime.parse(params["start_date"]),
+        end_date: DateTime.parse(params["end_date"]),
+        created_at: Time.now
       )
       respond_to do |format|
         if @licence.save
