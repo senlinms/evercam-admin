@@ -35,5 +35,7 @@ Rails.application.routes.draw do
   get '/no_access' => 'home#no_access'
   get "/cloud_recordings" => "snapshots#cloud_recordings"
 
-  resources :licence_reports
+  resources :licence_reports, path: "licences"
+  post "/licences/new" => "licence_reports#create"
+  post "/licences/auto-renewal" => "licence_reports#auto_renewal"
 end
