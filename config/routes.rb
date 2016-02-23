@@ -37,5 +37,6 @@ Rails.application.routes.draw do
 
   resources :licence_reports, path: "licences"
   post "/licences/new" => "licence_reports#create"
+  delete "/licences/delete" => "licence_reports#destroy"
   post "/licences/auto-renewal" => "licence_reports#auto_renewal"
 end

@@ -207,6 +207,41 @@ autoRenewal = ->
 
     sendAJAXRequest(settings)
 
+deleteLicence = ->
+  $(".delete-licence").on "click", ->
+    result = confirm("Are you sure to cancel this licence?")
+    if result is false
+      return
+    licence_row = $(this).parents('tr')
+    licence_type = $(this).attr("licence-type")
+
+    data = {}
+    data.licence_type = licence_type
+    if licence_type is "custom"
+      data.subscription_id = $(this).attr("subscription-id")
+    else
+      data.customer_id = $(this).attr("customer-id")
+      data.subscription_id = $(this).attr("subscription-id")
+
+    onError = (jqXHR, status, error) ->
+      Notification.show(jqXHR.responseText)
+
+    onSuccess = (result, status, jqXHR) ->
+      licence_row.remove()
+      Notification.show("Licence canceled successfully.")
+
+    settings =
+      cache: false
+      data: data
+      dataType: 'json'
+      error: onError
+      success: onSuccess
+      contentType: "application/x-www-form-urlencoded"
+      type: "delete"
+      url: "/licences/delete"
+
+    sendAJAXRequest(settings)
+
 window.initializeLicences = ->
   initChosen()
   onModelShow()
@@ -217,3 +252,4 @@ window.initializeLicences = ->
   initDateTime()
   saveLicence()
   autoRenewal()
+  deleteLicence()
