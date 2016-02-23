@@ -69,7 +69,7 @@
               </td>
               <td>&euro; <%= number_with_precision(custom_licence.amount, precision: 2) %></td>
               <td><input type="checkbox" class="auto-renewal hide">No</td>
-              <td><i class="fa fa-trash-o"></i></td>
+              <td><i licence-type="custom" subscription-id="<%= custom_licence.id %>" class="fa fa-trash-o delete-licence"></i></td>
             </tr>
             <% end %>
           <% @customers.each do |customer| %>
@@ -120,7 +120,7 @@
                 </td>
                 <td>&euro; <%= number_with_precision((licence.plan['amount']/100) * licence.quantity, precision: 2) %></td>
                 <td><%= licence.cancel_at_period_end ? "No" : "Yes" %><input customer-id="<%= customer.id %>" subscription-id="<%= licence.id %>" class="auto-renewal hide" type="checkbox" <%= licence.cancel_at_period_end ? "" : "checked" %>/></td>
-                <td><i class="fa fa-trash-o"></i></td>
+                <td><i licence-type="stripe" customer-id="<%= customer.id %>" subscription-id="<%= licence.id %>" class="fa fa-trash-o delete-licence"></i></td>
               </tr>
             <% end %>
           <% end %>
