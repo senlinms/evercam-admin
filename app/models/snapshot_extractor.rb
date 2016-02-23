@@ -123,19 +123,23 @@ class SnapshotExtractor < ActiveRecord::Base
 	end
 
 	def self.refine_intervals(created_ats, interval)
-		created_at = [created_ats.first]
-		last_created_at = DateTime.parse(created_ats.last)
-		index = 1
-		index_for_dt = 0
-		length = created_ats.length
-		(1..length).each do |single|
-			if (DateTime.parse(created_at[index_for_dt]) + interval.minutes) <= last_created_at
-				temp = DateTime.parse(created_at[index_for_dt]) + interval.minutes
-				created_at[index] = temp.to_s
-				index_for_dt += 1
-				index += 1
+		if interval == 0
+			created_ats
+		else
+			created_at = [created_ats.first]
+			last_created_at = DateTime.parse(created_ats.last)
+			index = 1
+			index_for_dt = 0
+			length = created_ats.length
+			(1..length).each do |single|
+				if (DateTime.parse(created_at[index_for_dt]) + interval.minutes) <= last_created_at
+					temp = DateTime.parse(created_at[index_for_dt]) + interval.minutes
+					created_at[index] = temp.to_s
+					index_for_dt += 1
+					index += 1
+				end
 			end
+			created_at
 		end
-		created_at
 	end
 end
