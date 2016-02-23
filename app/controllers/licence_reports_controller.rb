@@ -5,7 +5,7 @@ class LicenceReportsController < ApplicationController
   def index
     begin
       @customers = Stripe::Customer.all(limit: 200)
-      @custom_licences = Licence.all
+      @custom_licences = Licence.where(cancel_licence: false).all
       @users = EvercamUser.all
     rescue => error
       notify_airbrake(error)
@@ -42,7 +42,7 @@ class LicenceReportsController < ApplicationController
     begin
       if params[:licence_type] && params[:licence_type].eql?("custom")
         licence = Licence.where(id: params[:subscription_id]).first
-        licence.destroy
+        licence.update_attribute(:cancel_licence, true)
         respond_to do |format|
           format.html { redirect_to licence_report_path, notice: "Licence canceled successfully." }
           format.json { render json: [] }
