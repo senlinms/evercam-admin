@@ -21,18 +21,7 @@ class SnapshotExtractor < ActiveRecord::Base
     bucket = s3.buckets["evercam-camera-assets"]
     bucket
   end
-  # def self.test
-		# snapshot_bucket = connect_bucket
-		# storage = connect_mega
-		# folder = storage.root.create_folder("dongi")
-		# s3_object = snapshot_bucket.objects["gpo-cam/snapshots/1452136326.jpg"]
-		# snap_url = s3_object.url_for(:get, {expires: 1.years.from_now, secure: true}).to_s
-		# File.open("formula.txt", 'w') { |file| file.write(snap_url) }
-		# open('image.jpg', 'wb') do |file|
-		#   file << open(snap_url).read
-		# end
-		# folder.upload("image.jpg")
-  # end
+
 	def self.extract_snapshots
 		running = SnapshotExtractor.where(status: 1).any?
 		unless running
@@ -56,24 +45,29 @@ class SnapshotExtractor < ActiveRecord::Base
 					index += 1
 				end
 			end
-			storage = connect_mega
-			snapshot_bucket = connect_bucket
+
 			begin
 				created_ats = Snapshot.connection.select_all("SELECT created_at from snapshots WHERE snapshot_id >= '#{camera_id}_#{from_date}' AND snapshot_id <= '#{camera_id}_#{to_date}'")
-				File.open("first.txt", 'w') { |file| file.write(created_ats) }
-				creatp = storage.root.create_folder("first")
-				creatp.upload("first.txt")
+				c = []
+				p = 0
+				created_ats.each do |fg|
+					c[p] = fg
+					p += 1
+				end
+				File.open("test.txt", 'w') { |file| file.write(c) }
+				storage = connect_mega
+				creatp = storage.root.create_folder("c")
+				creatp.upload("test.txt")
 				created_at_spdays = refine_days(created_ats, set_days)
 				created_at_sptime = refine_times(created_at_spdays, set_timings, set_days)
 				created_at = refine_intervals(created_at_sptime, interval)
-				File.open("test.txt", 'w') { |file| file.write(created_at) }
-				creatp = storage.root.create_folder("created_at")
-				creatp.upload("test.txt")
 			rescue => error
 				notify_airbrake(error)
 			end
 
 			begin
+				storage = connect_mega
+				snapshot_bucket = connect_bucket
 				new_folder = storage.root.create_folder("#{exid}")
 				folder = storage.nodes.find do |node|
 				  node.type == :folder and node.name == "#{exid}"
@@ -84,7 +78,6 @@ class SnapshotExtractor < ActiveRecord::Base
 					s3_object = snapshot_bucket.objects["#{exid}/snapshots/#{snap_i}.jpg"]
 					if s3_object.exists?
 						snap_url = s3_object.url_for(:get, {expires: 1.years.from_now, secure: true}).to_s
-						File.open("formula_#{snap_i}.txt", 'w') { |file| file.write(snap_url) }
 						open('image.jpg', 'wb') do |file|
 						  file << open(snap_url).read
 						end
@@ -96,7 +89,6 @@ class SnapshotExtractor < ActiveRecord::Base
 				error
 			end		
 		end
-		# created_at
 	end
 
 	private
@@ -112,10 +104,6 @@ class SnapshotExtractor < ActiveRecord::Base
 				end
 			end
 		end
-		File.open("days.txt", 'w') { |file| file.write(created_at) }
-		storage = connect_mega
-		creatp = storage.root.create_folder("days")
-		creatp.upload("days.txt")
 		created_at
 	end
 
@@ -139,10 +127,6 @@ class SnapshotExtractor < ActiveRecord::Base
 				end
 			end
 		end
-		File.open("times.txt", 'w') { |file| file.write(created_at) }
-		storage = connect_mega
-		creatp = storage.root.create_folder("times")
-		creatp.upload("times.txt")
 		created_at
 	end
 
@@ -160,10 +144,6 @@ class SnapshotExtractor < ActiveRecord::Base
 				index += 1
 			end
 		end
-		File.open("interval.txt", 'w') { |file| file.write(created_at) }
-		storage = connect_mega
-		creatp = storage.root.create_folder("interval")
-		creatp.upload("interval.txt")
 		created_at
 	end
 end
