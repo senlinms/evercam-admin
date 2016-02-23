@@ -19,7 +19,7 @@ class LicenceReportsController < ApplicationController
         description: params["licence_desc"],
         total_cameras: params["total_cameras"],
         storage: params["storage"],
-        amount: params["amount"],
+        amount: params["amount"].to_i * 100,
         start_date: DateTime.parse(params["start_date"]),
         end_date: DateTime.parse(params["end_date"]),
         created_at: Time.now

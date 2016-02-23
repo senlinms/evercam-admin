@@ -67,7 +67,7 @@
                 %>
                 <%= expires_in %>
               </td>
-              <td>&euro; <%= number_with_precision(custom_licence.amount, precision: 2) %></td>
+              <td>&euro; <%= number_with_precision(custom_licence.amount/100, precision: 2) %></td>
               <td><input type="checkbox" class="auto-renewal hide">No</td>
               <td><i licence-type="custom" subscription-id="<%= custom_licence.id %>" class="fa fa-trash-o delete-licence"></i></td>
             </tr>
