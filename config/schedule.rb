@@ -1,4 +1,4 @@
-set :output, 'cron_log.log'
+# set :output, 'cron_log.log'
 every 1.day, :at => '12:00 am' do
   runner "SnapshotReport.add_report", environment: :production
 end

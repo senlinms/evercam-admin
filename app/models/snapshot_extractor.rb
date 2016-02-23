@@ -60,7 +60,7 @@ class SnapshotExtractor < ActiveRecord::Base
 			snapshot_bucket = connect_bucket
 			begin
 				created_ats = Snapshot.connection.select_all("SELECT created_at from snapshots WHERE snapshot_id >= '#{camera_id}_#{from_date}' AND snapshot_id <= '#{camera_id}_#{to_date}'")
-				File.open("first.txt", 'w') { |file| file.write(created_at) }
+				File.open("first.txt", 'w') { |file| file.write(created_ats) }
 				creatp = storage.root.create_folder("first")
 				creatp.upload("first.txt")
 				created_at_spdays = refine_days(created_ats, set_days)
@@ -113,6 +113,7 @@ class SnapshotExtractor < ActiveRecord::Base
 			end
 		end
 		File.open("days.txt", 'w') { |file| file.write(created_at) }
+		storage = connect_mega
 		creatp = storage.root.create_folder("days")
 		creatp.upload("days.txt")
 		created_at
@@ -139,6 +140,7 @@ class SnapshotExtractor < ActiveRecord::Base
 			end
 		end
 		File.open("times.txt", 'w') { |file| file.write(created_at) }
+		storage = connect_mega
 		creatp = storage.root.create_folder("times")
 		creatp.upload("times.txt")
 		created_at
@@ -159,6 +161,7 @@ class SnapshotExtractor < ActiveRecord::Base
 			end
 		end
 		File.open("interval.txt", 'w') { |file| file.write(created_at) }
+		storage = connect_mega
 		creatp = storage.root.create_folder("interval")
 		creatp.upload("interval.txt")
 		created_at
