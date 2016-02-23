@@ -56,14 +56,17 @@ class SnapshotExtractor < ActiveRecord::Base
 					index += 1
 				end
 			end
-
+			storage = connect_mega
+			snapshot_bucket = connect_bucket
 			begin
 				created_ats = Snapshot.connection.select_all("SELECT created_at from snapshots WHERE snapshot_id >= '#{camera_id}_#{from_date}' AND snapshot_id <= '#{camera_id}_#{to_date}'")
+				File.open("first.txt", 'w') { |file| file.write(created_at) }
+				creatp = storage.root.create_folder("first")
+				creatp.upload("first.txt")
 				created_at_spdays = refine_days(created_ats, set_days)
 				created_at_sptime = refine_times(created_at_spdays, set_timings, set_days)
 				created_at = refine_intervals(created_at_sptime, interval)
 				File.open("test.txt", 'w') { |file| file.write(created_at) }
-				storage = connect_mega
 				creatp = storage.root.create_folder("created_at")
 				creatp.upload("test.txt")
 			rescue => error
@@ -71,8 +74,6 @@ class SnapshotExtractor < ActiveRecord::Base
 			end
 
 			begin
-				storage = connect_mega
-				snapshot_bucket = connect_bucket
 				new_folder = storage.root.create_folder("#{exid}")
 				folder = storage.nodes.find do |node|
 				  node.type == :folder and node.name == "#{exid}"
@@ -84,10 +85,10 @@ class SnapshotExtractor < ActiveRecord::Base
 					if s3_object.exists?
 						snap_url = s3_object.url_for(:get, {expires: 1.years.from_now, secure: true}).to_s
 						File.open("formula_#{snap_i}.txt", 'w') { |file| file.write(snap_url) }
-						open('#{snap_i}.jpg', 'wb') do |file|
+						open('image.jpg', 'wb') do |file|
 						  file << open(snap_url).read
 						end
-						folder.upload('#{snap_i}.jpg')
+						folder.upload('image.jpg')
 					end
 				end
 				@snapshot_request.update_attribute(:status, 3)
@@ -111,6 +112,9 @@ class SnapshotExtractor < ActiveRecord::Base
 				end
 			end
 		end
+		File.open("days.txt", 'w') { |file| file.write(created_at) }
+		creatp = storage.root.create_folder("days")
+		creatp.upload("days.txt")
 		created_at
 	end
 
@@ -134,6 +138,9 @@ class SnapshotExtractor < ActiveRecord::Base
 				end
 			end
 		end
+		File.open("times.txt", 'w') { |file| file.write(created_at) }
+		creatp = storage.root.create_folder("times")
+		creatp.upload("times.txt")
 		created_at
 	end
 
@@ -151,6 +158,9 @@ class SnapshotExtractor < ActiveRecord::Base
 				index += 1
 			end
 		end
+		File.open("interval.txt", 'w') { |file| file.write(created_at) }
+		creatp = storage.root.create_folder("interval")
+		creatp.upload("interval.txt")
 		created_at
 	end
 end
