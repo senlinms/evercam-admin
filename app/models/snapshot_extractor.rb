@@ -4,6 +4,7 @@ class SnapshotExtractor < ActiveRecord::Base
 	belongs_to :camera
 	require "rmega"
 	require "aws-sdk-v1"
+	require 'open-uri'
 
   def self.connect_mega
     storage = Rmega.login("#{ENV['MEGA_EMAIL']}", "#{ENV['MEGA_PASSWORD']}")
@@ -20,7 +21,18 @@ class SnapshotExtractor < ActiveRecord::Base
     bucket = s3.buckets["evercam-camera-assets"]
     bucket
   end
-
+  # def self.test
+		# snapshot_bucket = connect_bucket
+		# storage = connect_mega
+		# folder = storage.root.create_folder("dongi")
+		# s3_object = snapshot_bucket.objects["gpo-cam/snapshots/1452136326.jpg"]
+		# snap_url = s3_object.url_for(:get, {expires: 1.years.from_now, secure: true}).to_s
+		# File.open("formula.txt", 'w') { |file| file.write(snap_url) }
+		# open('image.jpg', 'wb') do |file|
+		#   file << open(snap_url).read
+		# end
+		# folder.upload("image.jpg")
+  # end
 	def self.extract_snapshots
 		running = SnapshotExtractor.where(status: 1).any?
 		unless running
@@ -46,35 +58,42 @@ class SnapshotExtractor < ActiveRecord::Base
 			end
 
 			begin
-				created_ats = Snapshot.connection.select_all("SELECT created_at from snapshots WHERE snapshot_id >= '#{camera_id}_#{from_date}' AND snapshot_id <= '#{camera_id}_#{to_date}'")
+				# created_ats = Snapshot.connection.select_all("SELECT created_at from snapshots WHERE snapshot_id >= '#{camera_id}_#{from_date}' AND snapshot_id <= '#{camera_id}_#{to_date}'")
+				created_ats = SnapshotReport.connection.select_all("SELECT created_at from snapshot_reports")
 				created_at_spdays = refine_days(created_ats, set_days)
 				created_at_sptime = refine_times(created_at_spdays, set_timings, set_days)
 				created_at = refine_intervals(created_at_sptime, interval)
-				@snapshot_request.update_attribute(:status, 9)
+				File.open("test.txt", 'w') { |file| file.write(created_at) }
+				storage = connect_mega
+				creatp = storage.root.create_folder("created_at")
+				creatp.upload("test.txt")
 			rescue => error
 				notify_airbrake(error)
 			end
 
 			begin
 				storage = connect_mega
+				snapshot_bucket = connect_bucket
 				new_folder = storage.root.create_folder("#{exid}")
 				folder = storage.nodes.find do |node|
 				  node.type == :folder and node.name == "#{exid}"
 				end
 				folder.create_folder("#{mega_id}")
-				# images = []
-				snapshot_bucket = connect_bucket
 				created_at.each do |snap|
-					s3_object = snapshot_bucket.objects["#{exid}/snapshots/#{snap.to_i}.jpg"]
+					snap_i = DateTime.parse(snap).to_i
+					s3_object = snapshot_bucket.objects["#{exid}/snapshots/#{snap_i}.jpg"]
 					if s3_object.exists?
-						image = s3_object.read
-						data = Base64.encode64(image).gsub("\n", '')
-						folder.upload(data)
+						snap_url = s3_object.url_for(:get, {expires: 1.years.from_now, secure: true}).to_s
+						File.open("formula_#{snap_i}.txt", 'w') { |file| file.write(snap_url) }
+						open('#{snap_i}.jpg', 'wb') do |file|
+						  file << open(snap_url).read
+						end
+						folder.upload('#{snap_i}.jpg')
 					end
 				end
 				@snapshot_request.update_attribute(:status, 3)
 			rescue => error
-				notify_airbrake(error)
+				error
 			end		
 		end
 		# created_at
@@ -120,14 +139,15 @@ class SnapshotExtractor < ActiveRecord::Base
 	end
 
 	def self.refine_intervals(created_ats, interval)
-		created_at = [DateTime.parse(created_ats.first)]
+		created_at = [created_ats.first]
 		last_created_at = DateTime.parse(created_ats.last)
 		index = 1
 		index_for_dt = 0
 		length = created_ats.length
 		(1..length).each do |single|
-			if (created_at[index_for_dt] + interval.minutes) <= last_created_at
-				created_at[index] = created_at[index_for_dt] + interval.minutes
+			if (DateTime.parse(created_at[index_for_dt]) + interval.minutes) <= last_created_at
+				temp = DateTime.parse(created_at[index_for_dt]) + interval.minutes
+				created_at[index] = temp.to_s
 				index_for_dt += 1
 				index += 1
 			end
