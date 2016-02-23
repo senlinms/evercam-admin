@@ -25,8 +25,11 @@ initializeDataTable = ->
       {data: "6" },
       {data: "7" },
       {data: "8" },
-      {data: "9", "sClass": "right" },
-      {data: "10", visible: false }
+      {data: "9" },
+      {data: "10", "sClass": "right" },
+      {data: "11", "sClass": "right" },
+      {data: "12", "sClass": "center"},
+      {data: "13" }
     ],
     iDisplayLength: 50
     columnDefs: [
@@ -125,10 +128,9 @@ saveLicence = ->
     data.amount = $("#licence-amount").val()
     data.start_date = $("#from-date").val()
     data.end_date = $("#to-date").val()
-    data.save = 'true'
 
     onError = (jqXHR, status, error) ->
-      Notification.show(xhr.responseText)
+      Notification.show(jqXHR.responseText)
       false
 
     onSuccess = (result, status, jqXHR) ->
@@ -155,9 +157,9 @@ saveLicence = ->
       dataType: 'json'
       error: onError
       success: onSuccess
-      contentType: "application/json; charset=utf-8"
-      type: "GET"
-      url: "licence_reports"
+      contentType: "application/x-www-form-urlencoded"
+      type: "POST"
+      url: "/licences/new"
 
     sendAJAXRequest(settings)
 
@@ -170,6 +172,41 @@ clearForm = ->
   $("#from-date").val("")
   $("#to-date").val("")
 
+autoRenewal = ->
+  $(".auto-renewal").on "click", ->
+    auto_renew = false
+    if $(this).val() is "on"
+      $(this).parent("span").removeClass("checked")
+      $(this).val("off")
+      auto_renew = true
+    else
+      $(this).parent("span").addClass("checked")
+      $(this).val("on")
+      auto_renew = false
+
+    data = {}
+    data.customer_id = $(this).attr("customer-id")
+    data.subscription_id = $(this).attr("subscription-id")
+    data.auto_renew = auto_renew
+
+    onError = (jqXHR, status, error) ->
+      Notification.show(jqXHR.responseText)
+
+    onSuccess = (result, status, jqXHR) ->
+      Notification.show("Trurned off")
+
+    settings =
+      cache: false
+      data: data
+      dataType: 'json'
+      error: onError
+      success: onSuccess
+      contentType: "application/x-www-form-urlencoded"
+      type: "POST"
+      url: "/licences/auto-renewal"
+
+    sendAJAXRequest(settings)
+
 window.initializeLicences = ->
   initChosen()
   onModelShow()
@@ -179,3 +216,4 @@ window.initializeLicences = ->
   twoDigitDecimal()
   initDateTime()
   saveLicence()
+  autoRenewal()
