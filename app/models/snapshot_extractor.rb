@@ -4,7 +4,7 @@ class SnapshotExtractor < ActiveRecord::Base
 	belongs_to :camera
 	require "rmega"
 	require "aws-sdk-v1"
-	require 'open-uri'
+	require "open-uri"
 
   def self.connect_mega
     storage = Rmega.login("#{ENV['MEGA_EMAIL']}", "#{ENV['MEGA_PASSWORD']}")
@@ -68,7 +68,6 @@ class SnapshotExtractor < ActiveRecord::Base
 					s3_object = snapshot_bucket.objects["#{exid}/snapshots/#{snap_i}.jpg"]
 					if s3_object.exists?
 						snap_url = s3_object.url_for(:get, {expires: 1.years.from_now, secure: true}).to_s
-						File.open("url.txt", 'w') { |file| file.write(snap_url) }
 						open('image.jpg', 'wb') do |file|
 						  file << open(snap_url).read
 						end
@@ -125,7 +124,7 @@ class SnapshotExtractor < ActiveRecord::Base
 		if interval == 0
 			created_ats
 		else
-			created_at = [(DateTime.parse(created_ats.first).to_s).gsub("T"," ")]
+			created_at = [(DateTime.parse(created_ats.first).to_s).gsub('T',' ')]
 			last_created_at = DateTime.parse(created_ats.last)
 			index = 1
 			index_for_dt = 0
