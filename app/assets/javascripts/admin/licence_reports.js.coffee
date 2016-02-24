@@ -153,7 +153,7 @@ saveLicence = ->
 
 addNewRow = (data) ->
   trClass = $("#licences_datatables > tbody > tr:first").attr("class")
-  tr = "<tr role='row' class='" + returnClass(trClass) + "'><td><a href='/users/" + data.user_id + "'>" + data.user.email + "</a></td><td>" + data.user.firstname  + " " + data.user.lastname + "</td><td></td><td>" + data.description + "</td><td class='right'>" + data.total_cameras + "</td><td class='right'>" + data.storage + "</td><td>Custom</td><td>" + formatDate(data.created_at) + "</td><td>" + formatDate(data.start_date) + "</td><td>" + formatDate(data.end_date) + "</td><td class='right'>" + getExpDate(data.start_date, data.end_date) + "</td><td class='right'>€ " + data.amount + ".00</td><td class='center'>No</td><td><i licence-type='custom' subscription-id='" + data.id + "' class='fa fa-trash-o delete-licence'></i></td></tr>"
+  tr = "<tr role='row' class='" + returnClass(trClass) + "'><td><a href='/users/" + data.user_id + "'>" + data.user.email + "</a></td><td>" + data.user.firstname  + " " + data.user.lastname + "</td><td></td><td>" + data.description + "</td><td class='right'>" + data.total_cameras + "</td><td class='right'>" + data.storage + "</td><td>Custom</td><td>" + formatDate(data.created_at) + "</td><td>" + formatDate(data.start_date) + "</td><td>" + formatDate(data.end_date) + "</td><td class='right'>" + getExpDate(data.start_date, data.end_date) + "</td><td class='right'>€ " + (data.amount / 100) + ".00</td><td class='center'>No</td><td><i licence-type='custom' subscription-id='" + data.id + "' class='fa fa-trash-o delete-licence'></i></td></tr>"
   row = $("#licences_datatables > tbody > tr:first")
   row.before tr
 
