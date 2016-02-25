@@ -167,7 +167,7 @@ addNewRow = (data) ->
   tr +=  "<td class='right'>#{getExpDate(data.start_date, data.end_date)}</td>"
   tr +=  "<td class='right'>€ #{data.amount / 100}.00</td>"
   tr +=  "<td class='center'>No</td>"
-  tr +=  "<td>#{paidStatus(data.paid)}</td>"
+  tr +=  "<td style='color: #ff0000;'>#{paidStatus(data.paid)}</td>"
   tr +=  "<td><i licence-type='custom' subscription-id='#{data.id}' class='fa fa-trash-o delete-licence'></i></td>"
   tr += "</tr>"
   row = $("#licences_datatables > tbody > tr:first")
