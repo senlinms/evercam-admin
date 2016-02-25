@@ -29,7 +29,8 @@ initializeDataTable = ->
       {data: "10", "sClass": "right" },
       {data: "11", "sClass": "right" },
       {data: "12", "sClass": "center"},
-      {data: "13" }
+      {data: "13" },
+      {data: "14" }
     ],
     iDisplayLength: 50
     columnDefs: [
@@ -74,7 +75,7 @@ initNotify = ->
 
 initDateTime = ->
   $('.licence-date').datetimepicker
-    format: 'Y/m/d'
+    format: 'd/m/Y'
     timepicker: false
 
 saveLicence = ->
@@ -135,19 +136,7 @@ saveLicence = ->
 
     onSuccess = (result, status, jqXHR) ->
       $('#modal-add-licence').modal('hide')
-      #licences_table.row.add( [
-      #  '.1',
-      #  '.2',
-      #  '.3',
-      #  '.4',
-      #  '.5',
-      #  '.6',
-      #  '.7',
-      #  '.8',
-      #  '.9',
-      #  '.10',
-      #  '11'
-      #]).draw( false );*/
+      addNewRow(result)
       clearForm()
       true
 
@@ -163,11 +152,52 @@ saveLicence = ->
 
     sendAJAXRequest(settings)
 
+addNewRow = (data) ->
+  trClass = $("#licences_datatables > tbody > tr:first").attr("class")
+  tr = "<tr role='row' class='#{returnClass(trClass)}'>"
+  tr +=  "<td><a href='/users/#{data.user_id}'>#{data.user.email}</a></td>"
+  tr +=  "<td>#{data.user.firstname} #{data.user.lastname}</td>"
+  tr +=  "<td></td><td>#{data.description}</td>"
+  tr +=  "<td class='right'>#{data.total_cameras}</td>"
+  tr +=  "<td class='right'>#{data.storage}</td>"
+  tr +=  "<td>Custom</td>"
+  tr +=  "<td>#{formatDate(data.created_at)}</td>"
+  tr +=  "<td>#{formatDate(data.start_date)}</td>"
+  tr +=  "<td>#{formatDate(data.end_date)}</td>"
+  tr +=  "<td class='right'>#{getExpDate(data.start_date, data.end_date)}</td>"
+  tr +=  "<td class='right'>€ #{data.amount / 100}.00</td>"
+  tr +=  "<td class='center'>No</td>"
+  tr +=  "<td style='color: #ff0000;'>#{paidStatus(data.paid)}</td>"
+  tr +=  "<td><i licence-type='custom' subscription-id='#{data.id}' class='fa fa-trash-o delete-licence'></i></td>"
+  tr += "</tr>"
+  row = $("#licences_datatables > tbody > tr:first")
+  row.before tr
+
+formatDate = (data) ->
+  date = new Date(data)
+  return date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear()
+
+getExpDate = (start_date, end_date) ->
+  second = new Date(end_date)
+  first = new Date(start_date)
+  return (Math.round (second - first) / (1000 * 60 * 60 * 24)) + 1
+returnClass = (value) ->
+  if value is "odd"
+    "even"
+  else if value is "even"
+    "odd"
+
+paidStatus = (bol) ->
+  if bol is false
+    "Pending"
+  else if bol is true
+    "Paid"
+
 clearForm = ->
-  $("#users-list").val("")
+  $("#users-list ~ .chosen-container > .chosen-single span").text "Select User"
   $("#licence-desc").val("")
   $("#total-cameras").val(1)
-  $("#storage-days").val("0")
+  $("#storage-days ~ .chosen-container > .chosen-single span").text "Select Storage"
   $("#licence-amount").val("0.00")
   $("#from-date").val("")
   $("#to-date").val("")
@@ -208,7 +238,7 @@ autoRenewal = ->
     sendAJAXRequest(settings)
 
 deleteLicence = ->
-  $(".delete-licence").on "click", ->
+  $("#licences_datatables").on "click", ".delete-licence", ->
     result = confirm("Are you sure to cancel this licence?")
     if result is false
       return

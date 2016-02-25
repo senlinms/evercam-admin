@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-ruby '2.2.2'
+fail 'Ruby version must be greater than 2.0' unless RUBY_VERSION.to_f > 2.0
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.5.1'
@@ -97,4 +97,8 @@ group :evercam do
     github: 'evercam/evercam-ruby'
 end
 gem 'whenever', :require => false
+
+gem 'aws-sdk-v1'
+gem 'rmega', '~> 0.2.1'
+
 gem 'airbrake'

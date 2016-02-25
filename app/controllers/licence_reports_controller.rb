@@ -27,7 +27,7 @@ class LicenceReportsController < ApplicationController
       respond_to do |format|
         if @licence.save
           format.html { redirect_to licence_report_path, notice: 'Licence successfully created' }
-          format.json { render json: @licence }
+          format.json { render json: @licence.to_json(include: [:user]) }
         else
           format.html { redirect_to licence_report_path }
           format.json { render json: @licence.errors.full_messages, status: :unprocessable_entity }
@@ -35,6 +35,10 @@ class LicenceReportsController < ApplicationController
       end
     rescue => error
       notify_airbrake(error)
+      respond_to do |format|
+        format.html { redirect_to licence_report_path }
+        format.json { render json: error.message, status: :unprocessable_entity }
+      end
     end
   end
 

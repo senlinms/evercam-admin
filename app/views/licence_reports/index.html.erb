@@ -41,7 +41,8 @@
             <th name="order_expires_in" class="sorting">Expires In</th>
             <th name="order_amount" class="sorting">Amount</th>
             <th name="order_renew" class="sorting">Auto Renew</th>
-            <th name="order_action" class="sorting"></th>
+            <th name="order_action" class="sorting">Status</th>
+            <th name="order_status" class="sorting"></th>
           </tr>
           </thead>
           <tbody>
@@ -69,6 +70,13 @@
               </td>
               <td>&euro; <%= number_with_precision(custom_licence.amount/100, precision: 2) %></td>
               <td><input type="checkbox" class="auto-renewal hide">No</td>
+              <td>
+                <% if custom_licence.paid %>
+                  <span style="color: #008800;">Paid</span>
+                <% else %>
+                  <span style="color: #ff0000;">Pending</span>
+                <% end %>
+              </td>
               <td><i licence-type="custom" subscription-id="<%= custom_licence.id %>" class="fa fa-trash-o delete-licence"></i></td>
             </tr>
             <% end %>
@@ -120,6 +128,13 @@
                 </td>
                 <td>&euro; <%= number_with_precision((licence.plan['amount']/100) * licence.quantity, precision: 2) %></td>
                 <td><%= licence.cancel_at_period_end ? "No" : "Yes" %><input customer-id="<%= customer.id %>" subscription-id="<%= licence.id %>" class="auto-renewal hide" type="checkbox" <%= licence.cancel_at_period_end ? "" : "checked" %>/></td>
+                <td>
+                  <% if licence.status.eql?("active") %>
+                    <span style="color: #008800;">Paid</span>
+                  <% else %>
+                    <span style="color: #ff0000;">Pending</span>
+                  <% end %>
+                </td>
                 <td><i licence-type="stripe" customer-id="<%= customer.id %>" subscription-id="<%= licence.id %>" class="fa fa-trash-o delete-licence"></i></td>
               </tr>
             <% end %>

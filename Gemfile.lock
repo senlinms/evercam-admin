@@ -68,6 +68,9 @@ GEM
     autoprefixer-rails (6.3.1)
       execjs
       json
+    aws-sdk-v1 (1.59.0)
+      json (~> 1.4)
+      nokogiri (>= 1.4.4)
     babel-source (5.8.35)
     babel-transpiler (0.7.0)
       babel-source (>= 4.0, < 6)
@@ -242,6 +245,7 @@ GEM
       http-cookie (>= 1.0.2, < 2.0)
       mime-types (>= 1.16, < 3.0)
       netrc (~> 0.7)
+    rmega (0.2.1)
     rspec (3.4.0)
       rspec-core (~> 3.4.0)
       rspec-expectations (~> 3.4.0)
@@ -343,6 +347,7 @@ PLATFORMS
 DEPENDENCIES
   airbrake
   autoprefixer-rails
+  aws-sdk-v1
   capybara
   coffee-rails (~> 4.1.1)
   database_cleaner
@@ -383,6 +388,7 @@ DEPENDENCIES
   rails-assets-videojs (~> 4.12.7)!
   rails-assets-videojs-contrib-media-sources (~> 1.0.0)!
   rake (= 10.5.0)
+  rmega (~> 0.2.1)
   rspec (~> 3.4.0)
   rspec-rails (~> 3.4.1)
   sass-rails (~> 5.0)
