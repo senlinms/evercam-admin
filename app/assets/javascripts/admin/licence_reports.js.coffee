@@ -29,7 +29,8 @@ initializeDataTable = ->
       {data: "10", "sClass": "right" },
       {data: "11", "sClass": "right" },
       {data: "12", "sClass": "center"},
-      {data: "13" }
+      {data: "13" },
+      {data: "14" }
     ],
     iDisplayLength: 50
     columnDefs: [
@@ -153,7 +154,22 @@ saveLicence = ->
 
 addNewRow = (data) ->
   trClass = $("#licences_datatables > tbody > tr:first").attr("class")
-  tr = "<tr role='row' class='" + returnClass(trClass) + "'><td><a href='/users/" + data.user_id + "'>" + data.user.email + "</a></td><td>" + data.user.firstname  + " " + data.user.lastname + "</td><td></td><td>" + data.description + "</td><td class='right'>" + data.total_cameras + "</td><td class='right'>" + data.storage + "</td><td>Custom</td><td>" + formatDate(data.created_at) + "</td><td>" + formatDate(data.start_date) + "</td><td>" + formatDate(data.end_date) + "</td><td class='right'>" + getExpDate(data.start_date, data.end_date) + "</td><td class='right'>€ " + (data.amount / 100) + ".00</td><td class='center'>No</td><td><i licence-type='custom' subscription-id='" + data.id + "' class='fa fa-trash-o delete-licence'></i></td></tr>"
+  tr = "<tr role='row' class='#{returnClass(trClass)}'>"
+  tr +=  "<td><a href='/users/#{data.user_id}'>#{data.user.email}</a></td>"
+  tr +=  "<td>#{data.user.firstname} #{data.user.lastname}</td>"
+  tr +=  "<td></td><td>#{data.description}</td>"
+  tr +=  "<td class='right'>#{data.total_cameras}</td>"
+  tr +=  "<td class='right'>#{data.storage}</td>"
+  tr +=  "<td>Custom</td>"
+  tr +=  "<td>#{formatDate(data.created_at)}</td>"
+  tr +=  "<td>#{formatDate(data.start_date)}</td>"
+  tr +=  "<td>#{formatDate(data.end_date)}</td>"
+  tr +=  "<td class='right'>#{getExpDate(data.start_date, data.end_date)}</td>"
+  tr +=  "<td class='right'>€ #{data.amount / 100}.00</td>"
+  tr +=  "<td class='center'>No</td>"
+  tr +=  "<td>#{paidStatus(data.paid)}</td>"
+  tr +=  "<td><i licence-type='custom' subscription-id='#{data.id}' class='fa fa-trash-o delete-licence'></i></td>"
+  tr += "</tr>"
   row = $("#licences_datatables > tbody > tr:first")
   row.before tr
 
@@ -164,12 +180,18 @@ formatDate = (data) ->
 getExpDate = (start_date, end_date) ->
   second = new Date(end_date)
   first = new Date(start_date)
-  return Math.round (second - first) / (1000 * 60 * 60 * 24)
+  return (Math.round (second - first) / (1000 * 60 * 60 * 24)) + 1
 returnClass = (value) ->
   if value is "odd"
     "even"
   else if value is "even"
     "odd"
+
+paidStatus = (bol) ->
+  if bol is false
+    "Pending"
+  else if bol is true
+    "Paid"
 
 clearForm = ->
   $("#users-list ~ .chosen-container > .chosen-single span").text "Select User"
