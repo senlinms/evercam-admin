@@ -29,7 +29,8 @@ initializeDataTable = ->
       {data: "10", "sClass": "right" },
       {data: "11", "sClass": "right" },
       {data: "12", "sClass": "center"},
-      {data: "13" }
+      {data: "13" },
+      {data: "14" }
     ],
     iDisplayLength: 50
     columnDefs: [
