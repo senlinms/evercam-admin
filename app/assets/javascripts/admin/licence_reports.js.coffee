@@ -174,10 +174,10 @@ returnClass = (value) ->
     "odd"
 
 paidStatus = (bol) ->
-    if bol is false
-      "Pending"
-    else if bol is true
-        "Paid"
+  if bol is false
+    "Pending"
+  else if bol is true
+    "Paid"
       
 
 clearForm = ->
