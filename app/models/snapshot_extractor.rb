@@ -26,7 +26,11 @@ class SnapshotExtractor < ActiveRecord::Base
 		running = SnapshotExtractor.where(status: 1).any?
 		unless running
 			@snapshot_request = SnapshotExtractor.where(status: 0).first
-			@snapshot_request.update_attribute(:status, 1)
+			@snapshot_request.update_attributes(
+        status: 1,
+        notes: "Start Job",
+        update_at: Time.now
+      )
 			camera_id = @snapshot_request.camera_id
 			exid = Camera.find(camera_id).exid
 			mega_id = @snapshot_request.id
@@ -48,6 +52,10 @@ class SnapshotExtractor < ActiveRecord::Base
 
 			begin
 				created_ats = Snapshot.connection.select_all("SELECT created_at from snapshots WHERE snapshot_id >= '#{camera_id}_#{from_date}' AND snapshot_id <= '#{camera_id}_#{to_date}'")
+        @snapshot_request.update_attributes(
+            notes: "Complete Query, Total found=#{created_ats.length}",
+            update_at: Time.now
+        )
 				created_at_spdays = refine_days(created_ats, set_days)
 				created_at_sptime = refine_times(created_at_spdays, set_timings, set_days)
 				created_at = refine_intervals(created_at_sptime, interval)
