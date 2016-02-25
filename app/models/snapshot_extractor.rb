@@ -71,7 +71,9 @@ class SnapshotExtractor < ActiveRecord::Base
 				  node.type == :folder and node.name == "#{exid}"
 				end
 				to = folder.create_folder("#{mega_id}")
+        index = 0
 				created_at.each do |snap|
+
 					snap_i = DateTime.parse(snap).to_i
 					s3_object = snapshot_bucket.objects["#{exid}/snapshots/#{snap_i}.jpg"]
 					if s3_object.exists?
@@ -79,10 +81,15 @@ class SnapshotExtractor < ActiveRecord::Base
 						open('image.jpg', 'wb') do |file|
 						  file << open(snap_url).read
 						end
-						to.upload('image.jpg')
-					end
+						to.upload("#{index}.jpg")
+            index += 1
+          end
 				end
-				@snapshot_request.update_attribute(:status, 3)
+				@snapshot_request.update_attributes(
+            status: 3,
+            notes: "Complete Query, Total found=#{created_ats.length}",
+            update_at: Time.now
+        )
 			rescue => error
 				puts error
 			end
