@@ -259,6 +259,9 @@ shareOp = (intval) ->
   else
     return ""
 
+appendMe = ->
+  $("#merge_datatables_filter > label > input").addClass("label_color")
+
 window.initializeMerges = ->
   initializeDataTable()
   columnsDropdown()
@@ -266,3 +269,4 @@ window.initializeMerges = ->
   onCameraDelete()
   onCameraMerge()
   onModelClose()
+  appendMe()
