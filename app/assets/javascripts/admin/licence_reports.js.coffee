@@ -178,7 +178,6 @@ paidStatus = (bol) ->
     "Pending"
   else if bol is true
     "Paid"
-      
 
 clearForm = ->
   $("#users-list ~ .chosen-container > .chosen-single span").text "Select User"
