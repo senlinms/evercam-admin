@@ -46,6 +46,18 @@ columnsDropdown = ->
     column = snapshots_table.column($(this).attr("data-val"))
     column.visible !column.visible()
 
+appendMe = ->
+  div = '<div class="dropdown-checklist" id="div-dropdown-checklist">'
+  div += '<div href="#" class="btn btn-default grey" data-toggle="modal" data-target="#toggle-datatable-columns">'
+  div +=  '<i class="fa fa-columns"></i>'
+  div += '</div>'
+  div +='</div>'
+  $("#snapshots_datatables_wrapper").before(div)
+  $("#div-dropdown-checklist").addClass("box_button")
+  $("#snapshots_datatables_filter > label").addClass("filter_margin")
+  $("#snapshots_datatables_filter > label > input").addClass("label_color")
+
 window.initializSnapshots = ->
   columnsDropdown()
   initializeDataTable()
+  appendMe()
