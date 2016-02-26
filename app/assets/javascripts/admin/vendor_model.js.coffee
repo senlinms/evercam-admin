@@ -78,11 +78,11 @@ initializeDataTable = ->
         {data: "25"}
 
       ],
-      'order': [ [ 1, 'asc' ] ]
+      'order': [ [ 1, 'asc' ] ],
       initComplete: ->
-        $('#vendor-model-list-row').removeClass 'hide'
-        $("#div-dropdown-checklist").css('visibility', 'visible')
-        $("#datatable_vendor_models_wrapper .row .col-md-8").first().prepend($("#div-dropdown-checklist"))
+        # $('#vendor-model-list-row').removeClass 'hide'
+        # $("#div-dropdown-checklist").css('visibility', 'visible')
+        # $("#datatable_vendor_models_wrapper .row .col-md-8").first().prepend($("#div-dropdown-checklist"))
 
   vendor_models_table.getTableWrapper().on 'keyup', '.table-group-action-input', (e) ->
     e.preventDefault()
@@ -358,6 +358,27 @@ onModelDClose = ->
   $("#deleteModal").on "hidden.bs.modal", ->
     clearPopId()
 
+appendMe = ->
+  div = '<div class="dropdown-checklist" id="div-dropdown-checklist">'
+  div += '<div href="#" class="btn btn-default grey" data-toggle="modal" data-target="#toggle-datatable-columns">'
+  div +=  '<i class="fa fa-columns"></i>'
+  div += '</div>'
+  div +='</div>'
+
+  $("#datatable_vendor_models_wrapper").before(div)
+  $("#div-dropdown-checklist").addClass("box_button")
+  $("#licences_datatables_filter > label").addClass("filter_margin")
+  $(".vendor_model_filter > input").addClass("label_color")
+
+  AddModel = '<div href="#" class="btn btn-edit vmodal_btn" data-toggle="modal" data-target="#add-vendor-modal">'
+  AddModel += 'Add Model'
+  AddModel +='</div>'
+  $(".table-group-actions").before(AddModel)
+  $(".dataTables_info").css("display", "none")
+  $(".dataTables_length > label").css("display", "none")
+  $("#datatable_vendor_models_paginate > .pagination-panel").css("display", "none")
+  $(".paging_bootstrap_extended > .pagination-panel").addClass("fix_margin")
+
 window.initializeVendorModel = ->
   initializeDataTable()
   columnsDropdown()
@@ -367,3 +388,4 @@ window.initializeVendorModel = ->
   onEditModel()
   onDeleteModel()
   onModelDClose()
+  appendMe()
