@@ -272,6 +272,23 @@ deleteLicence = ->
 
     sendAJAXRequest(settings)
 
+appendMe = ->
+  div = '<div class="dropdown-checklist" id="div-dropdown-checklist">'
+  div += '<div href="#" class="btn btn-default grey" data-toggle="modal" data-target="#toggle-datatable-columns">'
+  div +=  '<i class="fa fa-columns"></i>'
+  div += '</div>'
+  div +='</div>'
+
+  addLicence = '<div href="#" class="btn btn-default grey licence-button" data-toggle="modal" data-target="#modal-add-licence">'
+  addLicence +=  '<i class="fa fa-plus"></i> Add Licence'
+  addLicence += '</div>'
+
+  $("#licences_datatables_wrapper").before(div)
+  $("#div-dropdown-checklist").addClass("box-button")
+  $("#licences_datatables_filter > label").addClass("filter-margin")
+  $("#licences_datatables_filter > label > input").addClass("label-color")
+  $("#licences_datatables_filter > label").before(addLicence)
+
 window.initializeLicences = ->
   initChosen()
   onModelShow()
@@ -283,3 +300,4 @@ window.initializeLicences = ->
   saveLicence()
   autoRenewal()
   deleteLicence()
+  appendMe()

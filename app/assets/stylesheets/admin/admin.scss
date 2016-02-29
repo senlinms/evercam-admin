@@ -433,3 +433,98 @@ ul.columns {
 #modal-add-licence select {
   background-color: #ffffff;
 }
+
+.alignment-top {
+  margin-top: -13px;
+}
+
+.alignment-cameras {
+  margin-top: 5px;
+}
+
+#cameras-body {
+  padding-bottom: 32px;
+}
+
+.filter-top {
+  margin-top: -59px;
+}
+
+.filter-margin {
+  margin-right: 49px;
+}
+
+.box-button {
+  float: right;
+  margin-top: -35px;
+  visibility: visible;
+  width: 41px;
+}
+
+.row-margin {
+  margin-top: -34px;
+}
+
+.label-color {
+  background-color: #ffffff;
+}
+
+.snapshort-date {
+  float: right;
+  margin-top: -35px;
+}
+
+.vendors-bar {
+  width: 400px;
+}
+
+.vendor-button {
+  margin-left: 515px;
+  margin-top: 7px;
+}
+
+.hide-me {
+  visibility: hidden;
+}
+
+.licence-button {
+  margin-left: 475px;
+}
+
+.snapshot-calender {
+  margin-left: 250px;
+}
+
+.label-margind {
+  margin-top: -39px;
+}
+
+.vendor-model-filter {
+  height: 34px;
+}
+
+.table-group-actions {
+  margin-right: 52px;
+}
+
+.vmodal-btn {
+  margin-left: 244px;
+  margin-top: 8px;
+}
+
+@media screen and (max-width: 1301px) 
+{
+  .vmodal-btn {
+    margin-left: 38px;
+    margin-top: 8px;
+  }
+
+  .vendor-button {
+    margin-left: 205px;
+    margin-top: 7px;
+  }
+
+  .licence-button {
+    margin-left: 155px;
+  }
+}

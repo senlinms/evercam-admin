@@ -37,6 +37,18 @@ columnsDropdown = ->
     column = users_table.column($(this).attr("data-val"))
     column.visible !column.visible()
 
+appendMe = ->
+  div = '<div class="dropdown-checklist" id="div-dropdown-checklist">'
+  div += '<div href="#" class="btn btn-default grey" data-toggle="modal" data-target="#toggle-datatable-columns">'
+  div +=  '<i class="fa fa-columns"></i>'
+  div += '</div>'
+  div +='</div>'
+  $("#users_datatables_filter").before(div)
+  $("#div-dropdown-checklist").addClass("box-button")
+  $("#users_datatables_filter > label").addClass("filter-margin")
+  $("#users_datatables_filter > label > input").addClass("label-color")
+
 window.initializeusers = ->
   columnsDropdown()
   initializeDataTable()
+  appendMe()

@@ -51,6 +51,18 @@ columnsDropdown = ->
     column = cameras_table.column($(this).attr("data-val"))
     column.visible !column.visible()
 
+appendMe = ->
+  div = '<div class="dropdown-checklist" id="div-dropdown-checklist">'
+  div += '<div href="#" class="btn btn-default grey" data-toggle="modal" data-target="#toggle-datatable-columns">'
+  div +=  '<i class="fa fa-columns"></i>'
+  div += '</div>'
+  div +='</div>'
+  $("#cameras_datatables_wrapper").before(div)
+  $("#div-dropdown-checklist").addClass("box-button")
+  $("#cameras_datatables_filter > label").addClass("filter-margin")
+  $("#cameras_datatables_filter > label > input").addClass("label-color")
+
 window.initializeCameras = ->
   columnsDropdown()
   initializeDataTable()
+  appendMe()
