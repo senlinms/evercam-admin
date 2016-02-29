@@ -511,3 +511,20 @@ ul.columns {
   margin-top: 8px;
   margin-left: 244px;
 }
+
+@media screen and (max-width: 1301px) 
+{
+  .vmodal_btn {
+    margin-top: 8px;
+    margin-left: 38px;
+  }
+
+  .vendor_button {
+    margin-top: 7px;
+    margin-left: 205px;
+  }
+
+  .licence_button {
+    margin-left: 155px;
+  }
+}
