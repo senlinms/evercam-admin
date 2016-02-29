@@ -134,10 +134,10 @@ appendMe = ->
   div += '</div>'
   div +='</div>'
   $("#datatable_vendors_wrapper").before(div)
-  $("#div-dropdown-checklist").addClass("box_button")
-  $("#datatable_vendors_filter > label").addClass("filter_margin")
-  $("#datatable_vendors_filter > label > input").addClass("label_color")
-  addVendor = '<div href="#" class="btn btn-edit vendor_button" data-toggle="modal" data-target="#add-vendor">'
+  $("#div-dropdown-checklist").addClass("box-button")
+  $("#datatable_vendors_filter > label").addClass("filter-margin")
+  $("#datatable_vendors_filter > label > input").addClass("label-color")
+  addVendor = '<div href="#" class="btn btn-edit vendor-button" data-toggle="modal" data-target="#add-vendor">'
   addVendor += 'Add Vendor'
   addVendor +='</div>'
   $("#datatable_vendors_filter > label").before(addVendor)

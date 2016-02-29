@@ -53,9 +53,9 @@ appendMe = ->
   div += '</div>'
   div +='</div>'
   $("#snapshots_datatables_wrapper").before(div)
-  $("#div-dropdown-checklist").addClass("box_button")
-  $("#snapshots_datatables_filter > label").addClass("filter_margin")
-  $("#snapshots_datatables_filter > label > input").addClass("label_color")
+  $("#div-dropdown-checklist").addClass("box-button")
+  $("#snapshots_datatables_filter > label").addClass("filter-margin")
+  $("#snapshots_datatables_filter > label > input").addClass("label-color")
 
 window.initializSnapshots = ->
   columnsDropdown()

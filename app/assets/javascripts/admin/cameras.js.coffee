@@ -58,9 +58,9 @@ appendMe = ->
   div += '</div>'
   div +='</div>'
   $("#cameras_datatables_wrapper").before(div)
-  $("#div-dropdown-checklist").addClass("box_button")
-  $("#cameras_datatables_filter > label").addClass("filter_margin")
-  $("#cameras_datatables_filter > label > input").addClass("label_color")
+  $("#div-dropdown-checklist").addClass("box-button")
+  $("#cameras_datatables_filter > label").addClass("filter-margin")
+  $("#cameras_datatables_filter > label > input").addClass("label-color")
 
 window.initializeCameras = ->
   columnsDropdown()

@@ -260,7 +260,7 @@ shareOp = (intval) ->
     return ""
 
 appendMe = ->
-  $("#merge_datatables_filter > label > input").addClass("label_color")
+  $("#merge_datatables_filter > label > input").addClass("label-color")
 
 window.initializeMerges = ->
   initializeDataTable()

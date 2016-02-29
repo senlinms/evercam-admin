@@ -41,9 +41,9 @@ appendMe = ->
   div += '</div>'
   div +='</div>'
   $("#shares_datatables_wrapper").before(div)
-  $("#div-dropdown-checklist").addClass("box_button")
-  $("#shares_datatables_filter > label").addClass("filter_margin")
-  $("#shares_datatables_filter > label > input").addClass("label_color")
+  $("#div-dropdown-checklist").addClass("box-button")
+  $("#shares_datatables_filter > label").addClass("filter-margin")
+  $("#shares_datatables_filter > label > input").addClass("label-color")
 
 window.initializeShareRequests = ->
   initializeDataTable()

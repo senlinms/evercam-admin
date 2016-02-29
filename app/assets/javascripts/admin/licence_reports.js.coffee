@@ -279,14 +279,14 @@ appendMe = ->
   div += '</div>'
   div +='</div>'
 
-  addLicence = '<div href="#" class="btn btn-default grey licence_button" data-toggle="modal" data-target="#modal-add-licence">'
+  addLicence = '<div href="#" class="btn btn-default grey licence-button" data-toggle="modal" data-target="#modal-add-licence">'
   addLicence +=  '<i class="fa fa-plus"></i> Add Licence'
   addLicence += '</div>'
 
   $("#licences_datatables_wrapper").before(div)
-  $("#div-dropdown-checklist").addClass("box_button")
-  $("#licences_datatables_filter > label").addClass("filter_margin")
-  $("#licences_datatables_filter > label > input").addClass("label_color")
+  $("#div-dropdown-checklist").addClass("box-button")
+  $("#licences_datatables_filter > label").addClass("filter-margin")
+  $("#licences_datatables_filter > label > input").addClass("label-color")
   $("#licences_datatables_filter > label").before(addLicence)
 
 window.initializeLicences = ->

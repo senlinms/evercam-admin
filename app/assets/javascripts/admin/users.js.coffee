@@ -44,9 +44,9 @@ appendMe = ->
   div += '</div>'
   div +='</div>'
   $("#users_datatables_filter").before(div)
-  $("#div-dropdown-checklist").addClass("box_button")
-  $("#users_datatables_filter > label").addClass("filter_margin")
-  $("#users_datatables_filter > label > input").addClass("label_color")
+  $("#div-dropdown-checklist").addClass("box-button")
+  $("#users_datatables_filter > label").addClass("filter-margin")
+  $("#users_datatables_filter > label > input").addClass("label-color")
 
 window.initializeusers = ->
   columnsDropdown()

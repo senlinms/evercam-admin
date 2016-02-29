@@ -366,11 +366,11 @@ appendMe = ->
   div +='</div>'
 
   $("#datatable_vendor_models_wrapper").before(div)
-  $("#div-dropdown-checklist").addClass("box_button")
-  $("#licences_datatables_filter > label").addClass("filter_margin")
-  $(".vendor_model_filter > input").addClass("label_color")
+  $("#div-dropdown-checklist").addClass("box-button")
+  $("#licences_datatables_filter > label").addClass("filter-margin")
+  $(".vendor-model-filter > input").addClass("label-color")
 
-  AddModel = '<div href="#" class="btn btn-edit vmodal_btn" data-toggle="modal" data-target="#add-vendor-modal">'
+  AddModel = '<div href="#" class="btn btn-edit vmodal-btn" data-toggle="modal" data-target="#add-vendor-modal">'
   AddModel += 'Add Model'
   AddModel +='</div>'
   $(".table-group-actions").before(AddModel)
