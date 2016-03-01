@@ -18,7 +18,7 @@ class CameraDecorator < Draper::Decorator
   end
 
   def is_online
-    h.human_boolean(object.is_online?)
+    object.is_online?
   end
 
   def is_public

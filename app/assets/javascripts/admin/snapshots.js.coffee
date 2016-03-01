@@ -6,11 +6,11 @@ initializeDataTable = ->
     fnRowCallback: (nRow, aData, iDisplayIndex, iDisplayIndexFull) ->
       if aData[9] is "true"
         $('td:eq(6)', nRow)
-          .html "Y"
+          .html "True"
           .css { "color": "green", "text-align": "center" }
       else
         $('td:eq(6)', nRow)
-          .html "N"
+          .html "False"
           .css { "color": "Red", "text-align": "center" }
     aLengthMenu: [
       [25, 50, 100, 200, -1]
