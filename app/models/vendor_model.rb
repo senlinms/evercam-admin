@@ -7,6 +7,4 @@ class VendorModel < ActiveRecord::Base
   validates :name, presence: true
   validates :exid, presence: true
   validates :jpg_url, presence: true
-  validates :mjpg_url, presence: true
-  validates :h264_url, presence: true
 end
