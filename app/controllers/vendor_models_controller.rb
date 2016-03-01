@@ -132,12 +132,22 @@ class VendorModelsController < ApplicationController
       end
       vendor = Vendor.find_by_exid(params[:vendor_id])
       vendor_model = VendorModel.find_by_exid(params[:id])
+      if params["h264_url"].present?
+        h264_url =  params["h264_url"]
+      else
+        h264_url = ""
+      end
+      if params["mjpg_url"].present?
+        mjpg_url =  params["mjpg_url"]
+      else
+        mjpg_url = ""
+      end
       vendor_model.update_attributes(
         name: params['name'],
         vendor: vendor,
         jpg_url: params['jpg_url'],
-        h264_url: params['h264_url'],
-        mjpg_url: params['mjpg_url'],
+        h264_url: h264_url,
+        mjpg_url: mjpg_url,
         audio_url: params['audio_url'],
         poe: params['poe'],
         wifi: params['wifi'],
