@@ -64,12 +64,12 @@ class VendorModelsController < ApplicationController
 
   def create
     vendor = Vendor.find_by_exid(params[:vendor_id])
-    if params[:h264_url].present?
+    if params[:h264_url]
       h264_url = params[:h264_url]
     else
       h264_url = ""
     end
-    if params[:mjpg_url].present?
+    if params[:mjpg_url]
       mjpg_url = params[:mjpg_url]
     else
       mjpg_url = ""
@@ -142,12 +142,12 @@ class VendorModelsController < ApplicationController
       end
       vendor = Vendor.find_by_exid(params[:vendor_id])
       vendor_model = VendorModel.find_by_exid(params[:id])
-      if params["h264_url"].present?
+      if params["h264_url"]
         h264_url = params["h264_url"]
       else
         h264_url = ""
       end
-      if params["mjpg_url"].present?
+      if params["mjpg_url"]
         mjpg_url = params["mjpg_url"]
       else
         mjpg_url = ""
