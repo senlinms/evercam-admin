@@ -3,7 +3,7 @@ source 'https://rubygems.org'
 fail 'Ruby version must be greater than 2.0' unless RUBY_VERSION.to_f > 2.0
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.2.5.1'
+gem 'rails', '4.2.5.2'
 
 # Use postgresql as the database for Active Record
 gem 'pg'
@@ -55,7 +55,7 @@ gem 'jquery-rails'
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 gem 'turbolinks'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-gem 'jbuilder', '~> 2.4.0'
+gem 'jbuilder', '~> 2.4.1'
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0', group: :doc
 
@@ -72,7 +72,7 @@ gem 'devise'
 group :development, :test do
   gem 'pry'
   gem 'factory_girl_rails', require: false
-  gem 'rspec-rails', '~> 3.4.1'
+  gem 'rspec-rails', '~> 3.4.2'
   gem 'rspec', '~> 3.4.0'
   gem 'spinach-rails'
   gem 'database_cleaner'
