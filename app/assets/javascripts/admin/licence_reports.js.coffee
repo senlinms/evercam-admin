@@ -289,6 +289,19 @@ appendMe = ->
   $("#licences_datatables_filter > label > input").addClass("label-color")
   $("#licences_datatables_filter > label").before(addLicence)
 
+getVat = ->
+  $("#users-list").on "change", ->
+    vat = $('option:selected', this).attr('vat-number')
+    if vat is ""
+      $("#vat-number").hide()
+      $("#vat").prepend("<span>User dont have a vat number</span>")
+    else
+      $("#vat > span").hide()
+      $("#vat-number").show()
+      $("#vat-number").val(vat)
+      $("#vat-number").attr('readonly', true);
+
+
 window.initializeLicences = ->
   initChosen()
   onModelShow()
@@ -301,3 +314,4 @@ window.initializeLicences = ->
   autoRenewal()
   deleteLicence()
   appendMe()
+  getVat()
