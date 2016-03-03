@@ -57,8 +57,17 @@
               <td><input id="to-date" name="to-date" type="text" class="form-control licence-date"/></td>
             </tr>
             <tr>
-              <td><label class="control-label">Is Paid:</label></td>
-              <td><input id="is-paid" type="checkbox" class="form-control"></td>
+              <td><label class="control-label">Payment Method:</label></td>
+              <td>
+                <div class="btn-group">
+                  <label class="control-label methods">
+                    <input type="radio" name="options" id="stripe-m">Stripe
+                  </label>
+                  <label class="control-label">
+                    <input type="radio" name="options" id="other-m">Other
+                  </label>
+                </div>
+              </td>
             </tr>
           </table>
         </div>

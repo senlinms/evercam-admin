@@ -121,6 +121,10 @@ saveLicence = ->
       Notification.show('Please select To Date.')
       return false
 
+    if !($("#other-m").is(':checked')) && !($("#stripe-m").is(':checked'))
+      Notification.show('Please select To Payment Method.')
+      return false
+
     data = {}
     data.user_id = $("#users-list").val()
     data.licence_desc = $("#licence-desc").val()
@@ -129,7 +133,7 @@ saveLicence = ->
     data.amount = $("#licence-amount").val()
     data.start_date = $("#from-date").val()
     data.end_date = $("#to-date").val()
-    if $('#is-paid:checkbox:checked').length > 0
+    if $("#other-m").is(':checked')
       data.paid = true
     else
       data.paid = false
@@ -208,7 +212,7 @@ colorExp = ->
     $("#ending").css({"color": "red"})
 
 paidStatus = ->
-  if $('#is-paid:checkbox:checked').length > 0
+  if $("#other-m").is(':checked')
     "<span style='color:green;'>Paid</span>"
   else
     "<span style='color:red;'>Pending</span>"
@@ -221,7 +225,7 @@ clearForm = ->
   $("#licence-amount").val("0.00")
   $("#from-date").val("")
   $("#to-date").val("")
-  $("#is-paid").attr('checked', false)
+  $(".checked").removeClass("checked")
 
 autoRenewal = ->
   $(".auto-renewal").on "click", ->
