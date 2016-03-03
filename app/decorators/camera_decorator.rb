@@ -1,5 +1,5 @@
 class CameraDecorator < Draper::Decorator
-  delegate :exid, :name, :user, :thumbnail_url, :config, :mac_address, :id
+  delegate :exid, :name, :user, :thumbnail_url, :config, :mac_address, :id, :location
 
   def vendor_model_name
     camera.vendor_model.try(:name)
@@ -27,5 +27,13 @@ class CameraDecorator < Draper::Decorator
 
   def is_discoverable
     h.human_boolean(camera.discoverable?)
+  end
+
+  def location
+    object.location
+  end
+
+  def map_camera
+    h.human_boolean(object.is_online?)
   end
 end
