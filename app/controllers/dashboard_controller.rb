@@ -10,7 +10,7 @@ class DashboardController < ApplicationController
   end
 
   def map
-    @cameras = Camera.where.not(location: nil)
+    @cameras = Camera.where.not(location: nil).decorate
   end
 
   def kpi
