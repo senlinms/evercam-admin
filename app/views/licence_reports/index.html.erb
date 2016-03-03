@@ -116,7 +116,7 @@
                        expires_in = ((end_date - Time.now).to_i/ (24 * 60 * 60)) + 1
                      end
                   %>
-                  <% expires_in %>
+                  <%= expires_in %>
                 </td>
                 <td>&euro; <%= number_with_precision((licence.plan['amount']/100) * licence.quantity, precision: 2) %></td>
                 <td><%= licence.cancel_at_period_end ? "No" : "Yes" %><input customer-id="<%= customer.id %>" subscription-id="<%= licence.id %>" class="auto-renewal hide" type="checkbox" <%= licence.cancel_at_period_end ? "" : "checked" %>/></td>
