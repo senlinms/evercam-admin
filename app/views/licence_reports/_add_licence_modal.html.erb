@@ -16,7 +16,7 @@
                 <select id="users-list" name="users-list" class="form-control is-required chose-select">
                   <option value="">Select User</option>
                   <% @users.each do |u| %>
-                    <option value="<%= u.id -%>">
+                    <option value="<%= u.id -%>" vat-number="<%= u.vat_number %>" >
                       <%= u.email -%>
                     </option>
                   <% end %>
@@ -55,6 +55,11 @@
             <tr>
               <td><label class="control-label">To Date:</label></td>
               <td><input id="to-date" name="to-date" type="text" class="form-control licence-date"/></td>
+            </tr>
+            <tr>
+            <tr id="vat-number">
+              <td><label class="control-label">Vat Number:</label></td>
+              <td id="vat"><span></span></td>
             </tr>
             <tr>
               <td><label class="control-label">Payment Method:</label></td>

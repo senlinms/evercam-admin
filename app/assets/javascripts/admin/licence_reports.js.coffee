@@ -56,7 +56,8 @@ initChosen = ->
 
 onModelShow = ->
   $("#modal-add-licence").on "show.bs.modal", ->
-    $(".chosen-container").width("100%");
+    $(".chosen-container").width("100%")
+    $("#vat-number").hide()
 
 twoDigitDecimal = ->
   $("#licence-amount").on "change", ->
@@ -229,6 +230,7 @@ clearForm = ->
   $("#from-date").val("")
   $("#to-date").val("")
   $(".checked").removeClass("checked")
+  $("#vat-number").hide()
 
 autoRenewal = ->
   $(".auto-renewal").on "click", ->
@@ -317,6 +319,16 @@ appendMe = ->
   $("#licences_datatables_filter > label > input").addClass("label-color")
   $("#licences_datatables_filter > label").before(addLicence)
 
+getVat = ->
+  $("#users-list").on "change", ->
+    vat = $('option:selected', this).attr('vat-number')
+    if vat is ""
+      $("#vat-number").show()
+      $("#vat > span").text("User doesn't have a vat number.")
+    else
+      $("#vat-number").show()
+      $("#vat > span").text(vat)
+
 window.initializeLicences = ->
   initChosen()
   onModelShow()
@@ -329,3 +341,4 @@ window.initializeLicences = ->
   autoRenewal()
   deleteLicence()
   appendMe()
+  getVat()
