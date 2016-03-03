@@ -324,7 +324,7 @@ getVat = ->
     vat = $('option:selected', this).attr('vat-number')
     if vat is ""
       $("#vat-number").show()
-      $("#vat > span").text("User dont have a vat number")
+      $("#vat > span").text("User doesn't have a vat number.")
     else
       $("#vat-number").show()
       $("#vat > span").text(vat)
