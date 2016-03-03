@@ -45,7 +45,7 @@
         google.maps.event.addListener(marker, 'click', function () {
           infowindow = new google.maps.InfoWindow({
             <% if camera.thumbnail_url %>
-            content: '<img class="img-responsive" height="240" src="<%= camera.thumbnail_url %>" /><br/><div class="center">Name: <a href="/users/<%= camera.user.id %>"><%= camera.name %></a><span><br/>Email: <%= camera.user.email %></span><br/><span>Added: <%= camera.creation_date %></span><br/><span>Online: <%= camera.map_camera %></span></div>'
+            content: '<img height="240" src="<%= camera.thumbnail_url %>" /><br/><div class="center">Name: <a href="/users/<%= camera.user.id %>"><%= camera.name %></a><span><br/>Email: <%= camera.user.email %></span><br/><span>Added: <%= camera.creation_date %></span><br/><span>Online: <%= camera.map_camera %></span></div>'
             <% else %>
             content: '<img class="img-responsive" src="<%= image_path 'noise.png' %>" />'
             <% end %>
