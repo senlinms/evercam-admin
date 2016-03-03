@@ -299,7 +299,7 @@ getVat = ->
       $("#vat > span").hide()
       $("#vat-number").show()
       $("#vat-number").val(vat)
-      $("#vat-number").attr('readonly', true);
+      $("#vat-number").attr('readonly', true)
 
 window.initializeLicences = ->
   initChosen()
