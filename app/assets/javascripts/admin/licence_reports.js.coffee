@@ -56,7 +56,8 @@ initChosen = ->
 
 onModelShow = ->
   $("#modal-add-licence").on "show.bs.modal", ->
-    $(".chosen-container").width("100%");
+    $(".chosen-container").width("100%")
+    $("#vat-number").hide()
 
 twoDigitDecimal = ->
   $("#licence-amount").on "change", ->
@@ -229,6 +230,7 @@ clearForm = ->
   $("#from-date").val("")
   $("#to-date").val("")
   $(".checked").removeClass("checked")
+  $("#vat-number").hide()
 
 autoRenewal = ->
   $(".auto-renewal").on "click", ->
@@ -321,13 +323,11 @@ getVat = ->
   $("#users-list").on "change", ->
     vat = $('option:selected', this).attr('vat-number')
     if vat is ""
-      $("#vat-number").hide()
-      $("#vat").prepend("<span>User dont have a vat number</span>")
-    else
-      $("#vat > span").hide()
       $("#vat-number").show()
-      $("#vat-number").val(vat)
-      $("#vat-number").attr('readonly', true)
+      $("#vat > span").text("User dont have a vat number")
+    else
+      $("#vat-number").show()
+      $("#vat > span").text(vat)
 
 window.initializeLicences = ->
   initChosen()
