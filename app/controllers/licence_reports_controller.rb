@@ -22,6 +22,7 @@ class LicenceReportsController < ApplicationController
         amount: params["amount"].to_i * 100,
         start_date: DateTime.parse(params["start_date"]),
         end_date: DateTime.parse(params["end_date"]),
+        paid: params["paid"],
         created_at: Time.now
       )
       respond_to do |format|

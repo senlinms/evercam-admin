@@ -53,10 +53,10 @@
               <td><%= Time.at(custom_licence.end_date).strftime('%d/%m/%Y') %></td>
               <td>
                 <% end_date = Time.at(custom_licence.end_date)
-                   expires_in = 1
-                   if end_date >= Time.now
-                     expires_in = (end_date - Time.now).to_i/ (24 * 60 * 60)
-                   end
+                  expires_in = ""
+                  if end_date >= Time.now
+                    expires_in = ((end_date - Time.now).to_i/ (24 * 60 * 60)) + 1
+                  end
                 %>
                 <%= expires_in %>
               </td>
@@ -111,12 +111,12 @@
                 <td><%= Time.at(licence.current_period_end).strftime('%d/%m/%Y') %></td>
                 <td>
                   <% end_date = Time.at(licence.current_period_end)
-                     expires_in = 1
+                     expires_in = ""
                      if end_date >= Time.now
-                       expires_in = (end_date - Time.now).to_i/ (24 * 60 * 60)
+                       expires_in = ((end_date - Time.now).to_i/ (24 * 60 * 60)) + 1
                      end
                   %>
-                  <%= expires_in %>
+                  <% expires_in %>
                 </td>
                 <td>&euro; <%= number_with_precision((licence.plan['amount']/100) * licence.quantity, precision: 2) %></td>
                 <td><%= licence.cancel_at_period_end ? "No" : "Yes" %><input customer-id="<%= customer.id %>" subscription-id="<%= licence.id %>" class="auto-renewal hide" type="checkbox" <%= licence.cancel_at_period_end ? "" : "checked" %>/></td>
