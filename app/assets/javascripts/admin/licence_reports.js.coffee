@@ -199,7 +199,10 @@ getExpDate = (end_date) ->
 
 formatDate = (data) ->
   date = new Date(data)
-  return date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear()
+  return addDdigit(date.getDate()) + "/" + addDdigit((date.getMonth() + 1)) + "/" + date.getFullYear()
+
+addDdigit = (n) ->
+  if n < 10 then '0' + n else '' + n
 
 returnClass = (value) ->
   if value is "odd"
