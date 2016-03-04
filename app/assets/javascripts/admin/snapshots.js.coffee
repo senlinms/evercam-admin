@@ -3,15 +3,6 @@ snapshots_table = undefined
 initializeDataTable = ->
   snapshots_table = $("#snapshots_datatables").DataTable
     aaSorting: [1, "asc"]
-    fnRowCallback: (nRow, aData, iDisplayIndex, iDisplayIndexFull) ->
-      if aData[9] is "true"
-        $('td:eq(6)', nRow)
-          .html "True"
-          .css { "color": "green", "text-align": "center" }
-      else
-        $('td:eq(6)', nRow)
-          .html "False"
-          .css { "color": "Red", "text-align": "center" }
     aLengthMenu: [
       [25, 50, 100, 200, -1]
       [25, 50, 100, 200, "All"]
@@ -26,7 +17,7 @@ initializeDataTable = ->
       {data: "6" },
       {data: "7" },
       {data: "8", visible: false },
-      {data: "9" }
+      {data: "9", "render": colorStatus }
     ],
     iDisplayLength: 50
     columnDefs: [
@@ -56,6 +47,12 @@ appendMe = ->
   $("#div-dropdown-checklist").addClass("box-button")
   $("#snapshots_datatables_filter > label").addClass("filter-margin")
   $("#snapshots_datatables_filter > label > input").addClass("label-color")
+
+colorStatus = (name) ->
+  if name is "true"
+    return "<span style='color: green;'>True</span>"
+  else if name is "false"
+    return "<span style='color: red;'>False</span>"
 
 window.initializSnapshots = ->
   columnsDropdown()

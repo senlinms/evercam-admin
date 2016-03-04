@@ -3,15 +3,6 @@ cameras_table = undefined
 initializeDataTable = ->
   cameras_table = $("#cameras_datatables").DataTable
     aaSorting: [1, "asc"]
-    fnRowCallback: (nRow, aData, iDisplayIndex, iDisplayIndexFull) ->
-      if aData[12] is "true"
-        $('td:eq(12)', nRow)
-          .html "True"
-          .css { "color": "green", "text-align": "center" }
-      else
-        $('td:eq(12)', nRow)
-          .html "False"
-          .css { "color": "Red", "text-align": "center" }
     aLengthMenu: [
       [25, 50, 100, 200, -1]
       [25, 50, 100, 200, "All"]
@@ -29,7 +20,7 @@ initializeDataTable = ->
       {data: "9" },
       {data: "10" },
       {data: "11" },
-      {data: "12" },
+      {data: "12", "render": colorStatus },
       {data: "13" },
       {data: "14", visible: false }
     ],
@@ -61,6 +52,12 @@ appendMe = ->
   $("#div-dropdown-checklist").addClass("box-button")
   $("#cameras_datatables_filter > label").addClass("filter-margin")
   $("#cameras_datatables_filter > label > input").addClass("label-color")
+
+colorStatus = (name) ->
+  if name is "true"
+    return "<span style='color: green;'>True</span>"
+  else if name is "false"
+    return "<span style='color: red;'>False</span>"
 
 window.initializeCameras = ->
   columnsDropdown()
