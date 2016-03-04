@@ -1,7 +1,7 @@
 users_table = undefined
 
 initializeDataTable = ->
-  users_table = $("#users_datatables").DataTable
+  users_table = $("#users_datatables").dataTable
     aaSorting: [1, "asc"]
     aLengthMenu: [
       [25, 50, 100, 200, -1]
@@ -27,7 +27,7 @@ initializeDataTable = ->
     "oLanguage": {
       "sSearch": "Filter:"
     },
-    initComplete: ->
+    initComplete: (data) ->
       $("#user-list-row").removeClass('hide')
       $("#users_datatables_length label").hide()
       $("#div-dropdown-checklist").css('visibility', 'visible')
@@ -48,7 +48,24 @@ appendMe = ->
   $("#users_datatables_filter > label").addClass("filter-margin")
   $("#users_datatables_filter > label > input").addClass("label-color")
 
+onPageLoad = ->
+  $(window).load ->
+    data = {}
+    data.true = true
+    $.ajax
+      url: 'users'
+      data: data
+      type: 'get'
+      dataType: "json"
+      success: (data) ->
+        console.log data
+        # if typeof data == "object"
+        # users_table.fnClearTable()
+        users_table.fnAddData(data)
+        # users_table.fnDrawCallback(data)
+
 window.initializeusers = ->
   columnsDropdown()
   initializeDataTable()
   appendMe()
+  onPageLoad()
