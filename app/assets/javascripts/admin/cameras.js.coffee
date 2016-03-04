@@ -3,15 +3,6 @@ cameras_table = undefined
 initializeDataTable = ->
   cameras_table = $("#cameras_datatables").DataTable
     aaSorting: [1, "asc"]
-    # fnRowCallback: (nRow, aData, iDisplayIndex, iDisplayIndexFull) ->
-    #   if aData[12] is "true"
-    #     $('td:eq(12)', nRow)
-    #       .html "True"
-    #       .css { "color": "green", "text-align": "center" }
-    #   else
-    #     $('td:eq(12)', nRow)
-    #       .html "False"
-    #       .css { "color": "Red", "text-align": "center" }
     aLengthMenu: [
       [25, 50, 100, 200, -1]
       [25, 50, 100, 200, "All"]
