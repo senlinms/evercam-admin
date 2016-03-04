@@ -52,7 +52,7 @@ fnShowHide = (iCol, oTable) ->
   bVis = oTable.fnSettings().aoColumns[iCol].bVisible
   oTable.fnSetColumnVis iCol, if bVis then false else true
 
-linkUser = (name, type, row)->
+linkUser = (name, type, row) ->
   if page_load
     return name
   else
