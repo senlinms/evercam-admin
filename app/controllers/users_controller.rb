@@ -8,7 +8,30 @@ class UsersController < ApplicationController
       @countries = Country.all
       render "show", params: { user: @user, countries: @countries }
     else
-      @users = EvercamUser.all.includes(:country, :cameras).decorate
+      @users = EvercamUser.all.includes(:country, :cameras).limit(50).decorate
+      if params[:true]
+        @lateusers = EvercamUser.all.includes(:country, :cameras).decorate
+        records = []
+        @lateusers.each do |user|
+          records[records.length] = [
+            user.username,
+            user.fullname,
+            user.email,
+            user.api_id,
+            user.api_key,
+            user.cameras.length,
+            user.country_name,
+            user.registered_at,
+            user.confirmed_email,
+            user.last_login,
+            user.id
+          ]
+        end
+      end
+      respond_to do |format|
+        format.html { render "index" }
+        format.json { render json: records }
+      end
     end
   end
 

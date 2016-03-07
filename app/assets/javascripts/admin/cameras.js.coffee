@@ -1,15 +1,16 @@
 cameras_table = undefined
+page_load = true
 
 initializeDataTable = ->
-  cameras_table = $("#cameras_datatables").DataTable
-    aaSorting: [1, "asc"]
+  cameras_table = $("#cameras_datatables").dataTable
+    aaSorting: [13, "desc"]
     aLengthMenu: [
       [25, 50, 100, 200, -1]
       [25, 50, 100, 200, "All"]
     ]
     columns: [
-      {data: "0" },
-      {data: "1" },
+      {data: "0", "render": linkCamera },
+      {data: "1", "render": linkOwner },
       {data: "2" },
       {data: "3" },
       {data: "4" },
@@ -39,8 +40,11 @@ initializeDataTable = ->
 
 columnsDropdown = ->
   $(".cameras-column").on "click", ->
-    column = cameras_table.column($(this).attr("data-val"))
-    column.visible !column.visible()
+    fnShowHide($(this).attr("data-val"), cameras_table)
+
+fnShowHide = (iCol, oTable) ->
+  bVis = oTable.fnSettings().aoColumns[iCol].bVisible
+  oTable.fnSetColumnVis iCol, if bVis then false else true
 
 appendMe = ->
   div = '<div class="dropdown-checklist" id="div-dropdown-checklist">'
@@ -54,12 +58,47 @@ appendMe = ->
   $("#cameras_datatables_filter > label > input").addClass("label-color")
 
 colorStatus = (name) ->
-  if name is "true"
+  if name is "true" || name is true
     return "<span style='color: green;'>True</span>"
-  else if name is "false"
+  else if name is "false" || name is false
     return "<span style='color: red;'>False</span>"
+
+linkCamera = (name, type, row) ->
+  if page_load
+    return name
+  else
+    return "<a href='/cameras/#{row[15]}'>#{row[0]}</a>"
+
+linkOwner = (name, type, row) ->
+  if page_load
+    return name
+  else
+    return "<a href='/users/#{row[16]}'>#{row[1]}</a>"
+
+onPageLoad = ->
+  $(window).load ->
+    page_load = false
+    data = {}
+    data.true = true
+    $.ajax
+      url: 'cameras'
+      data: data
+      type: 'get'
+      dataType: "json"
+      success: (data) ->
+        cameras_table.fnClearTable()
+        cameras_table.fnAddData(data)
+      error: (xhr, status, error) ->
+        $(".bb-alert")
+            .addClass("alert-danger")
+            .text(xhr.responseText)
+            .delay(200)
+            .fadeIn()
+            .delay(4000)
+            .fadeOut()
 
 window.initializeCameras = ->
   columnsDropdown()
   initializeDataTable()
   appendMe()
+  onPageLoad()

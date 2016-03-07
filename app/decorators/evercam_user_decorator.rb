@@ -12,7 +12,8 @@ class EvercamUserDecorator < Draper::Decorator
            :camera_shares,
            :api_id,
            :api_key,
-           :last_login_at
+           :last_login_at,
+           :id
 
   def is_admin
     h.human_boolean(object.is_admin?)
