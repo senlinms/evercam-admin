@@ -8,9 +8,9 @@ class UsersController < ApplicationController
       @countries = Country.all
       render "show", params: { user: @user, countries: @countries }
     else
-      @users = EvercamUser.all.includes(:country, :cameras).limit(50).decorate
+      @users = EvercamUser.all.includes(:country, :cameras).limit(50).order("created_at desc").decorate
       if params[:true]
-        @lateusers = EvercamUser.all.includes(:country, :cameras).decorate
+        @lateusers = EvercamUser.all.includes(:country, :cameras).order("created_at desc").decorate
         records = []
         @lateusers.each do |user|
           records[records.length] = [

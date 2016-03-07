@@ -3,7 +3,7 @@ page_load = true
 
 initializeDataTable = ->
   users_table = $("#users_datatables").dataTable
-    aaSorting: [7, "desc"]
+    aaSorting: []
     aLengthMenu: [
       [25, 50, 100, 200, -1]
       [25, 50, 100, 200, "All"]
@@ -16,7 +16,7 @@ initializeDataTable = ->
       {data: "4" },
       {data: "5", "render": cameraLink },
       {data: "6" },
-      {data: "7" },
+      {data: "7", "sType": "uk_datetime" },
       {data: "8", visible: false },
       {data: "9" }
     ],

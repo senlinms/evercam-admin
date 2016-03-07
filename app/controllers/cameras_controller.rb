@@ -2,9 +2,9 @@ class CamerasController < ApplicationController
   before_action :authorize_admin
 
   def index
-    @cameras = Camera.all.includes(:user, vendor_model: [:vendor]).limit(50).decorate
+    @cameras = Camera.all.includes(:user, vendor_model: [:vendor]).limit(50).order("created_at desc").decorate
     if params[:true]
-      @latecameras = Camera.all.includes(:user, vendor_model: [:vendor]).decorate
+      @latecameras = Camera.all.includes(:user, vendor_model: [:vendor]).order("created_at desc").decorate
       records = []
       @latecameras.each do |camera|
         records[records.length] = [
