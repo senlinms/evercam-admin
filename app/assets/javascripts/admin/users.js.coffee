@@ -78,7 +78,13 @@ onPageLoad = ->
         users_table.fnClearTable()
         users_table.fnAddData(data)
       error: (xhr, status, error) ->
-        console.log xhr
+        $(".bb-alert")
+            .addClass("alert-danger")
+            .text(xhr.responseText)
+            .delay(200)
+            .fadeIn()
+            .delay(4000)
+            .fadeOut()
 
 window.initializeusers = ->
   columnsDropdown()

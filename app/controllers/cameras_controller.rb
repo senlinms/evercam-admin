@@ -2,7 +2,36 @@ class CamerasController < ApplicationController
   before_action :authorize_admin
 
   def index
-    @cameras = Camera.all.includes(:user, vendor_model: [:vendor]).decorate
+    @cameras = Camera.all.includes(:user, vendor_model: [:vendor]).limit(50).decorate
+    if params[:true]
+      @latecameras = Camera.all.includes(:user, vendor_model: [:vendor]).decorate
+      records = []
+      @latecameras.each do |camera|
+        records[records.length] = [
+          camera.exid,
+          camera.user.fullname,
+          camera.name,
+          camera.config.deep_fetch('external_host') { '' },
+          camera.config.deep_fetch('external_http_port') { '' },
+          camera.config.deep_fetch('external_rtsp_port') { '' },
+          camera.config.deep_fetch('auth', 'basic', 'username') { '' },
+          camera.config.deep_fetch('auth', 'basic', 'password') { '' },
+          camera.mac_address,
+          camera.vendor_model_name,
+          camera.vendor_name,
+          camera.is_public,
+          camera.is_online,
+          camera.creation_date,
+          camera.last_poll_date,
+          camera.id,
+          camera.user.id
+        ]
+      end
+    end
+    respond_to do |format|
+      format.html { render "index" }
+      format.json { render json: records }
+    end
   end
 
   def show
