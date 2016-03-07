@@ -3,7 +3,7 @@ page_load = true
 
 initializeDataTable = ->
   cameras_table = $("#cameras_datatables").dataTable
-    aaSorting: [13, "desc"]
+    aaSorting: []
     aLengthMenu: [
       [25, 50, 100, 200, -1]
       [25, 50, 100, 200, "All"]
@@ -22,7 +22,7 @@ initializeDataTable = ->
       {data: "10" },
       {data: "11" },
       {data: "12", "render": colorStatus },
-      {data: "13" },
+      {data: "13", "sType": "uk_datetime" },
       {data: "14", visible: false }
     ],
     iDisplayLength: 50
