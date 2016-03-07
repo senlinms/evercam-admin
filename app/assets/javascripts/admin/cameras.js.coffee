@@ -92,7 +92,6 @@ onPageLoad = ->
       type: 'get'
       dataType: "json"
       success: (data) ->
-        console.log data
         cameras_table.fnClearTable()
         cameras_table.fnAddData(data)
       error: (xhr, status, error) ->
