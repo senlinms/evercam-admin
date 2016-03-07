@@ -58,16 +58,10 @@ appendMe = ->
   $("#cameras_datatables_filter > label > input").addClass("label-color")
 
 colorStatus = (name) ->
-  if page_load
-    if name is "true"
-      return "<span style='color: green;'>True</span>"
-    else if name is "false"
-      return "<span style='color: red;'>False</span>"
-  else
-    if name is true
-      return "<span style='color: green;'>True</span>"
-    else if name is false
-      return "<span style='color: red;'>False</span>"
+  if name is "true" || name is true
+    return "<span style='color: green;'>True</span>"
+  else if name is "false" || name is false
+    return "<span style='color: red;'>False</span>"
 
 linkCamera = (name, type, row) ->
   if page_load
