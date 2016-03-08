@@ -27,9 +27,7 @@ initializeDataTable = ->
       # execute some code on network or other general error
       return
     onDataLoad: (grid) ->
-      # do something
-      return
-    loadingMessage: 'Loading...'
+      #do something
     dataTable:
       'bStateSave': false
       'lengthMenu': [
@@ -37,6 +35,8 @@ initializeDataTable = ->
         [ 25, 50, 100, 150 ]
       ]
       'pageLength': 50
+      'processing': true
+      'language': 'processing': '<img src="/assets/loading.gif">'
       'ajax':
         'method': 'GET'
         'headers': headers
@@ -47,15 +47,14 @@ initializeDataTable = ->
         {data: "2" },
         {data: "3" },
         {data: "4" },
-        {data: "5", "render": cameraLink },
+        {data: "5", "render": cameraLink, "sClass": "center" },
         {data: "6" },
         {data: "7", "sType": "uk_datetime" },
         {data: "8", visible: false },
         {data: "9" }
       ],
-      'order': [ ],
       initComplete: ->
-        $('#user-list-row').removeClass 'hide'
+        # execute some code on network or other general error
 
 columnsDropdown = ->
   $(".users-column").on "click", ->
@@ -64,7 +63,6 @@ columnsDropdown = ->
 
 searchFilter = ->
   $('.table-group-action-input').on "keyup", ->
-    console.log "hi"
     action = $('.table-group-action-input').val()
     users_table.setAjaxParam 'username', action
     users_table.setAjaxParam 'email', action
@@ -85,18 +83,19 @@ appendMe = ->
   $(".dataTables_length > label").css("display", "none")
   $("#users_datatables_paginate > .pagination-panel").css("display", "none")
 
-fnShowHide = (iCol, oTable) ->
-  bVis = oTable.fnSettings().aoColumns[iCol].bVisible
-  oTable.fnSetColumnVis iCol, if bVis then false else true
-
 linkUser = (name, type, row) ->
   return "<a href='/users/#{row[10]}'>#{name}</a>"
 
 cameraLink = (name, type, row) ->
   return "<a href='/users/#{row[10]}#tab_1_12'>#{name}</>"
 
+showTable = ->
+  $(window).load ->
+    $('#user-list-row').removeClass 'hide'
+
 window.initializeusers = ->
   initializeDataTable()
   columnsDropdown()
   appendMe()
   searchFilter()
+  showTable()
