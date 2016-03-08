@@ -7,31 +7,6 @@ class UsersController < ApplicationController
       @user = EvercamUser.find_by_email(params[:q]).decorate
       @countries = Country.all
       render "show", params: { user: @user, countries: @countries }
-    else
-      @users = EvercamUser.all.includes(:country, :cameras).limit(50).order("created_at desc").decorate
-      if params[:true]
-        @lateusers = EvercamUser.all.includes(:country, :cameras).order("created_at desc").decorate
-        records = []
-        @lateusers.each do |user|
-          records[records.length] = [
-            user.username,
-            user.fullname,
-            user.email,
-            user.api_id,
-            user.api_key,
-            user.cameras.length,
-            user.country_name,
-            user.registered_at,
-            user.confirmed_email,
-            user.last_login,
-            user.id
-          ]
-        end
-      end
-      respond_to do |format|
-        format.html { render "index" }
-        format.json { render json: records }
-      end
     end
   end
 
@@ -55,6 +30,39 @@ class UsersController < ApplicationController
                            error.backtrace.join("\n")
     flash[:message] = "An error occurred updating User details. "\
                           "Please try again and, if this problem persists, contact support."
+  end
+
+  def load_users
+    condition = "lower(users.username) like lower('%#{params[:username]}%') OR 
+      lower(users.email) like lower('%#{params[:email]}%')"
+    # users = EvercamUser.joins(:country, :cameras).where(condition).order("created_at desc").decorate
+    users = EvercamUser.where(condition).includes(:country, :cameras).order("created_at desc").decorate
+    total_records = users.count
+    display_length = params[:length].to_i
+    display_length = display_length < 0 ? total_records : display_length
+    display_start = params[:start].to_i
+    table_draw = params[:draw].to_i
+
+    index_end = display_start + display_length
+    index_end = index_end > total_records ? total_records - 1 : index_end
+    records = {:data => [], :draw => table_draw, :recordsTotal => total_records, :recordsFiltered => total_records}
+
+    (display_start..index_end).each do |index|
+      records[:data][records[:data].count] = [
+        users[index].username,
+        users[index].fullname,
+        users[index].email,
+        users[index].api_id,
+        users[index].api_key,
+        users[index].cameras.length,
+        users[index].country_name,
+        users[index].registered_at,
+        users[index].confirmed_email,
+        users[index].last_login,
+        users[index].id
+      ]
+    end
+    render json: records
   end
 
   private
