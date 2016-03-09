@@ -454,6 +454,15 @@ ul.columns {
   margin-right: 49px;
 }
 
+.users-f {
+  float: right;
+  margin-right: 46px;
+}
+
+.user-box-m {
+  margin-right: -197px;
+}
+
 .box-button {
   float: right;
   margin-top: -35px;
@@ -503,6 +512,10 @@ ul.columns {
   height: 34px;
 }
 
+.user-filter {
+  height: 34px;
+}
+
 .table-group-actions {
   margin-right: 52px;
 }
@@ -514,6 +527,20 @@ ul.columns {
 
 .methods {
   margin-right: 20px;
+}
+
+#users_datatables_processing {
+  bottom: 0;
+  color: #3D3D3D;
+  font-size: 16px;
+  height: 15px;
+  left: 0;
+  margin: auto;
+  position: absolute;
+  right: 0;
+  text-align: center;
+  top: 0;
+  width: 100px;
 }
 
 @media screen and (max-width: 1301px) 
