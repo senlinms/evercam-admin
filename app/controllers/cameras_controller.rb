@@ -37,10 +37,10 @@ class CamerasController < ApplicationController
   end
 
   def load_cameras
-    condition = "lower(cameras.exid) like lower('%#{params[:exid]}%') OR lower(cameras.name) like lower('%#{params[:name]}%') OR 
-      lower(vm.name) like lower('%#{params[:vmname]}%') OR lower(v.name) like lower('%#{params[:vname]}%')
-      OR lower(users.firstname || ' ' || users.lastname) like lower('%#{params[:fullname]}%') OR 
-      lower(cameras.config->>'external_host') like lower('%#{params[:external_host]}%')"
+    condition = "lower(cameras.exid) like lower('%#{params[:fquery]}%') OR lower(cameras.name) like lower('%#{params[:fquery]}%') OR 
+      lower(vm.name) like lower('%#{params[:fquery]}%') OR lower(v.name) like lower('%#{params[:fquery]}%')
+      OR lower(users.firstname || ' ' || users.lastname) like lower('%#{params[:fquery]}%') OR 
+      lower(cameras.config->>'external_host') like lower('%#{params[:fquery]}%')"
     cameras = Camera.joins("left JOIN users on cameras.owner_id = users.id")
                     .joins("left JOIN vendor_models vm on cameras.model_id = vm.id")
                     .joins("left JOIN vendors v on vm.vendor_id = v.id")
