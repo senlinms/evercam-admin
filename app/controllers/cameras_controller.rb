@@ -2,36 +2,6 @@ class CamerasController < ApplicationController
   before_action :authorize_admin
 
   def index
-    @cameras = Camera.all.includes(:user, vendor_model: [:vendor]).limit(50).order("created_at desc").decorate
-    if params[:true]
-      @latecameras = Camera.all.includes(:user, vendor_model: [:vendor]).order("created_at desc").decorate
-      records = []
-      @latecameras.each do |camera|
-        records[records.length] = [
-          camera.exid,
-          camera.user.fullname,
-          camera.name,
-          camera.config.deep_fetch("external_host") { "" },
-          camera.config.deep_fetch("external_http_port") { "" },
-          camera.config.deep_fetch("external_rtsp_port") { "" },
-          camera.config.deep_fetch("auth", "basic", "username") { "" },
-          camera.config.deep_fetch("auth", "basic", "password") { "" },
-          camera.mac_address,
-          camera.vendor_model_name,
-          camera.vendor_name,
-          camera.is_public,
-          camera.is_online,
-          camera.creation_date,
-          camera.last_poll_date,
-          camera.id,
-          camera.user.id
-        ]
-      end
-    end
-    respond_to do |format|
-      format.html { render "index" }
-      format.json { render json: records }
-    end
   end
 
   def show
@@ -64,6 +34,49 @@ class CamerasController < ApplicationController
     else
       @cameras = Camera.run_sql("select count(nullif(is_online = false, true)) as online, config->>'external_http_port' as external_http_port, config->>'external_host' as external_host, LOWER(config->'snapshots'->>'jpg')   as jpg, count(*) as count from cameras group by config->>'external_http_port', config->>'external_host', LOWER(config->'snapshots'->>'jpg') HAVING (COUNT(*)>1)")
     end
+  end
+
+  def load_cameras
+    condition = "lower(cameras.exid) like lower('%#{params[:exid]}%') OR lower(cameras.name) like lower('%#{params[:name]}%') OR 
+      lower(vm.name) like lower('%#{params[:vmname]}%') OR lower(v.name) like lower('%#{params[:vname]}%')
+      OR lower(users.firstname || ' ' || users.lastname) like lower('%#{params[:fullname]}%') OR 
+      lower(cameras.config->>'external_host') like lower('%#{params[:external_host]}%')"
+    cameras = Camera.joins("left JOIN users on cameras.owner_id = users.id")
+                    .joins("left JOIN vendor_models vm on cameras.model_id = vm.id")
+                    .joins("left JOIN vendors v on vm.vendor_id = v.id")
+                    .where(condition).order("cameras.created_at").decorate
+    total_records = cameras.count
+    display_length = params[:length].to_i
+    display_length = display_length < 0 ? total_records : display_length
+    display_start = params[:start].to_i
+    table_draw = params[:draw].to_i
+
+    index_end = display_start + display_length
+    index_end = index_end > total_records ? total_records - 1 : index_end
+    records = { data: [], draw: table_draw, recordsTotal: total_records, recordsFiltered: total_records }
+
+    (display_start..index_end).each do |index|
+      records[:data][records[:data].count] = [
+        cameras[index].exid,
+        cameras[index].user.fullname,
+        cameras[index].name,
+        cameras[index].config.deep_fetch("external_host") { "" },
+        cameras[index].config.deep_fetch("external_http_port") { "" },
+        cameras[index].config.deep_fetch("external_rtsp_port") { "" },
+        cameras[index].config.deep_fetch("auth", "basic", "username") { "" },
+        cameras[index].config.deep_fetch("auth", "basic", "password") { "" },
+        cameras[index].mac_address,
+        cameras[index].vendor_model_name,
+        cameras[index].vendor_name,
+        cameras[index].is_public,
+        cameras[index].is_online,
+        cameras[index].creation_date,
+        cameras[index].last_poll_date,
+        cameras[index].id,
+        cameras[index].user.id
+      ]
+    end
+    render json: records
   end
 
   private

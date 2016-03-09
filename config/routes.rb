@@ -40,4 +40,5 @@ Rails.application.routes.draw do
   delete "/licences/delete" => "licence_reports#destroy"
   post "/licences/auto-renewal" => "licence_reports#auto_renewal"
   get "/load_users" => "users#load_users"
+  get "/load_cameras" => "cameras#load_cameras"
 end

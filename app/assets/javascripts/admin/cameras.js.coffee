@@ -1,50 +1,83 @@
 cameras_table = undefined
 page_load = true
 
+sendAJAXRequest = (settings) ->
+  token = $('meta[name="csrf-token"]')
+  if token.size() > 0
+    headers =
+      "X-CSRF-Token": token.attr("content")
+    settings.headers = headers
+  xhrRequestChangeMonth = jQuery.ajax(settings)
+  true
+
 initializeDataTable = ->
-  cameras_table = $("#cameras_datatables").dataTable
-    aaSorting: []
-    aLengthMenu: [
-      [25, 50, 100, 200, -1]
-      [25, 50, 100, 200, "All"]
-    ]
-    columns: [
-      {data: "0", "render": linkCamera },
-      {data: "1", "render": linkOwner },
-      {data: "2" },
-      {data: "3" },
-      {data: "4" },
-      {data: "5" },
-      {data: "6" },
-      {data: "7" },
-      {data: "8" },
-      {data: "9" },
-      {data: "10" },
-      {data: "11" },
-      {data: "12", "render": colorStatus },
-      {data: "13", "sType": "uk_datetime" },
-      {data: "14", visible: false }
-    ],
-    iDisplayLength: 50
-    columnDefs: [
-      type: "date-uk"
-      targets: 'datatable-date'
-    ],
-    "oLanguage": {
-      "sSearch": "Filter:"
-    },
-    initComplete: ->
-      $("#cameras-list-row").removeClass('hide')
-      $("#cameras_datatables_length label").hide()
-      $("#div-dropdown-checklist").css('visibility', 'visible')
+  cameras_table = new Datatable
+  headers = undefined
+  token = $('meta[name="csrf-token"]')
+
+  if token.size() > 0
+    headers = 'X-CSRF-Token': token.attr('content')
+
+  cameras_table.init
+    src: $('#cameras_datatables')
+    onSuccess: (grid) ->
+      # execute some code after table records loaded
+      return
+    onError: (grid) ->
+      # execute some code on network or other general error
+      return
+    onDataLoad: (grid) ->
+      #do something
+    dataTable:
+      'bStateSave': false
+      'lengthMenu': [
+        [ 25, 50, 100, 150 ]
+        [ 25, 50, 100, 150 ]
+      ]
+      'pageLength': 50
+      'processing': true
+      'language': 'processing': '<img src="/assets/loading.gif">'
+      'ajax':
+        'method': 'GET'
+        'headers': headers
+        'url': '/load_cameras'
+      columns: [
+        {data: "0", "render": linkCamera },
+        {data: "1", "render": linkOwner },
+        {data: "2" },
+        {data: "3" },
+        {data: "4" },
+        {data: "5" },
+        {data: "6" },
+        {data: "7" },
+        {data: "8" },
+        {data: "9" },
+        {data: "10" },
+        {data: "11" },
+        {data: "12", "render": colorStatus },
+        {data: "13", "sType": "uk_datetime" },
+        {data: "14", visible: false }
+      ],
+      initComplete: ->
+        # execute some code on network or other general error
+
+searchFilter = ->
+  $('.table-group-action-input').on "keyup", ->
+    action = $('.table-group-action-input').val()
+    cameras_table.setAjaxParam 'exid', action
+    cameras_table.setAjaxParam 'name', action
+    cameras_table.setAjaxParam 'vmname', action
+    cameras_table.setAjaxParam 'vname', action
+    cameras_table.setAjaxParam 'fullname', action
+    cameras_table.setAjaxParam 'external_host', action
+    cameras_table.getDataTable().ajax.reload()
+    cameras_table.clearAjaxParams()
+    return
 
 columnsDropdown = ->
   $(".cameras-column").on "click", ->
-    fnShowHide($(this).attr("data-val"), cameras_table)
-
-fnShowHide = (iCol, oTable) ->
-  bVis = oTable.fnSettings().aoColumns[iCol].bVisible
-  oTable.fnSetColumnVis iCol, if bVis then false else true
+    column = cameras_table.getDataTable().column($(this).attr("data-val"))
+    column.visible !column.visible()
 
 appendMe = ->
   div = '<div class="dropdown-checklist" id="div-dropdown-checklist">'
@@ -53,9 +86,12 @@ appendMe = ->
   div += '</div>'
   div +='</div>'
   $("#cameras_datatables_wrapper").before(div)
-  $("#div-dropdown-checklist").addClass("box-button")
-  $("#cameras_datatables_filter > label").addClass("filter-margin")
-  $("#cameras_datatables_filter > label > input").addClass("label-color")
+  $("#div-dropdown-checklist").addClass("box-button").addClass("user-box-m")
+  $(".users-f > input").addClass("label-color")
+  $(".dataTables_info").css("display", "none")
+  $(".dataTables_length > label").css("display", "none")
+  $("#cameras_datatables_paginate > .pagination-panel").css("display", "none")
+  $(".paging_bootstrap_extended").css("float","none")
 
 colorStatus = (name) ->
   if name is "true" || name is true
@@ -75,30 +111,13 @@ linkOwner = (name, type, row) ->
   else
     return "<a href='/users/#{row[16]}'>#{row[1]}</a>"
 
-onPageLoad = ->
+showTable = ->
   $(window).load ->
-    page_load = false
-    data = {}
-    data.true = true
-    $.ajax
-      url: 'cameras'
-      data: data
-      type: 'get'
-      dataType: "json"
-      success: (data) ->
-        cameras_table.fnClearTable()
-        cameras_table.fnAddData(data)
-      error: (xhr, status, error) ->
-        $(".bb-alert")
-            .addClass("alert-danger")
-            .text(xhr.responseText)
-            .delay(200)
-            .fadeIn()
-            .delay(4000)
-            .fadeOut()
+    $('#cameras-list-row').removeClass 'hide'
 
 window.initializeCameras = ->
   columnsDropdown()
   initializeDataTable()
   appendMe()
-  onPageLoad()
+  showTable()
+  searchFilter()
