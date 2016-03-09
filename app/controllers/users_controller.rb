@@ -44,7 +44,7 @@ class UsersController < ApplicationController
 
     index_end = display_start + display_length
     index_end = index_end > total_records ? total_records - 1 : index_end
-    records = {:data => [], :draw => table_draw, :recordsTotal => total_records, :recordsFiltered => total_records}
+    records = { data: [], draw: table_draw, recordsTotal: total_records, recordsFiltered: total_records }
 
     (display_start..index_end).each do |index|
       records[:data][records[:data].count] = [

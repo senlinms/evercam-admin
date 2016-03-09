@@ -530,17 +530,17 @@ ul.columns {
 }
 
 #users_datatables_processing {
-  width: 100px;
-  height: 15px;  
-  position: absolute;
-  top: 0;
   bottom: 0;
-  left: 0;
-  right: 0;
-  margin: auto;
   color: #3D3D3D;
-  text-align: center;
   font-size: 16px;
+  height: 15px;
+  left: 0;
+  margin: auto;
+  position: absolute;
+  right: 0;
+  text-align: center;
+  top: 0;
+  width: 100px;
 }
 
 @media screen and (max-width: 1301px) 

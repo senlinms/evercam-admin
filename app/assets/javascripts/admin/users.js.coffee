@@ -82,6 +82,7 @@ appendMe = ->
   $(".dataTables_info").css("display", "none")
   $(".dataTables_length > label").css("display", "none")
   $("#users_datatables_paginate > .pagination-panel").css("display", "none")
+  $(".paging_bootstrap_extended").css("float","none")
 
 linkUser = (name, type, row) ->
   return "<a href='/users/#{row[10]}'>#{name}</a>"
