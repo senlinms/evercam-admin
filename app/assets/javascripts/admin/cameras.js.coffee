@@ -95,16 +95,10 @@ colorStatus = (name) ->
     return "<span style='color: red;'>False</span>"
 
 linkCamera = (name, type, row) ->
-  if page_load
-    return name
-  else
-    return "<a href='/cameras/#{row[15]}'>#{row[0]}</a>"
+  return "<a href='/cameras/#{row[15]}'>#{row[0]}</a>"
 
 linkOwner = (name, type, row) ->
-  if page_load
-    return name
-  else
-    return "<a href='/users/#{row[16]}'>#{row[1]}</a>"
+  return "<a href='/users/#{row[16]}'>#{row[1]}</a>"
 
 showTable = ->
   $(window).load ->
