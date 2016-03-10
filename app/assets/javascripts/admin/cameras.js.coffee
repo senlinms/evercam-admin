@@ -64,7 +64,7 @@ initializeDataTable = ->
 searchFilter = ->
   $('.table-group-action-input').on "keyup", ->
     action = $('.table-group-action-input').val()
-    cameras_table.setAjaxParam 'fquery', action
+    cameras_table.setAjaxParam 'fquery', action.replace("'","''")
     cameras_table.getDataTable().ajax.reload()
     cameras_table.clearAjaxParams()
     return
