@@ -51,7 +51,10 @@ initializeDataTable = ->
         {data: "6" },
         {data: "7", "sType": "uk_datetime" },
         {data: "8", visible: false },
-        {data: "9" }
+        {data: "9" },
+        {data: "10" },
+        {data: "11" },
+        {data: "12" }
       ],
       initComplete: ->
         # execute some code on network or other general error
@@ -85,10 +88,10 @@ appendMe = ->
   $(".paging_bootstrap_extended").css("float","none")
 
 linkUser = (name, type, row) ->
-  return "<a href='/users/#{row[10]}'>#{name}</a>"
+  return "<a href='/users/#{row[13]}'>#{name}</a>"
 
 cameraLink = (name, type, row) ->
-  return "<a href='/users/#{row[10]}#tab_1_12'>#{name}</>"
+  return "<a href='/users/#{row[13]}#tab_1_12'>#{name}</>"
 
 showTable = ->
   $(window).load ->

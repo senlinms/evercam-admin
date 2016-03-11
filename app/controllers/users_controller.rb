@@ -35,7 +35,7 @@ class UsersController < ApplicationController
   def load_users
     condition = "lower(users.username) like lower('%#{params[:username]}%') OR 
       lower(users.email) like lower('%#{params[:email]}%')"
-    users = EvercamUser.where(condition).includes(:country, :cameras).order("created_at desc").decorate
+    users = EvercamUser.where(condition).includes(:country, :cameras, :licences).order("created_at desc").decorate
     total_records = users.count
     display_length = params[:length].to_i
     display_length = display_length < 0 ? total_records : display_length
@@ -58,6 +58,9 @@ class UsersController < ApplicationController
         users[index].registered_at,
         users[index].confirmed_email,
         users[index].last_login,
+        users[index].cameras_with_cr,
+        users[index].licence_count,
+        users[index].cameras_with_cr - users[index].licence_count,
         users[index].id
       ]
     end
