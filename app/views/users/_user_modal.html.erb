@@ -32,6 +32,15 @@
                 </select>
               </td>
             </tr>
+            <tr>
+              <td class="col-md-4"><label class="control-label">Payment Method:</label></td>
+              <td>
+                <select id="user_payment_method" name="user[payment_method]" class="form-control is-required">
+                  <option value="0" <% if @user.payment_method.eql?(0) %>selected="selected"<% end %>>Stripe</option>
+                  <option value="1" <% if @user.payment_method.eql?(1) %>selected="selected"<% end %>>Custom</option>
+                </select>
+              </td>
+            </tr>
           </table>
         </div>
       </div>
