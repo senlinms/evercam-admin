@@ -7,8 +7,8 @@ class LicenceReportsController < ApplicationController
       @customers = Stripe::Customer.all(limit: 200)
       @custom_licences = Licence.where(cancel_licence: false, subscription_id: nil).all
       @users = EvercamUser.all
-      if ENV['UPDATE_STRIPE_LICENCES'].eql?("yes")
-        add_stripe_licence()
+      if ENV["UPDATE_STRIPE_LICENCES"].eql?("yes")
+        add_stripe_licence
       end
     rescue => error
       notify_airbrake(error)
@@ -102,31 +102,31 @@ class LicenceReportsController < ApplicationController
       licences.each do |licence|
         unless Licence.where(cancel_licence: false, subscription_id: licence.id).count > 0
           user = EvercamUser.where(stripe_customer_id: customer.id).includes(:country).first
-          storage = ''
-          case licence.plan['id']
-            when "24-hours-recording", "24-hours-recording-annual"
-              storage = 1
-            when "7-days-recording", "7-days-recording-annual"
-              storage = 7
-            when "30-days-recording", "30-days-recording-annual"
-              storage = 30
-            when "90-days-recording", "90-days-recording-annual"
-              storage = 90
-            when "infinity", "infinity-annual"
-              storage = -1
+          storage = ""
+          case licence.plan["id"]
+          when "24-hours-recording", "24-hours-recording-annual"
+            storage = 1
+          when "7-days-recording", "7-days-recording-annual"
+            storage = 7
+          when "30-days-recording", "30-days-recording-annual"
+            storage = 30
+          when "90-days-recording", "90-days-recording-annual"
+            storage = 90
+          when "infinity", "infinity-annual"
+            storage = -1
           end
           licence = Licence.new(
-              user_id: user.id,
-              subscription_id: licence.id,
-              description: licence.plan.name,
-              total_cameras: licence.quantity,
-              storage: storage,
-              amount: licence.plan.amount,
-              start_date: Time.at(licence.current_period_start),
-              end_date: Time.at(licence.current_period_end),
-              created_at: Time.at(licence.start),
-              auto_renew: !licence.cancel_at_period_end,
-              paid: true
+            user_id: user.id,
+            subscription_id: licence.id,
+            description: licence.plan.name,
+            total_cameras: licence.quantity,
+            storage: storage,
+            amount: licence.plan.amount,
+            start_date: Time.at(licence.current_period_start),
+            end_date: Time.at(licence.current_period_end),
+            created_at: Time.at(licence.start),
+            auto_renew: !licence.cancel_at_period_end,
+            paid: true
           )
           licence.save
         end
