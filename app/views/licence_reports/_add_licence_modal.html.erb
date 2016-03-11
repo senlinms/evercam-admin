@@ -62,14 +62,14 @@
               <td id="vat"><span></span></td>
             </tr>
             <tr>
-              <td><label class="control-label">Payment Method:</label></td>
+              <td><label class="control-label">Paid:</label></td>
               <td>
                 <div class="btn-group">
                   <label class="control-label methods">
-                    <input type="radio" name="options" id="stripe-m">Stripe
+                    <input type="radio" name="options" id="other-m">Yes
                   </label>
                   <label class="control-label">
-                    <input type="radio" name="options" id="other-m">Other
+                    <input type="radio" name="options" id="stripe-m">No
                   </label>
                 </div>
               </td>
@@ -79,6 +79,7 @@
       </div>
       <div class="modal-footer">
         <div class="pull-right">
+          <button type="button" class="btn btn-default grey hide" id="update-licence">Update</button>
           <button type="button" class="btn btn-default grey" id="save-licence">Save</button>
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         </div>

@@ -1,4 +1,5 @@
 licences_table = undefined
+editRow = ''
 
 sendAJAXRequest = (settings) ->
   token = $('meta[name="csrf-token"]')
@@ -30,7 +31,8 @@ initializeDataTable = ->
       {data: "11", "sClass": "right" },
       {data: "12", "sClass": "center"},
       {data: "13" },
-      {data: "14" }
+      {data: "14" },
+      {data: "15" }
     ],
     iDisplayLength: 50
     columnDefs: [
@@ -58,6 +60,7 @@ onModelShow = ->
   $("#modal-add-licence").on "show.bs.modal", ->
     $(".chosen-container").width("100%")
     $("#vat-number").hide()
+    clearForm()
 
 twoDigitDecimal = ->
   $("#licence-amount").on "change", ->
@@ -184,6 +187,7 @@ addNewRow = (data) ->
   tr +=  "<td class='center'>No</td>"
   tr +=  "<td>#{paidStatus()}</td>"
   tr +=  "<td><i licence-type='custom' subscription-id='#{data.id}' class='fa fa-trash-o delete-licence'></i></td>"
+  tr +=  "<td><i id='update-id' update-id='#{data.id}' class='fa fa-pencil-square-o edit-licence'></i></td>"
   tr += "</tr>"
   row = $("#licences_datatables > tbody > tr:first")
   row.before tr
@@ -231,6 +235,9 @@ clearForm = ->
   $("#to-date").val("")
   $(".checked").removeClass("checked")
   $("#vat-number").hide()
+  $("#save-licence").show()
+  $("#update-licence").addClass("hide")
+  $(".modal-header > .caption > strong").text("Add Licence")
 
 autoRenewal = ->
   $(".auto-renewal").on "click", ->
@@ -329,6 +336,102 @@ getVat = ->
       $("#vat-number").show()
       $("#vat > span").text(vat)
 
+onEditLicence = ->
+  $("#licences_datatables").on "click", ".edit-licence", ->
+    $("#modal-add-licence").modal("show")
+    editRow = $(this).parents('tr')
+    setModelUpdate(licences_table.row( editRow ).data())
+
+setModelUpdate = (values) ->
+  $("#save-licence").hide()
+  $("#update-licence").removeClass("hide")
+  $(".modal-header > .caption > strong").text("Edit Licence")
+  $("#users-list ~ .chosen-container > .chosen-single span").text values[1]
+  $("#licence-desc").val(values[3])
+  $("#total-cameras").val(values[4])
+  $("#storage-days ~ .chosen-container > .chosen-single span").text(setStorageText(values[5]))
+  $("#users-list").val(getUserId(values[0])).trigger("chosen:updated")
+  $("#storage-days").val(values[5]).trigger("chosen:updated")
+  $("#licence-amount").val(values[11].slice(2))
+  $("#from-date").val(values[8])
+  $("#to-date").val(values[9])
+  getPaidStatus(values[13])
+
+getUserId = (id) ->
+  return id.match(/\d+/)[0]
+
+getPaidStatus = (status) ->
+  if $(status).text() is "Paid"
+    $("#uniform-other-m > span").addClass("checked")
+    $("#uniform-stripe-m > span").removeClass("checked")
+  else if $(status).text() is "Pending"
+    $("#uniform-stripe-m > span").addClass("checked")
+    $("#uniform-other-m > span").removeClass("checked")
+
+onModelUpdate = ->
+  $("#update-licence").on "click", ->
+    data = {}
+    data.user_id = $("#users-list").val()
+    data.licence_desc = $("#licence-desc").val()
+    data.total_cameras = $("#total-cameras").val()
+    data.storage = $("#storage-days").val()
+    data.amount = $("#licence-amount").val()
+    data.start_date = $("#from-date").val()
+    data.end_date = $("#to-date").val()
+    data.licence_id = editRow.find("#update-id").attr('update-id')
+    if $("#uniform-other-m > span").hasClass("checked")
+      data.paid = true
+    else
+      data.paid = false
+
+    onError = (jqXHR, status, error) ->
+      Notification.show(jqXHR.text)
+
+    onSuccess = (result, status, jqXHR) ->
+      $("#modal-add-licence").modal("hide")
+      updateRow(result)
+
+    settings =
+      cache: false
+      data: data
+      dataType: 'json'
+      error: onError
+      success: onSuccess
+      contentType: "application/x-www-form-urlencoded"
+      type: "patch"
+      url: "/licences/update"
+
+    sendAJAXRequest(settings)
+
+updateRow = (data) ->
+  licences_table
+    .cell(editRow.find('td:nth-child(4)')).data(data.description)
+    .cell(editRow.find('td:nth-child(5)')).data(data.total_cameras)
+    .cell(editRow.find('td:nth-child(6)')).data(data.storage)
+    .cell(editRow.find('td:nth-child(9)')).data(formatDate(data.start_date))
+    .cell(editRow.find('td:nth-child(10)')).data(formatDate(data.end_date))
+    .cell(editRow.find('td:nth-child(11)')).data(getExpDate(data.end_date))
+    .cell(editRow.find('td:nth-child(12)')).data("€ #{data.amount / 100}.00")
+    .cell(editRow.find('td:nth-child(14)')).data(setPaidStatus(data.paid))
+
+setPaidStatus = (value) ->
+  if value is true
+    "<span style='color:green;'>Paid</span>"
+  else
+    "<span style='color:red;'>Pending</span>"
+
+setStorageText = (storage) ->
+  if storage is "1"
+    return "24 hours recording"
+  else if storage is "7"
+    return "7 days recording"
+  else if storage is "30"
+    return "30 days recording"
+  else if storage is "90"
+    return "90 days recording"
+  else if storage is "-1"
+    return "infinity"
+
 window.initializeLicences = ->
   initChosen()
   onModelShow()
@@ -342,3 +445,5 @@ window.initializeLicences = ->
   deleteLicence()
   appendMe()
   getVat()
+  onEditLicence()
+  onModelUpdate()

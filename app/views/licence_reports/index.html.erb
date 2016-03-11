@@ -35,6 +35,7 @@
             <th name="order_renew" class="sorting">Auto Renew</th>
             <th name="order_action" class="sorting">Status</th>
             <th name="order_status" class="sorting"></th>
+            <th name="order_status" class="sorting"></th>
           </tr>
           </thead>
           <tbody>
@@ -70,6 +71,7 @@
                 <% end %>
               </td>
               <td><i licence-type="custom" subscription-id="<%= custom_licence.id %>" class="fa fa-trash-o delete-licence"></i></td>
+              <td><i id="update-id" update-id="<%= custom_licence.id %>" class="fa fa-pencil-square-o edit-licence"></i></td>
             </tr>
             <% end %>
           <% @customers.each do |customer| %>
@@ -128,6 +130,7 @@
                   <% end %>
                 </td>
                 <td><i licence-type="stripe" customer-id="<%= customer.id %>" subscription-id="<%= licence.id %>" class="fa fa-trash-o delete-licence"></i></td>
+                <td></td>
               </tr>
             <% end %>
           <% end %>

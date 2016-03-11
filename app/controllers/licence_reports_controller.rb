@@ -73,6 +73,35 @@ class LicenceReportsController < ApplicationController
     end
   end
 
+  def update
+    begin
+      licence = Licence.where(id: params[:licence_id], user_id: params[:user_id]).first
+      licence.update_attributes(
+        description: params["licence_desc"],
+        total_cameras: params["total_cameras"],
+        storage: params["storage"],
+        amount: params["amount"].to_i * 100,
+        start_date: DateTime.parse(params["start_date"]),
+        end_date: DateTime.parse(params["end_date"]),
+        paid: params["paid"]
+      )
+      message = "Licence updated successfully"
+      saved = true
+    rescue => error
+      notify_airbrake(error)
+      message = error.message
+    end
+    respond_to do |format|
+      if saved
+        format.html { redirect_to licence_report_path, notice: message }
+        format.json { render json: licence }
+      else
+        format.html { redirect_to licence_report_path }
+        format.json { render json: message, status: :unprocessable_entity }
+      end
+    end
+  end
+
   def auto_renewal
     begin
       if params[:customer_id] && params[:subscription_id]
