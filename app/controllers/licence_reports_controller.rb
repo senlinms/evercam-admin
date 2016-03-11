@@ -85,7 +85,7 @@ class LicenceReportsController < ApplicationController
         end_date: DateTime.parse(params["end_date"]),
         paid: params["paid"]
       )
-      message = 'Licence updated successfully'
+      message = "Licence updated successfully"
       saved = true
     rescue => error
       notify_airbrake(error)

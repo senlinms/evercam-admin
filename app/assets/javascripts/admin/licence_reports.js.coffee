@@ -421,7 +421,7 @@ setPaidStatus = (value) ->
     "<span style='color:red;'>Pending</span>"
 
 setStorageText = (storage) ->
-  if storage is "24"
+  if storage is "1"
     return "24 hours recording"
   else if storage is "7"
     return "7 days recording"
