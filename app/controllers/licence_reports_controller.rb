@@ -59,6 +59,10 @@ class LicenceReportsController < ApplicationController
         customer = Stripe::Customer.retrieve(params[:customer_id])
         subscription = customer.subscriptions.retrieve(params[:subscription_id])
         subscription.delete
+
+        # Also cancel licence in evercam database
+        licence = Licence.where(subscription_id: params[:subscription_id]).first
+        licence.update_attribute(:cancel_licence, true)
         respond_to do |format|
           format.html { redirect_to licence_report_path, notice: "Licence canceled successfully." }
           format.json { render json: subscription }
