@@ -116,20 +116,6 @@ validateDigit = ->
       $(".licence-count").val("")
       return
 
-# onNextPrev = ->
-#   $(".next, .prev").on "click", ->
-#     action = $('.table-group-action-input').val()
-#     def = $(".licence-count").val()
-#     lic_req = $(".licence-required").val()
-#     lic_valid = $(".licence-valid").val()
-#     users_table.setAjaxParam 'queryValue', action.replace("'","''")
-#     users_table.setAjaxParam 'def', def
-#     users_table.setAjaxParam 'licReq', lic_req 
-#     users_table.setAjaxParam 'licValid', lic_valid 
-#     users_table.getDataTable().ajax.reload()
-#     users_table.clearAjaxParams()
-#     return
-
 window.initializeusers = ->
   initializeDataTable()
   columnsDropdown()
@@ -138,4 +124,3 @@ window.initializeusers = ->
   searchFilter()
   showTable()
   openFilter()
-  # onNextPrev()
