@@ -116,9 +116,9 @@ validateDigit = ->
       $(".licence-count").val("")
       return
 
-removeMinus = (name, type, row) ->
-  if name > 0
-    return name
+removeMinus = (deficient) ->
+  if deficient > 0
+    return deficient
   else
     ""
 
