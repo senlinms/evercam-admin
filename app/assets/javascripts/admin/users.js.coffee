@@ -34,8 +34,9 @@ initializeDataTable = ->
         [ 25, 50, 100, 150 ]
         [ 25, 50, 100, 150 ]
       ]
-      'pageLength': 50
+      'pageLength': 102
       'processing': true
+      'serverSide': true
       'language': 'processing': '<img src="/assets/loading.gif">'
       'ajax':
         'method': 'GET'
@@ -65,11 +66,15 @@ columnsDropdown = ->
     column.visible !column.visible()
 
 searchFilter = ->
-  $('.table-group-action-input, .licence-count').on "keyup", ->
+  $('.table-group-action-input, .licence-count, .licence-required, .licence-valid').on "keyup", ->
     action = $('.table-group-action-input').val()
     def = $(".licence-count").val()
+    lic_req = $(".licence-required").val()
+    lic_valid = $(".licence-valid").val()
     users_table.setAjaxParam 'queryValue', action.replace("'","''")
     users_table.setAjaxParam 'def', def
+    users_table.setAjaxParam 'licReq', lic_req 
+    users_table.setAjaxParam 'licValid', lic_valid 
     users_table.getDataTable().ajax.reload()
     users_table.clearAjaxParams()
     return
