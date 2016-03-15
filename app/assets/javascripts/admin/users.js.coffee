@@ -55,7 +55,7 @@ initializeDataTable = ->
         {data: "9" },
         {data: "10", "sClass": "center" },
         {data: "11", "sClass": "center green" },
-        {data: "12", "sClass": "center red" }
+        {data: "12", "sClass": "center red", "render": removeMinus }
       ],
       initComplete: ->
         # execute some code on network or other general error
@@ -115,6 +115,12 @@ validateDigit = ->
     if !intRegex.test(value)
       $(".licence-count").val("")
       return
+
+removeMinus = (name, type, row) ->
+  if name > 0
+    return name
+  else
+    ""
 
 window.initializeusers = ->
   initializeDataTable()
