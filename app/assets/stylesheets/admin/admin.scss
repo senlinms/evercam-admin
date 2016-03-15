@@ -460,6 +460,10 @@ ul.columns {
 }
 
 .user-box-m {
+  margin-right: -84px;
+}
+
+.camera-box-m {
   margin-right: -197px;
 }
 
@@ -545,6 +549,27 @@ ul.columns {
 
 .edit-licence {
   cursor: pointer;
+}
+
+#filter-modal-box {
+  position: absolute;
+  right: 101px;
+  top: 20px;
+  z-index: 9;
+}
+
+.closing {
+  padding: 5px;
+  cursor: pointer;
+  font-size: 20px;
+  position: absolute;
+  right: 5px;
+  top: -2px;
+  z-index: 50;
+}
+
+.green {
+  color: green;
 }
 
 @media screen and (max-width: 1301px) 

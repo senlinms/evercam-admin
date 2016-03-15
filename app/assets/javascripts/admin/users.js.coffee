@@ -51,7 +51,10 @@ initializeDataTable = ->
         {data: "6" },
         {data: "7", "sType": "uk_datetime" },
         {data: "8", visible: false },
-        {data: "9" }
+        {data: "9" },
+        {data: "10", "sClass": "center" },
+        {data: "11", "sClass": "center green" },
+        {data: "12", "sClass": "center red" }
       ],
       initComplete: ->
         # execute some code on network or other general error
@@ -62,10 +65,11 @@ columnsDropdown = ->
     column.visible !column.visible()
 
 searchFilter = ->
-  $('.table-group-action-input').on "keyup", ->
+  $('.table-group-action-input, .licence-count').on "keyup", ->
     action = $('.table-group-action-input').val()
-    users_table.setAjaxParam 'username', action
-    users_table.setAjaxParam 'email', action
+    def = $(".licence-count").val()
+    users_table.setAjaxParam 'queryValue', action.replace("'","''")
+    users_table.setAjaxParam 'def', def
     users_table.getDataTable().ajax.reload()
     users_table.clearAjaxParams()
     return
@@ -85,18 +89,33 @@ appendMe = ->
   $(".paging_bootstrap_extended").css("float","none")
 
 linkUser = (name, type, row) ->
-  return "<a href='/users/#{row[10]}'>#{name}</a>"
+  return "<a href='/users/#{row[13]}'>#{name}</a>"
 
 cameraLink = (name, type, row) ->
-  return "<a href='/users/#{row[10]}#tab_1_12'>#{name}</>"
+  return "<a href='/users/#{row[13]}#tab_1_12'>#{name}</>"
 
 showTable = ->
   $(window).load ->
     $('#user-list-row').removeClass 'hide'
 
+openFilter = ->
+  $("#filter-modal, .closing").on "click", ->
+    $("#filter-modal-box")
+      .toggle("slide", { direction: "right" }, 500)
+
+validateDigit = ->
+  $('.licence-count').on "keyup", ->
+    value = $('.licence-count').val().replace(/^\s\s*/, '').replace(/\s\s*$/, '')
+    intRegex = /^\d+$/
+    if !intRegex.test(value)
+      $(".licence-count").val("")
+      return
+
 window.initializeusers = ->
   initializeDataTable()
   columnsDropdown()
   appendMe()
+  validateDigit()
   searchFilter()
   showTable()
+  openFilter()

@@ -33,9 +33,19 @@ class UsersController < ApplicationController
   end
 
   def load_users
-    condition = "lower(users.username) like lower('%#{params[:username]}%') OR 
-      lower(users.email) like lower('%#{params[:email]}%')"
-    users = EvercamUser.where(condition).includes(:country, :cameras).order("created_at desc").decorate
+    if params[:def].present?
+      condition1 = "where (required_licence - valid_licence) > #{params[:def]}"
+    else
+      condition1 = ""
+    end
+    condition = "lower(u.username) like lower('%#{params[:queryValue]}%') OR 
+                 lower(u.email) like lower('%#{params[:queryValue]}%') OR 
+                 lower(u.firstname || ' ' || u.lastname) like lower('%#{params[:queryValue]}%')"
+    users = EvercamUser.connection.select_all("select *, (required_licence - valid_licence) def from (
+                 select *, (select count(cr.id) from cloud_recordings cr left join cameras c on c.owner_id=u.id where c.id=cr.camera_id and cr.status <>'off') required_licence,
+                 (select SUM(l.total_cameras) from licences l left join users uu on l.user_id=uu.id where uu.id=u.id and cancel_licence=false) valid_licence
+                 from users u where #{condition} order by u.id desc
+                ) t #{condition1}")
     total_records = users.count
     display_length = params[:length].to_i
     display_length = display_length < 0 ? total_records : display_length
@@ -48,17 +58,20 @@ class UsersController < ApplicationController
 
     (display_start..index_end).each do |index|
       records[:data][records[:data].count] = [
-        users[index].username,
-        users[index].fullname,
-        users[index].email,
-        users[index].api_id,
-        users[index].api_key,
-        users[index].cameras.length,
-        users[index].country_name,
-        users[index].registered_at,
-        users[index].confirmed_email,
-        users[index].last_login,
-        users[index].id
+        users[index]["username"],
+        users[index]["firstname"] + " " + users[index]["lastname"],
+        users[index]["email"],
+        users[index]["api_id"],
+        users[index]["api_key"],
+        Camera.where(owner_id: users[index]["id"]).count,
+        Country.exists?(users[index]["country_id"]) ? Country.find(users[index]["country_id"]).name : "",
+        users[index]["created_at"] ? Date.parse(users[index]["created_at"]).strftime("%d/%m/%y %I:%M %p") : "",
+        users[index]["confirmed_at"] ? Date.parse(users[index]["confirmed_at"]).strftime("%d/%m/%y %I:%M %p") : "",
+        users[index]["last_login_at"] ? Date.parse(users[index]["last_login_at"]).strftime("%d/%m/%y %I:%M %p") : "",
+        users[index]["required_licence"],
+        users[index]["valid_licence"],
+        users[index]["def"],
+        users[index]["id"]
       ]
     end
     render json: records
