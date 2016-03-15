@@ -81,7 +81,7 @@ appendMe = ->
   div += '</div>'
   div +='</div>'
   $("#cameras_datatables_wrapper").before(div)
-  $("#div-dropdown-checklist").addClass("box-button").addClass("user-box-m")
+  $("#div-dropdown-checklist").addClass("box-button").addClass("camera-box-m")
   $(".users-f > input").addClass("label-color")
   $(".dataTables_info").css("display", "none")
   $(".dataTables_length > label").css("display", "none")

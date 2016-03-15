@@ -52,9 +52,9 @@ initializeDataTable = ->
         {data: "7", "sType": "uk_datetime" },
         {data: "8", visible: false },
         {data: "9" },
-        {data: "10" },
-        {data: "11" },
-        {data: "12" }
+        {data: "10", "sClass": "center" },
+        {data: "11", "sClass": "center green" },
+        {data: "12", "sClass": "center red" }
       ],
       initComplete: ->
         # execute some code on network or other general error
@@ -65,10 +65,11 @@ columnsDropdown = ->
     column.visible !column.visible()
 
 searchFilter = ->
-  $('.table-group-action-input').on "keyup", ->
+  $('.table-group-action-input, .licence-count').on "keyup", ->
     action = $('.table-group-action-input').val()
-    users_table.setAjaxParam 'username', action
-    users_table.setAjaxParam 'email', action
+    def = $(".licence-count").val()
+    users_table.setAjaxParam 'queryValue', action
+    users_table.setAjaxParam 'def', def
     users_table.getDataTable().ajax.reload()
     users_table.clearAjaxParams()
     return
@@ -97,9 +98,24 @@ showTable = ->
   $(window).load ->
     $('#user-list-row').removeClass 'hide'
 
+openFilter = ->
+  $("#filter-modal, .closing").on "click", ->
+    $("#filter-modal-box")
+      .toggle("slide", { direction: "right" }, 500)
+
+validateDigit = ->
+  $('.licence-count').on "keyup", ->
+    value = $('.licence-count').val().replace(/^\s\s*/, '').replace(/\s\s*$/, '')
+    intRegex = /^\d+$/
+    if !intRegex.test(value)
+      $(".licence-count").val("")
+      return
+
 window.initializeusers = ->
   initializeDataTable()
   columnsDropdown()
   appendMe()
+  validateDigit()
   searchFilter()
   showTable()
+  openFilter()

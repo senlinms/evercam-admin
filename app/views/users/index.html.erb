@@ -8,11 +8,13 @@
       </div>
     </div>
     <%= render 'columns_modal' %>
+    <%= render 'filter_modal' %>
     <div id="user-list-row" class="row hide">
       <div class="col-md-12 filter-top">
         <div class="table-actions-wrapper users-f">
-          <span></span>
-          Filter: <input type="text" placeholder="" class="table-group-action-input form-control input-inline input-small input-sm user-filter"/>
+          <!-- <span></span> -->
+          <div href="#" class="btn btn-default grey" id="filter-modal"><i class="fa fa-filter"></i></div>
+          <!-- Filter: <input type="text" placeholder="" class="table-group-action-input form-control input-inline input-small input-sm user-filter"/> -->
         </div>
         <table class="table table-striped table-bordered table-hover user-list-table" id="users_datatables">
           <thead>
