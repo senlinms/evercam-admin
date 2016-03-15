@@ -552,20 +552,20 @@ ul.columns {
 }
 
 #filter-modal-box {
-  z-index: 9;
   position: absolute;
   right: 101px;
   top: 20px;
+  z-index: 9;
 }
 
 .closing {
+  padding: 5px;
+  cursor: pointer;
+  font-size: 20px;
   position: absolute;
   right: 5px;
   top: -2px;
   z-index: 50;
-  padding: 5px;
-  cursor: pointer;
-  font-size: 20px;
 }
 
 .green {

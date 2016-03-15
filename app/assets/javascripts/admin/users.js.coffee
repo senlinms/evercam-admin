@@ -68,7 +68,7 @@ searchFilter = ->
   $('.table-group-action-input, .licence-count').on "keyup", ->
     action = $('.table-group-action-input').val()
     def = $(".licence-count").val()
-    users_table.setAjaxParam 'queryValue', action
+    users_table.setAjaxParam 'queryValue', action.replace("'","''")
     users_table.setAjaxParam 'def', def
     users_table.getDataTable().ajax.reload()
     users_table.clearAjaxParams()

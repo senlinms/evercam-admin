@@ -41,9 +41,7 @@ class UsersController < ApplicationController
     condition = "lower(u.username) like lower('%#{params[:queryValue]}%') OR 
                  lower(u.email) like lower('%#{params[:queryValue]}%') OR 
                  lower(u.firstname || ' ' || u.lastname) like lower('%#{params[:queryValue]}%')"
-    users = EvercamUser
-              .connection
-              .select_all("select *, (required_licence - valid_licence) def from (
+    users = EvercamUser.connection.select_all("select *, (required_licence - valid_licence) def from (
                  select *, (select count(cr.id) from cloud_recordings cr left join cameras c on c.owner_id=u.id where c.id=cr.camera_id and cr.status <>'off') required_licence,
                  (select SUM(l.total_cameras) from licences l left join users uu on l.user_id=uu.id where uu.id=u.id and cancel_licence=false) valid_licence
                  from users u where #{condition} order by u.id desc
