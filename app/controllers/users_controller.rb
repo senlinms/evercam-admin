@@ -33,18 +33,19 @@ class UsersController < ApplicationController
   end
 
   def load_users
+    case_value = "(CASE WHEN (required_licence - valid_licence) > 0 THEN (required_licence - valid_licence) ELSE required_licence end)"
     if params[:def].present? and params[:licReq].present? and params[:licValid].present?
-      condition1 = "where (required_licence - valid_licence) > #{params[:def]} OR required_licence > #{params[:licReq]} OR valid_licence > #{params[:licValid]}"
+      condition1 = "where #{case_value} > #{params[:def]} OR required_licence > #{params[:licReq]} OR valid_licence > #{params[:licValid]}"
     elsif params[:def].present? and params[:licReq].present?
-      condition1 = "where (required_licence - valid_licence) > #{params[:def]} OR required_licence > #{params[:licReq]}"
+      condition1 = "where #{case_value} > #{params[:def]} OR required_licence > #{params[:licReq]}"
     elsif params[:def].present? and params[:licValid].present?
-      condition1 = "where (required_licence - valid_licence) > #{params[:def]} OR valid_licence > #{params[:licValid]}"
+      condition1 = "where #{case_value} > #{params[:def]} OR valid_licence > #{params[:licValid]}"
     elsif params[:licReq].present? and params[:licValid].present?
       condition1 = "where valid_licence > #{params[:licValid]} OR required_licence > #{params[:licReq]}"
     elsif params[:licReq].present?
       condition1 = "where required_licence > #{params[:licReq]}"
     elsif params[:def].present?
-      condition1 = "where (required_licence - valid_licence) > #{params[:def]}"
+      condition1 = "where #{case_value} > #{params[:def]}"
     elsif params[:licValid].present?
       condition1 = "where valid_licence > #{params[:licValid]}"
     else
@@ -53,7 +54,7 @@ class UsersController < ApplicationController
     condition = "lower(u.username) like lower('%#{params[:queryValue]}%') OR 
                  lower(u.email) like lower('%#{params[:queryValue]}%') OR 
                  lower(u.firstname || ' ' || u.lastname) like lower('%#{params[:queryValue]}%')"
-    users = EvercamUser.connection.select_all("select *, (CASE WHEN (required_licence - valid_licence) > 0 THEN (required_licence - valid_licence) ELSE required_licence end) def from (
+    users = EvercamUser.connection.select_all("select *, #{case_value} def from (
                  select *, (select count(cr.id) from cloud_recordings cr left join cameras c on c.owner_id=u.id where c.id=cr.camera_id and cr.status <>'off') required_licence,
                  (select SUM(l.total_cameras) from licences l left join users uu on l.user_id=uu.id where uu.id=u.id and cancel_licence=false) valid_licence
                  from users u where #{condition} order by u.id desc
