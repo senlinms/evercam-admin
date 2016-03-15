@@ -33,8 +33,20 @@ class UsersController < ApplicationController
   end
 
   def load_users
-    if params[:def].present?
+    if params[:def].present? and params[:licReq].present? and params[:licValid].present?
+      condition1 = "where (required_licence - valid_licence) > #{params[:def]} OR required_licence > #{params[:licReq]} OR valid_licence > #{params[:licValid]}"
+    elsif params[:def].present? and params[:licReq].present?
+      condition1 = "where (required_licence - valid_licence) > #{params[:def]} OR required_licence > #{params[:licReq]}"
+    elsif params[:def].present? and params[:licValid].present?
+      condition1 = "where (required_licence - valid_licence) > #{params[:def]} OR valid_licence > #{params[:licValid]}"
+    elsif params[:licReq].present? and params[:licValid].present?
+      condition1 = "where valid_licence > #{params[:licValid]} OR required_licence > #{params[:licReq]}"
+    elsif params[:licReq].present?
+      condition1 = "where required_licence > #{params[:licReq]}"
+    elsif params[:def].present?
       condition1 = "where (required_licence - valid_licence) > #{params[:def]}"
+    elsif params[:licValid].present?
+      condition1 = "where valid_licence > #{params[:licValid]}"
     else
       condition1 = ""
     end
