@@ -73,7 +73,9 @@ class CamerasController < ApplicationController
         cameras[index].creation_date,
         cameras[index].last_poll_date,
         cameras[index].id,
-        cameras[index].user.id
+        cameras[index].user.id,
+        cameras[index].user.api_id,
+        cameras[index].user.api_key
       ]
     end
     render json: records

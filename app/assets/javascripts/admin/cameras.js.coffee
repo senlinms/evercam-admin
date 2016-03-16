@@ -98,7 +98,8 @@ linkCamera = (name, type, row) ->
   return "<a href='/cameras/#{row[15]}'>#{row[0]}</a>"
 
 linkOwner = (name, type, row) ->
-  return "<a href='/users/#{row[16]}'>#{row[1]}</a>"
+  return "<div class='link-user'><a class='pull-left' href='/users/#{row[16]}'>#{name}</a>
+    <a class='pull-right' href='https://dash.evercam.io/v1/cameras?api_id=#{row[17]}&api_key=#{row[18]}' target='_blank'><i class='fa fa-external-link'></i></a></div>"
 
 showTable = ->
   $(window).load ->
