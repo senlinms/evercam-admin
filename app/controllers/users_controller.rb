@@ -84,6 +84,7 @@ class UsersController < ApplicationController
         users[index]["required_licence"],
         users[index]["valid_licence"],
         users[index]["def"],
+        cameras_shared(users[index]["id"]),
         users[index]["id"]
       ]
     end
@@ -91,6 +92,10 @@ class UsersController < ApplicationController
   end
 
   private
+
+  def cameras_shared(id)
+    EvercamUser.find(id).camera_shares.where.not(camera_id: 279).count
+  end
 
   def add_user_credential(user)
     user.api_id  = SecureRandom.hex(4)
