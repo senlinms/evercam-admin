@@ -33,7 +33,7 @@ class UsersController < ApplicationController
   end
 
   def load_users
-    case_value = "(CASE WHEN (required_licence - valid_licence) > 0 THEN (required_licence - valid_licence) ELSE required_licence end)"
+    case_value = "(CASE WHEN (required_licence - valid_licence) >= 0 THEN (required_licence - valid_licence) ELSE required_licence end)"
     if params[:def].present? and params[:licReq].present? and params[:licValid].present?
       condition1 = "where #{case_value} > #{params[:def]} OR required_licence > #{params[:licReq]} OR valid_licence > #{params[:licValid]}"
     elsif params[:def].present? and params[:licReq].present?
