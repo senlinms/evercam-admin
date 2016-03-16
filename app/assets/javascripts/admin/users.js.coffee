@@ -44,7 +44,7 @@ initializeDataTable = ->
         'url': '/load_users'
       columns: [
         {data: "0" },
-        {data: "1", "render": linkUser },
+        {data: "1", "sClass": "center", "render": linkUser },
         {data: "2" },
         {data: "3" },
         {data: "4" },
@@ -95,7 +95,7 @@ appendMe = ->
   $(".paging_bootstrap_extended").css("float","none")
 
 linkUser = (name, type, row) ->
-  return "<a href='/users/#{row[14]}'>#{name}</a><a class='link-to-user' href='/users/#{row[14]}' target='_blank'><i class='fa fa-external-link'></i></a>"
+  return "<div class='link-user'><a class='pull-left' href='/users/#{row[14]}'>#{name}</a><a class='pull-right' href='/users/#{row[14]}' target='_blank'><i class='fa fa-external-link'></i></a></div>"
 
 cameraLink = (name, type, row) ->
   return "<a href='/users/#{row[14]}#tab_1_12'>#{name}</>"
