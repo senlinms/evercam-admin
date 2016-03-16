@@ -99,7 +99,7 @@ linkUser = (name, type, row) ->
     <a class='pull-right' href='https://dash.evercam.io/v1/cameras?api_id=#{row[3]}&api_key=#{row[4]}' target='_blank'><i class='fa fa-external-link'></i></a></div>"
 
 cameraLink = (name, type, row) ->
-  return "<a href='/users/#{row[15]}#tab_1_12'>#{name}</>"
+  return "<a href='/users/#{row[15]}#tab_1_12'>#{name}</a>"
 
 totalCameras = (name, type, row) ->
   return row[6] + row[5]
