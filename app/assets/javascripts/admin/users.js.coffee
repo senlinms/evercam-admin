@@ -96,7 +96,7 @@ appendMe = ->
 
 linkUser = (name, type, row) ->
   return "<div class='link-user'><a class='pull-left' href='/users/#{row[15]}'>#{name}</a>
-    <a class='pull-right' href='https://dash.evercam.io/v1/cameras?api_id=#{row[3]}&api_key=#{row[4]}' target='_blank'><i class='fa fa-external-link'></i></a></div>"
+    <a class='pull-right' href='#{row[16]}/v1/cameras?api_id=#{row[3]}&api_key=#{row[4]}' target='_blank'><i class='fa fa-external-link'></i></a></div>"
 
 cameraLink = (name, type, row) ->
   return "<a href='/users/#{row[15]}#tab_1_12'>#{name}</a>"

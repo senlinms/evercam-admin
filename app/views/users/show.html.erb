@@ -26,7 +26,7 @@
             <%= link_to @user.fullname, user_path(@user) %>
             </li>
             <li class="pull-right">
-              <%= link_to "https://dash.evercam.io/v1/cameras?api_id=#{@user.api_id}&api_key=#{@user.api_key}",
+              <%= link_to "#{check_env}/v1/cameras?api_id=#{@user.api_id}&api_key=#{@user.api_key}",
                           :target => "_blank" do %>
                 <%= "Sign in as #{@user.fullname}" %>
                 <i class="fa fa-sign-in"></i>
