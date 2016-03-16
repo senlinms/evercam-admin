@@ -109,11 +109,21 @@ openFilter = ->
       .toggle("slide", { direction: "right" }, 500)
 
 validateDigit = ->
-  $('.licence-count').on "keyup", ->
+  $('.licence-count, .licence-required, .licence-valid').on "keyup", ->
     value = $('.licence-count').val().replace(/^\s\s*/, '').replace(/\s\s*$/, '')
+    value1 = $('.licence-required').val().replace(/^\s\s*/, '').replace(/\s\s*$/, '')
+    value2 = $('.licence-valid').val().replace(/^\s\s*/, '').replace(/\s\s*$/, '')
     intRegex = /^\d+$/
+    console.log "hi"
     if !intRegex.test(value)
       $(".licence-count").val("")
+      return
+    if !intRegex.test(value1)
+      console.log "hi"
+      $('.licence-required').val("")
+      return
+    if !intRegex.test(value2)
+      $('.licence-valid').val("")
       return
 
 removeMinus = (deficient) ->
