@@ -86,7 +86,8 @@ class UsersController < ApplicationController
         users[index]["required_licence"],
         users[index]["valid_licence"],
         users[index]["def"],
-        users[index]["id"]
+        users[index]["id"],
+        check_env()
       ]
     end
     render json: records

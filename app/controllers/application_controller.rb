@@ -5,14 +5,21 @@ class ApplicationController < ActionController::Base
 
   before_action :authenticate_user!
   before_action :configure_permitted_parameters, if: :devise_controller?
+  helper_method :check_env
 
   def authorize_admin
     redirect_to no_access_path if current_user.present? && !current_user.is_admin?
   end
 
+  def check_env
+    if Rails.env.development?
+      "http://localhost:3000"
+    else
+      "https://dash.evercam.io"
+    end
+  end
+
   protected
-
-
 
   def configure_permitted_parameters
     devise_parameter_sanitizer.for(:sign_up) do |u|
@@ -27,4 +34,3 @@ class ApplicationController < ActionController::Base
     notify_airbrake(exception)
   end
 end
-

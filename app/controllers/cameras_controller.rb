@@ -75,7 +75,8 @@ class CamerasController < ApplicationController
         cameras[index].id,
         cameras[index].user.id,
         cameras[index].user.api_id,
-        cameras[index].user.api_key
+        cameras[index].user.api_key,
+        check_env()
       ]
     end
     render json: records
