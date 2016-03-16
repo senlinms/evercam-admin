@@ -1,5 +1,6 @@
 class CamerasController < ApplicationController
   before_action :authorize_admin
+  require 'evercam'
 
   def index
   end
