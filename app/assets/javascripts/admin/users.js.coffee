@@ -34,7 +34,7 @@ initializeDataTable = ->
         [ 25, 50, 100, 150 ]
         [ 25, 50, 100, 150 ]
       ]
-      'pageLength': 102
+      'pageLength': 50
       'processing': true
       'serverSide': true
       'language': 'processing': '<img src="/assets/loading.gif">'
@@ -78,7 +78,6 @@ searchFilter = ->
     users_table.setAjaxParam 'licReq', lic_req 
     users_table.setAjaxParam 'licValid', lic_valid 
     users_table.getDataTable().ajax.reload()
-    users_table.clearAjaxParams()
     return
 
 appendMe = ->
