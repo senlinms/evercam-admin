@@ -44,19 +44,20 @@ initializeDataTable = ->
         'url': '/load_users'
       columns: [
         {data: "0" },
-        {data: "1", "sClass": "center", "render": linkUser },
+        {data: "1", "render": linkUser },
         {data: "2" },
         {data: "3" },
         {data: "4" },
         {data: "5", "render": cameraLink, "sClass": "center" },
-        {data: "6" },
-        {data: "7", "sType": "uk_datetime" },
-        {data: "8", visible: false },
-        {data: "9" },
-        {data: "10", "sClass": "center" },
-        {data: "11", "sClass": "center green" },
-        {data: "12", "sClass": "center red", "render": removeMinus },
-        {data: "13", "sClass": "center" }
+        {data: "6", "sClass": "center" }
+        {data: "7", "sClass": "center", "render": totalCameras }
+        {data: "8" },
+        {data: "9", "sType": "uk_datetime" },
+        {data: "10", visible: false },
+        {data: "11" },
+        {data: "12", "sClass": "center" },
+        {data: "13", "sClass": "center green" },
+        {data: "14", "sClass": "center red", "render": removeMinus },
       ],
       initComplete: ->
         # execute some code on network or other general error
@@ -94,10 +95,14 @@ appendMe = ->
   $(".paging_bootstrap_extended").css("float","none")
 
 linkUser = (name, type, row) ->
-  return "<div class='link-user'><a class='pull-left' href='/users/#{row[14]}'>#{name}</a><a class='pull-right' href='/users/#{row[14]}' target='_blank'><i class='fa fa-external-link'></i></a></div>"
+  return "<div class='link-user'><a class='pull-left' href='/users/#{row[15]}'>#{name}</a>
+    <a class='pull-right' href='https://dash.evercam.io/v1/cameras?api_id=#{row[3]}&api_key=#{row[4]}' target='_blank'><i class='fa fa-external-link'></i></a></div>"
 
 cameraLink = (name, type, row) ->
-  return "<a href='/users/#{row[14]}#tab_1_12'>#{name}</>"
+  return "<a href='/users/#{row[15]}#tab_1_12'>#{name}</a>"
+
+totalCameras = (name, type, row) ->
+  return row[6] + row[5]
 
 showTable = ->
   $(window).load ->

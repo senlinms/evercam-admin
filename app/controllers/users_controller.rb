@@ -77,6 +77,8 @@ class UsersController < ApplicationController
         users[index]["api_id"],
         users[index]["api_key"],
         Camera.where(owner_id: users[index]["id"]).count,
+        cameras_shared(users[index]["id"]),
+        "",
         Country.exists?(users[index]["country_id"]) ? Country.find(users[index]["country_id"]).name : "",
         users[index]["created_at"] ? Date.parse(users[index]["created_at"]).strftime("%d/%m/%y %I:%M %p") : "",
         users[index]["confirmed_at"] ? Date.parse(users[index]["confirmed_at"]).strftime("%d/%m/%y %I:%M %p") : "",
@@ -84,7 +86,6 @@ class UsersController < ApplicationController
         users[index]["required_licence"],
         users[index]["valid_licence"],
         users[index]["def"],
-        cameras_shared(users[index]["id"]),
         users[index]["id"]
       ]
     end
