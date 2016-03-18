@@ -29,12 +29,14 @@ initializeDataTable = ->
     onDataLoad: (grid) ->
       #do something
     dataTable:
+      'bAutoWidth': false
       'bStateSave': false
       'lengthMenu': [
         [ 25, 50, 100, 150 ]
         [ 25, 50, 100, 150 ]
       ]
-      'pageLength': 50
+      "order": [[ 10, "desc" ]]
+      'pageLength': 60
       'processing': true
       'serverSide': true
       'language': 'processing': '<img src="/assets/loading.gif">'
@@ -43,21 +45,21 @@ initializeDataTable = ->
         'headers': headers
         'url': '/load_users'
       columns: [
-        {data: "0" },
-        {data: "1", "render": linkUser },
-        {data: "2" },
-        {data: "3" },
-        {data: "4" },
-        {data: "5", "render": cameraLink, "sClass": "center" },
-        {data: "6", "sClass": "center" }
-        {data: "7", "sClass": "center", "render": totalCameras }
-        {data: "8" },
-        {data: "9", "sType": "uk_datetime" },
+        {data: "0", "orderable": true, "width": "75px" },
+        {data: "1", "render": linkUser, "width": "120px" },
+        {data: "2", "width": "150px" },
+        {data: "3", "width": "70px" },
+        {data: "4", "width": "215px" },
+        {data: "5", "width": "120px", "render": cameraLink, "sClass": "center" },
+        {data: "6", "width": "120px", "sClass": "center", "render": removeMinus },
+        {data: "7", "width": "120px", "sClass": "center", "render": removeMinus },
+        {data: "8", "width": "110px" },
+        {data: "9", "width": "100px", "sType": "uk_datetime" },
         {data: "10", visible: false },
-        {data: "11" },
-        {data: "12", "sClass": "center" },
-        {data: "13", "sClass": "center green" },
-        {data: "14", "sClass": "center red", "render": removeMinus },
+        {data: "11", "width": "100px" },
+        {data: "12", "width": "120px", "sClass": "center" },
+        {data: "13", "width": "120px", "sClass": "center green" },
+        {data: "14", "width": "120px", "sClass": "center red", "render": removeMinus }
       ],
       initComplete: ->
         # execute some code on network or other general error
@@ -68,15 +70,28 @@ columnsDropdown = ->
     column.visible !column.visible()
 
 searchFilter = ->
-  $('.table-group-action-input, .licence-count, .licence-required, .licence-valid').on "keyup", ->
-    action = $('.table-group-action-input').val()
-    def = $(".licence-count").val()
-    lic_req = $(".licence-required").val()
-    lic_valid = $(".licence-valid").val()
-    users_table.setAjaxParam 'queryValue', action.replace("'","''")
-    users_table.setAjaxParam 'def', def
-    users_table.setAjaxParam 'licReq', lic_req 
-    users_table.setAjaxParam 'licValid', lic_valid 
+  $('#username, #email, #fullname, #total_cameras, #licREQ1, #licREQ2, #licVALID1, #licVALID2, #licDEF1, #licDEF2').on "keyup", ->
+    username = $("#username").val().replace("'","''")
+    fullname = $("#fullname").val().replace("'","''")
+    email = $("#email").val().replace("'","''")
+    total_cameras = $("#total_cameras").val()
+    licREQ1 = $("#licREQ1").val()
+    licREQ2 = $("#licREQ2").val()
+    licVALID1 = $("#licVALID1").val()
+    licVALID2 = $("#licVALID2").val()
+    licDEF1 = $("#licDEF1").val()
+    licDEF2 = $("#licDEF2").val()
+    console.log licREQ2
+    users_table.setAjaxParam 'username', username
+    users_table.setAjaxParam 'fullname', fullname
+    users_table.setAjaxParam 'email', email
+    users_table.setAjaxParam 'total_cameras', total_cameras
+    users_table.setAjaxParam 'licREQ1', licREQ1
+    users_table.setAjaxParam 'licREQ2', licREQ2
+    users_table.setAjaxParam 'licVALID1', licVALID1
+    users_table.setAjaxParam 'licVALID2', licVALID2
+    users_table.setAjaxParam 'licDEF1', licDEF1
+    users_table.setAjaxParam 'licDEF2', licDEF2
     users_table.getDataTable().ajax.reload()
     return
 
@@ -86,8 +101,7 @@ appendMe = ->
   div +=  '<i class="fa fa-columns"></i>'
   div += '</div>'
   div +='</div>'
-  $("#users_datatables_wrapper").before(div)
-  $("#div-dropdown-checklist").addClass("box-button").addClass("user-box-m")
+  $("#div-dropdown-checklist").css({"visibility":"visible", "width":"59px", "top":"-41px", "float":"right" })
   $(".users-f > input").addClass("label-color")
   $(".dataTables_info").css("display", "none")
   $(".dataTables_length > label").css("display", "none")
@@ -108,27 +122,42 @@ showTable = ->
   $(window).load ->
     $('#user-list-row').removeClass 'hide'
 
-openFilter = ->
-  $("#filter-modal, .closing").on "click", ->
-    $("#filter-modal-box")
-      .toggle("slide", { direction: "right" }, 500)
-
 validateDigit = ->
   intRegex = /^\d+$/
-  $('.licence-count').on "keyup", ->
-    value = $('.licence-count').val().replace(/^\s\s*/, '').replace(/\s\s*$/, '')
+  $('#licREQ1').on "keyup", ->
+    value = $('#licREQ1').val().replace(/^\s\s*/, '').replace(/\s\s*$/, '')
     if !intRegex.test(value)
-      $(".licence-count").val("")
+      $("#licREQ1").val("")
       return
-  $('.licence-required').on "keyup", ->
-    value1 = $('.licence-required').val().replace(/^\s\s*/, '').replace(/\s\s*$/, '')
+  $('#licREQ2').on "keyup", ->
+    value1 = $('#licREQ2').val().replace(/^\s\s*/, '').replace(/\s\s*$/, '')
     if !intRegex.test(value1)
-      $('.licence-required').val("")
+      $('#licREQ2').val("")
       return
-   $('.licence-valid').on "keyup", ->
-    value2 = $('.licence-valid').val().replace(/^\s\s*/, '').replace(/\s\s*$/, '')
+   $('#licVALID1').on "keyup", ->
+    value2 = $('#licVALID1').val().replace(/^\s\s*/, '').replace(/\s\s*$/, '')
     if !intRegex.test(value2)
-      $('.licence-valid').val("")
+      $('#licVALID1').val("")
+      return
+   $('#licVALID2').on "keyup", ->
+    value2 = $('#licVALID2').val().replace(/^\s\s*/, '').replace(/\s\s*$/, '')
+    if !intRegex.test(value2)
+      $('#licVALID2').val("")
+      return
+   $('#total_cameras').on "keyup", ->
+    value2 = $('#total_cameras').val().replace(/^\s\s*/, '').replace(/\s\s*$/, '')
+    if !intRegex.test(value2)
+      $('#total_cameras').val("")
+      return
+   $('#licDEF1').on "keyup", ->
+    value2 = $('#licDEF1').val().replace(/^\s\s*/, '').replace(/\s\s*$/, '')
+    if !intRegex.test(value2)
+      $('#licDEF1').val("")
+      return
+   $('#licDEF2').on "keyup", ->
+    value2 = $('#licDEF2').val().replace(/^\s\s*/, '').replace(/\s\s*$/, '')
+    if !intRegex.test(value2)
+      $('#licDEF2').val("")
       return
 
 removeMinus = (deficient) ->
@@ -137,6 +166,21 @@ removeMinus = (deficient) ->
   else
     ""
 
+clearFilter = ->
+  $("#filterClear").on "click", ->
+    $("#licREQ1").val("")
+    $('#licREQ2').val("")
+    $('#licVALID1').val("")
+    $('#licVALID2').val("")
+    $('#licDEF1').val("")
+    $('#licDEF2').val("")
+    $('#total_cameras').val("")
+    $("#username").val("")
+    $("#fullname").val("")
+    $("#email").val("")
+    users_table.clearAjaxParams()
+    users_table.getDataTable().ajax.reload()
+
 window.initializeusers = ->
   initializeDataTable()
   columnsDropdown()
@@ -144,4 +188,4 @@ window.initializeusers = ->
   validateDigit()
   searchFilter()
   showTable()
-  openFilter()
+  clearFilter()

@@ -1,21 +1,67 @@
 <div class="page-content-wrapper">
   <div class="page-content">
-    <div class="row">
-      <div class="col-md-12">
+    <div class="row overlop-margin">
+      <div class="col-md-12 uper-bottom">
         <ul class="page-breadcrumb breadcrumb">
           <%= render 'shared/breadcrumb_basic', current_section: 'Users' %>
         </ul>
       </div>
+      <div class="dropdown-checklist" id="div-dropdown-checklist">
+        <div href="#" class="btn btn-default grey" data-toggle="modal" data-target="#toggle-datatable-columns">
+          <i class="fa fa-columns"></i>
+        </div>
+      </div>
     </div>
     <%= render 'columns_modal' %>
     <%= render 'filter_modal' %>
-    <div id="user-list-row" class="row hide">
-      <div class="col-md-12 filter-top">
-        <div class="table-actions-wrapper users-f">
-          <!-- <span></span> -->
-          <div href="#" class="btn btn-default grey" id="filter-modal"><i class="fa fa-filter"></i></div>
-          <!-- Filter: <input type="text" placeholder="" class="table-group-action-input form-control input-inline input-small input-sm user-filter"/> -->
+    <div class="row overlapping">
+      <div class="form-main">
+        <div class="main-contain">
+          <div class="filter-name">
+            Search :
+          </div>
+          <div class="input-divs">
+            <input type="text" class="first-ins" placeholder="Username" id="username">
+            <input type="text" class="first-ins" placeholder="Fullname" id="fullname">
+            <input type="text" class="first-ins" placeholder="email" id="email">
+          </div>
         </div>
+        <div class="main-contain licence-space">
+          <div class="filter-name">
+            Licence Required :
+          </div>
+          <div class="input-divs-s">
+            <input type="text" class="small-ins" placeholder="from" id="licREQ1">
+            <input type="text" class="small-ins" placeholder="to" id="licREQ2">
+          </div>
+          <div class="filter-second">
+            Licence Valid :
+          </div>
+          <div class="input-divs-s">
+            <input type="text" class="small-ins" placeholder="from" id="licVALID1">
+            <input type="text" class="small-ins" placeholder="to" id="licVALID2">
+          </div>
+          <div class="filter-second def-ins">
+            Licence Deficient :
+          </div>
+          <div class="input-divs-s">
+            <input type="text" class="small-ins" placeholder="from" id="licDEF1">
+            <input type="text" class="small-ins" placeholder="to" id="licDEF2">
+          </div>
+        </div>
+        <div class="main-contain licence-space">
+          <div class="filter-name">
+            Total Cameras :
+          </div>
+          <div class="input-divs">
+            <input type="text" class="small-ins" placeholder="numeric" id="total_cameras">
+            <button type="button" class="clear-btn-f" id="filterClear">Clear Filter</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="user-list-row" class="row hide dt-user-m">
+      <div class="col-md-12">
         <table class="table table-striped table-bordered table-hover user-list-table" id="users_datatables">
           <thead>
             <tr role="row" class="heading">

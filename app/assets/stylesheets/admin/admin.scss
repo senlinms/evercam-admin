@@ -1,3 +1,4 @@
+//= require views/users/index.css
 //= require bootstrap
 //= require base/fonts.css
 //= require uniform.default.min.css
@@ -558,16 +559,6 @@ ul.columns {
   z-index: 9;
 }
 
-.closing {
-  padding: 5px;
-  cursor: pointer;
-  font-size: 20px;
-  position: absolute;
-  right: 5px;
-  top: -2px;
-  z-index: 50;
-}
-
 .green {
   color: green;
 }
@@ -578,7 +569,18 @@ ul.columns {
 
 .link-user {
   overflow: hidden;
-  width: 150px;
+  width: 90%;
+}
+
+.uper-bottom {
+  margin-top: -15px;
+  margin-bottom: -18px;
+  margin-left: -9px;
+  overflow: hidden;
+}
+
+.dt-user-m {
+  margin-left: -23px;
 }
 
 @media screen and (max-width: 1301px) 
