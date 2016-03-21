@@ -40,11 +40,11 @@ class UsersController < ApplicationController
     sorting1 = "order by u.id #{order_for}"
     sorting2 = ""
     first_sort = ["0", "1", "2", "3", "4", "5", "6", "8", "9", "10", "11", "12", "13"]
-    secont_sort = ["7", "14"]
+    second_sort = ["7", "14"]
     if first_sort.include? col_for_order
       sorting1 = sorting(col_for_order, order_for)
     end
-    if secont_sort.include? col_for_order
+    if second_sort.include? col_for_order
       sorting2 = sorting(col_for_order, order_for)
     end
 
