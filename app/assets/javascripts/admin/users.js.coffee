@@ -96,7 +96,7 @@ searchFilter = ->
     return
 
 appendMe = ->
-  $("#div-dropdown-checklist").css({"visibility":"visible", "width":"59px", "top":"-41px", "float":"right" })
+  $("#div-dropdown-checklist").css({"visibility": "visible", "width": "59px", "top": "-41px", "float": "right" })
   $(".dataTables_info").css("display", "none")
   $(".dataTables_length > label").css("display", "none")
   $("#users_datatables_paginate > .pagination-panel").css("display", "none")
@@ -128,27 +128,27 @@ validateDigit = ->
     if !intRegex.test(value1)
       $('#licREQ2').val("")
       return
-   $('#licVALID1').on "keyup", ->
+  $('#licVALID1').on "keyup", ->
     value2 = $('#licVALID1').val().replace(/^\s\s*/, '').replace(/\s\s*$/, '')
     if !intRegex.test(value2)
       $('#licVALID1').val("")
       return
-   $('#licVALID2').on "keyup", ->
+  $('#licVALID2').on "keyup", ->
     value2 = $('#licVALID2').val().replace(/^\s\s*/, '').replace(/\s\s*$/, '')
     if !intRegex.test(value2)
       $('#licVALID2').val("")
       return
-   $('#total_cameras').on "keyup", ->
+  $('#total_cameras').on "keyup", ->
     value2 = $('#total_cameras').val().replace(/^\s\s*/, '').replace(/\s\s*$/, '')
     if !intRegex.test(value2)
       $('#total_cameras').val("")
       return
-   $('#licDEF1').on "keyup", ->
+  $('#licDEF1').on "keyup", ->
     value2 = $('#licDEF1').val().replace(/^\s\s*/, '').replace(/\s\s*$/, '')
     if !intRegex.test(value2)
       $('#licDEF1').val("")
       return
-   $('#licDEF2').on "keyup", ->
+  $('#licDEF2').on "keyup", ->
     value2 = $('#licDEF2').val().replace(/^\s\s*/, '').replace(/\s\s*$/, '')
     if !intRegex.test(value2)
       $('#licDEF2').val("")
