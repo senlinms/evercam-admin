@@ -1,0 +1,117 @@
+.margin-left {
+  margin-left: 5px;
+}
+
+.overlapping {
+  z-index: 1;
+  position: relative;
+}
+
+.margin-top-f {
+  margin-top: 5px;
+}
+
+.overlop-margin {
+  margin-bottom: -34px;
+}
+
+.presenc {
+  border: solid 1px black;
+}
+
+.form-main {
+  width: 700px;
+  overflow: hidden;
+  height: auto;
+  float: left;
+  text-align: center;
+}
+
+.main-contain {
+  width: 750px;
+  height: auto;
+  overflow: hidden;
+}
+
+.filter-name {
+  width: 115px;
+  padding: 9px 2px;
+  height: auto;
+  float: left;
+  text-align: right;
+  font-size: 13px;
+}
+
+.filter-second {
+  width: 87px;
+  padding: 9px 2px;
+  height: auto;
+  float: left;
+  text-align: left;
+  font-size: 13px;
+}
+
+.input-divs {
+  width: 600px;
+  float: left;
+  height: auto;
+  overflow: hidden;
+  padding: 3px 1px;
+}
+
+.input-divs-s {
+  width: 105px;
+  float: left;
+  height: auto;
+  overflow: hidden;
+  padding: 3px 1px;
+}
+
+.first-ins {
+  background-color: #EEEEEE;
+  width: 164px;
+  padding: 7px;
+  margin-left: 5px;
+  border: none;
+  float: left;
+}
+
+.small-ins {
+  width: 45px;
+  padding: 7px;
+  border: none;
+  margin-left: 5px;
+  float: left;
+  background-color: #EEEEEE;
+}
+
+.btn-margin-clear {
+  margin-left: 5px;
+}
+
+.def-ins {
+  width: 111px;
+}
+
+.licence-space {
+  width: 900px;
+}
+
+.clear-btn-f {
+  padding: 7px;
+  display: inline-block;
+  background-color: #428bca;
+  float: left;
+  color: white;
+  border: none;
+  margin-left: 10px;
+}
+
+table#users_datatables {
+  margin: 0 auto;
+  width: 100%;
+  clear: both;
+  border-collapse: collapse;
+  table-layout: fixed;
+  word-wrap: break-word;
+}
