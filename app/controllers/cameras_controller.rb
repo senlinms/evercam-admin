@@ -47,7 +47,7 @@ class CamerasController < ApplicationController
     cameras = Camera.joins("left JOIN users on cameras.owner_id = users.id")
                     .joins("left JOIN vendor_models vm on cameras.model_id = vm.id")
                     .joins("left JOIN vendors v on vm.vendor_id = v.id")
-                    .where(condition).order(sorting(col_for_order,order_for)).decorate
+                    .where(condition).order(sorting(col_for_order, order_for)).decorate
     total_records = cameras.count
     display_length = params[:length].to_i
     display_length = display_length < 0 ? total_records : display_length
