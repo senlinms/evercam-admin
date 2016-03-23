@@ -9,9 +9,11 @@ class VendorModelsController < ApplicationController
   end
 
   def load_vendor_model
+    col_for_order = params[:order]["0"]["column"]
+    order_for = params[:order]["0"]["dir"]
     condition = "lower(vendor_models.name) like lower('%#{params[:vendor_model]}%') OR
                  lower(vendors.name) like lower('%#{params[:vendor]}%') "
-    vendors_models = VendorModel.joins(:vendor).where(condition).order('vendor_models.name')
+    vendors_models = VendorModel.joins(:vendor).where(condition).order(sorting(col_for_order, order_for))
     total_records = vendors_models.count
     display_length = params[:length].to_i
     display_length = display_length < 0 ? total_records : display_length
@@ -201,6 +203,61 @@ class VendorModelsController < ApplicationController
       rescue
         render json: errors
       end
+    end
+  end
+
+  private
+
+  def sorting(col, order)
+    case col
+    when "1"
+      "vendor_models.exid #{order}"
+    when "2"
+      "vendors.name #{order}"
+    when "3"
+      "vendor_models.name #{order}"
+    when "4"
+      "vendor_models.config-> 'snapshots'->> 'jpg' #{order}"
+    when "5"
+      "vendor_models.config-> 'snapshots'->> 'h264' #{order}"
+    when "6"
+      "vendor_models.config-> 'snapshots'->> 'mjpg' #{order}"
+    when "7"
+      "vendor_models.config-> 'snapshots'->> 'mpeg4' #{order}"
+    when "8"
+      "vendor_models.config-> 'snapshots'->> 'mobile' #{order}"
+    when "9"
+      "vendor_models.config-> 'snapshots'->> 'lowers' #{order}"
+    when "10"
+      "vendor_models.config-> 'auth'-> 'basic'->> 'username' #{order}"
+    when "11"
+      "vendor_models.config-> 'auth'-> 'basic'->> 'password' #{order}"
+    when "12"
+      "vendor_models.audio_url #{order}"
+    when "13"
+      "vendor_models.poe #{order}"
+    when "14"
+      "vendor_models.wifi #{order}"
+    when "15"
+      "vendor_models.onvif #{order}"
+    when "16"
+      "vendor_models.psia #{orders}"
+    when "17"
+      "vendor_models.ptz #{order}"
+    when "18"
+      "vendor_models.infrared #{order}"
+    when "19"
+      "vendor_models.varifocal #{order}"
+    when "20"
+      "vendor_models.sd_card #{order}"
+    when "21"
+      "vendor_models.upnp"
+    when "22"
+      "vendor_models.audio_io"
+    when "23"
+      "vendor_models.shape"
+    when "24"
+      "vendor_models.resolution"
     end
   end
 end
