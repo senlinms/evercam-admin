@@ -115,3 +115,44 @@ table#users_datatables {
   table-layout: fixed;
   word-wrap: break-word;
 }
+
+.filter-top-cam {
+  margin-top: -41px;
+}
+
+table#cameras_datatables {
+  margin: 0 auto;
+  width: 100%;
+  clear: both;
+  border-collapse: collapse;
+  table-layout: fixed;
+  word-wrap: break-word;
+}
+
+.vendor-model-space {
+  margin-left: -24px !important;
+  margin-right: -6px !important;
+  margin-top: 51px;
+}
+
+.fiter-vendor-model {
+  width: 155px;
+  margin-top: -33px;
+}
+
+.model-add-btn {
+  position: relative;
+  z-index: 9;
+  left: -228px;
+  float: right;
+  margin-top: -34px;
+}
+
+table#datatable_vendor_models {
+  margin: 0 auto;
+  width: 100%;
+  clear: both;
+  border-collapse: collapse;
+  table-layout: fixed;
+  word-wrap: break-word;
+}

@@ -38,6 +38,8 @@ class CamerasController < ApplicationController
   end
 
   def load_cameras
+    col_for_order = params[:order]["0"]["column"]
+    order_for = params[:order]["0"]["dir"]
     condition = "lower(cameras.exid) like lower('%#{params[:fquery]}%') OR lower(cameras.name) like lower('%#{params[:fquery]}%') OR 
       lower(vm.name) like lower('%#{params[:fquery]}%') OR lower(v.name) like lower('%#{params[:fquery]}%')
       OR lower(users.firstname || ' ' || users.lastname) like lower('%#{params[:fquery]}%') OR 
@@ -45,7 +47,7 @@ class CamerasController < ApplicationController
     cameras = Camera.joins("left JOIN users on cameras.owner_id = users.id")
                     .joins("left JOIN vendor_models vm on cameras.model_id = vm.id")
                     .joins("left JOIN vendors v on vm.vendor_id = v.id")
-                    .where(condition).order("cameras.created_at").decorate
+                    .where(condition).order(sorting(col_for_order, order_for)).decorate
     total_records = cameras.count
     display_length = params[:length].to_i
     display_length = display_length < 0 ? total_records : display_length
@@ -164,5 +166,40 @@ class CamerasController < ApplicationController
     end
     parameters = parameters.merge(settings) unless settings.empty?
     Evercam::API.new(parameters)
+  end
+
+  def sorting(col, order)
+    case col
+    when "0"
+      "cameras.exid #{order}"
+    when "1"
+      "users.firstname || users.lastname #{order}"
+    when "2"
+      "cameras.name #{order}"
+    when "3"
+      "cameras.config->> 'external_host' #{order}"
+    when "4"
+      "cameras.config->> 'external_http_port' #{order}"
+    when "5"
+      "cameras.config->> 'external_rtsp_port' #{order}"
+    when "6"
+      "cameras.config-> 'auth'-> 'basic'->> 'username' #{order}"
+    when "7"
+      "cameras.config-> 'auth'-> 'basic'->> 'password' #{order}"
+    when "8"
+      "cameras.mac_address #{order}"
+    when "9"
+      "vm.name #{order}"
+    when "10"
+      "v.name #{order}"
+    when "11"
+      "cameras.is_public #{order}"
+    when "12"
+      "cameras.is_online #{order}"
+    when "13"
+      "cameras.created_at #{order}"
+    else
+      "cameras.created_at desc"
+    end
   end
 end

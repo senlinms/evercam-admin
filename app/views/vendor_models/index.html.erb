@@ -29,20 +29,28 @@
 <div class="page-content-wrapper">
   <div class="page-content">
     <!-- BEGIN PAGE HEADER-->
-    <div class="row">
-      <div class="col-md-12">
+    <div class="row overlop-margin">
+      <div class="col-md-12 uper-bottom">
         <!-- BEGIN PAGE TITLE & BREADCRUMB-->
         <ul class="page-breadcrumb breadcrumb">
           <%= render 'shared/breadcrumb_basic', current_section: 'Models' %>
         </ul>
         <!-- END PAGE TITLE & BREADCRUMB-->
       </div>
+      <div href="#" class="btn btn-edit model-add-btn" data-toggle="modal" data-target="#add-vendor-modal">
+        Add Model
+      </div>
+      <div class="dropdown-checklist" id="div-dropdown-checklist">
+        <div href="#" class="btn btn-default grey" data-toggle="modal" data-target="#toggle-datatable-columns">
+          <i class="fa fa-columns"></i>
+        </div>
+      </div>
     </div>
     <!-- END PAGE HEADER-->
     <%= render 'vendor_model_modal' %>
     <!-- BEGIN PAGE CONTENT-->
     <%= render 'columns_modal' %>
-    <div id="vendor-model-list-row" class="row">
+    <div id="vendor-model-list-row" class="row vendor-model-space">
       <input type="hidden" id="total_vendors" value="<%= @total_vendors %>"/>
       <input type="hidden" id="total_cameras" value="<%= @total_cameras %>"/>
       <div class="col-md-12 table-container filter-top">

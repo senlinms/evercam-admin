@@ -52,30 +52,30 @@ initializeDataTable = ->
       columns: [
         {data: "0", visible: false, 'render': showLogo },
         {data: "1", visible: false},
-        {data: "2"},
-        {data: "3", 'render': editModel },
-        {data: "4"},
-        {data: "5"},
-        {data: "6"},
-        {data: "7"},
-        {data: "8"},
-        {data: "9"},
-        {data: "10"},
-        {data: "11"},
-        {data: "12", visible: false},
-        {data: "13", visible: false, 'render': humanBool},
-        {data: "14", visible: false, 'render': humanBool},
-        {data: "15", visible: false, 'render': humanBool},
-        {data: "16", visible: false, 'render': humanBool},
-        {data: "17", visible: false, 'render': humanBool},
-        {data: "18", visible: false, 'render': humanBool},
-        {data: "19", visible: false, 'render': humanBool},
-        {data: "20", visible: false, 'render': humanBool},
-        {data: "21", visible: false, 'render': humanBool},
-        {data: "22", visible: false, 'render': humanBool},
-        {data: "23", visible: false},
-        {data: "24", visible: false},
-        {data: "25"}
+        {data: "2", "width": "150px" },
+        {data: "3", "width": "150px", 'render': editModel },
+        {data: "4", "width": "150px" },
+        {data: "5", "width": "150px" },
+        {data: "6", "width": "150px" },
+        {data: "7", "width": "150px" },
+        {data: "8", "width": "200px" },
+        {data: "9", "width": "200px" },
+        {data: "10", "width": "70px" },
+        {data: "11", "width": "70px" },
+        {data: "12", "width": "150px", visible: false },
+        {data: "13", "width": "50px", visible: false, 'render': humanBool },
+        {data: "14", "width": "50px", visible: false, 'render': humanBool },
+        {data: "15", "width": "50px", visible: false, 'render': humanBool },
+        {data: "16", "width": "50px", visible: false, 'render': humanBool },
+        {data: "17", "width": "50px", visible: false, 'render': humanBool },
+        {data: "18", "width": "50px", visible: false, 'render': humanBool },
+        {data: "19", "width": "50px", visible: false, 'render': humanBool },
+        {data: "20", "width": "50px", visible: false, 'render': humanBool },
+        {data: "21", "width": "50px", visible: false, 'render': humanBool },
+        {data: "22", "width": "50px", visible: false, 'render': humanBool },
+        {data: "23", "width": "50px", visible: false },
+        {data: "24", "width": "50px", visible: false },
+        {data: "25" , "width": "50px" }
 
       ],
       'order': [ [ 1, 'asc' ] ],
@@ -359,28 +359,17 @@ onModelDClose = ->
     clearPopId()
 
 appendMe = ->
-  div = '<div class="dropdown-checklist" id="div-dropdown-checklist">'
-  div += '<div href="#" class="btn btn-default grey" data-toggle="modal" data-target="#toggle-datatable-columns">'
-  div +=  '<i class="fa fa-columns"></i>'
-  div += '</div>'
-  div +='</div>'
-
-  $("#datatable_vendor_models_wrapper").before(div)
-  $("#div-dropdown-checklist").addClass("box-button")
-  $("#licences_datatables_filter > label").addClass("filter-margin")
-  $(".vendor-model-filter > input").addClass("label-color")
-
-  AddModel = '<div href="#" class="btn btn-edit vmodal-btn" data-toggle="modal" data-target="#add-vendor-modal">'
-  AddModel += 'Add Model'
-  AddModel +='</div>'
-  $(".table-group-actions").before(AddModel)
+  $("#div-dropdown-checklist").css({"visibility": "visible", "width": "59px", "top": "-41px", "float": "right", "left": "-7px" })
+  $(".table-group-actions").addClass("fiter-vendor-model")
+  $(".fiter-vendor-model").parent().css("right": "-9px")
   $(".dataTables_info").css("display", "none")
   $(".dataTables_length > label").css("display", "none")
   $("#datatable_vendor_models_paginate > .pagination-panel").css("display", "none")
-  $(".paging_bootstrap_extended > .pagination-panel").addClass("fix_margin")
+  $(".paging_bootstrap_extended").css("float","none")
 
 window.initializeVendorModel = ->
   initializeDataTable()
+  appendMe()
   columnsDropdown()
   loadVendors()
   handleAddNewModel()
@@ -388,4 +377,3 @@ window.initializeVendorModel = ->
   onEditModel()
   onDeleteModel()
   onModelDClose()
-  appendMe()
