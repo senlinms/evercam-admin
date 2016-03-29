@@ -36,4 +36,8 @@ class CameraDecorator < Draper::Decorator
   def map_camera
     h.human_boolean(object.is_online?)
   end
+
+  def vendor_exid
+    camera.vendor_model.vendor.exid if camera.vendor_model.present?
+  end
 end
