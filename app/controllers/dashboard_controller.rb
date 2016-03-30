@@ -14,7 +14,12 @@ class DashboardController < ApplicationController
   end
 
   def maps_gardashared
-    @gardashared = CameraShare.where(user_id: 7011)
+    ids = []
+    gardashared = CameraShare.where(user_id: 7011)
+    gardashared.each do |share|
+      ids[ids.count] = share.camera.id
+    end
+    @cameras = Camera.where(id: ids).decorate
   end
 
   def kpi
