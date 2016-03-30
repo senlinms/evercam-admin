@@ -32,7 +32,7 @@
     var map = new google.maps.Map(document.getElementById('map_canvas'), options);
     var iconBase;
     // set multiple marker
-    <% @public_cams.each do |camera| %>
+    <% @gardashared.each do |share| %>
       <% if camera.vendor_model %>
         <% if camera.vendor_model.vendor.exid == "other" || camera.vendor_model.vendor.nil? %>
           <% logo_url = "" %>
