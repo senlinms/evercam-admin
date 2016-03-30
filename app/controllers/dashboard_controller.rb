@@ -13,6 +13,19 @@ class DashboardController < ApplicationController
     @cameras = Camera.where.not(location: nil).decorate
   end
 
+  def maps_gardashared
+    @public_cams = Camera.where.not(location: nil).where(is_public: true)
+    pry
+    public_count = @public_cams.count + 1
+    gardashared = CameraShare.where(user_id: 7011)
+    gardashared.each do |garda|
+      @public_cams[public_count] = garda.camera
+      public_count += 1
+    end
+    @public_cams
+    pry
+  end
+
   def kpi
     if params[:kpi_result]
       date = []
