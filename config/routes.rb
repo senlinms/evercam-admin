@@ -31,6 +31,7 @@ Rails.application.routes.draw do
   delete "/models" => "vendor_models#delete"
 
   get '/map' => 'dashboard#map'
+  get "/maps_gardashared" => "dashboard#maps_gardashared"
   get '/kpi' => 'dashboard#kpi'
   get '/no_access' => 'home#no_access'
   get "/cloud_recordings" => "snapshots#cloud_recordings"
