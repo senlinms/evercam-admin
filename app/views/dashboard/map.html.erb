@@ -30,7 +30,7 @@
 
     // init map
     var map = new google.maps.Map(document.getElementById('map_canvas'), options);
-
+    var iconBase;
     // set multiple marker
     <% @cameras.each do |camera| %>
       <% if camera.vendor_exid == "other" || camera.vendor_exid.nil? %>
@@ -38,10 +38,17 @@
       <% else %>
         <% logo_url = "<img width='80' src='http://evercam-public-assets.s3.amazonaws.com/#{camera.vendor_exid}/logo.jpg' />" %>
       <% end %>
+
+      <% if camera.is_online == false %>
+        iconBase = 'http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|808080'
+      <% else %>
+        iconBase = ''
+      <% end %>
       // init markers
       var marker = new google.maps.Marker({
         position: new google.maps.LatLng(<%=  Geocoding.as_point(camera.location).y %>, <%=  Geocoding.as_point(camera.location).x %>),
         map: map,
+        icon: iconBase,
         title: 'Click Me '
       });
 
@@ -51,7 +58,7 @@
         google.maps.event.addListener(marker, 'click', function () {
           infowindow = new google.maps.InfoWindow({
             <% if camera.thumbnail_url %>
-            content: '<table class="table table-striped"><tbody><tr><th>Representative Image</th><td><img height="140" src="<%= camera.thumbnail_url %>" /><br/><br/><div class="center"><strong ><%= camera.name %> <a href="https://dash.evercam.io/v1/cameras/<%= camera.exid %>/live?api_id=<%= camera.user.api_id %>&api_key=<%= camera.user.api_key %>" target="_bank"><i class="fa fa-external-link"></i></a></strong></div></td></tr><tr><th>Data Processor</th><td>Camba.tv Ltd. 01-5383333</td></tr><tr><th>Data Controller</th><td><%= camera.user.username %></td></tr><tr><th>Online ?</th><td><%= camera.map_camera %></td></tr><tr><th>Public ?</th><td><%= camera.is_public %></td></tr><tr><th>Vendor/Model</th><td><%= logo_url.tr("'", '"').html_safe %> <%= camera.vendor_model_name %></td></tr></tbody></table>'
+            content: '<table class="table table-striped"><tbody><tr><th></th><td><img height="140" src="<%= camera.thumbnail_url %>" /><br/><br/><div class="center"><strong ><%= camera.name %> <a href="https://dash.evercam.io/v1/cameras/<%= camera.exid %>/live?api_id=<%= camera.user.api_id %>&api_key=<%= camera.user.api_key %>" target="_bank"><i class="fa fa-external-link"></i></a></strong></div></td></tr><tr><th>Data Processor</th><td>Camba.tv Ltd. 01-5383333</td></tr><tr><th>Data Controller</th><td><%= camera.user.username %></td></tr><tr><th>Online ?</th><td><%= camera.map_camera %></td></tr><tr><th>Public ?</th><td><%= camera.is_public %></td></tr><tr><th>Vendor/Model</th><td><%= logo_url.tr("'", '"').html_safe %> <%= camera.vendor_model_name %></td></tr></tbody></table>'
             <% else %>
             content: '<img class="img-responsive" src="<%= image_path 'noise.png' %>" />'
             <% end %>
