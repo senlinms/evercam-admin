@@ -21,7 +21,6 @@
 #= require metronic/quick-sidebar.js
 #= require lib/underscore-min.js
 #= require alerts.js
-#= require evercam.js.coffee
 #= require admin/vendor_model.js
 #= require admin/vendor.js
 #= require admin/cameras.js

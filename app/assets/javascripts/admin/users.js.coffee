@@ -81,7 +81,6 @@ searchFilter = ->
     licVALID2 = $("#licVALID2").val()
     licDEF1 = $("#licDEF1").val()
     licDEF2 = $("#licDEF2").val()
-    console.log licREQ2
     users_table.setAjaxParam 'username', username
     users_table.setAjaxParam 'fullname', fullname
     users_table.setAjaxParam 'email', email
