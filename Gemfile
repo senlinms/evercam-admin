@@ -29,7 +29,6 @@ gem 'stripe',
 gem 'stripe_event'
 
 source 'https://rails-assets.org' do
-  gem 'rails-assets-bootbox', '~> 4.3.0'
   gem 'rails-assets-bootstrap', '~> 3.3.1'
   gem 'rails-assets-bootstrap-datepicker', '~> 1.3.1'
   gem 'rails-assets-bootstrap-tabdrop', '~> 1.0.0'
@@ -44,10 +43,6 @@ source 'https://rails-assets.org' do
   gem 'rails-assets-jquery.uniform', '~> 2.1.2'
   gem 'rails-assets-ladda', '~> 0.8.0'
   gem 'rails-assets-moment', '~> 2.8'
-  gem 'rails-assets-pusher', '~> 2.2.3'
-  gem 'rails-assets-screenfull', '~> 2.0'
-  gem 'rails-assets-videojs', '~> 4.12.7'
-  gem 'rails-assets-videojs-contrib-media-sources', '~> 1.0.0'
 end
 
 # Use jquery as the JavaScript library
