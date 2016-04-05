@@ -50,8 +50,8 @@ initializeDataTable = ->
         'headers': headers
         'url': 'models/load.vendor.model'
       columns: [
-        {data: "0", visible: false, 'render': showLogo },
-        {data: "1", visible: false},
+        {data: "0", "width": "150px", visible: false, 'render': showLogo },
+        {data: "1", "width": "150px", visible: false},
         {data: "2", "width": "150px" },
         {data: "3", "width": "150px", 'render': editModel },
         {data: "4", "width": "150px" },
