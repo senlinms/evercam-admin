@@ -238,7 +238,7 @@ GEM
       http-cookie (>= 1.0.2, < 2.0)
       mime-types (>= 1.16, < 3.0)
       netrc (~> 0.7)
-    rmega (0.2.1)
+    rmega (0.2.2)
     rspec (3.4.0)
       rspec-core (~> 3.4.0)
       rspec-expectations (~> 3.4.0)
@@ -376,7 +376,7 @@ DEPENDENCIES
   rails-assets-ladda (~> 0.8.0)!
   rails-assets-moment (~> 2.8)!
   rake (= 11.1.2)
-  rmega (~> 0.2.1)
+  rmega (~> 0.2.2)
   rspec (~> 3.4.0)
   rspec-rails (~> 3.4.2)
   sass-rails (~> 5.0)

@@ -94,6 +94,6 @@ end
 gem 'whenever', :require => false
 
 gem 'aws-sdk-v1'
-gem 'rmega', '~> 0.2.1'
+gem 'rmega', '~> 0.2.2'
 
 gem 'airbrake'
