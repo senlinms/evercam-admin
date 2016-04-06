@@ -3,7 +3,7 @@ source 'https://rubygems.org'
 fail 'Ruby version must be greater than 2.0' unless RUBY_VERSION.to_f > 2.0
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.2.5.2'
+gem 'rails', '4.2.6'
 
 # Use postgresql as the database for Active Record
 gem 'pg'
@@ -11,7 +11,7 @@ gem 'pg'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets
-gem 'uglifier', '>= 2.7.2'
+gem 'uglifier', '>= 3.0.0'
 gem 'yui-compressor'
 
 # Use CoffeeScript for .coffee assets and views
@@ -22,7 +22,7 @@ gem 'sprockets-es6', require: 'sprockets/es6'
 # gem 'fog'
 # gem 'asset_sync'
 gem 'autoprefixer-rails'
-gem 'rake', '10.5.0'
+gem 'rake', '11.1.2'
 
 gem 'stripe',
     github: 'stripe/stripe-ruby'
@@ -94,6 +94,6 @@ end
 gem 'whenever', :require => false
 
 gem 'aws-sdk-v1'
-gem 'rmega', '~> 0.2.1'
+gem 'rmega', '~> 0.2.2'
 
 gem 'airbrake'
