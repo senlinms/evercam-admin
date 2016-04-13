@@ -68,13 +68,30 @@ onCameraAction = ->
         content = "<table class='table table-striped'>"
         content += "<thead>"
         content += "<tr>"
-        content += "<th>Name</th><th>exid</th><th>Online</th><th>Owner Name</th><th>Public</th><th>Shared Count</th><th>Created At</th><th class='center'>Action</th>"
+        content += "<th>Name</th>
+                    <th>exid</th>
+                    <th>Online</th>
+                    <th class='center'>Owner Name</th>
+                    <th>Public</th>
+                    <th>Shared Count</th>
+                    <th>Created At</th>
+                    <th class='center'>Action</th>"
         content += "</tr>"
         content += "</thead>"
         content += "<tbody>"
         data.forEach (cam) ->
           content += '<tr>
-                          <td><a href="/cameras/'+ cam[0] + '">' + cam[2] + '</a></td><td>' + cam[1] + '</td><td>' + colorMe(cam[6]) + '</td><td><a href="/users/'+ cam[9] + '">' + cam[3] + ' ' + cam[4] + '</a></td><td>' + colorMe(cam[8]) + '</td><td>' + cam[5] + '</td><td>' + cam[7] + '</td><td class="center"><input type="checkbox" class="delete-cam" value=""></td><td style="display: none;">' + cam[0] + '</td>
+                        <td><a href="/cameras/'+ cam[0] + '">' + cam[2] + '</a></td>
+                        <td>' + cam[1] + '</td><td>' + colorMe(cam[6]) + '</td>
+                        <td class="col-md-342">
+                          <a class="pull-left" href="/users/'+ cam[9] + '">' + cam[3] + ' ' + cam[4] + '</a>
+                          <a class="pull-right" href="'+ cam[12] + '/v1/cameras?api_id='+ cam[10] + '&api_key='+ cam[11] + '" target="_blank"><i class="fa fa-external-link"></i></a>
+                        </td>
+                        <td>' + colorMe(cam[8]) + '</td>
+                        <td>' + cam[5] + '</td>
+                        <td>' + cam[7] + '</td>
+                        <td class="center"><input type="checkbox" class="delete-cam" value=""></td>
+                        <td style="display: none;">' + cam[0] + '</td>
                       </tr>'
         content += "</tbody>"
         content += '</table>'
