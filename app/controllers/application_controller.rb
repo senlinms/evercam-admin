@@ -12,7 +12,7 @@ class ApplicationController < ActionController::Base
   end
 
   def connect_intercom
-    intercom = Intercom::Client.new(app_id: ENV["INTERCOM_ID"], api_key: ENV["INTERCOM_KEY"])
+    Intercom::Client.new(app_id: ENV["INTERCOM_ID"], api_key: ENV["INTERCOM_KEY"])
   end
 
   def check_env
