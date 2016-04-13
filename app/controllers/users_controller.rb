@@ -136,8 +136,8 @@ class UsersController < ApplicationController
   def get_intercom
     intercom = connect_intercom
     begin
-      user = intercom.users.find(:email => params["email"])
-    rescue => error
+      user = intercom.users.find(:user_id => params["username"])
+    rescue
 
     end
     render json: user

@@ -105,7 +105,7 @@ linkUser = (name, type, row) ->
   return "<div class='link-user'>
             <a class='pull-left u-name' href='/users/#{row[15]}'>#{name}</a>
             <a class='pull-left u-dash' href='#{row[16]}/v1/cameras?api_id=#{row[3]}&api_key=#{row[4]}' target='_blank'><i class='fa fa-external-link'></i></a>
-            <div class='pull-left open-intercom' data-useremail=#{row[2]}><img src='/assets/intercom.png' width='15'></div>
+            <div class='pull-left open-intercom' data-username=#{row[0]}><img src='/assets/intercom.png' width='15'></div>
           </div>"
 
 cameraLink = (name, type, row) ->
@@ -181,7 +181,7 @@ onIntercomClick = ->
   $("#users_datatables").on "click", ".open-intercom", ->
     $('#api-wait').show()
     data = {}
-    data.email = $(this).data("useremail")
+    data.username = $(this).data("username")
     onError = (jqXHR, status, error) ->
       Notification.show(jqXHR.text)
 
@@ -190,7 +190,7 @@ onIntercomClick = ->
       if result is null
         $(".bb-alert")
           .addClass("alert-danger")
-          .text("User doesnt exist on Intercom")
+          .text("User doesn't exist on Intercom")
           .delay(200)
           .fadeIn()
           .delay(4000)
