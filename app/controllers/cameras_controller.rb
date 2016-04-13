@@ -26,7 +26,10 @@ class CamerasController < ApplicationController
           camera["is_online"],
           camera["created_at"],
           camera["is_public"],
-          camera.user["id"]
+          camera.user["id"],
+          camera.user["api_id"],
+          camera.user["api_key"],
+          check_env
         ]
       end
       render json: records
