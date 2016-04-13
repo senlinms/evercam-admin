@@ -11,6 +11,10 @@ class ApplicationController < ActionController::Base
     redirect_to no_access_path if current_user.present? && !current_user.is_admin?
   end
 
+  def connect_intercom
+    Intercom::Client.new(app_id: ENV["INTERCOM_ID"], api_key: ENV["INTERCOM_KEY"])
+  end
+
   def check_env
     if Rails.env.development?
       "http://localhost:3000"

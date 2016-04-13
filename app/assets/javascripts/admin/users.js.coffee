@@ -46,7 +46,7 @@ initializeDataTable = ->
         'url': '/load_users'
       columns: [
         {data: "0", "orderable": true, "width": "75px" },
-        {data: "1", "render": linkUser, "width": "120px" },
+        {data: "1", "render": linkUser, "width": "170px" },
         {data: "2", "width": "150px" },
         {data: "3", "width": "70px" },
         {data: "4", "width": "215px" },
@@ -102,8 +102,11 @@ appendMe = ->
   $(".paging_bootstrap_extended").css("float","none")
 
 linkUser = (name, type, row) ->
-  return "<div class='link-user'><a class='pull-left' href='/users/#{row[15]}'>#{name}</a>
-    <a class='pull-right' href='#{row[16]}/v1/cameras?api_id=#{row[3]}&api_key=#{row[4]}' target='_blank'><i class='fa fa-external-link'></i></a></div>"
+  return "<div class='link-user'>
+            <a class='pull-left u-name' href='/users/#{row[15]}'>#{name}</a>
+            <a class='pull-left u-dash' href='#{row[16]}/v1/cameras?api_id=#{row[3]}&api_key=#{row[4]}' target='_blank'><i class='fa fa-external-link'></i></a>
+            <div class='pull-left open-intercom' data-username=#{row[0]}><img src='/assets/intercom.png' width='15'></div>
+          </div>"
 
 cameraLink = (name, type, row) ->
   return "<a href='/users/#{row[15]}#tab_1_12'>#{name}</a>"
@@ -174,6 +177,42 @@ clearFilter = ->
     users_table.clearAjaxParams()
     users_table.getDataTable().ajax.reload()
 
+onIntercomClick = ->
+  $("#users_datatables").on "click", ".open-intercom", ->
+    $('#api-wait').show()
+    data = {}
+    data.username = $(this).data("username")
+    onError = (jqXHR, status, error) ->
+      Notification.show(jqXHR.text)
+
+    onSuccess = (result, status, jqXHR) ->
+      $('#api-wait').hide()
+      if result is null
+        $(".bb-alert")
+          .addClass("alert-danger")
+          .text("User doesn't exist on Intercom")
+          .delay(200)
+          .fadeIn()
+          .delay(4000)
+          .fadeOut()
+      else
+        appId = result.app_id
+        id = result.id
+        newWindow = window.open("","_blank")
+        newWindow.location.href = "https://app.intercom.io/a/apps/#{appId}/users/#{id}/all-conversations"
+
+    settings =
+      cache: false
+      data: data
+      dataType: 'json'
+      error: onError
+      success: onSuccess
+      contentType: "application/x-www-form-urlencoded"
+      type: "get"
+      url: "/intercom/user"
+
+    sendAJAXRequest(settings)
+
 window.initializeusers = ->
   initializeDataTable()
   columnsDropdown()
@@ -182,3 +221,4 @@ window.initializeusers = ->
   searchFilter()
   showTable()
   clearFilter()
+  onIntercomClick()
