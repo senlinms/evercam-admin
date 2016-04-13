@@ -569,7 +569,7 @@ ul.columns {
 
 .link-user {
   overflow: hidden;
-  width: 90%;
+  width: 95%;
 }
 
 .uper-bottom {
@@ -585,6 +585,18 @@ ul.columns {
 
 .col-md-342 {
   width: 160px;
+}
+
+.open-intercom {
+  cursor: pointer;
+}
+
+.u-name {
+  margin-right: 25px;
+}
+
+.u-dash {
+  margin-right: 12px;
 }
 
 @media screen and (max-width: 1301px) 

@@ -43,4 +43,5 @@ Rails.application.routes.draw do
   post "/licences/auto-renewal" => "licence_reports#auto_renewal"
   get "/load_users" => "users#load_users"
   get "/load_cameras" => "cameras#load_cameras"
+  get "/intercom/user" => "users#get_intercom"
 end

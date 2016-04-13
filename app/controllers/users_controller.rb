@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
   before_action :authorize_admin
   before_action :set_user, only: [:show, :update]
+  require "intercom"
 
   def index
     if params[:q]
@@ -130,6 +131,16 @@ class UsersController < ApplicationController
     end
     @pageload = false
     render json: records
+  end
+
+  def get_intercom
+    intercom = connect_intercom
+    begin
+      user = intercom.users.find(:email => params["email"])
+    rescue Exception => e
+
+    end
+    render json: user
   end
 
   private
