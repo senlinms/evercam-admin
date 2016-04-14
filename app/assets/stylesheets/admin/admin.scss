@@ -22,6 +22,10 @@
 //= require views/snapshot_extractors/chosen.min.css
 //= require_self
 
+$back-color: #3096EE;
+$silver: #c0c0c0;
+$text-color: #FFFFFF;
+
 body {
   color: black;
   direction: ltr;
@@ -605,14 +609,14 @@ ul.columns {
   opacity: 0;
   transition: all 0.15s ease;
   padding: 10px;
-  color: #FFFFFF;
+  color: $text-color;
   border-radius: 2px;
-  box-shadow: 2px 2px 1px #c0c0c0;
+  box-shadow: 2px 2px 1px $silver;
 }
 
 [tooltip]:hover::before {
   opacity: 1;
-  background: #1074AE;
+  background: $back-color;
   margin-top: -40px;
   margin-left: 20px;
 }
