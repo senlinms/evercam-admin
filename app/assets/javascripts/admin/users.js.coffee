@@ -213,7 +213,7 @@ onIntercomClick = ->
       url: "/intercom/user"
 
     sendAJAXRequest(settings)
-    
+
 window.initializeusers = ->
   initializeDataTable()
   columnsDropdown()
