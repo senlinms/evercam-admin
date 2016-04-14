@@ -22,6 +22,10 @@
 //= require views/snapshot_extractors/chosen.min.css
 //= require_self
 
+$back-color: #3096ee;
+$silver: #c0c0c0;
+$text-color: #ffffff;
+
 body {
   color: black;
   direction: ltr;
@@ -597,6 +601,28 @@ ul.columns {
 
 .u-dash {
   margin-right: 12px;
+}
+
+[tooltip]::before {
+  content: attr(tooltip);
+  position: absolute;
+  opacity: 0;
+  transition: all 0.15s ease;
+  padding: 10px;
+  color: $text-color;
+  border-radius: 2px;
+  box-shadow: 2px 2px 1px $silver;
+}
+
+[tooltip]:hover::before {
+  opacity: 1;
+  background: $back-color;
+  margin-top: -40px;
+  margin-left: 20px;
+}
+
+[tooltip]:not([tooltip-persistent])::before {
+  pointer-events: none;
 }
 
 @media screen and (max-width: 1301px) 

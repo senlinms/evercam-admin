@@ -105,7 +105,7 @@ linkUser = (name, type, row) ->
   return "<div class='link-user'>
             <a class='pull-left u-name' href='/users/#{row[15]}'>#{name}</a>
             <a class='pull-left u-dash' href='#{row[16]}/v1/cameras?api_id=#{row[3]}&api_key=#{row[4]}' target='_blank'><i class='fa fa-external-link'></i></a>
-            <div class='pull-left open-intercom' data-username=#{row[0]}><img src='/assets/intercom.png' width='15'></div>
+            <div tooltip='Intercom Conversation' class='pull-left open-intercom' data-username=#{row[0]}><img src='/assets/intercom.png' width='15'></div>
           </div>"
 
 cameraLink = (name, type, row) ->
@@ -198,8 +198,9 @@ onIntercomClick = ->
       else
         appId = result.app_id
         id = result.id
-        newWindow = window.open("","_blank")
-        newWindow.location.href = "https://app.intercom.io/a/apps/#{appId}/users/#{id}/all-conversations"
+        x = $(window).width()
+        y = $(window).height()
+        window.open("https://app.intercom.io/a/apps/#{appId}/users/#{id}/all-conversations", "_blank", "height=#{y}, width=#{x}, scrollbars=0")
 
     settings =
       cache: false
