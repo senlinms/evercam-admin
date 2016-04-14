@@ -599,7 +599,7 @@ ul.columns {
   margin-right: 12px;
 }
 
-[tooltip]:before {
+[tooltip]::before {
   content: attr(tooltip);
   position: absolute;
   opacity: 0;
@@ -607,17 +607,17 @@ ul.columns {
   padding: 10px;
   color: #FFFFFF;
   border-radius: 2px;
-  box-shadow: 2px 2px 1px silver;
+  box-shadow: 2px 2px 1px #c0c0c0;
 }
 
-[tooltip]:hover:before {
+[tooltip]:hover::before {
   opacity: 1;
   background: #1074AE;
   margin-top: -40px;
   margin-left: 20px;
 }
 
-[tooltip]:not([tooltip-persistent]):before {
+[tooltip]:not([tooltip-persistent])::before {
   pointer-events: none;
 }
 
