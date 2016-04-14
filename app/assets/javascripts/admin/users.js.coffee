@@ -48,8 +48,8 @@ initializeDataTable = ->
         {data: "0", "orderable": true, "width": "75px" },
         {data: "1", "render": linkUser, "width": "170px" },
         {data: "2", "width": "150px" },
-        {data: "3", "width": "70px" },
-        {data: "4", "width": "215px" },
+        {data: "3", "width": "70px", visible: false },
+        {data: "4", "width": "215px", visible: false },
         {data: "5", "width": "120px", "render": cameraLink, "sClass": "center" },
         {data: "6", "width": "120px", "sClass": "center", "render": removeMinus },
         {data: "7", "width": "120px", "sClass": "center", "render": removeMinus },
@@ -103,9 +103,9 @@ appendMe = ->
 
 linkUser = (name, type, row) ->
   return "<div class='link-user'>
-            <a class='pull-left u-name' href='/users/#{row[15]}'>#{name}</a>
-            <a class='pull-left u-dash' href='#{row[16]}/v1/cameras?api_id=#{row[3]}&api_key=#{row[4]}' target='_blank'><i class='fa fa-external-link'></i></a>
-            <div tooltip='Intercom Conversation' class='pull-left open-intercom' data-username=#{row[0]}><img src='/assets/intercom.png' width='15'></div>
+            <a class='pull-left' href='/users/#{row[15]}'>#{name}</a>
+            <a class='pull-right u-dash' href='#{row[16]}/v1/cameras?api_id=#{row[3]}&api_key=#{row[4]}' target='_blank'><i class='fa fa-external-link'></i></a>
+            <a tooltip='Intercom Conversation' class='pull-right open-intercom' data-username=#{row[0]}><i class='fa fa-comment-o'></i></a>
           </div>"
 
 cameraLink = (name, type, row) ->
@@ -213,7 +213,7 @@ onIntercomClick = ->
       url: "/intercom/user"
 
     sendAJAXRequest(settings)
-
+    
 window.initializeusers = ->
   initializeDataTable()
   columnsDropdown()
