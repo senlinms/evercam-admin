@@ -78,6 +78,6 @@ setInterval = (name, id, row) ->
   else if name is "1440"
     return "1 Frame Every 24 hours"
 
-window.initializeMerges = ->
+window.initializeTimelapse = ->
   initializeDataTable()
   columnsDropdown()
