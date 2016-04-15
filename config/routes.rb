@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-
   resources :snapshot_extractors
   resources :snapshot_reports
   root to: 'dashboard#index'
