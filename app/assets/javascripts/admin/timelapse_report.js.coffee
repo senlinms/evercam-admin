@@ -11,7 +11,7 @@ initializeDataTable = ->
       {data: "0", visible: false },
       {data: "1", visible: false },
       {data: "2", visible: false },
-      {data: "3" },
+      {data: "3", width: "107px" },
       {data: "4", width: "80px" },
       {data: "5", width: "170px" },
       {data: "6", width: "80px", sClass: "center" },
