@@ -1,0 +1,2 @@
+module TimelapseReportHelper
+end

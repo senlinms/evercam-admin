@@ -1,0 +1,21 @@
+<% if @timelapses.present? %>
+  <% @timelapses.each do |timelapse| %>
+    <tr>
+      <td><%= timelapse["id"] %></td>
+      <td><%= timelapse["access_token"] %></td>
+      <td><%= timelapse["code"] %></td>
+      <td><%= timelapse["camera_id"] %></td>
+      <td><%= timelapse["user_id"] %></td>
+      <td><%= timelapse["title"] %></td>
+      <td><%= timelapse["file_size"] %></td>
+      <td><%= timelapse["created_date"] %></td>
+      <td><%= timelapse["resolution"] %></td>
+      <td><%= timelapse["duration"] %></td>
+      <td><%= timelapse["interval"] %></td>
+      <td><%= timelapse["is_date_always"] %></td>
+      <td><%= timelapse["is_time_always"] %></td>
+      <td><%= timelapse["snaps_count"] %></td>
+      <td><%= timelapse["status"] %></td>
+    </tr>
+  <% end %>
+<% end %>

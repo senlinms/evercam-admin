@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+
   resources :snapshot_extractors
   resources :snapshot_reports
   root to: 'dashboard#index'
@@ -44,4 +45,5 @@ Rails.application.routes.draw do
   get "/load_users" => "users#load_users"
   get "/load_cameras" => "cameras#load_cameras"
   get "/intercom/user" => "users#get_intercom"
+  get "/timelapse" => "timelapse_report#index"
 end
