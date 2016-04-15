@@ -1,0 +1,58 @@
+<!-- BEGIN CONTENT -->
+<div class="page-content-wrapper">
+  <div class="page-content" id="cameras-report">
+    <!-- BEGIN PAGE HEADER-->
+    <div class="row">
+      <div class="col-md-12">
+        <!-- BEGIN PAGE TITLE & BREADCRUMB-->
+        <ul class="page-breadcrumb breadcrumb">
+          <%= render 'shared/breadcrumb_basic', current_section: 'Timelapse' %>
+        </ul>
+        <!-- END PAGE TITLE & BREADCRUMB-->
+      </div>
+      <div class="dropdown-checklist" id="div-dropdown-checklist">
+        <div href="#" class="btn btn-default grey" data-toggle="modal" data-target="#toggle-datatable-columns">
+          <i class="fa fa-columns"></i>
+        </div>
+      </div>
+    </div>
+    <!-- END PAGE HEADER-->
+    <%= render 'columns_modal' %>
+    <!-- BEGIN PAGE CONTENT-->
+    <div id="timelapse-list-row" class="row">
+      <div class="col-md-12 filter-top">
+        <table class="table table-striped table-bordered table-hover" id="timelapse_datatables">
+          <thead>
+            <tr role="row" class="heading">
+              <th name="order_id" class="sorting">Id</th>
+              <th name="order_access_token" class="sorting">Access Token</th>
+              <th name="order_code" class="sorting">Code</th>
+              <th name="order_camera_id" class="sorting">Camera ID</th>
+              <th name="order_user_id" class="sorting">User id</th>
+              <th name="order_title" class="sorting">Title</th>
+              <th name="order_file_size" class="sorting">File Size</th>
+              <th name="order_created_at" class="sorting">Created at</th>
+              <th name="order_resolution" class="sorting">Resoluion</th>
+              <th name="order_duration" class="sorting">Duration</th>
+              <th name="order_interval" class="sorting">Interval</th>
+              <th name="order_is_date_always" class="sorting">Is Date Always</th>
+              <th name="order_is_time_always" class="sorting">Is Time Always</th>
+              <th name="order_snapshot_count" class="sorting">Snapshot Count</th>
+              <th name="order_status" class="sorting">Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <%=  render "timelapse" %>
+          </tbody>
+        </table>
+      </div>
+    <!-- END PAGE CONTENT-->
+  </div>
+  </div>
+</div>
+<!-- END CONTENT -->
+<script>
+  $(document).ready(function () {
+    window.initializeMerges();
+  });
+</script>

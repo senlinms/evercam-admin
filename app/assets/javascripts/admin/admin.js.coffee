@@ -32,6 +32,7 @@
 #= require admin/snapshot_extractors.js
 #= require admin/dashboard.js
 #= require admin/licence_reports.js
+#= require admin/timelapse_report.js
 #= require admin/jquery.datetimepicker.min.js
 #= require admin/chosen.jquery.min.js
 #= require admin/moment.min.js
