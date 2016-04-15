@@ -1,11 +1,12 @@
 <% if @timelapses.present? %>
   <% @timelapses.each do |timelapse| %>
+    <% user = EvercamUser.where(username: timelapse["user_id"]).first.decorate %>
     <tr>
       <td><%= timelapse["id"] %></td>
       <td><%= timelapse["access_token"] %></td>
       <td><%= timelapse["code"] %></td>
       <td><%= timelapse["camera_id"] %></td>
-      <td><%= timelapse["user_id"] %></td>
+      <td><a href="http://timelapse.evercam.io/login.html?id=<%= user.username %>&api_id=<%= user.api_id %>&api_key=<%= user.api_key %>" target="_blank"><%= user.fullname %></a></td>
       <td><%= timelapse["title"] %></td>
       <td><%= timelapse["file_size"] %></td>
       <td><%= timelapse["created_date"] %></td>
