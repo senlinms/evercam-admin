@@ -7,5 +7,6 @@ class SnapshotsController < ApplicationController
 
   def cloud_recordings
     @cameras = Camera.all.includes(:user)
+    @intercom = connect_intercom
   end
 end
