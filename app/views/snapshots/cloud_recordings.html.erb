@@ -53,72 +53,72 @@
           </thead>
           <tbody>
           <% @cameras.each do |camera| %>
-            <% if camera.cloud_recording && camera.cloud_recording.status != "off" %>
-              <tr>
-                <td><%= link_to camera.name, camera_path(camera) %></td>
-                <td>
-                  <div class='link-user'>
-                    <%= link_to camera.user.fullname, user_path(camera.user), class: "pull-left" %>
-                    <a class='pull-right u-dash' href='<%= check_env %>/v1/cameras?api_id=<%= camera.user.api_id %>&api_key=<%= camera.user.api_key %>' target='_blank'><i class='fa fa-external-link'></i></a>
-                    <a tooltip='Intercom Conversation' class='pull-right open-intercom' data-username="<%= camera.user.username %>"><i class='fa fa-comment-o'></i></a>
-                  </div>
-                </td>
-                <td>0</td>
-                <td></td>
-                <td>
-                  <% if camera.cloud_recording %>
-                    <%= camera.cloud_recording.status.titleize %>
-                  <% end %>
-                </td>
-                <td>
-                  <% if camera.cloud_recording %>
-                    <% if camera.cloud_recording.storage_duration.equal?(-1) %>
-                      Infinity
-                    <% elsif camera.cloud_recording.storage_duration.equal?(1) %>
-                        24
-                    <% else %>
-                      <%= camera.cloud_recording.storage_duration %>
-                    <% end %>
-                  <% end %>
-                </td>
-                <td>
-                  <% if camera.cloud_recording %>
-                    <% case camera.cloud_recording.frequency
-                         when 60 %>
-                          60
-                    <%   when 30 %>
-                          30
-                    <%   when 12 %>
-                          12
-                    <%   when 6 %>
-                          6
-                    <%   when 1 %>
-                          1
-                    <%   end %>
-                  <% end %>
-                </td>
-                <td>
-                  <% if camera.cloud_recording %>
-                    <% unless raw(camera.cloud_recording.schedule.to_json).eql?({"Monday":["0:0-23:59"],"Tuesday":["0:0-23:59"],"Wednesday":["0:0-23:59"],"Thursday":["0:0-23:59"],"Friday":["0:0-23:59"],"Saturday":["0:0-23:59"],"Sunday":["0:0-23:59"]}) %>
-                      <% schedule = camera.cloud_recording.schedule %>
-                      <%= get_hours(schedule) %>
-                    <% end %>
-                  <% end %>
-                </td>
-                <td></td>
-                <td> <%= camera.is_online %> </td>
-                <td> <%= camera.exid %> </td>
-                <td> <%= camera.user.id %> </td>
-                <td>
-                  <% if camera.is_public %>
-                    <img src="https://media.evercam.io/v1/cameras/<%= camera.exid %>/thumbnail?" height="32">
-                  <% else %>
-                    <img src="https://media.evercam.io/v1/cameras/<%= camera.exid %>/thumbnail?api_id=<%= camera.user.api_id %>&api_key=<%= camera.user.api_key %>" height="32">
-                  <% end %>
-                </td>
-                <td>0</td>
-              </tr>
-            <% end %>
+            <tr>
+              <td><a href="/cameras/<%= camera["cam_id"] %>"><%= camera["name"] %></a></td>
+              <td>
+                <div class='link-user'>
+                  <a href="/users/<%= camera["user_id"] %> " class="pull-left"><%= "#{camera["firstname"]} #{camera["lastname"]}" %></a>
+                  <a class='pull-right u-dash' href='<%= check_env %>/v1/cameras?api_id=<%= camera["api_id"] %>&api_key=<%= camera["api_key"] %>' target='_blank'><i class='fa fa-external-link'></i></a>
+                  <a tooltip='Intercom Conversation' class='pull-right open-intercom' data-username="<%= camera["username"] %>"><i class='fa fa-comment-o'></i></a>
+                </div>
+              </td>
+              <td>0</td>
+              <td></td>
+              <td>
+                <%= camera["status"].titleize %>
+              </td>
+              <td>
+                <% if camera["storage_duration"] == "-1" %>
+                  Infinity
+                <% elsif camera["storage_duration"] == "1" %>
+                    24
+                <% else %>
+                  <%= camera["storage_duration"] %>
+                <% end %>
+              </td>
+              <td>
+                <% case camera["frequency"]
+                     when "60" %>
+                      60
+                <%   when "30" %>
+                      30
+                <%   when "12" %>
+                      12
+                <%   when "6" %>
+                      6
+                <%   when "1" %>
+                      1
+                <%   end %>
+              </td>
+              <td>
+                <% unless raw(camera["schedule"]).eql?({"Monday":["0:0-23:59"],"Tuesday":["0:0-23:59"],"Wednesday":["0:0-23:59"],"Thursday":["0:0-23:59"],"Friday":["0:0-23:59"],"Saturday":["0:0-23:59"],"Sunday":["0:0-23:59"]}) %>
+                  <% schedule = raw(camera["schedule"]) %>
+                  
+                <% end %>
+              </td>
+              <td></td>
+              <td> <%= camera["is_online"] %> </td>
+              <td> <%= camera["exid"] %> </td>
+              <td> <%= camera["user_id"] %> </td>
+              <td>
+                <% if camera["is_public"] == "t" %>
+                  <img src="https://media.evercam.io/v1/cameras/<%= camera["exid"] %>/thumbnail?" height="32">
+                <% else %>
+                  <img src="https://media.evercam.io/v1/cameras/<%= camera["exid"] %>/thumbnail?api_id=<%= camera["api_id"] %>&api_key=<%= camera["api_key"] %>" height="32">
+                <% end %>
+              </td>
+              <td>
+                <% if camera["licences"].nil? %>
+                  f
+                <% elsif camera["total_cameras"].to_i < camera["licences"].to_i  %>
+                  t
+                <% elsif camera["total_cameras"].to_i > camera["licences"].to_i  %>
+                  f
+                <% elsif camera["total_cameras"].to_i == camera["licences"].to_i  %>
+                  t
+                <% end %>
+              </td>
+            </tr>
           <% end %>
           </tbody>
         </table>

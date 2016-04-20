@@ -30,7 +30,7 @@ initializeDataTable = ->
       {data: "10", visible: false, sWidth: "105px" },
       {data: "11", visible: false, sClass: "center", sWidth: "55px" },
       {data: "12", visible: false, sClass: "center", sWidth: "75px"},
-      {data: "13", sClass: "center", sWidth: "65px", visible: false }
+      {data: "13", sClass: "center", sWidth: "65px", "render": colorStatus }
     ],
     iDisplayLength: 50
     columnDefs: [
@@ -52,9 +52,9 @@ columnsDropdown = ->
     column.visible !column.visible()
 
 colorStatus = (name) ->
-  if name is "true"
+  if name is "t"
     return "<span style='color: green;'>True</span>"
-  else if name is "false"
+  else if name is "f"
     return "<span style='color: red;'>False</span>"
 
 onIntercomClick = ->
