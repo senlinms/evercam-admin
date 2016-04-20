@@ -92,8 +92,8 @@
               </td>
               <td>
                 <% unless raw(camera["schedule"]).eql?({"Monday":["0:0-23:59"],"Tuesday":["0:0-23:59"],"Wednesday":["0:0-23:59"],"Thursday":["0:0-23:59"],"Friday":["0:0-23:59"],"Saturday":["0:0-23:59"],"Sunday":["0:0-23:59"]}) %>
-                  <% schedule = raw(camera["schedule"]) %>
-                  
+                  <% schedule = JSON.parse(camera["schedule"]) %>
+                  <%= get_hours(schedule) %>
                 <% end %>
               </td>
               <td></td>
