@@ -671,6 +671,23 @@ ul.columns {
   text-align: center;
 }
 
+.full-image {
+  display: none;
+  position: absolute;
+  border: solid 1px $back-color;
+  position: fixed;
+  z-index: 99999;
+}
+
+.snapshots-datatables > thead > tr > th,
+.snapshots-datatables > tbody > tr > th,
+.snapshots-datatables > tfoot > tr > th,
+.snapshots-datatables > thead > tr > td,
+.snapshots-datatables > tbody > tr > td,
+.snapshots-datatables > tfoot > tr >td {
+  padding: 2px;
+}
+
 @media screen and (max-width: 1301px) 
 {
   .vmodal-btn {

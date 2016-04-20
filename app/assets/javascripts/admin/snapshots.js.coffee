@@ -1,4 +1,5 @@
 snapshots_table = undefined
+nextImage = undefined
 
 sendAJAXRequest = (settings) ->
   token = $('meta[name="csrf-token"]')
@@ -120,8 +121,17 @@ onSearch = ->
       .search( @value )
       .draw()
 
+onImageHover = ->
+  $("#snapshots_datatables").on "mouseover", ".thumbnails", ->
+    nextImage = $(this).siblings(".full-image")
+    nextImage.show()
+
+  $("#snapshots_datatables").on "mouseout", ".thumbnails", ->
+    nextImage.hide()
+
 window.initializSnapshots = ->
   columnsDropdown()
   initializeDataTable()
   onIntercomClick()
   onSearch()
+  onImageHover()
