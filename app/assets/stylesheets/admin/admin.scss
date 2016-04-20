@@ -25,6 +25,7 @@
 $back-color: #3096ee;
 $silver: #c0c0c0;
 $text-color: #ffffff;
+$input-color: #eeeeee;
 
 body {
   color: black;
@@ -624,6 +625,50 @@ ul.columns {
 
 [tooltip]:not([tooltip-persistent])::before {
   pointer-events: none;
+}
+
+.snapshots-list-row {
+  margin-top: 52px;
+}
+
+.filter-naming {
+  width: 60px;
+  padding: 9px 2px;
+  height: auto;
+  float: left;
+  text-align: right;
+  font-size: 13px;
+}
+
+.first-inps {
+  background-color: $input-color;
+  width: 125px;
+  padding: 7px;
+  margin-left: 5px;
+  border: none;
+  float: left;
+}
+
+.inputs-divs {
+  width: 656px;
+  float: left;
+  height: auto;
+  overflow: hidden;
+  padding: 3px 1px;
+}
+
+.main-contains {
+  width: 755px;
+  height: auto;
+  overflow: hidden;
+}
+
+.form-mains {
+  width: 730px;
+  overflow: hidden;
+  height: auto;
+  float: left;
+  text-align: center;
 }
 
 @media screen and (max-width: 1301px) 
