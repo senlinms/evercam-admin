@@ -124,10 +124,11 @@ onSearch = ->
 onImageHover = ->
   $("#snapshots_datatables").on "mouseover", ".thumbnails", ->
     nextImage = $(this).siblings(".full-image")
-    nextImage.show()
-
+    $(".div-elms").html(nextImage.show())
+    $(".div-elms").show()
   $("#snapshots_datatables").on "mouseout", ".thumbnails", ->
-    nextImage.hide()
+    $(".div-elms").html("")
+    $(".div-elms").hide()
 
 window.initializSnapshots = ->
   columnsDropdown()
