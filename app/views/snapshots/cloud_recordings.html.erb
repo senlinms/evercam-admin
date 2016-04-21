@@ -1,6 +1,6 @@
 <div class="bb-alert alert" style="display: none;"></div>
 <img src="<%= image_path 'loading.gif' %>" id="api-wait" style="display:none" />
-<div class="div-elms">me</div>
+<div class="div-elms"><img class="full-image" width="100%"></div>
 <!-- BEGIN CONTENT -->
 <div class="page-content-wrapper">
   <div class="page-content" id="snapshots-report">
@@ -79,18 +79,7 @@
                 <% end %>
               </td>
               <td>
-                <% case camera["frequency"]
-                     when "60" %>
-                      60
-                <%   when "30" %>
-                      30
-                <%   when "12" %>
-                      12
-                <%   when "6" %>
-                      6
-                <%   when "1" %>
-                      1
-                <%   end %>
+                <%= camera["frequency"] %>
               </td>
               <td>
                 <% unless raw(camera["schedule"]).eql?({"Monday":["0:0-23:59"],"Tuesday":["0:0-23:59"],"Wednesday":["0:0-23:59"],"Thursday":["0:0-23:59"],"Friday":["0:0-23:59"],"Saturday":["0:0-23:59"],"Sunday":["0:0-23:59"]}) %>
@@ -105,10 +94,8 @@
               <td>
                 <% if camera["is_public"] == "t" %>
                   <img src="https://media.evercam.io/v1/cameras/<%= camera["exid"] %>/thumbnail?" height="32" class="thumbnails">
-                  <img src="https://media.evercam.io/v1/cameras/<%= camera["exid"] %>/thumbnail?" class="full-image" width="100%">
                 <% else %>
                   <img src="https://media.evercam.io/v1/cameras/<%= camera["exid"] %>/thumbnail?api_id=<%= camera["api_id"] %>&api_key=<%= camera["api_key"] %>" height="32" class="thumbnails">
-                  <img src="https://media.evercam.io/v1/cameras/<%= camera["exid"] %>/thumbnail?api_id=<%= camera["api_id"] %>&api_key=<%= camera["api_key"] %>" class="full-image" width="100%">
                 <% end %>
               </td>
               <td>

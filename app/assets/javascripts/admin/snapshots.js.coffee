@@ -1,5 +1,4 @@
 snapshots_table = undefined
-nextImage = undefined
 that = undefined
 
 sendAJAXRequest = (settings) ->
@@ -136,13 +135,9 @@ onSearch = ->
 onImageHover = ->
   $("#snapshots_datatables").on "mouseover", ".thumbnails", ->
     that = this
-    nextImage = $(this).siblings(".full-image")
-    $(".div-elms").html(nextImage.show())
+    $(".full-image").attr("src", @src)
     $(".div-elms").show()
-  $("#snapshots_datatables").on "mouseout", ".thumbnails", ->
-    $(nextImage).css("display": "none")
-    $(that).after(nextImage)
-    $(".div-elms").html("")
+  $("#snapshots_datatables").on "mouseout", that, ->
     $(".div-elms").hide()
 
 window.initializSnapshots = ->
