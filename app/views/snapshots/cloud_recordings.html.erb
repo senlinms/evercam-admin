@@ -104,10 +104,10 @@
               <td>
                 <% if camera["is_public"] == "t" %>
                   <img src="https://media.evercam.io/v1/cameras/<%= camera["exid"] %>/thumbnail?" height="32" class="thumbnails">
-                  <img src="https://media.evercam.io/v1/cameras/<%= camera["exid"] %>/thumbnail?" class="full-image">
+                  <img src="https://media.evercam.io/v1/cameras/<%= camera["exid"] %>/thumbnail?" class="full-image" width="100%">
                 <% else %>
                   <img src="https://media.evercam.io/v1/cameras/<%= camera["exid"] %>/thumbnail?api_id=<%= camera["api_id"] %>&api_key=<%= camera["api_key"] %>" height="32" class="thumbnails">
-                  <img src="https://media.evercam.io/v1/cameras/<%= camera["exid"] %>/thumbnail?api_id=<%= camera["api_id"] %>&api_key=<%= camera["api_key"] %>" class="full-image">
+                  <img src="https://media.evercam.io/v1/cameras/<%= camera["exid"] %>/thumbnail?api_id=<%= camera["api_id"] %>&api_key=<%= camera["api_key"] %>" class="full-image" width="100%">
                 <% end %>
               </td>
               <td>

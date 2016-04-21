@@ -614,6 +614,7 @@ ul.columns {
   color: $text-color;
   border-radius: 2px;
   box-shadow: 2px 2px 1px $silver;
+  z-index: 6;
 }
 
 [tooltip]:hover::before {
@@ -676,20 +677,16 @@ ul.columns {
 }
 
 .div-elms {
-  width: 600px;
-  height: 400px;
+  max-width: 600px;
   position: fixed;
-  top: 0;
-  bottom: 0;
+  top: 25%;
   left: 0;
   right: 0;
   margin: auto;
+  overflow: hidden;
+  border: 2px solid $back-color;
   z-index: 9999;
   display: none;
-}
-
-.div-elms > img {
-  width: 600px;
 }
 
 .snapshots-datatables > thead > tr > th,

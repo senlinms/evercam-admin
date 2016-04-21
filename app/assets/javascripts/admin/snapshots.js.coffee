@@ -1,5 +1,6 @@
 snapshots_table = undefined
 nextImage = undefined
+that = undefined
 
 sendAJAXRequest = (settings) ->
   token = $('meta[name="csrf-token"]')
@@ -123,10 +124,13 @@ onSearch = ->
 
 onImageHover = ->
   $("#snapshots_datatables").on "mouseover", ".thumbnails", ->
+    that = this
     nextImage = $(this).siblings(".full-image")
     $(".div-elms").html(nextImage.show())
     $(".div-elms").show()
   $("#snapshots_datatables").on "mouseout", ".thumbnails", ->
+    $(nextImage).css("display": "none")
+    $(that).after(nextImage)
     $(".div-elms").html("")
     $(".div-elms").hide()
 
