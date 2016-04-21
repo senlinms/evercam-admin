@@ -12,7 +12,7 @@ initializeDataTable = ->
       {data: "1", visible: false, width: "220px" },
       {data: "2", visible: false, width: "65px" },
       {data: "3", width: "170px" },
-      {data: "4", width: "90px" },
+      {data: "4", width: "100px" },
       {data: "5", width: "200px" },
       {data: "6", width: "80px", sClass: "center" },
       {data: "7", width: "145px", sClass: "center" },
@@ -37,8 +37,8 @@ initializeDataTable = ->
       $("#timelapse-list-row").removeClass('hide')
       $("#timelapse_datatables_length label").hide()
       $("#div-dropdown-checklist").css('visibility', 'visible')
-      $("#div-dropdown-checklist").css({"visibility": "visible", "width": "57px", "top": "-59px", "float": "right" })
-      $("#timelapse_datatables_filter").css({"margin-top": "-34px", "margin-right": "49px"})
+      $("#div-dropdown-checklist").css({"visibility": "visible", "width": "57px", "top": "1px", "float": "right" })
+      $("#timelapse_datatables_filter").hide()
       $(".timelapse-datatables > thead > tr > th").css("padding": "2px")
       $(".timelapse-datatables > tbody > tr > th").css("padding": "2px")
       $(".timelapse-datatables > thead > tr > td").css("padding": "2px")
