@@ -5,7 +5,7 @@ module ApplicationHelper
 
   def avatar_url
     gravatar_id = Digest::MD5.hexdigest(current_user.email.downcase)
-    "http://gravatar.com/avatar/#{gravatar_id}1.png"
+    "https://gravatar.com/avatar/#{gravatar_id}1.png"
   end
 
   def get_user(stripe_customer_id)

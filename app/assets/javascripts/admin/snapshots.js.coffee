@@ -13,6 +13,7 @@ sendAJAXRequest = (settings) ->
 
 initializeDataTable = ->
   snapshots_table = $("#snapshots_datatables").DataTable
+    bSortCellsTop: true
     aaSorting: [1, "asc"]
     aLengthMenu: [
       [25, 50, 100, 200, -1]
@@ -139,6 +140,14 @@ onImageHover = ->
     $(that).after(nextImage)
     $(".div-elms").html("")
     $(".div-elms").hide()
+
+# addRow = ->
+#   newTr = $('<tr></tr>')
+#   $('#snapshots_datatables thead th').each ->
+#     title = $(this).text()
+#     newTr.append '<th><input type="text" placeholder="Search ' + title + '" /></th>'
+#     $('#snapshots_datatables thead').append newTr
+#     return
 
 window.initializSnapshots = ->
   columnsDropdown()
