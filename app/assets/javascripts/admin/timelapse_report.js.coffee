@@ -15,17 +15,17 @@ initializeDataTable = ->
       {data: "4", width: "90px" },
       {data: "5", width: "200px" },
       {data: "6", width: "80px", sClass: "center" },
-      {data: "7", width: "138px" },
-      {data: "8", width: "75px", sClass: "center" },
+      {data: "7", width: "145px", sClass: "center" },
+      {data: "8", width: "80px", sClass: "center" },
       {data: "9", visible: false, width: "60px", sClass: "center" },
       {data: "10", width: "125px", "render": setInterval },
       {data: "11", visible: false, width: "100px", sClass: "center" },
       {data: "12", visible: false, width: "100px", sClass: "center" },
       {data: "13", width: "110px", sClass: "center" },
-      {data: "14", width: "62px", sClass: "center", "render": setStatus }
-      {data: "15", width: "135px", sClass: "center" }
+      {data: "14", width: "80px", sClass: "center", "render": setStatus }
+      {data: "15", width: "160px", sClass: "center" }
     ],
-    iDisplayLength: 50
+    iDisplayLength: 500
     columnDefs: [
       type: "date-uk"
       targets: 'datatable-date'
@@ -39,6 +39,10 @@ initializeDataTable = ->
       $("#div-dropdown-checklist").css('visibility', 'visible')
       $("#div-dropdown-checklist").css({"visibility": "visible", "width": "57px", "top": "-59px", "float": "right" })
       $("#timelapse_datatables_filter").css({"margin-top": "-34px", "margin-right": "49px"})
+      $(".timelapse-datatables > thead > tr > th").css("padding": "2px")
+      $(".timelapse-datatables > tbody > tr > th").css("padding": "2px")
+      $(".timelapse-datatables > thead > tr > td").css("padding": "2px")
+      $(".timelapse-datatables > tbody > tr > td").css("padding": "2px")
 
 columnsDropdown = ->
   $(".timelapse-column").on "click", ->
