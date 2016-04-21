@@ -83,6 +83,34 @@ setInterval = (name, id, row) ->
   else if name is "1440"
     return "1 Frame Every 24 hours"
 
+onSearch = ->
+  $("#camera-name").on 'keyup change', ->
+    timelapse_table
+      .column(3)
+      .search( @value )
+      .draw()
+  $("#owner").on 'keyup change', ->
+    timelapse_table
+      .column(4)
+      .search( @value )
+      .draw()
+  $("#title").on 'keyup change', ->
+    timelapse_table
+      .column(5)
+      .search( @value )
+      .draw()
+  $("#sp-count").on 'keyup change', ->
+    timelapse_table
+      .column(13)
+      .search( @value )
+      .draw()
+  $("#status").on 'keyup change', ->
+    timelapse_table
+      .column(14)
+      .search( @value )
+      .draw()
+
 window.initializeTimelapse = ->
   initializeDataTable()
   columnsDropdown()
+  onSearch()
