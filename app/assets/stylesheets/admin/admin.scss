@@ -689,15 +689,6 @@ ul.columns {
   display: none;
 }
 
-.snapshots-datatables > thead > tr > th,
-.snapshots-datatables > tbody > tr > th,
-.snapshots-datatables > tfoot > tr > th,
-.snapshots-datatables > thead > tr > td,
-.snapshots-datatables > tbody > tr > td,
-.snapshots-datatables > tfoot > tr >td {
-  padding: 2px;
-}
-
 @media screen and (max-width: 1301px) 
 {
   .vmodal-btn {
