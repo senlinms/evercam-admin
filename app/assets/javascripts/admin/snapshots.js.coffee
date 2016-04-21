@@ -121,6 +121,12 @@ onSearch = ->
       .column(9)
       .search( @value )
       .draw()
+  $("#licenced").on 'keyup change', ->
+    snapshots_table
+      .column(13)
+      .search( @value )
+      .draw()
+
 
 onImageHover = ->
   $("#snapshots_datatables").on "mouseover", ".thumbnails", ->
