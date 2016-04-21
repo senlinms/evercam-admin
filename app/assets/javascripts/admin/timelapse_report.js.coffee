@@ -2,27 +2,28 @@ timelapse_table = undefined
 
 initializeDataTable = ->
   timelapse_table = $("#timelapse_datatables").DataTable
-    aaSorting: [1, "asc"]
+    aaSorting: [4, "asc"]
     aLengthMenu: [
       [25, 50, 100, 200, -1]
       [25, 50, 100, 200, "All"]
     ]
     columns: [
-      {data: "0", visible: false },
-      {data: "1", visible: false },
-      {data: "2", visible: false },
-      {data: "3", width: "107px" },
-      {data: "4", width: "80px" },
-      {data: "5", width: "170px" },
+      {data: "0", visible: false, width: "30px" },
+      {data: "1", visible: false, width: "220px" },
+      {data: "2", visible: false, width: "65px" },
+      {data: "3", width: "170px" },
+      {data: "4", width: "90px" },
+      {data: "5", width: "200px" },
       {data: "6", width: "80px", sClass: "center" },
       {data: "7", width: "138px" },
       {data: "8", width: "75px", sClass: "center" },
-      {data: "9", visible: false },
+      {data: "9", visible: false, width: "60px", sClass: "center" },
       {data: "10", width: "125px", "render": setInterval },
-      {data: "11", visible: false },
-      {data: "12", visible: false },
+      {data: "11", visible: false, width: "100px", sClass: "center" },
+      {data: "12", visible: false, width: "100px", sClass: "center" },
       {data: "13", width: "110px", sClass: "center" },
       {data: "14", width: "62px", sClass: "center", "render": setStatus }
+      {data: "15", width: "135px", sClass: "center" }
     ],
     iDisplayLength: 50
     columnDefs: [
