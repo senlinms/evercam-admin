@@ -1,5 +1,5 @@
 snapshots_table = undefined
-that = undefined
+mouseOverCtrl = undefined
 
 sendAJAXRequest = (settings) ->
   token = $('meta[name="csrf-token"]')
@@ -134,10 +134,11 @@ onSearch = ->
 
 onImageHover = ->
   $("#snapshots_datatables").on "mouseover", ".thumbnails", ->
-    that = this
+    mouseOverCtrl = this
     $(".full-image").attr("src", @src)
     $(".div-elms").show()
-  $("#snapshots_datatables").on "mouseout", that, ->
+
+  $("#snapshots_datatables").on "mouseout", mouseOverCtrl, ->
     $(".div-elms").hide()
 
 window.initializSnapshots = ->
