@@ -59,7 +59,7 @@
               <td>
                 <div class='link-user'>
                   <a href="/users/<%= camera["user_id"] %> " class="pull-left"><%= "#{camera["firstname"]} #{camera["lastname"]}" %></a>
-                  <a class='pull-right u-dash' href='<%= check_env %>/v1/cameras?api_id=<%= camera["api_id"] %>&api_key=<%= camera["api_key"] %>' target='_blank'><i class='fa fa-external-link'></i></a>
+                  <a class='pull-right u-dash' href='<%= check_env %>/v1/cameras/<%= camera["exid"] %>?api_id=<%= camera["api_id"] %>&api_key=<%= camera["api_key"] %>' target='_blank'><i class='fa fa-external-link'></i></a>
                   <a tooltip='Intercom Conversation' class='pull-right open-intercom' data-username="<%= camera["username"] %>"><i class='fa fa-comment-o'></i></a>
                 </div>
               </td>
