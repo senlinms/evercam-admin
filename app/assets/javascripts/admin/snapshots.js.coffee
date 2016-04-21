@@ -1,4 +1,5 @@
 snapshots_table = undefined
+mouseOverCtrl = undefined
 
 sendAJAXRequest = (settings) ->
   token = $('meta[name="csrf-token"]')
@@ -11,6 +12,7 @@ sendAJAXRequest = (settings) ->
 
 initializeDataTable = ->
   snapshots_table = $("#snapshots_datatables").DataTable
+    bSortCellsTop: true
     aaSorting: [1, "asc"]
     aLengthMenu: [
       [25, 50, 100, 200, -1]
@@ -30,9 +32,9 @@ initializeDataTable = ->
       {data: "10", visible: false, sWidth: "105px" },
       {data: "11", visible: false, sClass: "center", sWidth: "55px" },
       {data: "12", visible: false, sClass: "center", sWidth: "75px"},
-      {data: "13", sClass: "center", sWidth: "65px", visible: false }
+      {data: "13", sClass: "center", sWidth: "65px", "render": colorStatus }
     ],
-    iDisplayLength: 50
+    iDisplayLength: 500
     columnDefs: [
       type: "date-uk"
       targets: 'datatable-date'
@@ -45,6 +47,10 @@ initializeDataTable = ->
       $("#snapshots_datatables_filter").addClass("hide")
       $("#snapshots_datatables_length label").hide()
       $("#div-dropdown-checklist").css({"visibility": "visible", "width": "59px", "top": "1px", "float": "right" })
+      $(".snapshots-datatables > thead > tr > th").css("padding": "2px")
+      $(".snapshots-datatables > tbody > tr > th").css("padding": "2px")
+      $(".snapshots-datatables > thead > tr > td").css("padding": "2px")
+      $(".snapshots-datatables > tbody > tr > td").css("padding": "2px")
 
 columnsDropdown = ->
   $(".cameras-column").on "click", ->
@@ -52,9 +58,9 @@ columnsDropdown = ->
     column.visible !column.visible()
 
 colorStatus = (name) ->
-  if name is "true"
+  if name is "t"
     return "<span style='color: green;'>True</span>"
-  else if name is "false"
+  else if name is "f"
     return "<span style='color: red;'>False</span>"
 
 onIntercomClick = ->
@@ -119,9 +125,25 @@ onSearch = ->
       .column(9)
       .search( @value )
       .draw()
+  $("#licenced").on 'keyup change', ->
+    snapshots_table
+      .column(13)
+      .search( @value )
+      .draw()
+
+
+onImageHover = ->
+  $("#snapshots_datatables").on "mouseover", ".thumbnails", ->
+    mouseOverCtrl = this
+    $(".full-image").attr("src", @src)
+    $(".div-elms").show()
+
+  $("#snapshots_datatables").on "mouseout", mouseOverCtrl, ->
+    $(".div-elms").hide()
 
 window.initializSnapshots = ->
   columnsDropdown()
   initializeDataTable()
   onIntercomClick()
   onSearch()
+  onImageHover()

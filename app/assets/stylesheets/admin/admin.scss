@@ -614,6 +614,7 @@ ul.columns {
   color: $text-color;
   border-radius: 2px;
   box-shadow: 2px 2px 1px $silver;
+  z-index: 6;
 }
 
 [tooltip]:hover::before {
@@ -642,7 +643,7 @@ ul.columns {
 
 .first-inps {
   background-color: $input-color;
-  width: 125px;
+  width: 95px;
   padding: 7px;
   margin-left: 5px;
   border: none;
@@ -669,6 +670,19 @@ ul.columns {
   height: auto;
   float: left;
   text-align: center;
+}
+
+.div-elms {
+  max-width: 600px;
+  position: fixed;
+  top: 25%;
+  left: 0;
+  right: 0;
+  margin: auto;
+  overflow: hidden;
+  border: 2px solid $back-color;
+  z-index: 9999;
+  display: none;
 }
 
 @media screen and (max-width: 1301px) 
