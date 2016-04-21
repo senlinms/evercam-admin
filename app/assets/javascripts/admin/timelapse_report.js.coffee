@@ -12,7 +12,7 @@ initializeDataTable = ->
       {data: "1", visible: false, width: "220px" },
       {data: "2", visible: false, width: "65px" },
       {data: "3", width: "170px" },
-      {data: "4", width: "100px" },
+      {data: "4", width: "165px" },
       {data: "5", width: "200px" },
       {data: "6", width: "80px", sClass: "center" },
       {data: "7", width: "145px", sClass: "center" },
