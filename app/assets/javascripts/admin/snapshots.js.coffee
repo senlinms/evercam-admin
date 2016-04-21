@@ -35,7 +35,7 @@ initializeDataTable = ->
       {data: "12", visible: false, sClass: "center", sWidth: "75px"},
       {data: "13", sClass: "center", sWidth: "65px", "render": colorStatus }
     ],
-    iDisplayLength: 50
+    iDisplayLength: 500
     columnDefs: [
       type: "date-uk"
       targets: 'datatable-date'
@@ -140,14 +140,6 @@ onImageHover = ->
     $(that).after(nextImage)
     $(".div-elms").html("")
     $(".div-elms").hide()
-
-# addRow = ->
-#   newTr = $('<tr></tr>')
-#   $('#snapshots_datatables thead th').each ->
-#     title = $(this).text()
-#     newTr.append '<th><input type="text" placeholder="Search ' + title + '" /></th>'
-#     $('#snapshots_datatables thead').append newTr
-#     return
 
 window.initializSnapshots = ->
   columnsDropdown()
