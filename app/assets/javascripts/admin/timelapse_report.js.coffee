@@ -1,5 +1,14 @@
 timelapse_table = undefined
 
+sendAJAXRequest = (settings) ->
+  token = $('meta[name="csrf-token"]')
+  if token.size() > 0
+    headers =
+      "X-CSRF-Token": token.attr("content")
+    settings.headers = headers
+  xhrRequestChangeMonth = jQuery.ajax(settings)
+  true
+
 initializeDataTable = ->
   timelapse_table = $("#timelapse_datatables").DataTable
     aaSorting: [4, "asc"]
@@ -111,7 +120,7 @@ onSearch = ->
       .draw()
 
 onIntercomClick = ->
-  $("#snapshots_datatables").on "click", ".open-intercom", ->
+  $("#timelapse_datatables").on "click", ".open-intercom", ->
     $('#api-wait').show()
     data = {}
     data.username = $(this).data("username")
