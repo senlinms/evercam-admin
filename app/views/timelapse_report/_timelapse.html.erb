@@ -9,7 +9,7 @@
         <% if camera = Camera.where(exid: timelapse["camera_id"]).first %>
           <a href="/cameras/<%= camera.id %>"><%= camera.name %></a>
         <% else %>
-          <%= timelapse["camera_id"] %>
+          Camera doesn't exist!
         <% end %>
       </td>
       <td>
