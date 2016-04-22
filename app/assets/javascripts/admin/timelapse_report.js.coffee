@@ -110,7 +110,44 @@ onSearch = ->
       .search( @value )
       .draw()
 
+onIntercomClick = ->
+  $("#snapshots_datatables").on "click", ".open-intercom", ->
+    $('#api-wait').show()
+    data = {}
+    data.username = $(this).data("username")
+    onError = (jqXHR, status, error) ->
+      Notification.show(jqXHR.text)
+
+    onSuccess = (result, status, jqXHR) ->
+      $('#api-wait').hide()
+      if result is null
+        $(".bb-alert")
+          .addClass("alert-danger")
+          .text("User doesn't exist on Intercom")
+          .delay(200)
+          .fadeIn()
+          .delay(4000)
+          .fadeOut()
+      else
+        appId = result.app_id
+        id = result.id
+        newWindow = window.open("","_blank")
+        newWindow.location.href = "https://app.intercom.io/a/apps/#{appId}/users/#{id}/all-conversations"
+
+    settings =
+      cache: false
+      data: data
+      dataType: 'json'
+      error: onError
+      success: onSuccess
+      contentType: "application/x-www-form-urlencoded"
+      type: "get"
+      url: "/intercom/user"
+
+    sendAJAXRequest(settings)
+
 window.initializeTimelapse = ->
   initializeDataTable()
   columnsDropdown()
   onSearch()
+  onIntercomClick()
