@@ -1,30 +1,40 @@
 timelapse_table = undefined
 
+sendAJAXRequest = (settings) ->
+  token = $('meta[name="csrf-token"]')
+  if token.size() > 0
+    headers =
+      "X-CSRF-Token": token.attr("content")
+    settings.headers = headers
+  xhrRequestChangeMonth = jQuery.ajax(settings)
+  true
+
 initializeDataTable = ->
   timelapse_table = $("#timelapse_datatables").DataTable
-    aaSorting: [1, "asc"]
+    aaSorting: [4, "asc"]
     aLengthMenu: [
       [25, 50, 100, 200, -1]
       [25, 50, 100, 200, "All"]
     ]
     columns: [
-      {data: "0", visible: false },
-      {data: "1", visible: false },
-      {data: "2", visible: false },
-      {data: "3", width: "107px" },
-      {data: "4", width: "80px" },
-      {data: "5", width: "170px" },
+      {data: "0", visible: false, width: "30px" },
+      {data: "1", visible: false, width: "220px" },
+      {data: "2", visible: false, width: "65px" },
+      {data: "3", width: "170px" },
+      {data: "4", width: "165px" },
+      {data: "5", width: "200px" },
       {data: "6", width: "80px", sClass: "center" },
-      {data: "7", width: "138px" },
-      {data: "8", width: "75px", sClass: "center" },
-      {data: "9", visible: false },
+      {data: "7", width: "145px", sClass: "center" },
+      {data: "8", width: "80px", sClass: "center" },
+      {data: "9", visible: false, width: "60px", sClass: "center" },
       {data: "10", width: "125px", "render": setInterval },
-      {data: "11", visible: false },
-      {data: "12", visible: false },
+      {data: "11", visible: false, width: "100px", sClass: "center" },
+      {data: "12", visible: false, width: "100px", sClass: "center" },
       {data: "13", width: "110px", sClass: "center" },
-      {data: "14", width: "62px", sClass: "center", "render": setStatus }
+      {data: "14", width: "80px", sClass: "center", "render": setStatus }
+      {data: "15", width: "160px", sClass: "center" }
     ],
-    iDisplayLength: 50
+    iDisplayLength: 500
     columnDefs: [
       type: "date-uk"
       targets: 'datatable-date'
@@ -36,8 +46,12 @@ initializeDataTable = ->
       $("#timelapse-list-row").removeClass('hide')
       $("#timelapse_datatables_length label").hide()
       $("#div-dropdown-checklist").css('visibility', 'visible')
-      $("#div-dropdown-checklist").css({"visibility": "visible", "width": "57px", "top": "-59px", "float": "right" })
-      $("#timelapse_datatables_filter").css({"margin-top": "-34px", "margin-right": "49px"})
+      $("#div-dropdown-checklist").css({"visibility": "visible", "width": "57px", "top": "1px", "float": "right" })
+      $("#timelapse_datatables_filter").hide()
+      $(".timelapse-datatables > thead > tr > th").css("padding": "2px")
+      $(".timelapse-datatables > tbody > tr > th").css("padding": "2px")
+      $(".timelapse-datatables > thead > tr > td").css("padding": "2px")
+      $(".timelapse-datatables > tbody > tr > td").css("padding": "2px")
 
 columnsDropdown = ->
   $(".timelapse-column").on "click", ->
@@ -78,6 +92,71 @@ setInterval = (name, id, row) ->
   else if name is "1440"
     return "1 Frame Every 24 hours"
 
+onSearch = ->
+  $("#camera-name").on 'keyup change', ->
+    timelapse_table
+      .column(3)
+      .search( @value )
+      .draw()
+  $("#owner").on 'keyup change', ->
+    timelapse_table
+      .column(4)
+      .search( @value )
+      .draw()
+  $("#title").on 'keyup change', ->
+    timelapse_table
+      .column(5)
+      .search( @value )
+      .draw()
+  $("#sp-count").on 'keyup change', ->
+    timelapse_table
+      .column(13)
+      .search( @value )
+      .draw()
+  $("#status").on 'keyup change', ->
+    timelapse_table
+      .column(14)
+      .search( @value )
+      .draw()
+
+onIntercomClick = ->
+  $("#timelapse_datatables").on "click", ".open-intercom", ->
+    $('#api-wait').show()
+    data = {}
+    data.username = $(this).data("username")
+    onError = (jqXHR, status, error) ->
+      Notification.show(jqXHR.text)
+
+    onSuccess = (result, status, jqXHR) ->
+      $('#api-wait').hide()
+      if result is null
+        $(".bb-alert")
+          .addClass("alert-danger")
+          .text("User doesn't exist on Intercom")
+          .delay(200)
+          .fadeIn()
+          .delay(4000)
+          .fadeOut()
+      else
+        appId = result.app_id
+        id = result.id
+        newWindow = window.open("","_blank")
+        newWindow.location.href = "https://app.intercom.io/a/apps/#{appId}/users/#{id}/all-conversations"
+
+    settings =
+      cache: false
+      data: data
+      dataType: 'json'
+      error: onError
+      success: onSuccess
+      contentType: "application/x-www-form-urlencoded"
+      type: "get"
+      url: "/intercom/user"
+
+    sendAJAXRequest(settings)
+
 window.initializeTimelapse = ->
   initializeDataTable()
   columnsDropdown()
+  onSearch()
+  onIntercomClick()
