@@ -3,6 +3,7 @@ initializeDataTable = ->
   snapshots_table = $("#snapshots_datatables").dataTable
     aaSorting: [0, "asc"]
     fnRowCallback: (nRow, aData, iDisplayIndex, iDisplayIndexFull) ->
+      cellAndPage()
       if aData[3] && aData[3].storage_duration == -1
         $('td:eq(3)', nRow)
           .html "Infinity"
@@ -47,7 +48,6 @@ initializeDataTable = ->
     initComplete: ->
       $("#snapshots-list-row").removeClass('hide')
       $("#snapshots_datatables_length label").hide()
-      $("#div-dropdown-checklist").css('visibility', 'visible')
 
 columnsDropdown = ->
   $(".cameras-column").on "click", ->
@@ -88,6 +88,7 @@ ajaxCall = (date) ->
         if typeof data == "object"
           snapshots_table.fnClearTable()
           snapshots_table.fnAddData(data)
+          cellAndPage()
         else
           snapshots_table.fnClearTable()
           $(".bb-alert")
@@ -110,8 +111,21 @@ onPageLoad = ->
   $(window).load ->
     $('#datetimepicker').val getYesterdaysDate()
     ajaxCall(getYesterdaysDate())
+
+pageAndCell = ->
+  row = $("#snapshots_datatables_wrapper").children().first()
+  row.css("margin-bottom", "-11px")
+  cellAndPage()
+
+cellAndPage = ->
+  $("#snapshots_datatables > thead > tr > th").css("padding": "2px")
+  $("#snapshots_datatables > tbody > tr > th").css("padding": "2px")
+  $("#snapshots_datatables > thead > tr > td").css("padding": "2px")
+  $("#snapshots_datatables > tbody > tr > td").css("padding": "2px")
+
 window.initializSnapshotReport = ->
   columnsDropdown()
   initializeDataTable()
   initDatePicker()
   onPageLoad()
+  pageAndCell()
