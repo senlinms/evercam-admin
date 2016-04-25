@@ -27,7 +27,7 @@ initializeDataTable = ->
       # execute some code on network or other general error
       return
     onDataLoad: (grid) ->
-      #do something
+      cellDesign()
     dataTable:
       'bAutoWidth': false
       'bStateSave': false
@@ -62,7 +62,7 @@ initializeDataTable = ->
         {data: "14", "width": "120px", "sClass": "center red", "render": removeMinus }
       ],
       initComplete: ->
-        # execute some code on network or other general error
+        cellDesign()
 
 columnsDropdown = ->
   $(".users-column").on "click", ->
@@ -213,6 +213,12 @@ onIntercomClick = ->
       url: "/intercom/user"
 
     sendAJAXRequest(settings)
+
+cellDesign = ->
+  $("#users_datatables > thead > tr > th").css("padding": "2px")
+  $("#users_datatables > tbody > tr > th").css("padding": "2px")
+  $("#users_datatables > thead > tr > td").css("padding": "2px")
+  $("#users_datatables > tbody > tr > td").css("padding": "2px")
 
 window.initializeusers = ->
   initializeDataTable()
