@@ -30,14 +30,14 @@ initializeDataTable = ->
       [25, 50, 100, 200, "All"]
     ]
     columns: [
-      {data: "0", "render": linkMode1 },
-      {data: "1" },
-      {data: "2", "render": linkMode2 },
-      {data: "3" },
-      {data: "4" },
-      {data: "5"}
+      {data: "0", "render": linkMode1, width: "200px" },
+      {data: "1", width: "200px" },
+      {data: "2", "render": linkMode2, width: "200px" },
+      {data: "3", width: "200px" },
+      {data: "4", width: "75px", sClass: "center" },
+      {data: "5", width: "130px", sClass: "center"}
     ],
-    iDisplayLength: 50
+    iDisplayLength: 500
     columnDefs: [
       type: "date-uk"
       targets: 'datatable-date'
@@ -91,6 +91,7 @@ ajaxCall = (date) ->
           cellAndPage()
         else
           snapshots_table.fnClearTable()
+          cellAndPage()
           $(".bb-alert")
             .addClass("alert-danger")
             .text("There are no records for that date!")
