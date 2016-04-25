@@ -95,7 +95,7 @@ searchFilter = ->
     return
 
 appendMe = ->
-  $("#div-dropdown-checklist").css({"visibility": "visible", "width": "59px", "top": "-41px", "float": "right" })
+  $("#div-dropdown-checklist").css({"visibility": "visible", "width": "20px", "top": "78px", "float": "right", "right": "22px" })
   $(".dataTables_info").css("display", "none")
   $(".dataTables_length > label").css("display", "none")
   $("#users_datatables_paginate > .pagination-panel").css("display", "none")

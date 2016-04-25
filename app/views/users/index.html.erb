@@ -2,16 +2,9 @@
 <div class="bb-alert alert" style="display: none;"></div>
 <div class="page-content-wrapper">
   <div class="page-content">
-    <div class="row overlop-margin">
-      <div class="col-md-12 uper-bottom">
-        <ul class="page-breadcrumb breadcrumb">
-          <%= render 'shared/breadcrumb_basic', current_section: 'Users' %>
-        </ul>
-      </div>
-      <div class="dropdown-checklist" id="div-dropdown-checklist">
-        <div href="#" class="btn btn-default grey" data-toggle="modal" data-target="#toggle-datatable-columns">
-          <i class="fa fa-columns"></i>
-        </div>
+    <div class="dropdown-checklist" id="div-dropdown-checklist">
+      <div href="#" class="btn btn-default grey" data-toggle="modal" data-target="#toggle-datatable-columns">
+        <i class="fa fa-columns"></i>
       </div>
     </div>
     <%= render 'columns_modal' %>
