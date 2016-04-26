@@ -117,7 +117,7 @@ table#users_datatables {
 }
 
 .filter-top-cam {
-  margin-top: -41px;
+  margin-top: -6px;
 }
 
 table#cameras_datatables {
@@ -143,9 +143,8 @@ table#cameras_datatables {
 .model-add-btn {
   position: relative;
   z-index: 9;
-  left: -228px;
-  float: right;
-  margin-top: -34px;
+  left: 45px;
+  margin-top: 1px;
 }
 
 table#datatable_vendor_models {
@@ -157,7 +156,11 @@ table#datatable_vendor_models {
   word-wrap: break-word;
 }
 
-.timelapse-datatables {
+.timelapse-datatables,
+.snapshots-datatables,
+.snapshots-daily-datatables,
+.licencesr-datatables,
+.sharess-datatables {
   margin: 0 auto;
   width: 100%;
   clear: both;
@@ -166,11 +169,13 @@ table#datatable_vendor_models {
   word-wrap: break-word;
 }
 
-.snapshots-datatables {
-  margin: 0 auto;
-  width: 100%;
-  clear: both;
-  border-collapse: collapse;
-  table-layout: fixed;
-  word-wrap: break-word;
+.lic-col-box {
+  margin-top: -72px;
+}
+
+.dataTables_wrapper table > thead > tr > th,
+.dataTables_wrapper table > tbody > tr > th,
+.dataTables_wrapper table > thead > tr > td,
+.dataTables_wrapper table > tbody > tr > td {
+  padding: 2px 4px;
 }

@@ -27,7 +27,7 @@ initializeDataTable = ->
       # execute some code on network or other general error
       return
     onDataLoad: (grid) ->
-      #do something
+      cellDesign()
     dataTable:
       'bAutoWidth': false
       'bStateSave': false
@@ -62,7 +62,7 @@ initializeDataTable = ->
         {data: "14", "width": "120px", "sClass": "center red", "render": removeMinus }
       ],
       initComplete: ->
-        # execute some code on network or other general error
+        cellDesign()
 
 columnsDropdown = ->
   $(".users-column").on "click", ->
@@ -95,7 +95,7 @@ searchFilter = ->
     return
 
 appendMe = ->
-  $("#div-dropdown-checklist").css({"visibility": "visible", "width": "59px", "top": "-41px", "float": "right" })
+  $("#div-dropdown-checklist").css({"visibility": "visible", "width": "20px", "top": "78px", "float": "right", "right": "22px" })
   $(".dataTables_info").css("display", "none")
   $(".dataTables_length > label").css("display", "none")
   $("#users_datatables_paginate > .pagination-panel").css("display", "none")
@@ -213,6 +213,13 @@ onIntercomClick = ->
       url: "/intercom/user"
 
     sendAJAXRequest(settings)
+
+cellDesign = ->
+  console.log "hi"
+  # $("#users_datatables > thead > tr > th").css("padding": "2px 4px")
+  # $("#users_datatables > tbody > tr > th").css("padding": "2px 4px")
+  # $("#users_datatables > thead > tr > td").css("padding": "2px 4px")
+  # $("#users_datatables > tbody > tr > td").css("padding": "2px 4px")
 
 window.initializeusers = ->
   initializeDataTable()

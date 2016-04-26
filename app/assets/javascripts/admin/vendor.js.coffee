@@ -128,24 +128,16 @@ onEditVendor = ->
     $("#add-vendor div.caption").text("Edit Vendor");
 
 appendMe = ->
-  div = '<div class="dropdown-checklist" id="div-dropdown-checklist">'
-  div += '<div href="#" class="btn btn-default grey" data-toggle="modal" data-target="#toggle-datatable-columns">'
-  div +=  '<i class="fa fa-columns"></i>'
-  div += '</div>'
-  div +='</div>'
-  $("#datatable_vendors_wrapper").before(div)
-  $("#div-dropdown-checklist").addClass("box-button")
-  $("#datatable_vendors_filter > label").addClass("filter-margin")
-  $("#datatable_vendors_filter > label > input").addClass("label-color")
-  addVendor = '<div href="#" class="btn btn-edit vendor-button" data-toggle="modal" data-target="#add-vendor">'
-  addVendor += 'Add Vendor'
-  addVendor +='</div>'
-  $("#datatable_vendors_filter > label").before(addVendor)
+  options = $(".lic-col-box")
+  row = $("#datatable_vendors_wrapper").children().first()
+  row.append options
+  row.css("margin-bottom", "-11px")
+  $(".dropdown-checklist").css({"width": "20px", "top": "34px"})
 
 window.initializeVendors = ->
   initializeDataTable()
+  appendMe()
   columnsDropdown()
   handleAddNewModel()
   onModelClose()
   onEditVendor()
-  appendMe()

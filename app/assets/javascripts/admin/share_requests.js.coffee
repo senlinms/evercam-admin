@@ -2,19 +2,19 @@ shares_table = undefined
 
 initializeDataTable = ->
   shares_table = $("#shares_datatables").DataTable
-    aaSorting: [1, "asc"]
+    aaSorting: [2, "asc"]
     aLengthMenu: [
       [25, 50, 100, 200, -1]
       [25, 50, 100, 200, "All"]
     ]
     columns: [
-      {data: "0" },
-      {data: "1" },
-      {data: "2" },
-      {data: "3" },
-      {data: "4" },
-      {data: "5" },
-      {data: "6" }
+      {data: "0", sWidth: "150px" },
+      {data: "1", sWidth: "100px" },
+      {data: "2", sWidth: "110px" },
+      {data: "3", sWidth: "200px" },
+      {data: "4", sWidth: "89px", sClass: "center" },
+      {data: "5", sWidth: "85px", sClass: "center" },
+      {data: "6", sWidth: "85px", sClass: "center" }
     ],
     iDisplayLength: 50
     columnDefs: [
@@ -27,7 +27,6 @@ initializeDataTable = ->
     initComplete: ->
       $("#shares-list-row").removeClass('hide')
       $("#shares_datatables_length label").hide()
-      $("#div-dropdown-checklist").css('visibility', 'visible')
 
 columnsDropdown = ->
   $(".share-requests-column").on "click", ->
@@ -35,15 +34,10 @@ columnsDropdown = ->
     column.visible !column.visible()
 
 appendMe = ->
-  div = '<div class="dropdown-checklist" id="div-dropdown-checklist">'
-  div += '<div href="#" class="btn btn-default grey" data-toggle="modal" data-target="#toggle-datatable-columns">'
-  div +=  '<i class="fa fa-columns"></i>'
-  div += '</div>'
-  div +='</div>'
-  $("#shares_datatables_wrapper").before(div)
-  $("#div-dropdown-checklist").addClass("box-button")
-  $("#shares_datatables_filter > label").addClass("filter-margin")
-  $("#shares_datatables_filter > label > input").addClass("label-color")
+  $("#div-dropdown-checklist").css({'visibility': 'visible', "width": "20px", "left": "-8px", "top": "0px"})
+  row = $("#shares_datatables_wrapper").children().first()
+  row.css("margin-bottom", "-11px")
+  $("#shares-list-row").css("margin-top","-34px")
 
 window.initializeShareRequests = ->
   initializeDataTable()

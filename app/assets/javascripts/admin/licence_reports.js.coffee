@@ -17,22 +17,22 @@ initializeDataTable = ->
       [25, 50, 100, 200, "All"]
     ]
     columns: [
-      {data: "0" },
-      {data: "1" },
-      {data: "2" },
-      {data: "3" },
-      {data: "4", "sClass": "right" },
-      {data: "5", "sClass": "right" },
-      {data: "6" },
-      {data: "7" },
-      {data: "8" },
-      {data: "9", 'render': editColor },
-      {data: "10", "sClass": "right" },
-      {data: "11", "sClass": "right" },
-      {data: "12", "sClass": "center"},
-      {data: "13" },
-      {data: "14" },
-      {data: "15" }
+      {data: "0", width: "185px" },
+      {data: "1", width: "120px" },
+      {data: "2", width: "110px", "sClass": "center" },
+      {data: "3", width: "245px" },
+      {data: "4", width: "90px", "sClass": "center" },
+      {data: "5", width: "80px", "sClass": "center" },
+      {data: "6", width: "70px", "sClass": "center" },
+      {data: "7", width: "95px" },
+      {data: "8", width: "95px" },
+      {data: "9", width: "95px", 'render': editColor },
+      {data: "10", width: "80px", "sClass": "center" },
+      {data: "11", width: "85px", "sClass": "center" },
+      {data: "12", width: "110px", "sClass": "center" },
+      {data: "13", width: "85px", "sClass": "center" },
+      {data: "14", width: "50px", "sClass": "center" },
+      {data: "15", width: "50px",  "sClass": "center" }
     ],
     iDisplayLength: 50
     columnDefs: [
@@ -310,21 +310,11 @@ deleteLicence = ->
     sendAJAXRequest(settings)
 
 appendMe = ->
-  div = '<div class="dropdown-checklist" id="div-dropdown-checklist">'
-  div += '<div href="#" class="btn btn-default grey" data-toggle="modal" data-target="#toggle-datatable-columns">'
-  div +=  '<i class="fa fa-columns"></i>'
-  div += '</div>'
-  div +='</div>'
-
-  addLicence = '<div href="#" class="btn btn-default grey licence-button" data-toggle="modal" data-target="#modal-add-licence">'
-  addLicence +=  '<i class="fa fa-plus"></i> Add Licence'
-  addLicence += '</div>'
-
-  $("#licences_datatables_wrapper").before(div)
-  $("#div-dropdown-checklist").addClass("box-button")
-  $("#licences_datatables_filter > label").addClass("filter-margin")
-  $("#licences_datatables_filter > label > input").addClass("label-color")
-  $("#licences_datatables_filter > label").before(addLicence)
+  options = $(".lic-col-box")
+  row = $("#licences_datatables_wrapper").children().first()
+  row.append options
+  row.css("margin-bottom", "-11px")
+  $(".dropdown-checklist").css({"width": "20px", "top": "34px"})
 
 getVat = ->
   $("#users-list").on "change", ->

@@ -22,9 +22,9 @@ initializeDataTable = ->
       {data: "0" },
       {data: "1" },
       {data: "2" },
-      {data: "3" },
-      {data: "4" },
-      {data: "5" }
+      {data: "3", sClass: "center" },
+      {data: "4", sClass: "center" },
+      {data: "5", sClass: "center" }
     ],
     iDisplayLength: 50
     columnDefs: [
@@ -35,9 +35,7 @@ initializeDataTable = ->
       "sSearch": "Filter:"
     },
     initComplete: ->
-      $("#merge-list-row").removeClass('hide')
-      $("#merge_datatables_length label").hide()
-      $("#div-dropdown-checklist").css('visibility', 'visible')
+      #do something here
 
 columnsDropdown = ->
   $(".cameras-column").on "click", ->
@@ -276,8 +274,9 @@ shareOp = (intval) ->
   else
     return ""
 
-appendMe = ->
-  $("#merge_datatables_filter > label > input").addClass("label-color")
+filterAndPage = ->
+  row = $("#merge_datatables_wrapper").children().first()
+  row.css("margin-bottom", "-11px")
 
 window.initializeMerges = ->
   initializeDataTable()
@@ -286,4 +285,4 @@ window.initializeMerges = ->
   onCameraDelete()
   onCameraMerge()
   onModelClose()
-  appendMe()
+  filterAndPage()

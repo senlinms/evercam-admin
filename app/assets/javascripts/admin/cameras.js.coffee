@@ -75,14 +75,7 @@ columnsDropdown = ->
     column.visible !column.visible()
 
 appendMe = ->
-  div = '<div class="dropdown-checklist" id="div-dropdown-checklist">'
-  div += '<div href="#" class="btn btn-default grey" data-toggle="modal" data-target="#toggle-datatable-columns">'
-  div +=  '<i class="fa fa-columns"></i>'
-  div += '</div>'
-  div +='</div>'
-  $("#cameras_datatables_wrapper").before(div)
-  $("#div-dropdown-checklist").addClass("box-button").addClass("camera-box-m")
-  $(".users-f > input").addClass("label-color")
+  $("#div-dropdown-checklist").css({"visibility": "visible", "width": "20px", "top": "1px", "float": "right", "right": "22px" })
   $(".dataTables_info").css("display", "none")
   $(".dataTables_length > label").css("display", "none")
   $("#cameras_datatables_paginate > .pagination-panel").css("display", "none")

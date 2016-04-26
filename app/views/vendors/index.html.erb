@@ -3,19 +3,23 @@
 </div>
 <div class="page-content-wrapper">
   <div class="page-content">
-    <div class="row">
-      <div class="col-md-12">
-        <%= render 'breadcrumb' %>
+    <div class="col-md-6 col-sm-12 lic-col-box">
+      <div class="dropdown-checklist" id="div-dropdown-checklist">
+        <div href="#" class="btn btn-default grey" data-toggle="modal" data-target="#toggle-datatable-columns">
+          <i class="fa fa-columns"></i>
+        </div>
+      </div>
+      <div href="#" class="btn btn-default grey vendor-button" data-toggle="modal" data-target="#add-vendor">
+        <i class="fa fa-plus"></i> Add Vendor
       </div>
     </div>
-
     <%= render 'vendor_modal' %>
 
     <%= render 'columns_modal' %>
-    <div id="vendor-list-row" class="row hide">
+    <div id="vendor-list-row" class="row hide dt-user-m">
       <input type="hidden" id="total_vendors" value=""/>
       <input type="hidden" id="total_cameras" value=""/>
-      <div class="col-md-12 table-container filter-top">
+      <div class="col-md-12 table-container">
         <table class="table table-striped table-bordered table-hover" id="datatable_vendors">
           <thead>
           <tr role="row" class="heading">

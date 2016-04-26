@@ -29,14 +29,14 @@ initializeDataTable = ->
       [25, 50, 100, 200, "All"]
     ]
     columns: [
-      {data: "0", "render": linkMode1 },
-      {data: "1" },
-      {data: "2", "render": linkMode2 },
-      {data: "3" },
-      {data: "4" },
-      {data: "5"}
+      {data: "0", "render": linkMode1, width: "200px" },
+      {data: "1", width: "200px" },
+      {data: "2", "render": linkMode2, width: "200px" },
+      {data: "3", width: "200px" },
+      {data: "4", width: "75px", sClass: "center" },
+      {data: "5", width: "130px", sClass: "center"}
     ],
-    iDisplayLength: 50
+    iDisplayLength: 500
     columnDefs: [
       type: "date-uk"
       targets: 'datatable-date'
@@ -47,7 +47,6 @@ initializeDataTable = ->
     initComplete: ->
       $("#snapshots-list-row").removeClass('hide')
       $("#snapshots_datatables_length label").hide()
-      $("#div-dropdown-checklist").css('visibility', 'visible')
 
 columnsDropdown = ->
   $(".cameras-column").on "click", ->
@@ -110,8 +109,14 @@ onPageLoad = ->
   $(window).load ->
     $('#datetimepicker').val getYesterdaysDate()
     ajaxCall(getYesterdaysDate())
+
+pageAndCell = ->
+  row = $("#snapshots_datatables_wrapper").children().first()
+  row.css("margin-bottom", "-11px")
+
 window.initializSnapshotReport = ->
   columnsDropdown()
   initializeDataTable()
   initDatePicker()
   onPageLoad()
+  pageAndCell()

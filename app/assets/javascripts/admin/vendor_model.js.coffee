@@ -90,7 +90,6 @@ initializeDataTable = ->
     vendor_models_table.setAjaxParam 'vendor', action.val()
     vendor_models_table.setAjaxParam 'vendor_model', action.val()
     vendor_models_table.getDataTable().ajax.reload()
-    vendor_models_table.clearAjaxParams()
     return
 
 columnsDropdown = ->
@@ -359,9 +358,12 @@ onModelDClose = ->
     clearPopId()
 
 appendMe = ->
-  $("#div-dropdown-checklist").css({"visibility": "visible", "width": "59px", "top": "-41px", "float": "right", "left": "-7px" })
-  $(".table-group-actions").addClass("fiter-vendor-model")
-  $(".fiter-vendor-model").parent().css("right": "-9px")
+  options = $(".lic-col-box")
+  row = $("#datatable_vendor_models_wrapper").children().first()
+  row.append options
+  row.css("margin-bottom", "-11px")
+  $("#vendor-model-list-row").css("margin-top": "1px")
+  $(".dropdown-checklist").css({"width": "20px", "visibility": "visible" })
   $(".dataTables_info").css("display", "none")
   $(".dataTables_length > label").css("display", "none")
   $("#datatable_vendor_models_paginate > .pagination-panel").css("display", "none")
