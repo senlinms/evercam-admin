@@ -23,10 +23,6 @@ initializeDataTable = ->
       error: (xhr, error, thrown) ->
         console.log(xhr.responseJSON.message)
     },
-    fnRowCallback: ->
-      cellDesign()
-    drawCallback: ->
-      cellDesign()
     columns: [
       {data: "exid", visible: false, width: '20%', 'render': showLogo },
       {data: "exid", width: '20%', 'render': editVendor },
@@ -46,7 +42,6 @@ initializeDataTable = ->
       $("#vendor-list-row").removeClass('hide')
       $("#datatable_vendors_length label").hide()
       $("#div-dropdown-checklist").css('visibility', 'visible')
-      cellDesign()
   })
 
 columnsDropdown = ->
@@ -98,7 +93,6 @@ handleAddNewModel = ->
 
     onSuccess = (result, status, jqXHR) ->
       vendor_table.ajax.reload()
-      cellDesign()
       $('#add-vendor').modal('hide')
       method = 'POST'
       clearForm()
@@ -140,17 +134,10 @@ appendMe = ->
   row.css("margin-bottom", "-11px")
   $(".dropdown-checklist").css({"width": "20px", "top": "34px"})
 
-cellDesign = ->
-  $("#datatable_vendors > thead > tr > th").css("padding": "2px 4px")
-  $("#datatable_vendors > tbody > tr > th").css("padding": "2px 4px")
-  $("#datatable_vendors > thead > tr > td").css("padding": "2px 4px")
-  $("#datatable_vendors > tbody > tr > td").css("padding": "2px 4px")
-
 window.initializeVendors = ->
   initializeDataTable()
+  appendMe()
   columnsDropdown()
   handleAddNewModel()
   onModelClose()
   onEditVendor()
-  appendMe()
-  cellDesign()

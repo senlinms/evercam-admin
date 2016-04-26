@@ -6,7 +6,6 @@ initializeDataTable = ->
   merge_table = $("#merge_datatables").DataTable
     aaSorting: [1, "asc"]
     fnRowCallback: (nRow, aData, iDisplayIndex, iDisplayIndexFull) ->
-      cellAndPage()
       if aData[3] > 0
         $('td:eq(3)', nRow)
           .html "Y"
@@ -278,13 +277,6 @@ shareOp = (intval) ->
 filterAndPage = ->
   row = $("#merge_datatables_wrapper").children().first()
   row.css("margin-bottom", "-11px")
-  cellAndPage()
-
-cellAndPage = ->
-  $("#merge_datatables > thead > tr > th").css("padding": "2px 4px")
-  $("#merge_datatables > tbody > tr > th").css("padding": "2px 4px")
-  $("#merge_datatables > thead > tr > td").css("padding": "2px 4px")
-  $("#merge_datatables > tbody > tr > td").css("padding": "2px 4px")
 
 window.initializeMerges = ->
   initializeDataTable()

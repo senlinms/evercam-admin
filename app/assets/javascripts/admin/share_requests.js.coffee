@@ -2,8 +2,6 @@ shares_table = undefined
 
 initializeDataTable = ->
   shares_table = $("#shares_datatables").DataTable
-    fnRowCallback: ->
-      cellDesign()
     aaSorting: [2, "asc"]
     aLengthMenu: [
       [25, 50, 100, 200, -1]
@@ -41,14 +39,7 @@ appendMe = ->
   row.css("margin-bottom", "-11px")
   $("#shares-list-row").css("margin-top","-34px")
 
-cellDesign = ->
-  $("#shares_datatables > thead > tr > th").css("padding": "2px 4px")
-  $("#shares_datatables > tbody > tr > th").css("padding": "2px 4px")
-  $("#shares_datatables > thead > tr > td").css("padding": "2px 4px")
-  $("#shares_datatables > tbody > tr > td").css("padding": "2px 4px")
-
 window.initializeShareRequests = ->
   initializeDataTable()
   columnsDropdown()
   appendMe()
-  cellDesign()

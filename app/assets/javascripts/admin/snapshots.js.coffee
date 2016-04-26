@@ -47,10 +47,6 @@ initializeDataTable = ->
       $("#snapshots_datatables_filter").addClass("hide")
       $("#snapshots_datatables_length label").hide()
       $("#div-dropdown-checklist").css({"visibility": "visible", "width": "59px", "top": "1px", "float": "right" })
-      $(".snapshots-datatables > thead > tr > th").css("padding": "2px 4px")
-      $(".snapshots-datatables > tbody > tr > th").css("padding": "2px 4px")
-      $(".snapshots-datatables > thead > tr > td").css("padding": "2px 4px")
-      $(".snapshots-datatables > tbody > tr > td").css("padding": "2px 4px")
 
 columnsDropdown = ->
   $(".cameras-column").on "click", ->

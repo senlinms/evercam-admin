@@ -48,10 +48,6 @@ initializeDataTable = ->
       $("#div-dropdown-checklist").css('visibility', 'visible')
       $("#div-dropdown-checklist").css({"visibility": "visible", "width": "57px", "top": "1px", "float": "right" })
       $("#timelapse_datatables_filter").hide()
-      $(".timelapse-datatables > thead > tr > th").css("padding": "2px 4px")
-      $(".timelapse-datatables > tbody > tr > th").css("padding": "2px 4px")
-      $(".timelapse-datatables > thead > tr > td").css("padding": "2px 4px")
-      $(".timelapse-datatables > tbody > tr > td").css("padding": "2px 4px")
 
 columnsDropdown = ->
   $(".timelapse-column").on "click", ->

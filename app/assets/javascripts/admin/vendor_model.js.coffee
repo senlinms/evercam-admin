@@ -41,12 +41,9 @@ initializeDataTable = ->
         [ 25, 50, 100, 150 ]
       ]
       fnRowCallback: (nRow, aData, iDisplayIndex, iDisplayIndexFull) ->
-        cellDesign()
         $("td:eq(10)", nRow)
           .html("<i class='fa fa-trash-o delete-venderm'></i>")
           .css("text-align": "center")
-      drawCallback: ->
-        cellDesign()
       'pageLength': 200
       'ajax':
         'method': 'GET'
@@ -372,12 +369,6 @@ appendMe = ->
   $("#datatable_vendor_models_paginate > .pagination-panel").css("display", "none")
   $(".paging_bootstrap_extended").css("float","none")
 
-cellDesign = ->
-  $("#datatable_vendor_models > thead > tr > th").css("padding": "2px 4px")
-  $("#datatable_vendor_models > tbody > tr > th").css("padding": "2px 4px")
-  $("#datatable_vendor_models > thead > tr > td").css("padding": "2px 4px")
-  $("#datatable_vendor_models > tbody > tr > td").css("padding": "2px 4px")
-
 window.initializeVendorModel = ->
   initializeDataTable()
   appendMe()
@@ -388,4 +379,3 @@ window.initializeVendorModel = ->
   onEditModel()
   onDeleteModel()
   onModelDClose()
-  cellDesign()

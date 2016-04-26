@@ -3,7 +3,6 @@ initializeDataTable = ->
   snapshots_table = $("#snapshots_datatables").dataTable
     aaSorting: [0, "asc"]
     fnRowCallback: (nRow, aData, iDisplayIndex, iDisplayIndexFull) ->
-      cellAndPage()
       if aData[3] && aData[3].storage_duration == -1
         $('td:eq(3)', nRow)
           .html "Infinity"
@@ -88,10 +87,8 @@ ajaxCall = (date) ->
         if typeof data == "object"
           snapshots_table.fnClearTable()
           snapshots_table.fnAddData(data)
-          cellAndPage()
         else
           snapshots_table.fnClearTable()
-          cellAndPage()
           $(".bb-alert")
             .addClass("alert-danger")
             .text("There are no records for that date!")
@@ -116,13 +113,6 @@ onPageLoad = ->
 pageAndCell = ->
   row = $("#snapshots_datatables_wrapper").children().first()
   row.css("margin-bottom", "-11px")
-  cellAndPage()
-
-cellAndPage = ->
-  $("#snapshots_datatables > thead > tr > th").css("padding": "2px 4px")
-  $("#snapshots_datatables > tbody > tr > th").css("padding": "2px 4px")
-  $("#snapshots_datatables > thead > tr > td").css("padding": "2px 4px")
-  $("#snapshots_datatables > tbody > tr > td").css("padding": "2px 4px")
 
 window.initializSnapshotReport = ->
   columnsDropdown()

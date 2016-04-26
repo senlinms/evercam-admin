@@ -11,10 +11,6 @@ sendAJAXRequest = (settings) ->
 
 initializeDataTable = ->
   licences_table = $("#licences_datatables").DataTable
-    fnRowCallback: ->
-      cellDesign()
-    drawCallback: ->
-      cellDesign()
     aaSorting: [1, "asc"]
     aLengthMenu: [
       [25, 50, 100, 200, -1]
@@ -319,7 +315,6 @@ appendMe = ->
   row.append options
   row.css("margin-bottom", "-11px")
   $(".dropdown-checklist").css({"width": "20px", "top": "34px"})
-  cellDesign()
 
 getVat = ->
   $("#users-list").on "change", ->
@@ -426,12 +421,6 @@ setStorageText = (storage) ->
     return "90 days recording"
   else if storage is "-1"
     return "infinity"
-
-cellDesign = ->
-  $("#licences_datatables > thead > tr > th").css("padding": "2px 4px")
-  $("#licences_datatables > tbody > tr > th").css("padding": "2px 4px")
-  $("#licences_datatables > thead > tr > td").css("padding": "2px 4px")
-  $("#licences_datatables > tbody > tr > td").css("padding": "2px 4px")
 
 window.initializeLicences = ->
   initChosen()

@@ -27,7 +27,6 @@ initializeDataTable = ->
       # execute some code on network or other general error
       return
     onDataLoad: (grid) ->
-      cellDesign()
       #do something
     dataTable:
       'bStateSave': false
@@ -61,7 +60,6 @@ initializeDataTable = ->
         {data: "14", visible: false }
       ],
       initComplete: ->
-        cellDesign()
         # execute some code on network or other general error
 
 searchFilter = ->
@@ -99,12 +97,6 @@ linkOwner = (name, type, row) ->
 showTable = ->
   $(window).load ->
     $('#cameras-list-row').removeClass 'hide'
-
-cellDesign = ->
-  $("#cameras_datatables > thead > tr > th").css("padding": "2px 4px")
-  $("#cameras_datatables > tbody > tr > th").css("padding": "2px 4px")
-  $("#cameras_datatables > thead > tr > td").css("padding": "2px 4px")
-  $("#cameras_datatables > tbody > tr > td").css("padding": "2px 4px")
 
 window.initializeCameras = ->
   columnsDropdown()
