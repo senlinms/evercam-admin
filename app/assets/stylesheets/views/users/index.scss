@@ -117,7 +117,7 @@ table#users_datatables {
 }
 
 .filter-top-cam {
-  margin-top: -4px;
+  margin-top: -6px;
 }
 
 table#cameras_datatables {
@@ -184,6 +184,15 @@ table#datatable_vendor_models {
 }
 
 .licencesr_datatables {
+  margin: 0 auto;
+  width: 100%;
+  clear: both;
+  border-collapse: collapse;
+  table-layout: fixed;
+  word-wrap: break-word;
+}
+
+.sharess_datatables {
   margin: 0 auto;
   width: 100%;
   clear: both;
