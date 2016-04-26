@@ -41,9 +41,12 @@ initializeDataTable = ->
         [ 25, 50, 100, 150 ]
       ]
       fnRowCallback: (nRow, aData, iDisplayIndex, iDisplayIndexFull) ->
+        cellDesign()
         $("td:eq(10)", nRow)
           .html("<i class='fa fa-trash-o delete-venderm'></i>")
           .css("text-align": "center")
+      drawCallback: ->
+        cellDesign()
       'pageLength': 200
       'ajax':
         'method': 'GET'
@@ -90,7 +93,6 @@ initializeDataTable = ->
     vendor_models_table.setAjaxParam 'vendor', action.val()
     vendor_models_table.setAjaxParam 'vendor_model', action.val()
     vendor_models_table.getDataTable().ajax.reload()
-    vendor_models_table.clearAjaxParams()
     return
 
 columnsDropdown = ->
@@ -359,13 +361,22 @@ onModelDClose = ->
     clearPopId()
 
 appendMe = ->
-  $("#div-dropdown-checklist").css({"visibility": "visible", "width": "59px", "top": "-41px", "float": "right", "left": "-7px" })
-  $(".table-group-actions").addClass("fiter-vendor-model")
-  $(".fiter-vendor-model").parent().css("right": "-9px")
+  options = $(".lic-col-box")
+  $("#datatable_vendor_models_wrapper").children().first().append options
+  row = $("#datatable_vendor_models_wrapper").children().first()
+  row.css("margin-bottom", "-11px")
+  $("#vendor-model-list-row").css("margin-top": "1px")
+  $(".dropdown-checklist").css({"width": "20px", "visibility": "visible" })
   $(".dataTables_info").css("display", "none")
   $(".dataTables_length > label").css("display", "none")
   $("#datatable_vendor_models_paginate > .pagination-panel").css("display", "none")
   $(".paging_bootstrap_extended").css("float","none")
+
+cellDesign = ->
+  $("#datatable_vendor_models > thead > tr > th").css("padding": "2px 4px")
+  $("#datatable_vendor_models > tbody > tr > th").css("padding": "2px 4px")
+  $("#datatable_vendor_models > thead > tr > td").css("padding": "2px 4px")
+  $("#datatable_vendor_models > tbody > tr > td").css("padding": "2px 4px")
 
 window.initializeVendorModel = ->
   initializeDataTable()
@@ -377,3 +388,4 @@ window.initializeVendorModel = ->
   onEditModel()
   onDeleteModel()
   onModelDClose()
+  cellDesign()

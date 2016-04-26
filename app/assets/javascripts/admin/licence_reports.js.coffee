@@ -11,7 +11,9 @@ sendAJAXRequest = (settings) ->
 
 initializeDataTable = ->
   licences_table = $("#licences_datatables").DataTable
-    fnRowCallback: (nRow, aData, iDisplayIndex, iDisplayIndexFull) ->
+    fnRowCallback: ->
+      cellDesign()
+    drawCallback: ->
       cellDesign()
     aaSorting: [1, "asc"]
     aLengthMenu: [
@@ -426,10 +428,10 @@ setStorageText = (storage) ->
     return "infinity"
 
 cellDesign = ->
-  $("#licences_datatables > thead > tr > th").css("padding": "2px")
-  $("#licences_datatables > tbody > tr > th").css("padding": "2px")
-  $("#licences_datatables > thead > tr > td").css("padding": "2px")
-  $("#licences_datatables > tbody > tr > td").css("padding": "2px")
+  $("#licences_datatables > thead > tr > th").css("padding": "2px 4px")
+  $("#licences_datatables > tbody > tr > th").css("padding": "2px 4px")
+  $("#licences_datatables > thead > tr > td").css("padding": "2px 4px")
+  $("#licences_datatables > tbody > tr > td").css("padding": "2px 4px")
 
 window.initializeLicences = ->
   initChosen()

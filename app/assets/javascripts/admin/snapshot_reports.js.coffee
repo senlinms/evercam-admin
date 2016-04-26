@@ -119,10 +119,10 @@ pageAndCell = ->
   cellAndPage()
 
 cellAndPage = ->
-  $("#snapshots_datatables > thead > tr > th").css("padding": "2px")
-  $("#snapshots_datatables > tbody > tr > th").css("padding": "2px")
-  $("#snapshots_datatables > thead > tr > td").css("padding": "2px")
-  $("#snapshots_datatables > tbody > tr > td").css("padding": "2px")
+  $("#snapshots_datatables > thead > tr > th").css("padding": "2px 4px")
+  $("#snapshots_datatables > tbody > tr > th").css("padding": "2px 4px")
+  $("#snapshots_datatables > thead > tr > td").css("padding": "2px 4px")
+  $("#snapshots_datatables > tbody > tr > td").css("padding": "2px 4px")
 
 window.initializSnapshotReport = ->
   columnsDropdown()

@@ -23,6 +23,10 @@ initializeDataTable = ->
       error: (xhr, error, thrown) ->
         console.log(xhr.responseJSON.message)
     },
+    fnRowCallback: ->
+      cellDesign()
+    drawCallback: ->
+      cellDesign()
     columns: [
       {data: "exid", visible: false, width: '20%', 'render': showLogo },
       {data: "exid", width: '20%', 'render': editVendor },
@@ -42,6 +46,7 @@ initializeDataTable = ->
       $("#vendor-list-row").removeClass('hide')
       $("#datatable_vendors_length label").hide()
       $("#div-dropdown-checklist").css('visibility', 'visible')
+      cellDesign()
   })
 
 columnsDropdown = ->
@@ -93,6 +98,7 @@ handleAddNewModel = ->
 
     onSuccess = (result, status, jqXHR) ->
       vendor_table.ajax.reload()
+      cellDesign()
       $('#add-vendor').modal('hide')
       method = 'POST'
       clearForm()
@@ -128,19 +134,17 @@ onEditVendor = ->
     $("#add-vendor div.caption").text("Edit Vendor");
 
 appendMe = ->
-  div = '<div class="dropdown-checklist" id="div-dropdown-checklist">'
-  div += '<div href="#" class="btn btn-default grey" data-toggle="modal" data-target="#toggle-datatable-columns">'
-  div +=  '<i class="fa fa-columns"></i>'
-  div += '</div>'
-  div +='</div>'
-  $("#datatable_vendors_wrapper").before(div)
-  $("#div-dropdown-checklist").addClass("box-button")
-  $("#datatable_vendors_filter > label").addClass("filter-margin")
-  $("#datatable_vendors_filter > label > input").addClass("label-color")
-  addVendor = '<div href="#" class="btn btn-edit vendor-button" data-toggle="modal" data-target="#add-vendor">'
-  addVendor += 'Add Vendor'
-  addVendor +='</div>'
-  $("#datatable_vendors_filter > label").before(addVendor)
+  options = $(".lic-col-box")
+  $("#datatable_vendors_wrapper").children().first().append options
+  row = $("#datatable_vendors_wrapper").children().first()
+  row.css("margin-bottom", "-11px")
+  $(".dropdown-checklist").css({"width": "20px", "top": "34px"})
+
+cellDesign = ->
+  $("#datatable_vendors > thead > tr > th").css("padding": "2px 4px")
+  $("#datatable_vendors > tbody > tr > th").css("padding": "2px 4px")
+  $("#datatable_vendors > thead > tr > td").css("padding": "2px 4px")
+  $("#datatable_vendors > tbody > tr > td").css("padding": "2px 4px")
 
 window.initializeVendors = ->
   initializeDataTable()
@@ -149,3 +153,4 @@ window.initializeVendors = ->
   onModelClose()
   onEditVendor()
   appendMe()
+  cellDesign()

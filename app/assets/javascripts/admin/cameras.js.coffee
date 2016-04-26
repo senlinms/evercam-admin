@@ -101,10 +101,10 @@ showTable = ->
     $('#cameras-list-row').removeClass 'hide'
 
 cellDesign = ->
-  $("#cameras_datatables > thead > tr > th").css("padding": "2px")
-  $("#cameras_datatables > tbody > tr > th").css("padding": "2px")
-  $("#cameras_datatables > thead > tr > td").css("padding": "2px")
-  $("#cameras_datatables > tbody > tr > td").css("padding": "2px")
+  $("#cameras_datatables > thead > tr > th").css("padding": "2px 4px")
+  $("#cameras_datatables > tbody > tr > th").css("padding": "2px 4px")
+  $("#cameras_datatables > thead > tr > td").css("padding": "2px 4px")
+  $("#cameras_datatables > tbody > tr > td").css("padding": "2px 4px")
 
 window.initializeCameras = ->
   columnsDropdown()

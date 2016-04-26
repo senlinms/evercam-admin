@@ -215,10 +215,10 @@ onIntercomClick = ->
     sendAJAXRequest(settings)
 
 cellDesign = ->
-  $("#users_datatables > thead > tr > th").css("padding": "2px")
-  $("#users_datatables > tbody > tr > th").css("padding": "2px")
-  $("#users_datatables > thead > tr > td").css("padding": "2px")
-  $("#users_datatables > tbody > tr > td").css("padding": "2px")
+  $("#users_datatables > thead > tr > th").css("padding": "2px 4px")
+  $("#users_datatables > tbody > tr > th").css("padding": "2px 4px")
+  $("#users_datatables > thead > tr > td").css("padding": "2px 4px")
+  $("#users_datatables > tbody > tr > td").css("padding": "2px 4px")
 
 window.initializeusers = ->
   initializeDataTable()

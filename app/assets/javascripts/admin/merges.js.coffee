@@ -281,10 +281,10 @@ filterAndPage = ->
   cellAndPage()
 
 cellAndPage = ->
-  $("#merge_datatables > thead > tr > th").css("padding": "2px")
-  $("#merge_datatables > tbody > tr > th").css("padding": "2px")
-  $("#merge_datatables > thead > tr > td").css("padding": "2px")
-  $("#merge_datatables > tbody > tr > td").css("padding": "2px")
+  $("#merge_datatables > thead > tr > th").css("padding": "2px 4px")
+  $("#merge_datatables > tbody > tr > th").css("padding": "2px 4px")
+  $("#merge_datatables > thead > tr > td").css("padding": "2px 4px")
+  $("#merge_datatables > tbody > tr > td").css("padding": "2px 4px")
 
 window.initializeMerges = ->
   initializeDataTable()
