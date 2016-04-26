@@ -315,8 +315,8 @@ deleteLicence = ->
 
 appendMe = ->
   options = $(".lic-col-box")
-  $("#licences_datatables_wrapper").children().first().append options
   row = $("#licences_datatables_wrapper").children().first()
+  row.append options
   row.css("margin-bottom", "-11px")
   $(".dropdown-checklist").css({"width": "20px", "top": "34px"})
   cellDesign()

@@ -362,8 +362,8 @@ onModelDClose = ->
 
 appendMe = ->
   options = $(".lic-col-box")
-  $("#datatable_vendor_models_wrapper").children().first().append options
   row = $("#datatable_vendor_models_wrapper").children().first()
+  row.append options
   row.css("margin-bottom", "-11px")
   $("#vendor-model-list-row").css("margin-top": "1px")
   $(".dropdown-checklist").css({"width": "20px", "visibility": "visible" })

@@ -135,8 +135,8 @@ onEditVendor = ->
 
 appendMe = ->
   options = $(".lic-col-box")
-  $("#datatable_vendors_wrapper").children().first().append options
   row = $("#datatable_vendors_wrapper").children().first()
+  row.append options
   row.css("margin-bottom", "-11px")
   $(".dropdown-checklist").css({"width": "20px", "top": "34px"})
 
