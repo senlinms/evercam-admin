@@ -1,0 +1,13 @@
+<% if @archives.present? %>
+  <% @archives.each do |archive| %>
+    <tr>
+      <td><%= archive.exid %></td>
+      <td><%= archive.title %></td>
+      <td><%= archive.from_date %></td>
+      <td><%= archive.to_date %></td>
+      <td><%= archive.status %></td>
+      <td><%= archive.created_at %></td>
+      <td><%= archive.requested_by %></td>
+    </tr>
+  <% end %>
+<% end %>
