@@ -15,9 +15,12 @@ initializeDataTable = ->
       {data: "4", sWidth: "150px" },
       {data: "5", sWidth: "80px", sClass: "center", "render": archiveStatus },
       {data: "6", sWidth: "150px" },
-      {data: "7", sWidth: "150px", "render": renderDuration }
+      {data: "7", sWidth: "85px", "render": secondsTimeSpanToHMS, sClass: "center" },
+      {data: "8", sWidth: "100px", "render": publicStatus, sClass: "center", visible: false },
+      {data: "9", sWidth: "85px", sClass: "center", "render": publicStatus },
+      {data: "10", sWidth: "80px", sClass: "center", visible: false }
     ],
-    iDisplayLength: 50
+    iDisplayLength: 500
     columnDefs: [
       type: "date-uk"
       targets: 'datatable-date'
@@ -31,9 +34,15 @@ initializeDataTable = ->
       #do something here
 
 columnsDropdown = ->
-  $(".cameras-column").on "click", ->
-    column = merge_table.column($(this).attr("data-val"))
+  $(".archive-column").on "click", ->
+    column = archive_table.column($(this).attr("data-val"))
     column.visible !column.visible()
+
+publicStatus = (name) ->
+  if name is "true"
+    "<span style='color:green'>Yes</span>"
+  else if name is "" || name is "false"
+    "<span style='color:red'>No</span>"
 
 archiveStatus = (name) ->
   if name is "0"
@@ -49,20 +58,14 @@ setMargin = ->
   row = $("#archive_datatables_wrapper").children().first()
   row.css("margin-bottom", "-11px")
 
-renderDuration = (name, type, row) ->
-  dateTimeFrom = new Date(moment.utc(row[3]*1000).format('MM DD YYYY, HH:mm:ss'))
-  dateTimeTo = new Date(moment.utc(row[4]*1000).format('MM DD YYYY, HH:mm:ss'))
-  diff = dateTimeTo - dateTimeFrom
-  diffSeconds = diff / 1000
-  HH = Math.floor(diffSeconds / 3600)
-  hours = HH + ' ' + 'hr'
-  hours = '' unless HH isnt 0
-  MM = Math.floor(diffSeconds % 3600) / 60
-  MM = Math.round(MM)
-  minutes = MM + ' ' +'min'
-  minutes = '' unless MM isnt 0
-  formatted = hours + ' ' + minutes
-  return formatted
+secondsTimeSpanToHMS = (s) ->
+  h = Math.floor(s / 3600)
+  #Get whole hours
+  s -= h * 3600
+  m = Math.floor(s / 60)
+  #Get remaining minutes
+  s -= m * 60
+  h + ':' + (if m < 10 then '0' + m else m) + ':' + (if s < 10 then '0' + s else s)
 
 window.initializeArchives = ->
   initializeDataTable()
