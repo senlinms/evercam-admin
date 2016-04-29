@@ -2,7 +2,13 @@
   <% @archives.each do |archive| %>
     <% requester = EvercamUser.find(archive.requested_by).decorate %>
     <tr>
-      <td><a href="/cameras/<%= archive.camera_id %>"><%= archive.camera.name %></a></td>
+      <td>
+        <% if camera = Camera.find(archive.camera_id) %>
+          <a href="/cameras/<%= camera.id %>"><%= camera.name %></a>
+        <% else %>
+          Camera doesn't not exist.
+        <% end %>
+      </td>
       <td><a href="/users/<%= archive.requested_by %>"><%= requester.fullname %></a></td>
       <td><%= archive.title %></td>
       <td><%= archive.from_date.strftime('%a, %d %b %Y %H:%M:%S') %></td>
