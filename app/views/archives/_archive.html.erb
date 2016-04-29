@@ -3,8 +3,8 @@
     <% requester = EvercamUser.find(archive.requested_by).decorate %>
     <tr>
       <td>
-        <% if camera = Camera.find(archive.camera_id) %>
-          <a href="/cameras/<%= camera.id %>"><%= camera.name %></a>
+        <% if archive.camera.present? %>
+          <a href="/cameras/<%= archive.camera_id %>"><%= archive.camera.name %></a>
         <% else %>
           Camera doesn't not exist.
         <% end %>
