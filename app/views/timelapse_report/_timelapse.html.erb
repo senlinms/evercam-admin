@@ -5,13 +5,7 @@
       <td><%= timelapse["id"] %></td>
       <td><%= timelapse["access_token"] %></td>
       <td><%= timelapse["code"] %></td>
-      <td>
-        <% if camera = Camera.where(exid: timelapse["camera_id"]).first %>
-          <a href="/cameras/<%= camera.id %>"><%= camera.name %></a>
-        <% else %>
-          Camera doesn't exist!
-        <% end %>
-      </td>
+      <td><%= timelapse["camera_id"] %></td>
       <td>
       <div class='link-user'>
         <a href="http://timelapse.evercam.io/login.html?id=<%= user.username %>&api_id=<%= user.api_id %>&api_key=<%= user.api_key %>" target="_blank" class="pull-left"><%= user.fullname %></a>
