@@ -5,15 +5,6 @@ action = undefined
 initializeDataTable = ->
   merge_table = $("#merge_datatables").DataTable
     aaSorting: [1, "asc"]
-    fnRowCallback: (nRow, aData, iDisplayIndex, iDisplayIndexFull) ->
-      if aData[3] > 0
-        $('td:eq(3)', nRow)
-          .html "Y"
-          .css { "color": "green", "text-align": "center" }
-      else
-        $('td:eq(3)', nRow)
-          .html "N"
-          .css { "color": "Red", "text-align": "center" }
     aLengthMenu: [
       [25, 50, 100, 200, -1]
       [25, 50, 100, 200, "All"]
@@ -22,7 +13,7 @@ initializeDataTable = ->
       {data: "0" },
       {data: "1" },
       {data: "2" },
-      {data: "3", sClass: "center" },
+      {data: "3", sClass: "center", "render": isOnline },
       {data: "4", sClass: "center" },
       {data: "5", sClass: "center" }
     ],
@@ -35,7 +26,8 @@ initializeDataTable = ->
       "sSearch": "Filter:"
     },
     initComplete: ->
-      #do something here
+      $("#merge_datatables_filter").hide()
+      $("#merge_datatables_length label").hide()
 
 columnsDropdown = ->
   $(".cameras-column").on "click", ->
@@ -278,6 +270,39 @@ filterAndPage = ->
   row = $("#merge_datatables_wrapper").children().first()
   row.css("margin-bottom", "-11px")
 
+isOnline = (name) ->
+  if name > 0
+    return "<span style='color:green'>Yes</span>"
+  else
+    return "<span style='color:red'>No</span>"
+
+onSearch = ->
+  $("#camera-ip").on 'keyup change', ->
+    merge_table
+      .column(0)
+      .search( @value )
+      .draw()
+  $("#port").on 'keyup change', ->
+    merge_table
+      .column(1)
+      .search( @value )
+      .draw()
+  $("#url").on 'keyup change', ->
+    merge_table
+      .column(2)
+      .search( @value )
+      .draw()
+  $("#online").on 'keyup change', ->
+    merge_table
+      .column(3)
+      .search( @value )
+      .draw()
+  $("#count").on 'keyup change', ->
+    merge_table
+      .column(4)
+      .search( @value )
+      .draw()
+
 window.initializeMerges = ->
   initializeDataTable()
   columnsDropdown()
@@ -286,3 +311,4 @@ window.initializeMerges = ->
   onCameraMerge()
   onModelClose()
   filterAndPage()
+  onSearch()

@@ -3,6 +3,22 @@
   <div class="page-content" id="cameras-report">
     <%= render "merge_modal" %>
     <!-- BEGIN PAGE CONTENT-->
+    <div class="row overlapping">
+      <div class="form-timelapse">
+        <div class="main-contains">
+          <div class="filter-naming">
+            Search :
+          </div>
+          <div class="inputs-divs">
+            <input type="text" class="first-inps" placeholder="Search IP" id="camera-ip">
+            <input type="text" class="first-inps" placeholder="Search Port" id="port">
+            <input type="text" class="first-inps" placeholder="Search url" id="url">
+            <input type="text" class="first-inps" placeholder="Search Online" id="online">
+            <input type="text" class="first-inps" placeholder="Search Count" id="count">
+          </div>
+        </div>
+      </div>
+    </div>
     <div id="merge-list-row" class="row dt-user-m">
       <div class="col-md-12">
         <table class="table table-striped table-bordered table-hover" id="merge_datatables">
