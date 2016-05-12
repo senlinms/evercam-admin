@@ -4,7 +4,7 @@
     <%= render "merge_modal" %>
     <!-- BEGIN PAGE CONTENT-->
     <div class="row overlapping">
-      <div class="form-timelapse">
+      <div class="form-merge-report">
         <div class="main-contains">
           <div class="filter-naming">
             Search :
@@ -13,6 +13,7 @@
             <input type="text" class="first-inps" placeholder="Search IP" id="camera-ip">
             <input type="text" class="first-inps" placeholder="Search Port" id="port">
             <input type="text" class="first-inps" placeholder="Search url" id="url">
+            <input type="text" class="first-inps" placeholder="Search CR" id="cr">
             <input type="text" class="first-inps" placeholder="Search Online" id="online">
             <input type="text" class="first-inps" placeholder="Search Count" id="count">
           </div>
@@ -27,7 +28,8 @@
               <th name="order_camera_ip" class="sorting">Camera IP</th>
               <th name="order_http_port" class="sorting">Http Port</th>
               <th name="order_snapshot_url" class="sorting">Snapshot url</th>
-              <th name="order_snapshot_url" class="sorting">Online</th>
+              <th name="order_cr_status" class="sorting">CR Status</th>
+              <th name="order_online" class="sorting">Online</th>
               <th name="order_count" class="sorting">Count</th>
               <th name="order_action" class="sorting">Action</th>
             </tr>

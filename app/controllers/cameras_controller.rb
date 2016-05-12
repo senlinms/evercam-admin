@@ -29,14 +29,15 @@ class CamerasController < ApplicationController
           camera.user["id"],
           camera.user["api_id"],
           camera.user["api_key"],
-          check_env
+          check_env,
+          camera.cloud_recording || { "status" => "" } ["status"]
         ]
       end
       render json: records
     elsif params[:super_cam_id] && params[:super_cam_owner_id] && params[:camera_ids] && params[:owner_ids]
       merge_camera(params[:super_cam_id], params[:super_cam_owner_id], params[:camera_ids], params[:owner_ids])
     else
-      @cameras = Camera.run_sql("select count(nullif(is_online = false, true)) as online, config->>'external_http_port' as external_http_port, config->>'external_host' as external_host, LOWER(config->'snapshots'->>'jpg')   as jpg, count(*) as count from cameras group by config->>'external_http_port', config->>'external_host', LOWER(config->'snapshots'->>'jpg') HAVING (COUNT(*)>1)")
+      @cameras = Camera.run_sql("select count(nullif(c.is_online = false, true)) as online, c.config->>'external_http_port' as external_http_port, c.config->>'external_host' as external_host, LOWER(config->'snapshots'->>'jpg')   as jpg, count(*) as count, count(nullif(cr.status like 'off','on')) as is_recording from cameras c left join cloud_recordings cr on c.id=cr.camera_id group by c.config->>'external_http_port', c.config->>'external_host', LOWER(c.config->'snapshots'->>'jpg') HAVING (COUNT(*)>1)")
     end
   end
 
