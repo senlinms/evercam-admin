@@ -10,12 +10,13 @@ initializeDataTable = ->
       [25, 50, 100, 200, "All"]
     ]
     columns: [
-      {data: "0" },
-      {data: "1" },
-      {data: "2" },
-      {data: "3", sClass: "center", "render": isOnline },
-      {data: "4", sClass: "center" },
-      {data: "5", sClass: "center" }
+      {data: "0", sWidth: "195px" },
+      {data: "1", sWidth: "80px", sClass: "center" },
+      {data: "2", sWidth: "425px" },
+      {data: "3", sWidth: "79px", sClass: "center", "render": isRecording },
+      {data: "4", sWidth: "65px", sClass: "center", "render": isOnline}
+      {data: "5", sWidth: "65px", sClass: "center" },
+      {data: "6", sWidth: "65px", sClass: "center" }
     ],
     iDisplayLength: 50
     columnDefs: [
@@ -60,10 +61,11 @@ onCameraAction = ->
         content += "<tr>"
         content += "<th>Name</th>
                     <th>exid</th>
-                    <th>Online</th>
+                    <th class='center'>Online</th>
                     <th class='center'>Owner Name</th>
-                    <th>Public</th>
-                    <th>Shared Count</th>
+                    <th class='center'>Public</th>
+                    <th class='center'>Cr Status</th>
+                    <th class='center'>Shared Count</th>
                     <th>Created At</th>
                     <th class='center'>Action</th>"
         content += "</tr>"
@@ -72,13 +74,15 @@ onCameraAction = ->
         data.forEach (cam) ->
           content += '<tr>
                         <td><a href="/cameras/'+ cam[0] + '">' + cam[2] + '</a></td>
-                        <td>' + cam[1] + '</td><td>' + colorMe(cam[6]) + '</td>
+                        <td>' + cam[1] + '</td>
+                        <td class="center">' + colorMe(cam[6]) + '</td>
                         <td class="col-md-342">
                           <a class="pull-left" href="/users/'+ cam[9] + '">' + cam[3] + ' ' + cam[4] + '</a>
-                          <a class="pull-right" href="'+ cam[12] + '/v1/cameras?api_id='+ cam[10] + '&api_key='+ cam[11] + '" target="_blank"><i class="fa fa-external-link"></i></a>
+                          <a class="pull-right" href="'+ cam[12] + '/v1/cameras/'+ cam[1] + '?api_id='+ cam[10] + '&api_key='+ cam[11] + '" target="_blank"><i class="fa fa-external-link"></i></a>
                         </td>
-                        <td>' + colorMe(cam[8]) + '</td>
-                        <td>' + cam[5] + '</td>
+                        <td class="center">' + colorMe(cam[8]) + '</td>
+                        <td class="center">' + crStatus(cam[13]) + '</td>
+                        <td class="center">' + cam[5] + '</td>
                         <td>' + cam[7] + '</td>
                         <td class="center"><input type="checkbox" class="delete-cam" value=""></td>
                         <td style="display: none;">' + cam[0] + '</td>
@@ -241,6 +245,12 @@ colorMe = (status) ->
   else
     return "<span style='color:red;'>N</span>"
 
+crStatus = (obj) ->
+  if obj is ""
+    return "off"
+  else
+    return obj.status
+
 clearModal = ->
   $('#dat').html("")
 
@@ -276,6 +286,12 @@ isOnline = (name) ->
   else
     return "<span style='color:red'>No</span>"
 
+isRecording = (name) ->
+  if name > 0
+    return "<span style='color:green'>Yes</span>"
+  else
+    return "<span style='color:red'>No</span>"
+
 onSearch = ->
   $("#camera-ip").on 'keyup', ->
     merge_table
@@ -294,12 +310,17 @@ onSearch = ->
       .draw()
   $("#online").on 'keyup', ->
     merge_table
-      .column(3)
+      .column(4)
       .search( @value )
       .draw()
   $("#count").on 'keyup', ->
     merge_table
-      .column(4)
+      .column(5)
+      .search( @value )
+      .draw()
+  $("#cr").on 'keyup', ->
+    merge_table
+      .column(3)
       .search( @value )
       .draw()
 
