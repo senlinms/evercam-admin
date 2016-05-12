@@ -44,7 +44,7 @@ onCameraAction = ->
     host = $(this).parents('tr').find('td:nth-child(1)').text()
     port = $(this).parents('tr').find('td:nth-child(2)').text()
     jpg  = $(this).parents('tr').find('td:nth-child(3)').text()
-    count = parseInt($(this).parents('tr').find('td:nth-child(5)').text(),10)
+    count = parseInt($(this).parents('tr').find('td:nth-child(6)').text(),10)
     action = $(this).parents('tr')
     d = {}
     d.host = host
@@ -127,7 +127,7 @@ onCameraDelete = ->
         if count == 1 || count < 1
           action.remove()
         else
-          action.find('td:nth-child(5)').text(count)
+          action.find('td:nth-child(6)').text(count)
 
         if $("#dat > table > tbody").html() == ""
           $("#add-action").modal("hide")
@@ -177,10 +177,10 @@ onCameraMerge = ->
       $td = $('td', this)
       {
         id: ++i
-        camId: $td.eq(8).text()
+        camId: $td.eq(9).text()
         camName: $td.eq(0).text()
         exId: $td.eq(1).text()
-        sCount: $td.eq(5).text()
+        sCount: $td.eq(6).text()
       }
     ).get()
     optionsHtml = ''
@@ -201,7 +201,7 @@ onCameraMerge = ->
         merged_row = rows[i]
         rows.splice(i,1)
       i++
-    mCount = parseInt(merged_row.find('td:nth-child(6)').text(),10)
+    mCount = parseInt(merged_row.find('td:nth-child(7)').text(),10)
     merge = {}
     merge.super_cam_id = super_cam_id
     merge.super_cam_owner_id = super_cam_owner_id
@@ -217,12 +217,12 @@ onCameraMerge = ->
         if count == 1 || count < 1
           action.remove()
         else
-          action.find('td:nth-child(5)').text(count)
+          action.find('td:nth-child(6)').text(count)
         rows.forEach (row) ->
           row.remove()
         mCount += data
-        merged_row.find('td:nth-child(6)').text(mCount)
-        merged_row.find('td:nth-child(8) > .delete-cam').prop('checked', false)
+        merged_row.find('td:nth-child(7)').text(mCount)
+        merged_row.find('td:nth-child(9) > .delete-cam').prop('checked', false)
         $(".bb-alert")
           .addClass("alert-success")
           .text("Cameras have been successfully merged and Shared with full rights!")
