@@ -277,27 +277,27 @@ isOnline = (name) ->
     return "<span style='color:red'>No</span>"
 
 onSearch = ->
-  $("#camera-ip").on 'keyup change', ->
+  $("#camera-ip").on 'keyup', ->
     merge_table
       .column(0)
       .search( @value )
       .draw()
-  $("#port").on 'keyup change', ->
+  $("#port").on 'keyup', ->
     merge_table
       .column(1)
       .search( @value )
       .draw()
-  $("#url").on 'keyup change', ->
+  $("#url").on 'keyup', ->
     merge_table
       .column(2)
       .search( @value )
       .draw()
-  $("#online").on 'keyup change', ->
+  $("#online").on 'keyup', ->
     merge_table
       .column(3)
       .search( @value )
       .draw()
-  $("#count").on 'keyup change', ->
+  $("#count").on 'keyup', ->
     merge_table
       .column(4)
       .search( @value )
