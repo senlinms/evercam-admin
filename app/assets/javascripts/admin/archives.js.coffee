@@ -9,7 +9,7 @@ initializeDataTable = ->
     ]
     columns: [
       {data: "0", sWidth: "145px" },
-      {data: "1", sWidth: "145px" },
+      {data: "1", sWidth: "150px" },
       {data: "2", sWidth: "200px" },
       {data: "3", sWidth: "150px" },
       {data: "4", sWidth: "150px" },
