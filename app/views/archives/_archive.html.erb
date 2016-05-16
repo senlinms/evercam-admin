@@ -4,12 +4,17 @@
     <tr>
       <td>
         <% if archive.camera.present? %>
-          <a href="/cameras/<%= archive.camera_id %>"><%= archive.camera.name %></a>
+          <%= archive.camera.exid %>
         <% else %>
           Camera doesn't not exist.
         <% end %>
       </td>
-      <td><a href="/users/<%= archive.requested_by %>"><%= requester.fullname %></a></td>
+      <td>
+        <div class='link-user'>
+          <a class='pull-left' href='/users/<%= archive.requested_by %>'><%= requester.fullname %></a>
+          <a class='pull-right u-dash' href='<%= check_env %>/v1/cameras?api_id=<%= requester.api_id %>&api_key=<%= requester.api_key %>' target='_blank'><i class='fa fa-external-link'></i></a>
+        </div>
+      </td>
       <td><%= archive.title %></td>
       <td><%= archive.from_date.strftime('%a, %d %b %Y %H:%M:%S') %></td>
       <td><%= archive.to_date.strftime('%a, %d %b %Y %H:%M:%S') %></td>
