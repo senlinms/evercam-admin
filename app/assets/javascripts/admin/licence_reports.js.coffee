@@ -18,7 +18,7 @@ initializeDataTable = ->
     ]
     columns: [
       {data: "0", width: "185px" },
-      {data: "1", width: "120px" },
+      {data: "1", width: "150px" },
       {data: "2", width: "110px", "sClass": "center" },
       {data: "3", width: "245px" },
       {data: "4", width: "90px", "sClass": "center" },
@@ -422,6 +422,40 @@ setStorageText = (storage) ->
   else if storage is "-1"
     return "infinity"
 
+pendingReason = ->
+  $("#licences_datatables").on "click", ".pending-reason", ->
+    pending_id = $(this).attr("customer-id")
+    $(".pending-modal").modal("show")
+    $("#loading-popup").show()
+
+    data = {}
+    data.pending_id = pending_id
+
+    onError = (resp) ->
+      $("#loading-popup").hide()
+      $(".pending-modal modal-body").text resp
+
+    onSuccess = (resp) ->
+      $("#loading-popup").hide()
+      $(".fail-reasons").show()
+      $(".f-code").text resp[0].failure_code
+      $(".f-message").text resp[0].failure_message
+
+    settings =
+      error: onError
+      success: onSuccess
+      cache: false
+      data: data
+      dataType: "json"
+      type: "GET"
+      url: "/licences/pending_reason"
+
+    sendAJAXRequest(settings)
+
+pendingModelClose = ->
+  $(".pending-modal").on "hidden.bs.modal", ->
+    $(".fail-reasons").hide()
+
 window.initializeLicences = ->
   initChosen()
   onModelShow()
@@ -437,3 +471,5 @@ window.initializeLicences = ->
   getVat()
   onEditLicence()
   onModelUpdate()
+  pendingReason()
+  pendingModelClose()

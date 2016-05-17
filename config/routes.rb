@@ -37,6 +37,7 @@ Rails.application.routes.draw do
   get '/no_access' => 'home#no_access'
   get "/cloud_recordings" => "snapshots#cloud_recordings"
 
+  get "/licences/pending_reason" => "licence_reports#pending_reason"
   resources :licence_reports, path: "licences"
   post "/licences/new" => "licence_reports#create"
   delete "/licences/delete" => "licence_reports#destroy"
