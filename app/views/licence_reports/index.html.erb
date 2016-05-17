@@ -44,7 +44,12 @@
             <% user = custom_licence.user %>
             <tr>
               <td><%= link_to user.email, user_path(user) %></td>
-              <td><%= user.fullname %></td>
+              <td>
+                <div class='link-user'>
+                  <a class='pull-left' href='/users/<%= user.id %>'><%= user.fullname %></a>
+                  <a class='pull-right u-dash' href='<%= check_env %>/v1/cameras?api_id=<%= user.api_id %>&api_key=<%= user.api_key %>' target='_blank'><i class='fa fa-external-link'></i></a>
+                </div>
+              </td>
               <td><%= user.country.name if user.country.present? %></td>
               <td><%= custom_licence.description %></td>
               <td><%= custom_licence.total_cameras %></td>
@@ -87,7 +92,14 @@
                     <%= customer.email %>
                   <% end %>
                 </td>
-                <td><%= user.fullname if user.present? %></td>
+                <td>
+                  <% if user.present? %>
+                    <div class='link-user'>
+                      <a class='pull-left' href='/users/<%= user.id %>'><%= user.fullname %></a>
+                      <a class='pull-right u-dash' href='<%= check_env %>/v1/cameras?api_id=<%= user.api_id %>&api_key=<%= user.api_key %>' target='_blank'><i class='fa fa-external-link'></i></a>
+                    </div>
+                  <% end %>
+                </td>
                 <td><%= user.country.name if user.present? && user.country.present? %></td>
                 <td><%= licence.plan['name'] %></td>
                 <td><%= licence.quantity %></td>
@@ -127,7 +139,7 @@
                   <% if licence.status.eql?("active") %>
                     <span style="color: #008800;">Paid</span>
                   <% else %>
-                    <span style="color: #ff0000;">Pending</span>
+                    <span style="color: #ff0000;" class="pending-reason" customer-id="<%= customer.id %>" data-target=".pending-modal" tooltip="Click Me">Pending</span> <i class="fa fa-hand-o-left" aria-hidden="true"></i>
                   <% end %>
                 </td>
                 <td><i licence-type="stripe" customer-id="<%= customer.id %>" subscription-id="<%= licence.id %>" class="fa fa-trash-o delete-licence"></i></td>
@@ -140,6 +152,34 @@
       </div>
     </div>
     <!-- END PAGE CONTENT-->
+  </div>
+</div>
+<div class="modal fade pending-modal" aria-labelledby="mySmallModalLabel">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div id="loading-popup"><img src="<%= image_path 'loader3.gif' %>"></div>
+        <table class="table table-sm fail-reasons">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Failure Code</th>
+              <th>Failure Message</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">1</th>
+              <td class="f-code"></td>
+              <td class="f-message"></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+    </div>
   </div>
 </div>
 <!-- END CONTENT -->

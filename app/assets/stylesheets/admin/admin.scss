@@ -702,6 +702,15 @@ ul.columns {
   text-align: center;
 }
 
+.pending-reason {
+  cursor: pointer;
+}
+
+.fail-reasons {
+  display: none;
+  margin-bottom: -8px;
+}
+
 @media screen and (max-width: 1301px) 
 {
   .vmodal-btn {
