@@ -139,7 +139,7 @@
                   <% if licence.status.eql?("active") %>
                     <span style="color: #008800;">Paid</span>
                   <% else %>
-                    <span style="color: #ff0000;" class="pending-reason" customer-id="<%= customer.id %>" data-target=".pending-modal" tooltip="Click Me">Pending</span> <i class="fa fa-hand-o-left" aria-hidden="true"></i>
+                    <span style="color: #ff0000;" class="pending-reason" customer-id="<%= customer.id %>" data-target=".pending-modal">Pending <i class="fa fa-hand-o-left" aria-hidden="true"></i></span>
                   <% end %>
                 </td>
                 <td><i licence-type="stripe" customer-id="<%= customer.id %>" subscription-id="<%= licence.id %>" class="fa fa-trash-o delete-licence"></i></td>
