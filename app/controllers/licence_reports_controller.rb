@@ -128,15 +128,13 @@ class LicenceReportsController < ApplicationController
   end
 
   def pending_reason
-    begin
-      if params["pending_id"]
-        charge = Stripe::Charge.all(:customer => params["pending_id"], :limit => 1)
-        render json: charge.data
-      end
-    rescue => error
-      notify_airbrake(error)
-      render json: error
+    if params["pending_id"]
+      charge = Stripe::Charge.all(:customer => params["pending_id"], :limit => 1)
+      render json: charge.data
     end
+  rescue => error
+    notify_airbrake(error)
+    render json: error
   end
 
   private
