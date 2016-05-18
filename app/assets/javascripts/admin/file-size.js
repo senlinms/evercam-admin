@@ -40,4 +40,4 @@ jQuery.fn.dataTable.ext.type.order['file-size-pre'] = function ( data ) {
     } else {
         return -1;
     };
-};
+}
