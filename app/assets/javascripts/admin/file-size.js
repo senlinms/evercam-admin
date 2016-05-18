@@ -39,5 +39,5 @@ jQuery.fn.dataTable.ext.type.order['file-size-pre'] = function ( data ) {
         return parseFloat( matches[1] ) * multiplier;
     } else {
         return -1;
-    };
-}
+    }
+};
