@@ -37,6 +37,7 @@
 #= require admin/jquery.datetimepicker.min.js
 #= require admin/chosen.jquery.min.js
 #= require admin/moment.min.js
+#= require admin/file-size.js
 #= require admin/fullcalendar.min.js
 #= require admin/jquery.numericupdown.js
 
