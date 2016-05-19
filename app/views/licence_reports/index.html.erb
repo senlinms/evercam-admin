@@ -35,6 +35,7 @@
             <th name="order_amount" class="sorting">Amount</th>
             <th name="order_renew" class="sorting">Auto Renew</th>
             <th name="order_action" class="sorting">Status</th>
+            <th name="order_p_method" class="sorting">Payment Method</th>
             <th name="order_status" class="sorting"></th>
             <th name="order_status" class="sorting"></th>
           </tr>
@@ -76,6 +77,7 @@
                   <span style="color: #ff0000;">Pending</span>
                 <% end %>
               </td>
+              <td><%= user.payment_method == 1 ? "Custom" : "Stripe" %></td>
               <td><i licence-type="custom" subscription-id="<%= custom_licence.id %>" class="fa fa-trash-o delete-licence"></i></td>
               <td><i id="update-id" update-id="<%= custom_licence.id %>" class="fa fa-pencil-square-o edit-licence"></i></td>
             </tr>
@@ -142,6 +144,7 @@
                     <span style="color: #ff0000;" class="pending-reason" customer-id="<%= customer.id %>" data-target=".pending-modal">Pending <i class="fa fa-hand-o-left" aria-hidden="true"></i></span>
                   <% end %>
                 </td>
+                <td></td>
                 <td><i licence-type="stripe" customer-id="<%= customer.id %>" subscription-id="<%= licence.id %>" class="fa fa-trash-o delete-licence"></i></td>
                 <td></td>
               </tr>

@@ -31,8 +31,9 @@ initializeDataTable = ->
       {data: "11", width: "85px", "sClass": "center" },
       {data: "12", width: "110px", "sClass": "center" },
       {data: "13", width: "85px", "sClass": "center" },
-      {data: "14", width: "50px", "sClass": "center" },
-      {data: "15", width: "50px",  "sClass": "center" }
+      {data: "14", width: "125px", "sClass": "center" },
+      {data: "15", width: "50px", "sClass": "center" },
+      {data: "16", width: "50px",  "sClass": "center" }
     ],
     iDisplayLength: 50
     columnDefs: [
@@ -171,27 +172,40 @@ editColor = (name, type, row) ->
     return name
 
 addNewRow = (data) ->
+  check_env = "http://dash.evercam.io"
   trClass = $("#licences_datatables > tbody > tr:first").attr("class")
   tr = "<tr role='row' class='#{returnClass(trClass)}'>"
   tr +=  "<td><a href='/users/#{data.user_id}'>#{data.user.email}</a></td>"
-  tr +=  "<td>#{data.user.firstname} #{data.user.lastname}</td>"
+  tr +=  "<td>"
+  tr +=    "<div class='link-user'>"
+  tr +=      "<a class='pull-left' href='/users/#{data.user_id}'>#{data.user.firstname} #{data.user.lastname}</a>"
+  tr +=      "<a class='pull-right u-dash' href='#{check_env}/v1/cameras?api_id=#{data.user.api_id}&api_key=#{data.user.api_key}' target='_blank'><i class='fa fa-external-link'></i></a>"
+  tr +=    "</div>"
+  tr +=  "</td>"
   tr +=  "<td></td><td>#{data.description}</td>"
-  tr +=  "<td class='right'>#{data.total_cameras}</td>"
-  tr +=  "<td class='right'>#{data.storage}</td>"
-  tr +=  "<td>Custom</td>"
+  tr +=  "<td class='center'>#{data.total_cameras}</td>"
+  tr +=  "<td class='center'>#{data.storage}</td>"
+  tr +=  "<td class='center'>Custom</td>"
   tr +=  "<td>#{formatDate(data.created_at)}</td>"
   tr +=  "<td>#{formatDate(data.start_date)}</td>"
   tr +=  "<td id='ending'>#{formatDate(data.end_date)}</td>"
-  tr +=  "<td class='right exp'>#{getExpDate(data.end_date)}</td>"
-  tr +=  "<td class='right'>€ #{data.amount / 100}.00</td>"
+  tr +=  "<td class='center exp'>#{getExpDate(data.end_date)}</td>"
+  tr +=  "<td class='center'>€ #{data.amount / 100}.00</td>"
   tr +=  "<td class='center'>No</td>"
-  tr +=  "<td>#{paidStatus()}</td>"
-  tr +=  "<td><i licence-type='custom' subscription-id='#{data.id}' class='fa fa-trash-o delete-licence'></i></td>"
-  tr +=  "<td><i id='update-id' update-id='#{data.id}' class='fa fa-pencil-square-o edit-licence'></i></td>"
+  tr +=  "<td class='center'>#{paidStatus()}</td>"
+  tr +=  "<td class='center'>#{paymentMethod(data.user.payment_method)}</td>"
+  tr +=  "<td class='center'><i licence-type='custom' subscription-id='#{data.id}' class='fa fa-trash-o delete-licence'></i></td>"
+  tr +=  "<td class='center'><i id='update-id' update-id='#{data.id}' class='fa fa-pencil-square-o edit-licence'></i></td>"
   tr += "</tr>"
   row = $("#licences_datatables > tbody > tr:first")
   row.before tr
   colorExp()
+
+paymentMethod = (name) ->
+  if name is 0
+    "Stripe"
+  else
+    "Custom"
 
 getExpDate = (end_date) ->
   second = new Date(end_date)

@@ -32,7 +32,8 @@ initializeDataTable = ->
       {data: "10", visible: false, sWidth: "105px" },
       {data: "11", visible: false, sClass: "center", sWidth: "55px" },
       {data: "12", visible: false, sClass: "center", sWidth: "75px"},
-      {data: "13", sClass: "center", sWidth: "65px", "render": colorStatus }
+      {data: "13", sClass: "center", sWidth: "65px", "render": colorStatus },
+      {data: "14", sClass: "center", sWidth: "110px", "render": paymentMethod },
     ],
     iDisplayLength: 500
     columnDefs: [
@@ -52,6 +53,12 @@ columnsDropdown = ->
   $(".cameras-column").on "click", ->
     column = snapshots_table.column($(this).attr("data-val"))
     column.visible !column.visible()
+
+paymentMethod = (name) ->
+  if name is "0"
+    "Stripe"
+  else
+    "Custom"
 
 colorStatus = (name) ->
   if name is "t"

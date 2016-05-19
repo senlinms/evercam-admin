@@ -27,7 +27,7 @@ initializeDataTable = ->
       # execute some code on network or other general error
       return
     onDataLoad: (grid) ->
-      cellDesign()
+      # execute some code on network or other general error
     dataTable:
       'bAutoWidth': false
       'bStateSave': false
@@ -53,16 +53,17 @@ initializeDataTable = ->
         {data: "5", "width": "120px", "render": cameraLink, "sClass": "center" },
         {data: "6", "width": "120px", "sClass": "center", "render": removeMinus },
         {data: "7", "width": "120px", "sClass": "center", "render": removeMinus },
-        {data: "8", "width": "110px" },
+        {data: "8", "width": "110px", "sClass": "center" },
         {data: "9", "width": "100px", "sType": "uk_datetime" },
         {data: "10", visible: false },
         {data: "11", "width": "100px" },
         {data: "12", "width": "120px", "sClass": "center" },
         {data: "13", "width": "120px", "sClass": "center green" },
-        {data: "14", "width": "120px", "sClass": "center red", "render": removeMinus }
+        {data: "14", "width": "120px", "sClass": "center red", "render": removeMinus },
+        {data: "15", "width": "130px", "sClass": "center" , "render": paymentMethod}
       ],
       initComplete: ->
-        cellDesign()
+        # execute some code on network or other general error
 
 columnsDropdown = ->
   $(".users-column").on "click", ->
@@ -103,16 +104,22 @@ appendMe = ->
 
 linkUser = (name, type, row) ->
   return "<div class='link-user'>
-            <a class='pull-left' href='/users/#{row[15]}'>#{name}</a>
-            <a class='pull-right u-dash' href='#{row[16]}/v1/cameras?api_id=#{row[3]}&api_key=#{row[4]}' target='_blank'><i class='fa fa-external-link'></i></a>
+            <a class='pull-left' href='/users/#{row[16]}'>#{name}</a>
+            <a class='pull-right u-dash' href='#{row[17]}/v1/cameras?api_id=#{row[3]}&api_key=#{row[4]}' target='_blank'><i class='fa fa-external-link'></i></a>
             <a tooltip='Intercom Conversation' class='pull-right open-intercom' data-username=#{row[0]}><i class='fa fa-comment-o'></i></a>
           </div>"
 
 cameraLink = (name, type, row) ->
-  return "<a href='/users/#{row[15]}#tab_1_12'>#{name}</a>"
+  return "<a href='/users/#{row[16]}#tab_1_12'>#{name}</a>"
 
 totalCameras = (name, type, row) ->
   return row[6] + row[5]
+
+paymentMethod = (name) ->
+  if name is "0"
+    "Stripe"
+  else
+    "Custom"
 
 showTable = ->
   $(window).load ->
@@ -213,13 +220,6 @@ onIntercomClick = ->
       url: "/intercom/user"
 
     sendAJAXRequest(settings)
-
-cellDesign = ->
-  console.log "hi"
-  # $("#users_datatables > thead > tr > th").css("padding": "2px 4px")
-  # $("#users_datatables > tbody > tr > th").css("padding": "2px 4px")
-  # $("#users_datatables > thead > tr > td").css("padding": "2px 4px")
-  # $("#users_datatables > tbody > tr > td").css("padding": "2px 4px")
 
 window.initializeusers = ->
   initializeDataTable()
