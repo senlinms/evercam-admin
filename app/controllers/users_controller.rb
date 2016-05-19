@@ -40,7 +40,7 @@ class UsersController < ApplicationController
 
     sorting1 = "order by u.id #{order_for}"
     sorting2 = ""
-    first_sort = ["0", "1", "2", "3", "4", "5", "6", "8", "9", "10", "11", "12", "13"]
+    first_sort = ["0", "1", "2", "3", "4", "5", "6", "8", "9", "10", "11", "12", "13", "15"]
     second_sort = ["7", "14"]
     if first_sort.include? col_for_order
       sorting1 = sorting(col_for_order, order_for)
@@ -94,7 +94,7 @@ class UsersController < ApplicationController
                  select *, (select count(cr.id) from cloud_recordings cr left join cameras c on c.owner_id=u.id where c.id=cr.camera_id and cr.status <>'off') required_licence,
                  (select SUM(l.total_cameras) from licences l left join users uu on l.user_id=uu.id where uu.id=u.id and cancel_licence=false) valid_licence,
                  (select count(*) from cameras cc left join users uuu on cc.owner_id=uuu.id where uuu.id=u.id) cameras_owned,
-                 ((select count(*) from camera_shares cs left join users uuuu on cs.user_id=uuuu.id where uuuu.id = u.id) - 1) camera_shares,
+                 (select count(*) from camera_shares cs left join users uuuu on cs.user_id=uuuu.id where uuuu.id = u.id) camera_shares,
                  (select name from countries ct left join users uuuuu on ct.id=uuuuu.country_id where uuuuu.id=u.id) country
                  from users u #{condition} #{sorting1}
                 ) t #{condition2} #{sorting2}")
@@ -125,6 +125,7 @@ class UsersController < ApplicationController
         users[index]["required_licence"],
         users[index]["valid_licence"],
         users[index]["def"],
+        users[index]["payment_method"],
         users[index]["id"],
         check_env
       ]
@@ -189,6 +190,8 @@ class UsersController < ApplicationController
       "order by valid_licence #{order}"
     when "14"
       "order by def #{order}"
+    when "15"
+      "order by payment_method #{order}"
     when "10"
       "order by u.id desc"
     else
