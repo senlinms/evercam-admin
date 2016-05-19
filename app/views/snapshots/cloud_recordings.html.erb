@@ -51,6 +51,7 @@
             <th name="order_cam_user_id" class="sorting">User Id</th>
             <th name="order_cam_thumbail" class="sorting">Thumbnail</th>
             <th name="order_cam_licenced" class="sorting">Licenced</th>
+            <th name="order_cam_p_method" class="sorting">Payment Method</th>
           </tr>
           </thead>
           <tbody>
@@ -109,6 +110,7 @@
                   t
                 <% end %>
               </td>
+              <td><%= camera["payment_method"] %></td>
             </tr>
           <% end %>
           </tbody>
