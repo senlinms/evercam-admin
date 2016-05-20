@@ -45,7 +45,7 @@ initializeDataTable = ->
         'headers': headers
         'url': '/load_users'
       columns: [
-        {data: "0", "orderable": true, "width": "75px" },
+        {data: "0", "orderable": true, "width": "95px" },
         {data: "1", "render": linkUser, "width": "170px" },
         {data: "2", "width": "150px" },
         {data: "3", "width": "70px", visible: false },
