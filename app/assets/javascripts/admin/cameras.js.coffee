@@ -45,19 +45,19 @@ initializeDataTable = ->
       columns: [
         {data: "0", "width": "117px", "orderable": true, "render": linkCamera },
         {data: "1", "width": "150px", "render": linkOwner },
-        {data: "2", "width": "100px" },
+        {data: "2", "width": "125px" },
         {data: "3", "width": "90px" },
         {data: "4", "width": "70px" },
         {data: "5", "width": "75px" },
         {data: "6", "width": "135px" },
-        {data: "7", "width": "75px" },
+        {data: "7", "width": "100px" },
         {data: "8", "width": "110px" },
         {data: "9", "width": "100px" },
         {data: "10", "width": "130px" },
-        {data: "11", "width": "60px" },
-        {data: "12", "width": "60px", "render": colorStatus },
+        {data: "11", "width": "60px", "sClass": "center" },
+        {data: "12", "width": "60px", "render": colorStatus, "sClass": "center" },
         {data: "13", "width": "105px", "sType": "uk_datetime" },
-        {data: "14", visible: false }
+        {data: "14", visible: false, "width": "75px" }
       ],
       initComplete: ->
         # execute some code on network or other general error
