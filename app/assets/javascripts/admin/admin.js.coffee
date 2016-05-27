@@ -39,6 +39,7 @@
 #= require admin/moment.min.js
 #= require admin/file-size.js
 #= require admin/fullcalendar.min.js
+#= require admin/natural.js
 #= require admin/jquery.numericupdown.js
 
 $ ->

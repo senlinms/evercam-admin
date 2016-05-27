@@ -37,8 +37,8 @@ initializeDataTable = ->
     ],
     iDisplayLength: 500
     columnDefs: [
-      type: "date-uk"
-      targets: 'datatable-date'
+      {type: "date-uk", targets: 'datatable-date'},
+      {type: "natural", targets: 5}
     ],
     "oLanguage": {
       "sSearch": "Filter:"
