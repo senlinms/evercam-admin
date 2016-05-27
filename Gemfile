@@ -97,4 +97,4 @@ gem 'aws-sdk-v1'
 gem 'rmega', '~> 0.2.2'
 
 gem 'airbrake'
-gem 'intercom', "~> 3.4.0"
+gem 'intercom', "~> 3.5.1"
