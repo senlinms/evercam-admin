@@ -36,7 +36,7 @@ class UsersController < ApplicationController
   def load_users
     col_for_order = params[:order]["0"]["column"]
     order_for = params[:order]["0"]["dir"]
-    case_value = "(CASE WHEN (required_licence - valid_licence) >= 0 THEN (required_licence - valid_licence) ELSE required_licence end)"
+    case_value = "(CASE WHEN (required_licence - (CASE WHEN valid_licence >=0 THEN valid_licence ELSE 0 END)) >= 0 THEN (required_licence - (CASE WHEN valid_licence >=0 THEN valid_licence ELSE 0 END)) ELSE 0 end)"
 
     sorting1 = "order by u.id #{order_for}"
     sorting2 = ""
@@ -74,11 +74,11 @@ class UsersController < ApplicationController
     elsif params[:licVALID1].present? && params[:licVALID2].present?
       condition2 = "where valid_licence > #{params[:licVALID1]} and valid_licence < #{params[:licVALID2]}"
     elsif params[:licDEF1].present? && params[:licDEF2].present?
-      condition2 = "where (required_licence - valid_licence) > #{params[:licDEF1]} and (required_licence - valid_licence) < #{params[:licDEF2]}"
+      condition2 = "where (required_licence - (CASE WHEN valid_licence >=0 THEN valid_licence ELSE 0 END)) > #{params[:licDEF1]} and (required_licence - (CASE WHEN valid_licence >=0 THEN valid_licence ELSE 0 END)) < #{params[:licDEF2]}"
     elsif params[:licDEF1].present?
-      condition2 = "where (required_licence - valid_licence) > #{params[:licDEF1]}"
+      condition2 = "where (required_licence - (CASE WHEN valid_licence >=0 THEN valid_licence ELSE 0 END)) > #{params[:licDEF1]}"
     elsif params[:licDEF2].present?
-      condition2 = "where (required_licence - valid_licence) < #{params[:licDEF2]}"
+      condition2 = "where (required_licence - (CASE WHEN valid_licence >=0 THEN valid_licence ELSE 0 END)) < #{params[:licDEF2]}"
     elsif params[:licVALID1].present?
       condition2 = "where valid_licence > #{params[:licVALID1]}"
     elsif params[:licVALID2].present?
@@ -119,9 +119,9 @@ class UsersController < ApplicationController
         users[index]["camera_shares"],
         users[index]["total_cameras"],
         users[index]["country"],
-        users[index]["created_at"] ? Date.parse(users[index]["created_at"]).strftime("%d/%m/%y %I:%M %p") : "",
-        users[index]["confirmed_at"] ? Date.parse(users[index]["confirmed_at"]).strftime("%d/%m/%y %I:%M %p") : "",
-        users[index]["last_login_at"] ? Date.parse(users[index]["last_login_at"]).strftime("%d/%m/%y %I:%M %p") : "",
+        users[index]["created_at"] ? DateTime.parse(users[index]["created_at"]).strftime("%A, %d %b %Y %l:%M %p") : "",
+        users[index]["confirmed_at"] ? DateTime.parse(users[index]["confirmed_at"]).strftime("%A, %d %b %Y %l:%M %p") : "",
+        users[index]["last_login_at"] ? DateTime.parse(users[index]["last_login_at"]).strftime("%A, %d %b %Y %l:%M %p") : "",
         users[index]["required_licence"],
         users[index]["valid_licence"],
         users[index]["def"],
