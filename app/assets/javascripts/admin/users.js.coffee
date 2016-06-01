@@ -54,9 +54,9 @@ initializeDataTable = ->
         {data: "6", "width": "120px", "sClass": "center", "render": removeMinus },
         {data: "7", "width": "120px", "sClass": "center", "render": removeMinus },
         {data: "8", "width": "110px", "sClass": "center" },
-        {data: "9", "width": "100px", "sType": "uk_datetime" },
-        {data: "10", visible: false },
-        {data: "11", "width": "100px" },
+        {data: "9", "width": "160px", "sType": "uk_datetime" },
+        {data: "10", "width": "160px", visible: false },
+        {data: "11", "width": "160px" },
         {data: "12", "width": "120px", "sClass": "center" },
         {data: "13", "width": "120px", "sClass": "center green" },
         {data: "14", "width": "120px", "sClass": "center red", "render": removeMinus },
@@ -163,8 +163,10 @@ validateDigit = ->
       $('#licDEF2').val("")
       return
 
-removeMinus = (deficient) ->
-  if deficient > 0
+removeMinus = (deficient, type, row) ->
+  if deficient > 0 && row[15] == "1"
+    return "<span style='color:green;'>#{deficient}</span>"
+  else if deficient > 0 && row[15] == "0"
     return deficient
   else
     ""
