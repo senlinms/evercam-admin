@@ -1,6 +1,5 @@
 <% if @archives.present? %>
   <% @archives.each do |archive| %>
-    <% requester = EvercamUser.find(archive.requested_by).decorate %>
     <tr>
       <td>
         <% if archive.camera.present? %>
@@ -9,12 +8,17 @@
           Camera doesn't not exist.
         <% end %>
       </td>
-      <td>
-        <div class='link-user'>
-          <a class='pull-left' href='/users/<%= archive.requested_by %>'><%= requester.fullname %></a>
-          <a class='pull-right u-dash' href='<%= check_env %>/v1/cameras/<%= archive.camera.present? ? archive.camera.exid : "" %>/archives?api_id=<%= requester.api_id %>&api_key=<%= requester.api_key %>' target='_blank'><i class='fa fa-external-link'></i></a>
-        </div>
-      </td>
+      <% begin %>
+        <% requester = EvercamUser.find(archive.requested_by).decorate %>
+        <td>
+          <div class='link-user'>
+            <a class='pull-left' href='/users/<%= archive.requested_by %>'><%= requester.fullname %></a>
+            <a class='pull-right u-dash' href='<%= check_env %>/v1/cameras/<%= archive.camera.present? ? archive.camera.exid : "" %>/archives?api_id=<%= requester.api_id %>&api_key=<%= requester.api_key %>' target='_blank'><i class='fa fa-external-link'></i></a>
+          </div>
+        </td>
+      <% rescue %>
+        <td>User doesn't exist!</td>
+      <% end %>
       <td><%= archive.title %></td>
       <td><%= archive.from_date.strftime('%a, %d %b %Y %H:%M:%S') %></td>
       <td><%= archive.to_date.strftime('%a, %d %b %Y %H:%M:%S') %></td>
