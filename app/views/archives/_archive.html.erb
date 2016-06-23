@@ -8,15 +8,14 @@
           Camera doesn't not exist.
         <% end %>
       </td>
-      <% begin %>
-        <% requester = EvercamUser.find(archive.requested_by).decorate %>
+      <% if archive.user.present? %>
         <td>
           <div class='link-user'>
-            <a class='pull-left' href='/users/<%= archive.requested_by %>'><%= requester.fullname %></a>
-            <a class='pull-right u-dash' href='<%= check_env %>/v1/cameras/<%= archive.camera.present? ? archive.camera.exid : "" %>/archives?api_id=<%= requester.api_id %>&api_key=<%= requester.api_key %>' target='_blank'><i class='fa fa-external-link'></i></a>
+            <a class='pull-left' href='/users/<%= archive.requested_by %>'><%= archive.user.fullname %></a>
+            <a class='pull-right u-dash' href='<%= check_env %>/v1/cameras/<%= archive.camera.present? ? archive.camera.exid : "" %>/archives?api_id=<%= archive.user.api_id %>&api_key=<%= archive.user.api_key %>' target='_blank'><i class='fa fa-external-link'></i></a>
           </div>
         </td>
-      <% rescue %>
+      <% else %>
         <td>User doesn't exist!</td>
       <% end %>
       <td><%= archive.title %></td>
