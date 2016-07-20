@@ -15,8 +15,7 @@ class EvercamUserDecorator < Draper::Decorator
            :last_login_at,
            :id,
            :payment_method,
-           :insight_id,
-           :insight_auth_key
+           :insight_id
 
   def is_admin
     h.human_boolean(object.is_admin?)
