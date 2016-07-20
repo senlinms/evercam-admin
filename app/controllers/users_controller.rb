@@ -153,7 +153,7 @@ class UsersController < ApplicationController
   end
 
   def user_params
-    params.require(:user).permit(:firstname, :lastname, :email, :country_id, :payment_method, :insight_id, :insight_auth_key)
+    params.require(:user).permit(:firstname, :lastname, :email, :country_id, :payment_method, :insight_id)
   end
 
   def set_user
