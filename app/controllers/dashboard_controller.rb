@@ -19,7 +19,7 @@ class DashboardController < ApplicationController
     gardashared.each do |share|
       ids[ids.count] = share.camera.id
     end
-    @cameras = Camera.where(id: ids).decorate
+    @cameras = Camera.where(id: ids).where("location is not null").decorate
   end
 
   def kpi
