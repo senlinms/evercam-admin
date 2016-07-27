@@ -9,20 +9,20 @@ gem 'rails', '4.2.6'
 gem 'pg'
 
 # Use SCSS for stylesheets
-gem 'sass-rails', '~> 5.0'
+gem 'sass-rails', '~> 5.0.6'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 3.0.0'
 gem 'yui-compressor'
 
 # Use CoffeeScript for .coffee assets and views
-gem 'coffee-rails', '~> 4.1.1'
+gem 'coffee-rails', '~> 4.2.1'
 
 gem 'sprockets'
 gem 'sprockets-es6', require: 'sprockets/es6'
 # gem 'fog'
 # gem 'asset_sync'
 gem 'autoprefixer-rails'
-gem 'rake', '11.1.2'
+gem 'rake', '11.2.2'
 
 gem 'stripe',
     github: 'stripe/stripe-ruby'
@@ -50,7 +50,7 @@ gem 'jquery-rails'
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 gem 'turbolinks'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-gem 'jbuilder', '~> 2.4.1'
+gem 'jbuilder', '~> 2.6.0'
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0', group: :doc
 
@@ -78,7 +78,7 @@ group :test do
   gem 'capybara'
   gem 'shoulda-matchers'
   gem 'webmock'
-  gem 'nokogiri', '~> 1.6.7.2'
+  gem 'nokogiri', '~> 1.6.8'
   gem 'vcr'
   gem 'poltergeist'
   gem 'selenium-webdriver'
@@ -97,4 +97,4 @@ gem 'aws-sdk-v1'
 gem 'rmega', '~> 0.2.2'
 
 gem 'airbrake'
-gem 'intercom', "~> 3.5.1"
+gem 'intercom', "~> 3.5.2"
