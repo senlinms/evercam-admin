@@ -22,7 +22,7 @@ gem 'sprockets-es6', require: 'sprockets/es6'
 # gem 'fog'
 # gem 'asset_sync'
 gem 'autoprefixer-rails'
-gem 'rake', '11.1.2'
+gem 'rake', '11.2.2'
 
 gem 'stripe',
     github: 'stripe/stripe-ruby'
