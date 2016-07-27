@@ -15,7 +15,7 @@ gem 'uglifier', '>= 3.0.0'
 gem 'yui-compressor'
 
 # Use CoffeeScript for .coffee assets and views
-gem 'coffee-rails', '~> 4.1.1'
+gem 'coffee-rails', '~> 4.2.1'
 
 gem 'sprockets'
 gem 'sprockets-es6', require: 'sprockets/es6'
