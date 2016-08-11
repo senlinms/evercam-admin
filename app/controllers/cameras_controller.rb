@@ -79,6 +79,7 @@ class CamerasController < ApplicationController
         cameras[index].mac_address,
         cameras[index].vendor_model_name,
         cameras[index].vendor_name,
+        cameras[index].timezone,
         cameras[index].is_public,
         cameras[index].is_online,
         cameras[index].creation_date,
@@ -203,10 +204,12 @@ class CamerasController < ApplicationController
     when "10"
       "v.name #{order}"
     when "11"
-      "cameras.is_public #{order}"
+      "cameras.timezone #{order}"
     when "12"
-      "cameras.is_online #{order}"
+      "cameras.is_public #{order}"
     when "13"
+      "cameras.is_online #{order}"
+    when "14"
       "cameras.created_at #{order}"
     else
       "cameras.created_at desc"

@@ -54,10 +54,11 @@ initializeDataTable = ->
         {data: "8", "width": "110px" },
         {data: "9", "width": "100px" },
         {data: "10", "width": "130px" },
-        {data: "11", "width": "60px", "sClass": "center" },
-        {data: "12", "width": "60px", "render": colorStatus, "sClass": "center" },
-        {data: "13", "width": "105px", "sType": "uk_datetime" },
-        {data: "14", visible: false, "width": "75px" }
+        {data: "11", "width": "130px" },
+        {data: "12", "width": "60px", "sClass": "center" },
+        {data: "13", "width": "60px", "render": colStatus, "sClass": "center" },
+        {data: "14", "width": "105px", "sType": "uk_datetime" },
+        {data: "15", visible: false, "width": "75px" }
       ],
       initComplete: ->
         # execute some code on network or other general error
@@ -81,19 +82,19 @@ appendMe = ->
   $("#cameras_datatables_paginate > .pagination-panel").css("display", "none")
   $(".paging_bootstrap_extended").css("float","none")
 
-colorStatus = (name) ->
+colStatus = (name) ->
   if name is "true" || name is true
     return "<span style='color: green;'>True</span>"
   else if name is "false" || name is false
     return "<span style='color: red;'>False</span>"
 
 linkCamera = (name, type, row) ->
-  return "<a href='/cameras/#{row[15]}'>#{row[0]}</a>"
+  return "<a href='/cameras/#{row[16]}'>#{row[0]}</a>"
 
 linkOwner = (name, type, row) ->
-  url = "#{row[19]}/v1/cameras/#{row[0]}?api_id=#{row[17]}&api_key=#{row[18]}"
+  url = "#{row[20]}/v1/cameras/#{row[0]}?api_id=#{row[18]}&api_key=#{row[19]}"
   return "<div class='link-user'>" +
-    "<a class='pull-left' href='/users/#{row[16]}'>#{name}</a>" +
+    "<a class='pull-left' href='/users/#{row[17]}'>#{name}</a>" +
     "<a class='pull-right' href= #{url} target='_blank'>" +
     "<i class='fa fa-external-link'></i></a></div>"
 
