@@ -7,7 +7,7 @@ cache: bundler
   # - vendor/cache
 
 rvm:
-- 2.2.2
+- 2.3.1
 
 addons:
   postgresql: 9.3

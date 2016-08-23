@@ -1,9 +1,9 @@
 source 'https://rubygems.org'
 
-fail 'Ruby version must be greater than 2.0' unless RUBY_VERSION.to_f > 2.0
+ruby '2.3.1'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.2.6'
+gem 'rails'
 
 # Use postgresql as the database for Active Record
 gem 'pg'
@@ -62,13 +62,13 @@ gem 'puma'
 # Use Draper for decorators
 gem 'draper'
 
-gem 'devise'
+gem 'devise','~> 3.5.6'
 
 group :development, :test do
   gem 'pry'
   gem 'factory_girl_rails', require: false
-  gem 'rspec-rails', '~> 3.4.2'
-  gem 'rspec', '~> 3.4.0'
+  gem 'rspec-rails'
+  gem 'rspec'
   gem 'spinach-rails'
   gem 'database_cleaner'
   gem 'launchy'
