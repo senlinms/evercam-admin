@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-ruby '2.3.1'
+fail 'Ruby version must be greater than 2.0' unless RUBY_VERSION.to_f > 2.0
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails'
