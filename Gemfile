@@ -63,6 +63,7 @@ gem 'puma'
 gem 'draper'
 
 gem 'devise','~> 3.5.6'
+gem 'dotenv'
 
 group :development, :test do
   gem 'pry'
@@ -86,8 +87,6 @@ group :test do
 end
 
 group :evercam do
-  gem 'evercam_misc',
-    github: 'evercam/evercam-misc'
   gem 'evercam',
     github: 'evercam/evercam-ruby'
 end

@@ -1,11 +1,4 @@
 GIT
-  remote: git://github.com/evercam/evercam-misc.git
-  revision: 45a9cb02d75378fc3989d9b0f3845dfd86022af0
-  specs:
-    evercam_misc (0.0.11)
-      dotenv (~> 2.0)
-
-GIT
   remote: git://github.com/evercam/evercam-ruby.git
   revision: 9834d2e1a6fe70832ebf392d053c509f2e1e3f9c
   specs:
@@ -110,7 +103,7 @@ GEM
     diff-lcs (1.2.5)
     domain_name (0.5.20160128)
       unf (>= 0.0.5, < 1.0.0)
-    dotenv (2.1.0)
+    dotenv (2.1.1)
     draper (2.1.0)
       actionpack (>= 3.0)
       activemodel (>= 3.0)
@@ -347,9 +340,9 @@ DEPENDENCIES
   coffee-rails (~> 4.2.1)
   database_cleaner
   devise (~> 3.5.6)
+  dotenv
   draper
   evercam!
-  evercam_misc!
   factory_girl_rails
   geocoder
   georuby
@@ -397,9 +390,6 @@ DEPENDENCIES
   webmock
   whenever
   yui-compressor
-
-RUBY VERSION
-   ruby 2.3.1p112
 
 BUNDLED WITH
    1.12.5
