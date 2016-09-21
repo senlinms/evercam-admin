@@ -65,31 +65,32 @@ class CamerasController < ApplicationController
     index_end = display_start + display_length
     index_end = index_end > total_records ? total_records - 1 : index_end
     records = { data: [], draw: table_draw, recordsTotal: total_records, recordsFiltered: total_records }
-
     (display_start..index_end).each do |index|
-      records[:data][records[:data].count] = [
-        cameras[index].exid,
-        cameras[index].user.fullname,
-        cameras[index].name,
-        cameras[index].config.deep_fetch("external_host") { "" },
-        cameras[index].config.deep_fetch("external_http_port") { "" },
-        cameras[index].config.deep_fetch("external_rtsp_port") { "" },
-        cameras[index].config.deep_fetch("auth", "basic", "username") { "" },
-        cameras[index].config.deep_fetch("auth", "basic", "password") { "" },
-        cameras[index].mac_address,
-        cameras[index].vendor_model_name,
-        cameras[index].vendor_name,
-        cameras[index].timezone,
-        cameras[index].is_public,
-        cameras[index].is_online,
-        cameras[index].creation_date,
-        cameras[index].last_poll_date,
-        cameras[index].id,
-        cameras[index].user.id,
-        cameras[index].user.api_id,
-        cameras[index].user.api_key,
-        check_env
-      ]
+      if cameras[index].present? && cameras[index].user.present?
+        records[:data][records[:data].count] = [
+          cameras[index].exid,
+          cameras[index].user.fullname,
+          cameras[index].name,
+          cameras[index].config.deep_fetch("external_host") { "" },
+          cameras[index].config.deep_fetch("external_http_port") { "" },
+          cameras[index].config.deep_fetch("external_rtsp_port") { "" },
+          cameras[index].config.deep_fetch("auth", "basic", "username") { "" },
+          cameras[index].config.deep_fetch("auth", "basic", "password") { "" },
+          cameras[index].mac_address,
+          cameras[index].vendor_model_name,
+          cameras[index].vendor_name,
+          cameras[index].timezone,
+          cameras[index].is_public,
+          cameras[index].is_online,
+          cameras[index].creation_date,
+          cameras[index].last_poll_date,
+          cameras[index].id,
+          cameras[index].user.id,
+          cameras[index].user.api_id,
+          cameras[index].user.api_key,
+          check_env
+        ]
+      end
     end
     render json: records
   end
