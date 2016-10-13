@@ -25,8 +25,8 @@ class DashboardController < ApplicationController
   def maps_construction
     @cameras_owned = Camera.where(owner_id: 13959).where("location is not null").decorate
     ids = []
-    maps_shared = CameraShare.where(user_id: 13959)
-    maps_shared.each do |share|
+    construction_shared = CameraShare.where(user_id: 13959)
+    construction_shared.each do |share|
       ids[ids.count] = share.camera.id
     end
     @cameras_shared = Camera.where(id: ids).where("location is not null").decorate
