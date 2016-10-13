@@ -84,6 +84,7 @@ group :test do
   gem 'poltergeist'
   gem 'selenium-webdriver'
   gem 'phantomjs', :require => 'phantomjs/poltergeist'
+  gem "codeclimate-test-reporter", :require => nil
 end
 
 group :evercam do
