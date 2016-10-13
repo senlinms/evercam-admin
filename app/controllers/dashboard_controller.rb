@@ -10,7 +10,9 @@ class DashboardController < ApplicationController
   end
 
   def map
-    @cameras = Camera.where.not(location: nil).decorate
+    @cameras = Camera.includes(:user)
+                     .where.not(users: {api_key: nil, api_id: nil})
+                     .where.not(location: nil).decorate
   end
 
   def maps_gardashared
