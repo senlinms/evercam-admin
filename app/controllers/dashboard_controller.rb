@@ -23,12 +23,14 @@ class DashboardController < ApplicationController
   end
 
   def maps_construction
+    @cameras_owned = Camera.where(owner_id: 13959).where("location is not null").decorate
     ids = []
     gardashared = CameraShare.where(user_id: 13959)
     gardashared.each do |share|
       ids[ids.count] = share.camera.id
     end
-    @cameras = Camera.where(id: ids).where("location is not null").decorate
+    @cameras_shared = Camera.where(id: ids).where("location is not null").decorate
+    @cameras = @cameras_owned + @cameras_shared
   end
 
   def kpi
