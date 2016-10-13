@@ -5,6 +5,6 @@ class VendorModel < ActiveRecord::Base
   has_many :camera
 
   validates :name, presence: true
-  validates :exid, presence: true
+  validates :exid, presence: true, uniqueness: true
   validates :jpg_url, presence: true
 end
