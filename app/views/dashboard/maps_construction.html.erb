@@ -1,0 +1,111 @@
+<!-- BEGIN CONTENT -->
+<div class="page-content-wrapper">
+  <div class="page-content">
+    <div class="full-height-content full-height-content-scrollable">
+      <div class="slimScrollDiv">
+        <div class="full-height-content-body" data-initialized="1">
+            <div id="map_canvas"></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+<!-- END CONTENT -->
+
+<script src="//maps.googleapis.com/maps/api/js?v=3.11&sensor=false&key=<%= ENV['GOOGLE_MAP_KEY']%>" type="text/javascript"></script>
+
+<script type="text/javascript">
+  $(document).ready(function () {
+
+  // execute
+  (function () {
+    // map options
+    var options = {
+      zoom: 2,
+      center: new google.maps.LatLng(25, 10), // centered US
+      mapTypeId: google.maps.MapTypeId.TERRAIN,
+      mapTypeControl: false
+    };
+
+    // init map
+    var map = new google.maps.Map(document.getElementById('map_canvas'), options);
+    var iconBase;
+    // set multiple marker
+    <% @cameras.each do |camera| %>
+      <% if camera.vendor_exid == "other" || camera.vendor_exid.nil? %>
+        <% logo_url = "" %>
+      <% else %>
+        <% logo_url = "<img width='80' src='http://evercam-public-assets.s3.amazonaws.com/#{camera.vendor_exid}/logo.jpg' />" %>
+      <% end %>
+
+      <% if camera.is_online == false %>
+        iconBase = 'http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|808080'
+      <% else %>
+        iconBase = ''
+      <% end %>
+      <% if camera.is_public == "No" %>
+        <% thumbnail = "<img height='140' src='https://media.evercam.io/v1/cameras/#{camera.exid}/thumbnail?api_id=#{camera.user.api_id}&api_key=#{camera.user.api_key}' />" %>
+      <% else %>
+        <% thumbnail = "<img height='140' src='https://media.evercam.io/v1/cameras/#{camera.exid}/thumbnail?' />" %>
+      <% end %>
+      // init markers
+      var marker = new google.maps.Marker({
+        position: new google.maps.LatLng(<%=  Geocoding.as_point(camera.location).y %>, <%=  Geocoding.as_point(camera.location).x %>),
+        map: map,
+        icon: iconBase,
+        title: 'Click Me '
+      });
+
+      // process multiple info windows
+      (function (marker) {
+        // add click event
+        google.maps.event.addListener(marker, 'click', function () {
+          infowindow = new google.maps.InfoWindow({
+            content: 
+            '<table class="table table-striped">\
+              <tbody>\
+                <tr>\
+                  <th></th>\
+                  <td><%= thumbnail.tr("'", '"').html_safe %><br/><br/>\
+                    <div class="center">\
+                      <strong >\
+                        <%= camera.name %> \
+                        <a href="https://dash.evercam.io/v1/cameras/<%= camera.exid %>/live?api_id=<%= camera.user.api_id %>&api_key=<%= camera.user.api_key %>" target="_blank">\
+                        <i class="fa fa-external-link"></i>\
+                        </a>\
+                      </strong>\
+                    </div>\
+                  </td>\
+                </tr>\
+                <tr>\
+                <th>Data Processor</th>\
+                  <td>Camba.tv Ltd. 01-5383333</td>\
+                </tr>\
+                <tr>\
+                  <th>Data Controller</th>\
+                  <td><%= camera.user.username %></td>\
+                </tr>\
+                <tr>\
+                  <th>Online ?</th>\
+                  <td><%= camera.map_camera %></td>\
+                </tr>\
+                <tr>\
+                  <th>Public ?</th>\
+                  <td><%= camera.is_public %></td>\
+                </tr>\
+                <tr>\
+                  <th>Vendor/Model</th>\
+                  <td><%= logo_url.tr("'", '"').html_safe %> <%= camera.vendor_model_name %></td>\
+                </tr>\
+              </tbody>\
+            </table>'
+          });
+
+          infowindow.open(map, marker);
+        });
+      })(marker);
+      <% end %>
+    })();
+  });
+</script>
