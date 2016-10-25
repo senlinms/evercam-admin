@@ -166,6 +166,7 @@ clearForm = ->
   $('#interval option:eq(0)').prop('selected', true)
   $('#cloud-recording-calendar').fullCalendar "removeEvents"
   $('#cloud-recording-calendar').removeClass "open"
+  schedule = undefined
 
 window.initializSnapshotExtractors = ->
   initDateTime()
