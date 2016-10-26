@@ -9,6 +9,10 @@ class SnapshotExtractorsController < ApplicationController
     @set_cameras
   end
 
+  def list
+    @snapshot_extractors = SnapshotExtractor.order("created_at DESC").all
+  end
+
   def create
     status = 1
     SnapshotExtractor.create(
