@@ -31,6 +31,7 @@
 #= require admin/snapshot_reports.js
 #= require admin/archives.js
 #= require admin/snapshot_extractors.js
+#= require admin/snapshot_ex_list.js
 #= require admin/dashboard.js
 #= require admin/licence_reports.js
 #= require admin/timelapse_report.js

@@ -1,0 +1,21 @@
+<% if @snapshot_extractors.present? %>
+  <% @snapshot_extractors.each do |extractor| %>
+    <tr>
+      <td><%= extractor.id %></td>
+      <td>
+        <% if extractor.camera.present? %>
+          <%= extractor.camera.name %>
+        <% else %>
+          Camera doesn't not exist.
+        <% end %>
+      </td>
+      <td><%= extractor.from_date.strftime('%a, %d %b %Y') %></td>
+      <td><%= extractor.to_date.strftime('%a, %d %b %Y') %></td>
+      <td><%= extractor.interval %></td>
+      <td><%= extractor.status %></td>
+      <td><%= extractor.notes %></td>
+      <td><%= extractor.created_at.strftime('%a, %d %b %Y %H:%M:%S') %></td>
+      <td><%= extractor.updated_at.strftime('%a, %d %b %Y %H:%M:%S') %></td>
+    </tr>
+  <% end %>
+<% end %>
