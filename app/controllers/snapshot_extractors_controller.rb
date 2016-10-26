@@ -1,7 +1,7 @@
 class SnapshotExtractorsController < ApplicationController
 
   def index
-    @cameras = Camera.where(owner_id: 13959).decorate
+    @cameras = Camera.where(owner_id: 13959).order("name ASC").decorate
     @set_cameras = ["Select Camera", ""]
     @cameras.each do |camera|
       @set_cameras[@set_cameras.length] = [camera.name, camera.id]
