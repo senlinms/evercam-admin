@@ -10,8 +10,8 @@ initializeDataTable = ->
     columns: [
       {data: "0", sWidth: "70px", sClass: "center" },
       {data: "1", sWidth: "150px" },
-      {data: "2", sWidth: "200px" },
-      {data: "3", sWidth: "150px" },
+      {data: "2", sWidth: "110px" },
+      {data: "3", sWidth: "110px" },
       {data: "4", sWidth: "80px", sClass: "center" },
       {data: "5", sWidth: "80px", sClass: "center", "render": extractorStatus },
       {data: "6", sWidth: "150px" },
