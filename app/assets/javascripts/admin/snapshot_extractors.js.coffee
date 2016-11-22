@@ -1,12 +1,12 @@
 schedule = undefined
 fullWeekSchedule =
-  "Monday": ["00:00-23:59"]
-  "Tuesday": ["00:00-23:59"]
-  "Wednesday": ["00:00-23:59"]
-  "Thursday": ["00:00-23:59"]
-  "Friday": ["00:00-23:59"]
-  "Saturday": ["00:00-23:59"]
-  "Sunday": ["00:00-23:59"]
+  "Monday": ["08:00-17:30"]
+  "Tuesday": ["08:00-17:30"]
+  "Wednesday": ["08:00-17:30"]
+  "Thursday": ["08:00-17:30"]
+  "Friday": ["08:00-17:30"]
+  "Saturday": []
+  "Sunday": []
 data = {}
 
 sendAJAXRequest = (settings) ->
@@ -36,8 +36,9 @@ initScheduleCalendar = ->
     allDaySlot: false
     columnFormat: 'ddd'
     defaultDate: '1970-01-01'
+    slotDuration: '00:60:00'
     defaultView: 'agendaWeek'
-    dayNamesShort: ["S", "M", "T", "W", "T", "F", "S"]
+    dayNamesShort: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
     eventColor: '#428bca'
     editable: true
     eventClick: (event, element) ->
