@@ -16,7 +16,7 @@ initializeDataTable = ->
       {data: "5", sWidth: "80px", sClass: "center", "render": extractorStatus },
       {data: "6", sWidth: "150px" },
       {data: "7", sWidth: "200px" },
-      {data: "8", sWidth: "200px" }
+      {data: "8", sWidth: "150px" }
     ],
     iDisplayLength: 500
     columnDefs: [
