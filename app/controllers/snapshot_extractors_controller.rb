@@ -21,7 +21,7 @@ class SnapshotExtractorsController < ApplicationController
       to_date: params[:to_date],
       interval: params[:interval],
       schedule: params[:schedule],
-      requestor: "#{current_user.firstname} #{current_user.lastname}"
+      requestor: current_user.fullname
     )
     render json: status
   end
