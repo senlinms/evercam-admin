@@ -41,7 +41,7 @@
       <div class="form-group">
         <label for="inputInterval" class="col-lg-2 control-label">Interval</label>
         <div class="col-xs-3">
-          <%= select_tag "Interval", options_for_select(@intervals), class: "form-control", id: "interval" %>
+          <%= select_tag "Interval", options_for_select(@intervals, ["1 Frame Every 10 min", "600"]), class: "form-control", id: "interval" %>
         </div>
       </div>
       <div class="form-group">
