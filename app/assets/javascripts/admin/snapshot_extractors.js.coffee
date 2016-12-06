@@ -1,4 +1,5 @@
 schedule = undefined
+scheduleCalendar = undefined
 fullWeekSchedule =
   "Monday": ["08:00-17:30"]
   "Tuesday": ["08:00-17:30"]
@@ -69,6 +70,33 @@ initScheduleCalendar = ->
     selectHelper: true
     selectable: true
     timezone: 'local'
+
+renderEvents = ->
+  schedule = fullWeekSchedule
+  days = _.keys(schedule)
+  calendarWeek = currentCalendarWeek()
+
+  _.forEach days, (weekDay) ->
+    day = schedule[weekDay]
+    unless day.length == 0
+      _.forEach day, (event) ->
+        start = event.split("-")[0]
+        end = event.split("-")[1]
+        event =
+          start: moment("#{calendarWeek[weekDay]} #{start}", "YYYY-MM-DD HH:mm")
+          end: moment("#{calendarWeek[weekDay]} #{end}", "YYYY-MM-DD HH:mm")
+        scheduleCalendar.fullCalendar('renderEvent', event, true)
+
+currentCalendarWeek = ->
+  calendarWeek = {}
+  weekStart = scheduleCalendar.fullCalendar('getView').start
+  weekEnd = scheduleCalendar.fullCalendar('getView').end
+  day = weekStart
+  while day.isBefore(weekEnd)
+    weekDay = day.format("dddd")
+    calendarWeek[weekDay] = day.format('YYYY-MM-DD')
+    day.add 1, 'days'
+  calendarWeek
 
 updateScheduleFromCalendar = ->
   schedule = parseCalendar()
@@ -164,8 +192,7 @@ clearForm = ->
   $(".chosen-single span").text "Select Camera"
   $("#datetimepicker1").val getTodayDate()
   $("#datetimepicker2").val getTodayDate()
-  $('#interval option:eq(0)').prop('selected', true)
-  $('#cloud-recording-calendar').fullCalendar "removeEvents"
+  $('#interval option:eq(4)').prop('selected', true)
   $('#cloud-recording-calendar').removeClass "open"
   schedule = undefined
 
@@ -173,5 +200,6 @@ window.initializSnapshotExtractors = ->
   initDateTime()
   initScheduleCalendar()
   onCollapsRecording()
+  renderEvents()
   onSearchSET()
   initChosen()
