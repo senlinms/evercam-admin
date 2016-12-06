@@ -192,8 +192,7 @@ clearForm = ->
   $(".chosen-single span").text "Select Camera"
   $("#datetimepicker1").val getTodayDate()
   $("#datetimepicker2").val getTodayDate()
-  $('#interval option:eq(0)').prop('selected', true)
-  $('#cloud-recording-calendar').fullCalendar "removeEvents"
+  $('#interval option:eq(4)').prop('selected', true)
   $('#cloud-recording-calendar').removeClass "open"
   schedule = undefined
 
