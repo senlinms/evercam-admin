@@ -7,18 +7,18 @@
     <ul class="page-sidebar-menu" data-auto-scroll="true" data-slide-speed="200">
       <li class="start ">
         <a href="/">
-          <i class="icon-home"></i>
-          <span class="title">Dashboard</span>
+          <i class="icon-users"></i>
+          <span class="title">Users</span>
           <span class="selected"></span>
         </a>
       </li>
       <!-- BEGIN FRONTEND THEME LINKS -->
       <li>
-        <%= link_to users_path do %>
-            <i class="icon-users"></i>
-            <span class="title">
-                Users
-            </span>
+        <%= link_to dashboard_path do %>
+          <i class="icon-home"></i>
+          <span class="title">
+              Dashboard
+          </span>
         <% end %>
       </li>
       <li>

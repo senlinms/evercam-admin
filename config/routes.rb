@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   resources :archives
   resources :snapshot_extractors
   resources :snapshot_reports
-  root to: 'dashboard#index'
+  root to: 'users#index'
 
   devise_options = {
       controllers: {
@@ -31,6 +31,7 @@ Rails.application.routes.draw do
   patch '/models' => 'vendor_models#update'
   delete "/models" => "vendor_models#delete"
 
+  get '/dashboard' => 'dashboard#index'
   get '/map' => 'dashboard#map'
   get "/maps_gardashared" => "dashboard#maps_gardashared"
   get "/maps_construction" => "dashboard#maps_construction"
