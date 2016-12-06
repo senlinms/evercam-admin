@@ -35,7 +35,7 @@ initializeDataTable = ->
         [ 25, 50, 100, 150 ]
       ]
       'pageLength': 50
-      "order": [[ 13, "desc" ]]
+      "order": [[ 0, "desc" ]]
       'processing': true
       'language': 'processing': '<img src="/assets/loading.gif">'
       'ajax':
@@ -43,21 +43,21 @@ initializeDataTable = ->
         'headers': headers
         'url': '/load_cameras'
       columns: [
-        {data: "0", "width": "117px", "orderable": true, "render": linkCamera },
-        {data: "1", "width": "150px", "render": linkOwner },
-        {data: "2", "width": "125px" },
-        {data: "3", "width": "90px" },
-        {data: "4", "width": "70px" },
-        {data: "5", "width": "75px" },
-        {data: "6", "width": "135px" },
-        {data: "7", "width": "100px" },
-        {data: "8", "width": "110px" },
-        {data: "9", "width": "100px" },
-        {data: "10", "width": "130px" },
+        {data: "0", "width": "105px", "orderable": true, "sType": "uk_datetime" },
+        {data: "1", "width": "117px", "orderable": true, "render": linkCamera },
+        {data: "2", "width": "150px", "render": linkOwner },
+        {data: "3", "width": "125px" },
+        {data: "4", "width": "90px" },
+        {data: "5", "width": "70px" },
+        {data: "6", "width": "75px" },
+        {data: "7", "width": "135px" },
+        {data: "8", "width": "100px" },
+        {data: "9", "width": "110px" },
+        {data: "10", "width": "100px" },
         {data: "11", "width": "130px" },
-        {data: "12", "width": "60px", "sClass": "center" },
-        {data: "13", "width": "60px", "render": colStatus, "sClass": "center" },
-        {data: "14", "width": "105px", "sType": "uk_datetime" },
+        {data: "12", "width": "130px" },
+        {data: "13", "width": "60px", "sClass": "center" },
+        {data: "14", "width": "60px", "render": colStatus, "sClass": "center" },
         {data: "15", visible: false, "width": "75px" }
       ],
       initComplete: ->
@@ -89,10 +89,10 @@ colStatus = (name) ->
     return "<span style='color: red;'>False</span>"
 
 linkCamera = (name, type, row) ->
-  return "<a href='/cameras/#{row[16]}'>#{row[0]}</a>"
+  return "<a href='/cameras/#{row[16]}'>#{row[1]}</a>"
 
 linkOwner = (name, type, row) ->
-  url = "#{row[20]}/v1/cameras/#{row[0]}?api_id=#{row[18]}&api_key=#{row[19]}"
+  url = "#{row[20]}/v1/cameras/#{row[1]}?api_id=#{row[18]}&api_key=#{row[19]}"
   return "<div class='link-user'>" +
     "<a class='pull-left' href='/users/#{row[17]}'>#{name}</a>" +
     "<a class='pull-right' href= #{url} target='_blank'>" +

@@ -48,9 +48,9 @@ class CamerasController < ApplicationController
   def load_cameras
     col_for_order = params[:order]["0"]["column"]
     order_for = params[:order]["0"]["dir"]
-    condition = "lower(cameras.exid) like lower('%#{params[:fquery]}%') OR lower(cameras.name) like lower('%#{params[:fquery]}%') OR 
+    condition = "lower(cameras.exid) like lower('%#{params[:fquery]}%') OR lower(cameras.name) like lower('%#{params[:fquery]}%') OR
       lower(vm.name) like lower('%#{params[:fquery]}%') OR lower(v.name) like lower('%#{params[:fquery]}%')
-      OR lower(users.firstname || ' ' || users.lastname) like lower('%#{params[:fquery]}%') OR 
+      OR lower(users.firstname || ' ' || users.lastname) like lower('%#{params[:fquery]}%') OR
       lower(cameras.config->>'external_host') like lower('%#{params[:fquery]}%')"
     cameras = Camera.joins("left JOIN users on cameras.owner_id = users.id")
                     .joins("left JOIN vendor_models vm on cameras.model_id = vm.id")
@@ -68,6 +68,7 @@ class CamerasController < ApplicationController
     (display_start..index_end).each do |index|
       if cameras[index].present? && cameras[index].user.present?
         records[:data][records[:data].count] = [
+          cameras[index].creation_date,
           cameras[index].exid,
           cameras[index].user.fullname,
           cameras[index].name,
@@ -82,7 +83,6 @@ class CamerasController < ApplicationController
           cameras[index].timezone,
           cameras[index].is_public,
           cameras[index].is_online,
-          cameras[index].creation_date,
           cameras[index].last_poll_date,
           cameras[index].id,
           cameras[index].user.id,
@@ -182,35 +182,35 @@ class CamerasController < ApplicationController
 
   def sorting(col, order)
     case col
-    when "0"
-      "cameras.exid #{order}"
     when "1"
-      "users.firstname || users.lastname #{order}"
+      "cameras.exid #{order}"
     when "2"
-      "cameras.name #{order}"
+      "users.firstname || users.lastname #{order}"
     when "3"
-      "cameras.config->> 'external_host' #{order}"
+      "cameras.name #{order}"
     when "4"
-      "cameras.config->> 'external_http_port' #{order}"
+      "cameras.config->> 'external_host' #{order}"
     when "5"
-      "cameras.config->> 'external_rtsp_port' #{order}"
+      "cameras.config->> 'external_http_port' #{order}"
     when "6"
-      "cameras.config-> 'auth'-> 'basic'->> 'username' #{order}"
+      "cameras.config->> 'external_rtsp_port' #{order}"
     when "7"
-      "cameras.config-> 'auth'-> 'basic'->> 'password' #{order}"
+      "cameras.config-> 'auth'-> 'basic'->> 'username' #{order}"
     when "8"
-      "cameras.mac_address #{order}"
+      "cameras.config-> 'auth'-> 'basic'->> 'password' #{order}"
     when "9"
-      "vm.name #{order}"
+      "cameras.mac_address #{order}"
     when "10"
-      "v.name #{order}"
+      "vm.name #{order}"
     when "11"
-      "cameras.timezone #{order}"
+      "v.name #{order}"
     when "12"
-      "cameras.is_public #{order}"
+      "cameras.timezone #{order}"
     when "13"
-      "cameras.is_online #{order}"
+      "cameras.is_public #{order}"
     when "14"
+      "cameras.is_online #{order}"
+    when "0"
       "cameras.created_at #{order}"
     else
       "cameras.created_at desc"
