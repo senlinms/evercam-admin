@@ -34,7 +34,7 @@ initializeDataTable = ->
       {data: "14", width: "80px", sClass: "center", "render": setStatus }
       {data: "15", width: "160px", sClass: "center" }
     ],
-    iDisplayLength: 500
+    iDisplayLength: 60
     columnDefs: [
       { type: "date-uk" ,targets: 'datatable-date'},
       { type: 'file-size', targets: 6}
@@ -48,11 +48,13 @@ initializeDataTable = ->
       $("#div-dropdown-checklist").css('visibility', 'visible')
       $("#div-dropdown-checklist").css({"visibility": "visible", "width": "57px", "top": "1px", "float": "right" })
       $("#timelapse_datatables_filter").hide()
+      adjustHorizontalScroll()
 
 columnsDropdown = ->
   $(".timelapse-column").on "click", ->
     column = timelapse_table.column($(this).attr("data-val"))
     column.visible !column.visible()
+    adjustHorizontalScroll()
 
 setStatus = (name, id, row) ->
   if name is "1"
@@ -156,3 +158,5 @@ window.initializeTimelapse = ->
   columnsDropdown()
   onSearch()
   onIntercomClick()
+  $(window).resize ->
+    adjustHorizontalScroll()

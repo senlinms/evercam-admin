@@ -85,3 +85,19 @@ centerModal = ->
   offset = ($(window).height() - $dialog.height()) / 2
   if $(window).height() > $dialog.height()
     $dialog.css "margin-top", offset
+
+window.adjustHorizontalScroll = ->
+  $('.top-scrollbar').on 'scroll', (e) ->
+    $('div.table-scrollable').scrollLeft $('.top-scrollbar').scrollLeft()
+  $('div.table-scrollable').on 'scroll', (e) ->
+    $('.top-scrollbar').scrollLeft $('div.table-scrollable').scrollLeft()
+
+  $('.top-horizontal-scroll').width $('.table').width()
+  $('.top-scrollbar').width $('.table-scrollable').width()
+
+  setTimeout (->
+    if $('.top-horizontal-scroll').width() == $('.top-scrollbar').width()
+      $('.top-scrollbar').hide()
+    else
+      $('.top-scrollbar').show()
+  ), 500

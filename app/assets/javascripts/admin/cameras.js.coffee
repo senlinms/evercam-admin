@@ -34,7 +34,7 @@ initializeDataTable = ->
         [ 25, 50, 100, 150 ]
         [ 25, 50, 100, 150 ]
       ]
-      'pageLength': 50
+      'pageLength': 60
       "order": [[ 0, "desc" ]]
       'processing': true
       'language': 'processing': '<img src="/assets/loading.gif">'
@@ -60,6 +60,8 @@ initializeDataTable = ->
         {data: "14", "width": "60px", "render": colStatus, "sClass": "center" },
         {data: "15", visible: false, "width": "75px" }
       ],
+      drawCallback: ->
+        adjustHorizontalScroll()
       initComplete: ->
         # execute some code on network or other general error
 
@@ -74,6 +76,7 @@ columnsDropdown = ->
   $(".cameras-column").on "click", ->
     column = cameras_table.getDataTable().column($(this).attr("data-val"))
     column.visible !column.visible()
+    adjustHorizontalScroll()
 
 appendMe = ->
   $("#div-dropdown-checklist").css({"visibility": "visible", "width": "20px", "top": "1px", "float": "right", "right": "22px" })
@@ -108,3 +111,5 @@ window.initializeCameras = ->
   appendMe()
   showTable()
   searchFilter()
+  $(window).resize ->
+    adjustHorizontalScroll()

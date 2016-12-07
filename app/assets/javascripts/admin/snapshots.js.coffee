@@ -35,7 +35,7 @@ initializeDataTable = ->
       {data: "13", sClass: "center", sWidth: "65px", "render": colorStatus },
       {data: "14", sClass: "center", sWidth: "110px", "render": paymentMethod },
     ],
-    iDisplayLength: 500
+    iDisplayLength: 60
     columnDefs: [
       {type: "date-uk", targets: 'datatable-date'},
       {type: "natural", targets: 5}
@@ -43,6 +43,8 @@ initializeDataTable = ->
     "oLanguage": {
       "sSearch": "Filter:"
     },
+    drawCallback: ->
+      adjustHorizontalScroll()
     initComplete: ->
       $("#snapshots-list-row").removeClass('hide')
       $("#snapshots_datatables_filter").addClass("hide")
@@ -53,6 +55,7 @@ columnsDropdown = ->
   $(".cameras-column").on "click", ->
     column = snapshots_table.column($(this).attr("data-val"))
     column.visible !column.visible()
+    adjustHorizontalScroll()
 
 paymentMethod = (name) ->
   if name is "0"
@@ -150,3 +153,5 @@ window.initializSnapshots = ->
   onIntercomClick()
   onSearch()
   onImageHover()
+  $(window).resize ->
+    adjustHorizontalScroll()

@@ -62,6 +62,8 @@ initializeDataTable = ->
         {data: "14", "width": "120px", "sClass": "center red", "render": removeMinus },
         {data: "15", "width": "130px", "sClass": "center" , "render": paymentMethod}
       ],
+      drawCallback: ->
+        adjustHorizontalScroll()
       initComplete: ->
         # execute some code on network or other general error
 
@@ -69,6 +71,7 @@ columnsDropdown = ->
   $(".users-column").on "click", ->
     column = users_table.getDataTable().column($(this).attr("data-val"))
     column.visible !column.visible()
+    adjustHorizontalScroll()
 
 searchFilter = ->
   $('#username, #email, #fullname, #total_cameras, #licREQ1, #licREQ2, #licVALID1, #licVALID2, #licDEF1, #licDEF2').on "keyup", ->
@@ -232,3 +235,5 @@ window.initializeusers = ->
   showTable()
   clearFilter()
   onIntercomClick()
+  $(window).resize ->
+    adjustHorizontalScroll()
