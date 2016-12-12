@@ -138,7 +138,7 @@ onSearchSET = ->
     data.to_date = to_date
     data.interval = interval
     data.schedule = schedule
-    if camera_id is "" || interval is ""
+    if camera_id is "Select Camera" || interval is ""
       $(".bb-alert")
         .removeClass("alert-success")
         .addClass("alert-danger")
