@@ -31,7 +31,7 @@
     position: relative;
     #cloud-recording-collaps {
       bottom: 0;
-      display: block;
+      display: none;
       padding: 5px 0;
       position: relative;
       text-align: center;
@@ -51,7 +51,7 @@
 }
 
 #cloud-recording-collaps {
-  display: block;
+  display: none;
   width: 100%;
   padding: 5px 0;
   text-align: center;

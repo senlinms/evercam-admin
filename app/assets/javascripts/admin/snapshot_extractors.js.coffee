@@ -103,9 +103,8 @@ updateScheduleFromCalendar = ->
   schedule = JSON.stringify(parseCalendar())
   schedule
 
-onCollapsRecording = ->
-  $('#cloud-recording-collaps').click ->
-    $('#cloud-recording-calendar').toggleClass 'open'
+makeScheduleOpen = ->
+  $('#cloud-recording-calendar').addClass 'open'
 
 parseCalendar = ->
   events = $('#cloud-recording-calendar').fullCalendar('clientEvents')
@@ -199,7 +198,7 @@ clearForm = ->
 window.initializSnapshotExtractors = ->
   initDateTime()
   initScheduleCalendar()
-  onCollapsRecording()
+  makeScheduleOpen()
   renderEvents()
   onSearchSET()
   initChosen()
