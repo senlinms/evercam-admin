@@ -21,7 +21,7 @@ sendAJAXRequest = (settings) ->
 
 initDateTime = ->
   $('#datetimepicker1,#datetimepicker2').datetimepicker
-    format: 'Y/m/d'
+    format: 'd/m/Y'
     timepicker: false
 
   $('#datetimepicker1,#datetimepicker2').val getTodayDate()
@@ -29,7 +29,7 @@ initDateTime = ->
 getTodayDate = ->
   date = new Date
   date.setDate date.getDate()
-  date.getFullYear() + '/' + (date.getMonth() + 1) + '/' + date.getDate()
+  date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear()
 
 initScheduleCalendar = ->
   scheduleCalendar = $('#cloud-recording-calendar').fullCalendar
@@ -192,7 +192,6 @@ clearForm = ->
   $("#datetimepicker1").val getTodayDate()
   $("#datetimepicker2").val getTodayDate()
   $('#interval option:eq(4)').prop('selected', true)
-  $('#cloud-recording-calendar').removeClass "open"
   schedule = undefined
 
 window.initializSnapshotExtractors = ->
