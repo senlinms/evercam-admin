@@ -51,4 +51,5 @@ Rails.application.routes.draw do
   get "/timelapse" => "timelapse_report#index"
   get "/snapshot_extractors_list" => "snapshot_extractors#list"
   get "/admins" => "admins#index"
+  post "/admins/new" => "admins#create"
 end

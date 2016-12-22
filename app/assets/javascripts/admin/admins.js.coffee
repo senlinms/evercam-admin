@@ -1,5 +1,13 @@
 admin_table = undefined
 
+sendAJAXRequest = (settings) ->
+  token = $('meta[name="csrf-token"]')
+  if token.size() > 0
+    headers =
+      "X-CSRF-Token": token.attr("content")
+    settings.headers = headers
+  xhrRequestChangeMonth = jQuery.ajax(settings)
+
 initializeDataTable = ->
   admin_table = $("#admin_datatables").DataTable
     aaSorting: [1, "asc"]
@@ -28,18 +36,88 @@ initializeDataTable = ->
     },
     initComplete: ->
       $("#admin_datatables_length").hide()
-      $("#div-dropdown-checklist").css({"visibility": "visible", "width": "57px", "top": "0px", "left": "6px" })
+      $("#div-dropdown-checklist").css({"visibility": "visible"})
 
 columnsDropdown = ->
   $(".admin-column").on "click", ->
     column = admin_table.column($(this).attr("data-val"))
     column.visible !column.visible()
 
-setMargin = ->
+appendMe = ->
+  options = $(".lic-col-box")
   row = $("#admin_datatables_wrapper").children().first()
+  row.append options
   row.css("margin-bottom", "-11px")
+  $(".dropdown-checklist").css({"width": "20px", "top": "34px"})
+
+initNotify = ->
+  Notification.init(".bb-alert");
+
+addAdmin = ->
+  $("#save-admin").on "click", ->
+    firstname = $("#first-name").val()
+    lastname = $("#last-name").val()
+    username = $("#username").val()
+    email = $("#email").val()
+    password = $("#password").val()
+
+    data = {}
+    data.firstname = firstname
+    data.lastname = lastname
+    data.username = username
+    data.email = email
+    data.password = password
+
+    onError = (jqXHR, status, error) ->
+      console.log jqXHR
+      Notification.show(jqXHR.responseText)
+      false
+
+    onSuccess = (result, status, jqXHR) ->
+      $('#modal-add-admin').modal('hide')
+      clearForm()
+      addNewRow(result)
+      true
+
+    settings =
+      cache: false
+      data: data
+      dataType: 'json'
+      error: onError
+      success: onSuccess
+      contentType: "application/x-www-form-urlencoded"
+      type: "POST"
+      url: "/admins/new"
+
+    sendAJAXRequest(settings)
+
+clearForm = ->
+  $("#first-name").val("")
+  $("#last-name").val("")
+  $("#username").val("")
+  $("#email").val("")
+  $("#password").val("")
+
+addNewRow = (admin) ->
+  admin_table.row.add([
+    "#{admin.username}",
+    "#{admin.firstname} #{admin.lastname}",
+    "#{admin.email}",
+    "#{formatDate(admin.created_at)}",
+    "",
+    "",
+    "",
+    "0",
+    ""
+  ]).draw()
+
+formatDate = (date) ->
+  date = new Date(date)
+  date.toUTCString()
 
 window.initializeAdmins = ->
   initializeDataTable()
   columnsDropdown()
-  setMargin()
+  appendMe()
+  initNotify()
+  addAdmin()
