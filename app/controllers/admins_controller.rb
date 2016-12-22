@@ -20,4 +20,13 @@ class AdminsController < ApplicationController
       render json: error.message, status: :unprocessable_entity
     end
   end
+
+  def destroy
+    begin
+      @admin = User.where(id: params[:admin_id]).delete_all
+      render json: @admin.to_json
+    rescue => error
+      render json: error.message, status: :unprocessable_entity
+    end
+  end
 end

@@ -24,7 +24,8 @@ initializeDataTable = ->
       {data: "5", sWidth: "150px" },
       {data: "6", sWidth: "150px" },
       {data: "7", sWidth: "65px", sClass: "center" },
-      {data: "8", sWidth: "100px" }
+      {data: "8", sWidth: "100px" },
+      {data: "9", sWidth: "65px", sClass: "center" }
     ],
     iDisplayLength: 500
     columnDefs: [
@@ -102,12 +103,42 @@ addNewRow = (admin) ->
     "",
     "",
     "0",
-    ""
+    "",
+    "<i admin-id='#{admin.id}' class='fa fa-trash-o delete-admin'></i>"
   ]).draw()
 
 formatDate = (date) ->
   date = new Date(date)
   date.toUTCString()
+
+deleteAdmin = ->
+  $("#admin_datatables").on "click", ".delete-admin", ->
+    result = confirm("Are you sure to cancel this admin?")
+    if result is false
+      return
+    admin_row = $(this).parents('tr')
+
+    data = {}
+    data.admin_id = $(this).attr("admin-id")
+
+    onError = (jqXHR, status, error) ->
+      Notification.show(jqXHR.responseText)
+
+    onSuccess = (result, status, jqXHR) ->
+      admin_row.remove()
+      Notification.show("Admin deleted successfully.")
+
+    settings =
+      cache: false
+      data: data
+      dataType: 'json'
+      error: onError
+      success: onSuccess
+      contentType: "application/x-www-form-urlencoded"
+      type: "delete"
+      url: "/admins/delete"
+
+    sendAJAXRequest(settings)
 
 window.initializeAdmins = ->
   initializeDataTable()
@@ -115,3 +146,4 @@ window.initializeAdmins = ->
   appendMe()
   initNotify()
   addAdmin()
+  deleteAdmin()
