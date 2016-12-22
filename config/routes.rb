@@ -53,4 +53,5 @@ Rails.application.routes.draw do
   get "/admins" => "admins#index"
   post "/admins/new" => "admins#create"
   delete "/admins/delete" => "admins#destroy"
+  patch "/admins/update" => "admins#update"
 end

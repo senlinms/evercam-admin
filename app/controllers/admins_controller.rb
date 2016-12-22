@@ -21,6 +21,29 @@ class AdminsController < ApplicationController
     end
   end
 
+  def update
+    @admin = User.find(params[:id])
+
+    @admin.firstname = params[:firstname]
+    @admin.lastname = params[:lastname]
+    @admin.username = params[:username]
+    @admin.email = params[:email]
+    if params[:password]
+      @admin.password = params[:password]
+      @admin.password_confirmation = params[:password]
+    end
+
+    begin
+      if @admin.save
+        render json: @admin.to_json
+      else
+        render json: @admin.errors.full_messages, status: :unprocessable_entity
+      end
+    rescue => error
+      render json: error.message, status: :unprocessable_entity
+    end
+  end
+
   def destroy
     begin
       @admin = User.where(id: params[:admin_id]).delete_all

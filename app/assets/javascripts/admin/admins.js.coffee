@@ -1,4 +1,6 @@
 admin_table = undefined
+editRow = undefined
+editRowReference = undefined
 
 sendAJAXRequest = (settings) ->
   token = $('meta[name="csrf-token"]')
@@ -26,6 +28,7 @@ initializeDataTable = ->
       {data: "7", sWidth: "65px", sClass: "center" },
       {data: "8", sWidth: "100px" },
       {data: "9", sWidth: "65px", sClass: "center" }
+      {data: "10", sWidth: "65px", sClass: "center" }
     ],
     iDisplayLength: 500
     columnDefs: [
@@ -104,6 +107,7 @@ addNewRow = (admin) ->
     "",
     "0",
     "",
+    "<i admin-id='#{admin.id}' firstname='#{admin.firstname}' lastname='#{admin.lastname}' class='fa fa-pencil-square-o edit-admin'></i>",
     "<i admin-id='#{admin.id}' class='fa fa-trash-o delete-admin'></i>"
   ]).draw()
 
@@ -140,10 +144,69 @@ deleteAdmin = ->
 
     sendAJAXRequest(settings)
 
+editAdmin = ->
+  $("#admin_datatables").on "click", ".edit-admin", ->
+    $("#modal-add-admin").modal("show")
+    editRowReference = $(this)
+    editRow = $(this).parents('tr')
+    firstname = $(this).attr("firstname")
+    lastname = $(this).attr("lastname")
+    setModelUpdate(admin_table.row( editRow ).data(), firstname, lastname)
+
+setModelUpdate = (values, firstname, lastname) ->
+  $("#save-admin").hide()
+  $("#update-admin").removeClass("hide")
+  $(".modal-header > .caption > strong").text("Edit Admin")
+  $("#first-name").val(firstname)
+  $("#last-name").val(lastname)
+  $("#username").val(values[0])
+  $("#email").val(values[2])
+  $("#password").val("")
+
+updateAdmin = ->
+  $("#update-admin").on "click", ->
+    data = {}
+    data.id = editRowReference.attr("admin-id")
+    data.firstname = $("#first-name").val()
+    data.lastname = $("#last-name").val()
+    data.username = $("#username").val()
+    data.email = $("#email").val()
+    if $("#password").val() != ""
+      data.password = $("#password").val()
+
+    onError = (jqXHR, status, error) ->
+      Notification.show(jqXHR.responseText)
+
+    onSuccess = (result, status, jqXHR) ->
+      $("#modal-add-admin").modal("hide")
+      updateRow(result)
+      Notification.show("Admin's data has been udpated.")
+
+    settings =
+      cache: false
+      data: data
+      dataType: 'json'
+      error: onError
+      success: onSuccess
+      contentType: "application/x-www-form-urlencoded"
+      type: "patch"
+      url: "/admins/update"
+
+    sendAJAXRequest(settings)
+
+updateRow = (data) ->
+  admin_table
+    .cell(editRow.find('td:nth-child(1)')).data(data.username)
+    .cell(editRow.find('td:nth-child(2)')).data("#{data.firstname} #{data.lastname}")
+    .cell(editRow.find('td:nth-child(3)')).data(data.email)
+    .cell(editRow.find('td:nth-child(5)')).data(formatDate(data.updated_at))
+
 window.initializeAdmins = ->
   initializeDataTable()
   columnsDropdown()
   appendMe()
   initNotify()
   addAdmin()
+  editAdmin()
+  updateAdmin()
   deleteAdmin()
