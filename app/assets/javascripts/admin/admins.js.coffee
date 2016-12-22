@@ -55,18 +55,12 @@ initNotify = ->
 
 addAdmin = ->
   $("#save-admin").on "click", ->
-    firstname = $("#first-name").val()
-    lastname = $("#last-name").val()
-    username = $("#username").val()
-    email = $("#email").val()
-    password = $("#password").val()
-
     data = {}
-    data.firstname = firstname
-    data.lastname = lastname
-    data.username = username
-    data.email = email
-    data.password = password
+    data.firstname = $("#first-name").val()
+    data.lastname = $("#last-name").val()
+    data.username = $("#username").val()
+    data.email = $("#email").val()
+    data.password = $("#password").val()
 
     onError = (jqXHR, status, error) ->
       Notification.show(jqXHR.responseText)
