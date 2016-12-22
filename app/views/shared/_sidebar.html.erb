@@ -5,7 +5,7 @@
   <div class="page-sidebar navbar-collapse collapse">
     <!-- BEGIN SIDEBAR MENU -->
     <ul class="page-sidebar-menu" data-auto-scroll="true" data-slide-speed="200">
-      <li class="start ">
+      <li class="start">
         <a href="/">
           <i class="icon-users"></i>
           <span class="title">Users</span>
@@ -18,6 +18,14 @@
           <i class="icon-home"></i>
           <span class="title">
               Dashboard
+          </span>
+        <% end %>
+      </li>
+      <li>
+        <%= link_to admins_path do %>
+          <i class="fa fa-user"></i>
+          <span class="title">
+            Admins
           </span>
         <% end %>
       </li>

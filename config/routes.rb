@@ -50,4 +50,5 @@ Rails.application.routes.draw do
   get "/intercom/user" => "users#get_intercom"
   get "/timelapse" => "timelapse_report#index"
   get "/snapshot_extractors_list" => "snapshot_extractors#list"
+  get "/admins" => "admins#index"
 end

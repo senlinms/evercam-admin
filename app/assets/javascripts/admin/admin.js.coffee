@@ -30,6 +30,7 @@
 #= require admin/merges.js
 #= require admin/snapshot_reports.js
 #= require admin/archives.js
+#= require admin/admins.js
 #= require admin/snapshot_extractors.js
 #= require admin/snapshot_ex_list.js
 #= require admin/dashboard.js
