@@ -69,12 +69,12 @@ addAdmin = ->
     data.password = password
 
     onError = (jqXHR, status, error) ->
-      console.log jqXHR
       Notification.show(jqXHR.responseText)
       false
 
     onSuccess = (result, status, jqXHR) ->
       $('#modal-add-admin').modal('hide')
+      Notification.show("Admin has been added!")
       clearForm()
       addNewRow(result)
       true
