@@ -1,14 +1,21 @@
 <!-- BEGIN CONTENT -->
 <div class="page-content-wrapper">
-  <div class="page-content" id="cameras-report">
-    <div class="row overlop-margin">
+  <div class="page-content" id="admins-report">
+    <!-- BEGIN PAGE HEADER-->
+    <div class="col-md-6 col-sm-12 lic-col-box">
       <div class="dropdown-checklist" id="div-dropdown-checklist">
         <div href="#" class="btn btn-default grey" data-toggle="modal" data-target="#toggle-datatable-columns">
           <i class="fa fa-columns"></i>
         </div>
       </div>
+      <div href="#" class="btn btn-default grey licence-button" data-toggle="modal" data-target="#modal-add-admin">
+        <i class="fa fa-plus"></i> Add Admin
+      </div>
     </div>
+    <!-- END PAGE HEADER-->
+    <!-- BEGIN PAGE CONTENT-->
     <%= render 'columns_modal' %>
+    <%= render 'add_admin_modal' %>
     <!-- BEGIN PAGE CONTENT-->
     <div id="merge-list-row" class="row dt-user-m">
       <div class="col-md-12">
