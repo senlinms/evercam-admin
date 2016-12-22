@@ -51,7 +51,7 @@ appendMe = ->
   $(".dropdown-checklist").css({"width": "20px", "top": "34px"})
 
 initNotify = ->
-  Notification.init(".bb-alert");
+  Notification.init(".bb-alert")
 
 addAdmin = ->
   $("#save-admin").on "click", ->
