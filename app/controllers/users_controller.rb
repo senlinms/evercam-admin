@@ -20,7 +20,8 @@ class UsersController < ApplicationController
   end
 
   def update
-    if @user.update(user_params)
+    to_remove_empty = %w|password|
+    if @user.update(user_params.delete_if { |k, v| to_remove_empty.include?(k) && v.empty? })
       redirect_to user_path(@user), notice: 'User details updated successfully'
     else
       redirect_to user_path(@user), notice: @user.errors.full_messages.first

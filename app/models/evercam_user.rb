@@ -14,7 +14,7 @@ class EvercamUser < ActiveRecord::Base
   has_many :camera_shares, :foreign_key => 'user_id', :class_name => 'CameraShare'
   has_many :licences, foreign_key: 'user_id', class_name: 'Licence'
 
-  validates :password, presence: true
+  validates_length_of :password, minimum: 6, maximum: 8, if: :password_changed?
 
   def fullname
     "#{firstname} #{lastname}"
