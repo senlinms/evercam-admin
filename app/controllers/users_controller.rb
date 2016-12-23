@@ -23,7 +23,7 @@ class UsersController < ApplicationController
     if @user.update(user_params)
       redirect_to user_path(@user), notice: 'User details updated successfully'
     else
-      redirect_to user_path(@user)
+      redirect_to user_path(@user), notice: @user.errors.full_messages.first
     end
   rescue => error
     env["airbrake.error_id"] = notify_airbrake(error)
@@ -153,7 +153,7 @@ class UsersController < ApplicationController
   end
 
   def user_params
-    params.require(:user).permit(:firstname, :lastname, :email, :country_id, :payment_method, :insight_id)
+    params.require(:user).permit(:firstname, :lastname, :email, :country_id, :payment_method, :insight_id, :password)
   end
 
   def set_user
