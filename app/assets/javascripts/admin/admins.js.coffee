@@ -27,8 +27,9 @@ initializeDataTable = ->
       {data: "6", sWidth: "150px" },
       {data: "7", sWidth: "65px", sClass: "center" },
       {data: "8", sWidth: "100px" },
-      {data: "9", sWidth: "65px", sClass: "center" }
+      {data: "9", sWidth: "80px", sClass: "center", "render": humanizeStatus },
       {data: "10", sWidth: "65px", sClass: "center" }
+      {data: "11", sWidth: "65px", sClass: "center" }
     ],
     iDisplayLength: 500
     columnDefs: [
@@ -107,6 +108,7 @@ addNewRow = (admin) ->
     "",
     "0",
     "",
+    "#{admin.is_admin}",
     "<i admin-id='#{admin.id}' firstname='#{admin.firstname}' lastname='#{admin.lastname}' class='fa fa-pencil-square-o edit-admin'></i>",
     "<i admin-id='#{admin.id}' class='fa fa-trash-o delete-admin'></i>"
   ]).draw()
@@ -200,6 +202,12 @@ updateRow = (data) ->
     .cell(editRow.find('td:nth-child(2)')).data("#{data.firstname} #{data.lastname}")
     .cell(editRow.find('td:nth-child(3)')).data(data.email)
     .cell(editRow.find('td:nth-child(5)')).data(formatDate(data.updated_at))
+
+humanizeStatus = (active) ->
+  if active is "true" || active is true
+    return "<span style='color: green;'>True</span>"
+  else if active is "false" || active is false
+    return "<span style='color: red;'>False</span>"
 
 window.initializeAdmins = ->
   initializeDataTable()
