@@ -43,22 +43,23 @@ initializeDataTable = ->
         'headers': headers
         'url': '/load_cameras'
       columns: [
-        {data: "0", "width": "105px", "orderable": true, "sType": "uk_datetime" },
+        {data: "0", "width": "175px", "orderable": true, "sType": "uk_datetime" },
         {data: "1", "width": "117px", "orderable": true, "render": linkCamera },
         {data: "2", "width": "150px", "render": linkOwner },
         {data: "3", "width": "125px" },
-        {data: "4", "width": "90px" },
-        {data: "5", "width": "70px" },
-        {data: "6", "width": "75px" },
-        {data: "7", "width": "135px" },
-        {data: "8", "width": "100px" },
-        {data: "9", "width": "110px" },
-        {data: "10", "width": "100px" },
-        {data: "11", "width": "130px" },
+        {data: "4", "width": "70px", "sClass": "center" },
+        {data: "5", "width": "90px" },
+        {data: "6", "width": "70px" },
+        {data: "7", "width": "75px" },
+        {data: "8", "width": "135px" },
+        {data: "9", "width": "100px" },
+        {data: "10", "width": "110px" },
+        {data: "11", "width": "100px" },
         {data: "12", "width": "130px" },
-        {data: "13", "width": "60px", "sClass": "center" },
+        {data: "13", "width": "130px" },
         {data: "14", "width": "60px", "render": colStatus, "sClass": "center" },
-        {data: "15", visible: false, "width": "75px" }
+        {data: "15", "width": "60px", "render": colStatus, "sClass": "center" },
+        {data: "16", visible: false, "width": "75px" }
       ],
       drawCallback: ->
         adjustHorizontalScroll()
@@ -68,7 +69,7 @@ initializeDataTable = ->
 searchFilter = ->
   $('.table-group-action-input').on "keyup", ->
     action = $('.table-group-action-input').val()
-    cameras_table.setAjaxParam 'fquery', action.replace("'","''")
+    cameras_table.setAjaxParam 'query_params', action.replace("'","''")
     cameras_table.getDataTable().ajax.reload()
     return
 
@@ -86,18 +87,18 @@ appendMe = ->
   $(".paging_bootstrap_extended").css("float","none")
 
 colStatus = (name) ->
-  if name is "true" || name is true
+  if name is "t" || name is true
     return "<span style='color: green;'>True</span>"
-  else if name is "false" || name is false
+  else if name is "f" || name is false || name is null
     return "<span style='color: red;'>False</span>"
 
 linkCamera = (name, type, row) ->
   return "<a href='/cameras/#{row[16]}'>#{row[1]}</a>"
 
 linkOwner = (name, type, row) ->
-  url = "#{row[20]}/v1/cameras/#{row[1]}?api_id=#{row[18]}&api_key=#{row[19]}"
+  url = "#{row[21]}/v1/cameras/#{row[1]}?api_id=#{row[19]}&api_key=#{row[20]}"
   return "<div class='link-user'>" +
-    "<a class='pull-left' href='/users/#{row[17]}'>#{name}</a>" +
+    "<a class='pull-left' href='/users/#{row[18]}'>#{name}</a>" +
     "<a class='pull-right' href= #{url} target='_blank'>" +
     "<i class='fa fa-external-link'></i></a></div>"
 

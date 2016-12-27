@@ -48,14 +48,22 @@ class CamerasController < ApplicationController
   def load_cameras
     col_for_order = params[:order]["0"]["column"]
     order_for = params[:order]["0"]["dir"]
-    condition = "lower(cameras.exid) like lower('%#{params[:fquery]}%') OR lower(cameras.name) like lower('%#{params[:fquery]}%') OR
-      lower(vm.name) like lower('%#{params[:fquery]}%') OR lower(v.name) like lower('%#{params[:fquery]}%')
-      OR lower(users.firstname || ' ' || users.lastname) like lower('%#{params[:fquery]}%') OR
-      lower(cameras.config->>'external_host') like lower('%#{params[:fquery]}%')"
-    cameras = Camera.joins("left JOIN users on cameras.owner_id = users.id")
-                    .joins("left JOIN vendor_models vm on cameras.model_id = vm.id")
-                    .joins("left JOIN vendors v on vm.vendor_id = v.id")
-                    .where(condition).order(sorting(col_for_order, order_for)).decorate
+    if params[:query_params].present?
+      condition = "where lower(c.exid) like lower('%#{params[:query_params]}%') OR lower(c.name) like lower('%#{params[:query_params]}%') OR
+      lower(vendor_model_name) like lower('%#{params[:query_params]}%') OR lower(vendor_name) like lower('%#{params[:query_params]}%')
+      OR lower(fullname) like lower('%#{params[:query_params]}%') OR
+      lower(c.config->>'external_host') like lower('%#{params[:query_params]}%')"
+    else
+      condition = ""
+    end
+    cameras = Camera.connection.select_all("select * from (
+                select c.*,u.firstname || ' ' || u.lastname as fullname, u as user, u.id as user_id, u.api_id, u.api_key,
+                v.name as vendor_name,vm.name as vendor_model_name,
+                (select count(id) as total from camera_shares cs where c.id=cs.camera_id) as total_share from cameras c
+                inner JOIN users u on c.owner_id = u.id
+                left JOIN vendor_models vm on c.model_id = vm.id
+                left JOIN vendors v on vm.vendor_id = v.id
+                ) c #{condition} #{sorting(col_for_order, order_for)}")
     total_records = cameras.count
     display_length = params[:length].to_i
     display_length = display_length < 0 ? total_records : display_length
@@ -66,28 +74,29 @@ class CamerasController < ApplicationController
     index_end = index_end > total_records ? total_records - 1 : index_end
     records = { data: [], draw: table_draw, recordsTotal: total_records, recordsFiltered: total_records }
     (display_start..index_end).each do |index|
-      if cameras[index].present? && cameras[index].user.present?
+      if cameras[index].present? && cameras[index]["user"].present?
         records[:data][records[:data].count] = [
-          cameras[index].creation_date,
-          cameras[index].exid,
-          cameras[index].user.fullname,
-          cameras[index].name,
-          cameras[index].config.deep_fetch("external_host") { "" },
-          cameras[index].config.deep_fetch("external_http_port") { "" },
-          cameras[index].config.deep_fetch("external_rtsp_port") { "" },
-          cameras[index].config.deep_fetch("auth", "basic", "username") { "" },
-          cameras[index].config.deep_fetch("auth", "basic", "password") { "" },
-          cameras[index].mac_address,
-          cameras[index].vendor_model_name,
-          cameras[index].vendor_name,
-          cameras[index].timezone,
-          cameras[index].is_public,
-          cameras[index].is_online,
-          cameras[index].last_poll_date,
-          cameras[index].id,
-          cameras[index].user.id,
-          cameras[index].user.api_id,
-          cameras[index].user.api_key,
+          cameras[index]["created_at"] ? DateTime.parse(cameras[index]["created_at"]).strftime("%A, %d %b %Y %l:%M %p") : "",
+          cameras[index]["exid"],
+          cameras[index]["fullname"],
+          cameras[index]["name"],
+          cameras[index]["total_share"],
+          JSON.parse(cameras[index]["config"]).deep_fetch("external_host") { "" },
+          JSON.parse(cameras[index]["config"]).deep_fetch("external_http_port") { "" },
+          JSON.parse(cameras[index]["config"]).deep_fetch("external_rtsp_port") { "" },
+          JSON.parse(cameras[index]["config"]).deep_fetch("auth", "basic", "username") { "" },
+          JSON.parse(cameras[index]["config"]).deep_fetch("auth", "basic", "password") { "" },
+          cameras[index]["mac_address"],
+          cameras[index]["vendor_model_name"],
+          cameras[index]["vendor_name"],
+          cameras[index]["timezone"],
+          cameras[index]["is_public"],
+          cameras[index]["is_online"],
+          cameras[index]["last_poll_date"] ? DateTime.parse(cameras[index]["last_poll_date"]).strftime("%A, %d %b %Y %l:%M %p") : "",
+          cameras[index]["id"],
+          cameras[index]["user_id"],
+          cameras[index]["api_id"],
+          cameras[index]["api_key"],
           check_env
         ]
       end
@@ -183,37 +192,39 @@ class CamerasController < ApplicationController
   def sorting(col, order)
     case col
     when "1"
-      "cameras.exid #{order}"
+      "order by c.exid #{order}"
     when "2"
-      "users.firstname || users.lastname #{order}"
+      "order by fullname #{order}"
     when "3"
-      "cameras.name #{order}"
+      "order by c.name #{order}"
     when "4"
-      "cameras.config->> 'external_host' #{order}"
+      "order by total_share #{order}"
     when "5"
-      "cameras.config->> 'external_http_port' #{order}"
+      "order by c.config->> 'external_host' #{order}"
     when "6"
-      "cameras.config->> 'external_rtsp_port' #{order}"
+      "order by c.config->> 'external_http_port' #{order}"
     when "7"
-      "cameras.config-> 'auth'-> 'basic'->> 'username' #{order}"
+      "order by c.config->> 'external_rtsp_port' #{order}"
     when "8"
-      "cameras.config-> 'auth'-> 'basic'->> 'password' #{order}"
+      "order by c.config-> 'auth'-> 'basic'->> 'username' #{order}"
     when "9"
-      "cameras.mac_address #{order}"
+      "order by c.config-> 'auth'-> 'basic'->> 'password' #{order}"
     when "10"
-      "vm.name #{order}"
+      "order by c.mac_address #{order}"
     when "11"
-      "v.name #{order}"
+      "order by vendor_model_name #{order}"
     when "12"
-      "cameras.timezone #{order}"
+      "order by vendor_name #{order}"
     when "13"
-      "cameras.is_public #{order}"
+      "order by c.timezone #{order}"
     when "14"
-      "cameras.is_online #{order}"
+      "order by c.is_public #{order}"
+    when "15"
+      "order by c.is_online #{order}"
     when "0"
-      "cameras.created_at #{order}"
+      "order by c.created_at #{order}"
     else
-      "cameras.created_at desc"
+      "order by c.created_at desc"
     end
   end
 end
