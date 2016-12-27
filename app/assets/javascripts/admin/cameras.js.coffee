@@ -93,7 +93,7 @@ colStatus = (name) ->
     return "<span style='color: red;'>False</span>"
 
 linkCamera = (name, type, row) ->
-  return "<a href='/cameras/#{row[16]}'>#{row[1]}</a>"
+  return "<a href='/cameras/#{row[17]}'>#{row[1]}</a>"
 
 linkOwner = (name, type, row) ->
   url = "#{row[21]}/v1/cameras/#{row[1]}?api_id=#{row[19]}&api_key=#{row[20]}"
