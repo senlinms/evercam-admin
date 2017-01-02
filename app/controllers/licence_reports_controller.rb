@@ -11,7 +11,7 @@ class LicenceReportsController < ApplicationController
         add_stripe_licence
       end
     rescue => error
-      notify_airbrake(error)
+      Rails.logger.error error
     end
   end
 
@@ -38,7 +38,7 @@ class LicenceReportsController < ApplicationController
         end
       end
     rescue => error
-      notify_airbrake(error)
+      Rails.logger.error error
       respond_to do |format|
         format.html { redirect_to licence_report_path }
         format.json { render json: error.message, status: :unprocessable_entity }
@@ -69,7 +69,7 @@ class LicenceReportsController < ApplicationController
         end
       end
     rescue => error
-      notify_airbrake(error)
+      Rails.logger.error error
       respond_to do |format|
         format.html { redirect_to licence_report_path }
         format.json { render json: error.message, status: :unprocessable_entity }
@@ -92,7 +92,7 @@ class LicenceReportsController < ApplicationController
       message = "Licence updated successfully"
       saved = true
     rescue => error
-      notify_airbrake(error)
+      Rails.logger.error error
       message = error.message
     end
     respond_to do |format|
@@ -119,7 +119,7 @@ class LicenceReportsController < ApplicationController
         end
       end
     rescue => error
-      notify_airbrake(error)
+      Rails.logger.error error
       respond_to do |format|
         format.html { redirect_to licence_report_path }
         format.json { render json: error.message, status: :unprocessable_entity }
@@ -133,7 +133,7 @@ class LicenceReportsController < ApplicationController
       render json: charge.data
     end
   rescue => error
-    notify_airbrake(error)
+    Rails.logger.error error
     render json: error
   end
 

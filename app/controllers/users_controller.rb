@@ -27,7 +27,6 @@ class UsersController < ApplicationController
       redirect_to user_path(@user), notice: @user.errors.full_messages.first
     end
   rescue => error
-    env["airbrake.error_id"] = notify_airbrake(error)
     Rails.logger.error "Exception caught updating User details.\nCause: #{error}\n" +
                            error.backtrace.join("\n")
     flash[:message] = "An error occurred updating User details. "\

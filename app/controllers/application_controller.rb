@@ -35,6 +35,6 @@ class ApplicationController < ActionController::Base
 
   def render_error(exception)
     render :file => "#{Rails.root}/public/500.html", :layout => false, :status => 500
-    notify_airbrake(exception)
+    Rails.logger.error exception
   end
 end

@@ -54,9 +54,6 @@ GEM
       thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
     addressable (2.4.0)
-    airbrake (5.4.4)
-      airbrake-ruby (~> 1.4)
-    airbrake-ruby (1.4.6)
     arel (6.0.3)
     autoprefixer-rails (6.4.0.3)
       execjs
@@ -341,7 +338,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  airbrake
   autoprefixer-rails
   aws-sdk-v1
   bcrypt
