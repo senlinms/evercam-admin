@@ -7,6 +7,14 @@
       </td>
       <td><%= meta_data.action %></td>
       <td><%= meta_data.extra.deep_fetch('rtsp_url') { '' } unless meta_data.extra.nil? %></td>
+      <td>
+        <%
+          resolution = "#{meta_data.extra.deep_fetch('width') { '' }}x#{meta_data.extra.deep_fetch('height') { '' }}" unless meta_data.extra.nil? %>
+        <%= resolution != "x" ? resolution : "" %>
+      </td>
+      <td><%= meta_data.extra.deep_fetch('frame_rate') { '' } unless meta_data.extra.nil? %></td>
+      <td><%= meta_data.extra.deep_fetch('bit_rate') { '' } unless meta_data.extra.nil? %></td>
+      <td><%= meta_data.extra.deep_fetch('codec') { '' } unless meta_data.extra.nil? %></td>
       <td><%= meta_data.extra.deep_fetch('ip') { '' } unless meta_data.extra.nil? %></td>
       <td><%= meta_data.inserted_at.strftime('%a, %d %b %Y %H:%M:%S') %></td>
     </tr>

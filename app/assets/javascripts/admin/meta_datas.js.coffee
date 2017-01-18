@@ -8,12 +8,16 @@ initializeDataTable = ->
       [25, 50, 100, 200, "All"]
     ]
     columns: [
-      {data: "0", sWidth: "100px", visible: false },
+      {data: "0", sWidth: "70px", visible: false },
       {data: "1", sWidth: "100px" },
       {data: "2", sWidth: "50px" },
       {data: "3", sWidth: "280px" },
-      {data: "4", sWidth: "80px" },
-      {data: "5", sWidth: "90px" }
+      {data: "4", sWidth: "60px" },
+      {data: "5", sWidth: "40px" },
+      {data: "6", sWidth: "40px" },
+      {data: "7", sWidth: "40px" },
+      {data: "8", sWidth: "50px" },
+      {data: "9", sWidth: "90px" }
     ],
     iDisplayLength: 500
     columnDefs: [
