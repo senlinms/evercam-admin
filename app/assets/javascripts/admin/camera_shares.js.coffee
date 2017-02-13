@@ -31,7 +31,7 @@ initializeDataTable = ->
         [ 25, 50, 100, 150 ]
         [ 25, 50, 100, 150 ]
       ]
-      'pageLength': 50
+      'pageLength': 200
       "order": [[ 0, "desc" ]]
       'processing': true
       'language': 'processing': '<img src="/assets/loading.gif">'
