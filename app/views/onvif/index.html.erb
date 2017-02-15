@@ -1,0 +1,107 @@
+<div class="page-content-wrapper">
+  <div class="page-content">
+    <div class="row overlapping">
+        <% @services = [
+            [ "device_service", "device_service" ],
+            [ "Media", "Media" ],
+            [ "Display", "Display" ],
+            [ "Analytics", "Analytics" ],
+            [ "AnalyticsDevice", "AnalyticsDevice" ],
+            [ "DeviceIO", "DeviceIO" ],
+            [ "Imaging", "Imaging" ],
+            [ "receiver_service", "receiver_service" ]
+          ]
+
+          @operations = [
+            [ "GetAccessPolicy", "device_service" ],
+            [ "GetCACertificates", "device_service" ],
+            [ "GetCertificates", "device_service" ],
+            [ "GetCertificatesStatus", "device_service" ],
+            [ "GetClientCertificateMode", "device_service" ],
+            [ "GetDeviceInformation", "device_service" ],
+            [ "GetDiscoveryMode", "device_service" ],
+            [ "GetDNS", "device_service" ],
+            [ "GetDot11Capabilities", "device_service" ],
+            [ "GetDot1XConfigurations", "device_service" ],
+            [ "GetDPAddresses", "device_service" ],
+            [ "GetDynamicDNS", "device_service" ],
+            [ "GetEndpointReference", "device_service" ],
+            [ "GetGeoLocation", "device_service" ],
+            [ "GetHostname", "device_service" ],
+            [ "GetIPAddressFilter", "device_service" ],
+            [ "GetNetworkDefaultGateway", "device_service" ],
+            [ "GetNetworkInterfaces", "device_service" ],
+            [ "GetNetworkProtocols", "device_service" ],
+            [ "GetNTP", "device_service" ],
+            [ "GetRelayOutputs", "device_service" ],
+            [ "GetRemoteDiscoveryMode", "device_service" ],
+            [ "GetRemoteUser", "device_service" ],
+            [ "GetScopes", "device_service" ],
+            [ "GetServiceCapabilities", "device_service" ],
+            [ "GetStorageConfigurations", "device_service" ],
+            [ "GetSystemDateAndTime", "device_service" ],
+            [ "GetSystemSupportInformation", "device_service" ],
+            [ "GetSystemUris", "device_service" ],
+            [ "GetUsers", "device_service" ],
+            [ "GetWsdlUrl", "device_service" ],
+            [ "GetZeroConfiguration", "device_service" ],
+            [ "GetAudioDecoderConfigurations", "Media" ],
+            [ "GetAudioEncoderConfigurations", "Media" ],
+            [ "GetAudioOutputConfigurations", "Media" ],
+            [ "GetAudioOutputs", "Media" ],
+            [ "GetAudioSourceConfigurations", "Media" ],
+            [ "GetAudioSources", "Media" ],
+            [ "GetMetadataConfigurations", "Media" ],
+            [ "GetProfiles", "Media" ],
+            [ "GetServiceCapabilities", "Media" ],
+            [ "GetVideoAnalyticsConfigurations", "Media" ],
+            [ "GetVideoEncoderConfigurations", "Media" ],
+            [ "GetVideoSourceConfigurations", "Media" ],
+            [ "GetVideoSources", "Media" ],
+            [ "GetSnapshotUri", "Media" ],
+            [ "GetStreamUri", "Media" ],
+            [ "GetAnalyticsEngineControls", "Analytics" ],
+            [ "GetAnalyticsEngineInputs", "AnalyticsDevice" ],
+            [ "GetAnalyticsEngines", "AnalyticsDevice" ],
+            [ "GetServiceCapabilities", "AnalyticsDevice" ],
+            [ "GetAudioOutputs", "DeviceIO" ],
+            [ "GetAudioSources", "DeviceIO" ],
+            [ "GetDigitalInputs", "DeviceIO" ],
+            [ "GetRelayOutputs", "DeviceIO" ],
+            [ "GetSerialPorts", "DeviceIO" ],
+            [ "GetServiceCapabilities", "DeviceIO" ],
+            [ "GetVideoOutputs", "DeviceIO" ],
+            [ "GetVideoSources", "DeviceIO" ],
+            [ "GetServiceCapabilities", "Imaging" ],
+            [ "GetReceivers", "receiver_service" ],
+            [ "GetServiceCapabilities", "receiver_service" ],
+          ]
+        %>
+      <div class="both-inputs">
+        <div class="col-xs-12-percent">
+          <%= select_tag "Services", options_for_select(@services), class: "form-control", id: "services" %>
+        </div>
+        <div class="col-xs-12-percent">
+          <%= select_tag "Operations", options_for_select(@operations), class: "form-control", id: "operations" %>
+        </div>
+        <div class="col-xs-12-percent">
+          <%= select_tag "CameraID", options_for_select(@set_cameras), class: "form-control", id: "inputCameraId" %>
+        </div>
+        <button type="button" class="clear-btn-onvif" id="searchOnvif">Search</button>
+        <input type="hidden" value="<%= @evercam_server %>" id="server-api-url">
+      </div>
+    </div>
+    <div id="onvif-data" class="row dt-user-m">
+      <img src="<%= image_path 'loader3.gif' %>" id="camera-wait" style="display:none" />
+      <div class="col-md-12">
+        <pre id="json-renderer"></pre>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  $(document).ready(function () {
+    window.initializeOnvif();
+  });
+</script>

@@ -38,6 +38,8 @@
 #= require admin/timelapse_report.js
 #= require admin/meta_datas.js
 #= require admin/camera_shares.js
+#= require admin/jquery.json-viewer.js
+#= require admin/onvif.js
 #= require admin/jquery.datetimepicker.min.js
 #= require admin/chosen.jquery.min.js
 #= require admin/moment.min.js
