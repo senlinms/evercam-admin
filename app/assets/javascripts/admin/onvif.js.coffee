@@ -1,3 +1,4 @@
+loadingGif = '<img src="/assets/loader3.gif" class="camera-wait" />'
 sendAJAXRequest = (settings) ->
   token = $('meta[name="csrf-token"]')
   if token.size() > 0
@@ -21,14 +22,14 @@ initChosen = ->
 
 onOnvifRun = ->
   $("#searchOnvif").on "click", ->
-    $('#camera-wait').show()
+    $("#json-renderer").append loadingGif
     data = {}
     data.camera_info = $("#inputCameraId").val()
     data.service = $("#services").val()
     data.operation = $("#operations").find(":selected").text()
     data.api_url = $("#server-api-url").val()
     if $("#inputCameraId").val() is "Select Camera"
-      $('#camera-wait').hide()
+      $('.camera-wait').hide()
       $(".bb-alert")
         .removeClass("alert-success")
         .addClass("alert-danger")
@@ -43,11 +44,11 @@ onOnvifRun = ->
 getResponseFromCamera = (data) ->
 
   onError = (response) ->
-    $('#camera-wait').hide()
+    $('.camera-wait').hide()
     $("#json-renderer").jsonViewer($.parseJSON(response.responseText))
 
   onSuccess = (response) ->
-    $('#camera-wait').hide()
+    $('.camera-wait').hide()
     $('#json-renderer').jsonViewer(response)
 
   settings =
