@@ -42,13 +42,13 @@ onOnvifRun = ->
 
 getResponseFromCamera = (data) ->
 
-  onError = (data) ->
+  onError = (response) ->
     $('#camera-wait').hide()
-    $("#json-renderer").jsonViewer($.parseJSON(data.responseText))
+    $("#json-renderer").jsonViewer($.parseJSON(response.responseText))
 
-  onSuccess = (data) ->
+  onSuccess = (response) ->
     $('#camera-wait').hide()
-    $('#json-renderer').jsonViewer(data)
+    $('#json-renderer').jsonViewer(response)
 
   settings =
     error: onError
