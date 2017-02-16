@@ -43,7 +43,6 @@ module EvercamAdmin
     config.assets.precompile += %w[
       admin/admin.js
       admin/admin.css
-      bare-bones.js
       jquery.js
       phoenix.js
     ]

@@ -23,6 +23,14 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def evercam_server
+    if Rails.env.development?
+      "http://localhost:4000"
+    else
+      "https://media.evercam.io"
+    end
+  end
+
   protected
 
   def configure_permitted_parameters

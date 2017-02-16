@@ -58,4 +58,5 @@ Rails.application.routes.draw do
 
   get "/meta_datas" => "meta_datas#index"
   get "/shares" => "camera_shares#index"
+  get "/onvif" => "onvif#index"
 end
