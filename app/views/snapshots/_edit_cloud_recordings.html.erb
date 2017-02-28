@@ -1,0 +1,59 @@
+<div id="modal-add-cr" class="modal fade">
+  <div class="modal-dialog" style="width:400px;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="caption"><strong>Cloud Recordings</strong></div>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <table class="user-table" style="width: 100%;">
+            <tr>
+              <td><label class="control-label">Status:</label></td>
+              <td>
+               <select id="cloud-recording-status" class="form-control">
+                  <option value="on">On</option>
+                  <option value="off">Off</option>
+                  <option value="paused">Paused</option>
+                </select>
+              </td>
+            </tr>
+            <tr>
+              <td><label class="control-label">Storage Duration:</label></td>
+              <td>
+                <select id="cloud-recording-duration" class="form-control">
+                  <option value="1">24 hours recording</option>
+                  <option value="7">7 days recording</option>
+                  <option value="30">30 days recording</option>
+                  <option value="90">90 days recording</option>
+                  <option value="-1">Infinity</option>
+                </select>
+              </td>
+            </tr>
+            <tr>
+              <td><label class="control-label">Frequency:</label></td>
+              <td>
+                <select id="cloud-recording-frequency" class="form-control">
+                  <option value="60">60 (1 per second)</option>
+                  <option value="30">30 (1 every 2 seconds)</option>
+                  <option value="12">12 (1 every 5 seconds)</option>
+                  <option value="6">6 (1 every 10 seconds)</option>
+                  <option value="1">1 (1 every 60 seconds)</option>
+                </select>
+              </td>
+              <input type="hidden" value="" id="camera-exid">
+              <input type="hidden" value="" id="camera-api-id">
+              <input type="hidden" value="" id="camera-api-key">
+              <input type="hidden" value="" id="evercam-server">
+            </tr>
+          </table>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div class="pull-right">
+          <button type="button" class="btn btn-default grey" id="save-cr">Save</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

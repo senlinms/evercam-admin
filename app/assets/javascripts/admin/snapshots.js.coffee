@@ -1,5 +1,14 @@
 snapshots_table = undefined
 mouseOverCtrl = undefined
+editRowReference = undefined
+window.fullWeekSchedule =
+  "Monday": ["00:00-23:59"]
+  "Tuesday": ["00:00-23:59"]
+  "Wednesday": ["00:00-23:59"]
+  "Thursday": ["00:00-23:59"]
+  "Friday": ["00:00-23:59"]
+  "Saturday": ["00:00-23:59"]
+  "Sunday": ["00:00-23:59"]
 
 sendAJAXRequest = (settings) ->
   token = $('meta[name="csrf-token"]')
@@ -34,6 +43,7 @@ initializeDataTable = ->
       {data: "12", visible: false, sClass: "center", sWidth: "75px"},
       {data: "13", sClass: "center", sWidth: "65px", "render": colorStatus },
       {data: "14", sClass: "center", sWidth: "110px", "render": paymentMethod },
+      {data: "15", sClass: "center", sWidth: "50px" },
     ],
     iDisplayLength: 60
     columnDefs: [
@@ -137,6 +147,8 @@ onSearch = ->
       .search( @value )
       .draw()
 
+initNotify = ->
+  Notification.init(".bb-alert")
 
 onImageHover = ->
   $("#snapshots_datatables").on "mouseover", ".thumbnails", ->
@@ -147,11 +159,86 @@ onImageHover = ->
   $("#snapshots_datatables").on "mouseout", mouseOverCtrl, ->
     $(".div-elms").hide()
 
+onEditCR = ->
+  $("#snapshots_datatables").on "click", ".edit-cr", ->
+    editRowReference = $(this).parents('tr')
+    $('#modal-add-cr').modal('show')
+    status = $(this).parents('tr').find('td:nth-child(3)').text()
+    frequency = $(this).parents('tr').find('td:nth-child(5)').text()
+    if $(this).parents('tr').find('td:nth-child(4)').text() == "Infinity"
+      duration = -1
+    else
+      duration = $(this).parents('tr').find('td:nth-child(4)').text()
+    camera_exid = $(this).attr("camera-exid")
+    camera_api_id = $(this).attr("camera-api-id")
+    camera_api_key = $(this).attr("camera-api-key")
+    evercam_server = $(this).attr("evercam-server")
+
+    $("#cloud-recording-status").val(status.toLowerCase())
+    $("#cloud-recording-duration").val(duration)
+    $("#cloud-recording-frequency").val(frequency)
+    $("#camera-exid").val(camera_exid)
+    $("#camera-api-id").val(camera_api_id)
+    $("#camera-api-key").val(camera_api_key)
+    $("#evercam-server").val(evercam_server)
+
+onSaveCR = ->
+  $("#modal-add-cr").on "click", "#save-cr", ->
+    $('#modal-add-cr').modal('hide')
+    $("#cloud-recording-status").val()
+    $("#cloud-recording-duration").val()
+    $("#cloud-recording-frequency").val()
+    camera_exid = $("#camera-exid").val()
+    evercam_server = $("#evercam-server").val()
+
+    $('#api-wait').show()
+    data = {}
+    data.status = $("#cloud-recording-status").val()
+    data.storage_duration = $("#cloud-recording-duration").val()
+    data.frequency = $("#cloud-recording-frequency").val()
+    data.schedule = JSON.stringify(fullWeekSchedule)
+    data.api_id = $("#camera-api-id").val()
+    data.api_key = $("#camera-api-key").val()
+
+    onError = (jqXHR, status, error) ->
+      Notification.show(jqXHR.text)
+
+    onSuccess = (response, status, jqXHR) ->
+      $('#api-wait').hide()
+      editRowReference.find('td:nth-child(3)').text(capitalizeFirstLetter(response.cloud_recordings[0].status))
+      editRowReference.find('td:nth-child(4)').text(setDuration(response.cloud_recordings[0].storage_duration))
+      editRowReference.find('td:nth-child(5)').text(response.cloud_recordings[0].frequency)
+      Notification.show("Cloud Recordings have been updated.")
+
+    settings =
+      cache: false
+      data: data
+      dataType: 'json'
+      error: onError
+      success: onSuccess
+      contentType: "application/x-www-form-urlencoded"
+      type: "POST"
+      url: "#{evercam_server}/v1/cameras/#{camera_exid}/apps/cloud-recording"
+
+    $.ajax(settings)
+
+capitalizeFirstLetter = (string) ->
+  string.charAt(0).toUpperCase() + string.slice(1)
+
+setDuration = (value) ->
+  if value == -1
+    "Infinity"
+  else
+    value
+
 window.initializSnapshots = ->
+  initNotify()
   columnsDropdown()
   initializeDataTable()
   onIntercomClick()
   onSearch()
   onImageHover()
+  onEditCR()
+  onSaveCR()
   $(window).resize ->
     adjustHorizontalScroll()
