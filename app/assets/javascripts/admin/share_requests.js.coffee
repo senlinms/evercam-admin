@@ -39,7 +39,19 @@ appendMe = ->
   row.css("margin-bottom", "-11px")
   $("#shares-list-row").css("margin-top","-34px")
 
+statusFilter = ->
+  $(".share-requests-status-used, .share-requests-status-pending, .share-requests-status-cancelled").change ->
+    if !@checked
+      status = ""
+    else
+      status = $(this).attr("data-val")
+    shares_table
+      .column(5)
+      .search( status )
+      .draw()
+
 window.initializeShareRequests = ->
   initializeDataTable()
   columnsDropdown()
+  statusFilter()
   appendMe()
