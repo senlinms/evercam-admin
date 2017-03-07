@@ -10,7 +10,7 @@ class AdminsController < ApplicationController
         firstname: params[:firstname],
         lastname: params[:lastname],
         email: params[:email],
-        is_admin: true,
+        is_admin: params[:is_admin],
         password: params[:password],
         password_confirmation: params[:password]
       })
@@ -28,6 +28,7 @@ class AdminsController < ApplicationController
     @admin.lastname = params[:lastname]
     @admin.username = params[:username]
     @admin.email = params[:email]
+    @admin.is_admin = params[:is_admin]
     if params[:password]
       @admin.password = params[:password]
       @admin.password_confirmation = params[:password]

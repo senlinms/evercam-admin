@@ -58,6 +58,14 @@ appendMe = ->
 initNotify = ->
   Notification.init(".bb-alert")
 
+openModal = ->
+  $("#add-an-admin").on "click", ->
+    clearForm()
+    $("#save-admin").show()
+    $("#update-admin").addClass("hide")
+    $(".modal-header > .caption > strong").text("Add Admin")
+    $("#modal-add-admin").modal("show")
+
 addAdmin = ->
   $("#save-admin").on "click", ->
     data = {}
@@ -66,6 +74,7 @@ addAdmin = ->
     data.username = $("#username").val()
     data.email = $("#email").val()
     data.password = $("#password").val()
+    data.is_admin = $("#is_admin").val()
 
     onError = (jqXHR, status, error) ->
       Notification.show(jqXHR.responseText)
@@ -96,6 +105,7 @@ clearForm = ->
   $("#username").val("")
   $("#email").val("")
   $("#password").val("")
+  $("#is_admin").val("true")
 
 addNewRow = (admin) ->
   admin_table.row.add([
@@ -163,6 +173,7 @@ setModelUpdate = (values, firstname, lastname) ->
   $("#last-name").val(lastname)
   $("#username").val(values[0])
   $("#email").val(values[2])
+  $("#is_admin").val(values[9])
   $("#password").val("")
 
 updateAdmin = ->
@@ -173,6 +184,7 @@ updateAdmin = ->
     data.lastname = $("#last-name").val()
     data.username = $("#username").val()
     data.email = $("#email").val()
+    data.is_admin = $("#is_admin").val()
     if $("#password").val() != ""
       data.password = $("#password").val()
 
@@ -202,6 +214,7 @@ updateRow = (data) ->
     .cell(editRow.find('td:nth-child(2)')).data("#{data.firstname} #{data.lastname}")
     .cell(editRow.find('td:nth-child(3)')).data(data.email)
     .cell(editRow.find('td:nth-child(5)')).data(formatDate(data.updated_at))
+    .cell(editRow.find('td:nth-child(10)')).data(data.is_admin)
 
 humanizeStatus = (active) ->
   if active is "true" || active is true
@@ -214,6 +227,7 @@ window.initializeAdmins = ->
   columnsDropdown()
   appendMe()
   initNotify()
+  openModal()
   addAdmin()
   editAdmin()
   updateAdmin()
