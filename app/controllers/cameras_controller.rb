@@ -48,14 +48,31 @@ class CamerasController < ApplicationController
   def load_cameras
     col_for_order = params[:order]["0"]["column"]
     order_for = params[:order]["0"]["dir"]
-    if params[:query_params].present?
-      condition = "where lower(c.exid) like lower('%#{params[:query_params]}%') OR lower(c.name) like lower('%#{params[:query_params]}%') OR
-      lower(vendor_model_name) like lower('%#{params[:query_params]}%') OR lower(vendor_name) like lower('%#{params[:query_params]}%')
-      OR lower(fullname) like lower('%#{params[:query_params]}%') OR
-      lower(c.config->>'external_host') like lower('%#{params[:query_params]}%')"
-    else
-      condition = ""
+    if params[:camera_exid].present?
+      camera_exid = " and lower(c.exid) like lower('%#{params[:camera_exid]}%')"
     end
+    if params[:camera_name].present?
+      camera_name = " and lower(c.name) like lower('%#{params[:camera_name]}%')"
+    end
+    if params[:camera_owner].present?
+      camera_owner = " and lower(fullname) like lower('%#{params[:camera_owner]}%')"
+    end
+    if params[:camera_ip].present?
+      camera_ip = " and lower(c.config->>'external_host') like lower('%#{params[:camera_ip]}%')"
+    end
+    if params[:model].present?
+      camera_model = " and lower(vendor_model_name) like lower('%#{params[:model]}%')"
+    end
+    if params[:vendor].present?
+      camera_vendor = " and lower(vendor_name) like lower('%#{params[:vendor]}%')"
+    end
+    if params[:username].present?
+      camera_username = " and lower(c.config->'auth'->'basic'->>'username') like lower('%#{params[:username]}%')"
+    end
+    if params[:password].present?
+      camera_password = " and lower(c.config->'auth'->'basic'->>'password') like lower('%#{params[:password]}%')"
+    end
+
     cameras = Camera.connection.select_all("select * from (
                 select c.*,u.firstname || ' ' || u.lastname as fullname, u as user, u.id as user_id, u.api_id, u.api_key,
                 v.name as vendor_name,vm.name as vendor_model_name,
@@ -63,7 +80,9 @@ class CamerasController < ApplicationController
                 inner JOIN users u on c.owner_id = u.id
                 left JOIN vendor_models vm on c.model_id = vm.id
                 left JOIN vendors v on vm.vendor_id = v.id
-                ) c #{condition} #{sorting(col_for_order, order_for)}")
+                ) c where 1=1
+                #{camera_exid}#{camera_name}#{camera_owner}#{camera_ip}#{camera_model}#{camera_vendor}#{camera_username}#{camera_password}
+                #{sorting(col_for_order, order_for)}")
     total_records = cameras.count
     display_length = params[:length].to_i
     display_length = display_length < 0 ? total_records : display_length

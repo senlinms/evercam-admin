@@ -373,3 +373,25 @@ a.json-placeholder:hover {
   top: 25%;
   z-index: 99999;
 }
+
+.camera-inputs {
+  width: 835px;
+  float: left;
+  height: auto;
+  overflow: hidden;
+  padding: 3px 1px;
+}
+
+.filter-container {
+  width: 900px;
+  height: auto;
+  overflow: hidden;
+}
+
+.form-camera-report {
+  width: 900px;
+  overflow: hidden;
+  height: auto;
+  float: left;
+  text-align: center;
+}

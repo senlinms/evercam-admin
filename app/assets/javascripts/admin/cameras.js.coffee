@@ -67,9 +67,24 @@ initializeDataTable = ->
         # execute some code on network or other general error
 
 searchFilter = ->
-  $('.table-group-action-input').on "keyup", ->
-    action = $('.table-group-action-input').val()
-    cameras_table.setAjaxParam 'query_params', action.replace("'","''")
+  $("#camera-id, #owner, #camera-name, #camera-ip, #username, #password, #model, #vendor").on "keyup", ->
+    camera_exid = $("#camera-id").val()
+    camera_owner = $("#owner").val().replace("'","''")
+    camera_name = $("#camera-name").val().replace("'","''")
+    camera_ip = $("#camera-ip").val()
+    username = $("#username").val()
+    password = $("#password").val()
+    model = $("#model").val()
+    vendor = $("#vendor").val()
+
+    cameras_table.setAjaxParam 'camera_exid', camera_exid
+    cameras_table.setAjaxParam 'camera_owner', camera_owner
+    cameras_table.setAjaxParam 'camera_name', camera_name
+    cameras_table.setAjaxParam 'camera_ip', camera_ip
+    cameras_table.setAjaxParam 'username', username
+    cameras_table.setAjaxParam 'password', password
+    cameras_table.setAjaxParam 'model', model
+    cameras_table.setAjaxParam 'vendor', vendor
     cameras_table.getDataTable().ajax.reload()
     return
 
