@@ -1,0 +1,13 @@
+<% if @companies.present? %>
+  <% @companies.each do |company| %>
+    <tr>
+      <td><%= company.company_id %></td>
+      <td><%= company.name %></td>
+      <td><%= company.session_count %></td>
+      <td><%= company.user_count %></td>
+      <td><%= Time.at(company.updated_at).utc.strftime('%a, %d %b %Y %H:%M:%S') unless company.updated_at.nil? %></td>
+      <td><%= Time.at(company.created_at).utc.strftime('%a, %d %b %Y %H:%M:%S') unless company.created_at.nil? %></td>
+      <td><i company-id="<%= company.company_id %>" company-name="<%= company.name %>" class="fa fa-pencil-square-o edit-company"></i></td>
+    </tr>
+  <% end %>
+<% end %>
