@@ -280,6 +280,7 @@ GEM
       simplecov-html (~> 0.10.0)
     simplecov-html (0.10.0)
     slop (3.6.0)
+    spawnling (2.1.6)
     spinach (0.8.10)
       colorize
       gherkin-ruby (>= 0.3.2)
@@ -385,6 +386,7 @@ DEPENDENCIES
   sdoc (~> 0.4.0)
   selenium-webdriver
   shoulda-matchers
+  spawnling (~> 2.1)
   spinach-rails
   sprockets
   sprockets-es6

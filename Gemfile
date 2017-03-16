@@ -98,3 +98,4 @@ gem 'rmega', '~> 0.2.2'
 
 gem 'intercom', "~> 3.5.2"
 gem "bcrypt"
+gem 'spawnling', '~>2.1'

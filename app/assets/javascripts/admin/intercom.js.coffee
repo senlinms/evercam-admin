@@ -73,7 +73,7 @@ onSaveCompany = ->
           response.company["name"],
           response.company["session_count"],
           response.company["user_count"],
-          response.company["updated_at"],
+          getDateTime(response.company["updated_at"]),
           getDateTime(response.company["created_at"]),
           ""]).draw(false)
         Notification.show("Company created successfully.")
