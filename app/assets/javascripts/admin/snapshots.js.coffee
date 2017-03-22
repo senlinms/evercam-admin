@@ -1,7 +1,10 @@
 snapshots_table = undefined
 mouseOverCtrl = undefined
 editRowReference = undefined
-window.fullWeekSchedule =
+schedule = undefined
+scheduleCalendar = undefined
+cameraSchedule = undefined
+fullWeekSchedule =
   "Monday": ["00:00-23:59"]
   "Tuesday": ["00:00-23:59"]
   "Wednesday": ["00:00-23:59"]
@@ -159,6 +162,94 @@ onImageHover = ->
   $("#snapshots_datatables").on "mouseout", mouseOverCtrl, ->
     $(".div-elms").hide()
 
+initScheduleCalendar = ->
+  scheduleCalendar = $('.cloud-recording-calendar').fullCalendar
+    axisFormat: 'HH'
+    allDaySlot: false
+    columnFormat: 'ddd'
+    defaultDate: '1970-01-01'
+    slotDuration: '00:60:00'
+    defaultView: 'agendaWeek'
+    dayNamesShort: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
+    eventColor: '#428bca'
+    editable: true
+    eventClick: (event, element) ->
+      event.preventDefault
+      if (window.confirm("Are you sure you want to delete this event?"))
+        scheduleCalendar.fullCalendar('removeEvents', event._id)
+        schedule = parseCalendar()
+    eventDrop: (event) ->
+      schedule = parseCalendar()
+    eventResize: (event) ->
+      schedule = parseCalendar()
+    eventLimit: true
+    eventOverlap: false
+    firstDay: 1
+    header:
+      left: ''
+      center: ''
+      right: ''
+    height: 'auto'
+    select: (start, end) ->
+      # TODO: select whole day range when allDaySlot is selected
+      eventData =
+        start: start
+        end: end
+      scheduleCalendar.fullCalendar('renderEvent', eventData, true)
+      scheduleCalendar.fullCalendar('unselect')
+      schedule = parseCalendar()
+    selectHelper: true
+    selectable: true
+    timezone: 'local'
+
+renderEvents = ->
+  schedule = cameraSchedule
+  days = _.keys(schedule)
+  calendarWeek = currentCalendarWeek()
+
+  _.forEach days, (weekDay) ->
+    day = schedule[weekDay]
+    unless day.length == 0
+      _.forEach day, (event) ->
+        start = event.split("-")[0]
+        end = event.split("-")[1]
+        event =
+          start: moment("#{calendarWeek[weekDay]} #{start}", "YYYY-MM-DD HH:mm")
+          end: moment("#{calendarWeek[weekDay]} #{end}", "YYYY-MM-DD HH:mm")
+
+        scheduleCalendar.fullCalendar('renderEvent', event, true)
+
+currentCalendarWeek = ->
+  calendarWeek = {}
+  weekStart = scheduleCalendar.fullCalendar('getView').start
+  weekEnd = scheduleCalendar.fullCalendar('getView').end
+  day = weekStart
+  while day.isBefore(weekEnd)
+    weekDay = day.format("dddd")
+    calendarWeek[weekDay] = day.format('YYYY-MM-DD')
+    day.add 1, 'days'
+  calendarWeek
+
+makeScheduleOpen = ->
+  $('.cloud-recording-calendar').addClass 'open'
+
+parseCalendar = ->
+  events = $('.cloud-recording-calendar').fullCalendar('clientEvents')
+  schedule =
+    'Monday': []
+    'Tuesday': []
+    'Wednesday': []
+    'Thursday': []
+    'Friday': []
+    'Saturday': []
+    'Sunday': []
+  _.forEach events, (event) ->
+    startTime = "#{moment(event.start).get('hours')}:#{moment(event.start).get('minutes')}"
+    endTime = "#{moment(event.end).get('hours')}:#{moment(event.end).get('minutes')}"
+    day = moment(event.start).format('dddd')
+    schedule[day] = schedule[day].concat("#{startTime}-#{endTime}")
+  schedule
+
 onEditCR = ->
   $("#snapshots_datatables").on "click", ".edit-cr", ->
     editRowReference = $(this).parents('tr')
@@ -174,7 +265,16 @@ onEditCR = ->
     camera_api_key = $(this).attr("camera-api-key")
     evercam_server = $(this).attr("evercam-server")
 
-    $("#cloud-recording-status").val(status.toLowerCase())
+    if status == "On Scheduled"
+      $("#cloud-recording-status").val("on-scheduled")
+      $(".show-schedule").css("display","block")
+      cameraSchedule = JSON.parse(editRowReference.find('td:nth-child(6)').attr('camera-schedule'))
+      initScheduleCalendar()
+      renderEvents()
+    else
+      $("#cloud-recording-status").val(status.toLowerCase())
+      $(".show-schedule").css("display","none")
+
     $("#cloud-recording-duration").val(duration)
     $("#cloud-recording-frequency").val(frequency)
     $("#camera-exid").val(camera_exid)
@@ -196,7 +296,7 @@ onSaveCR = ->
     data.status = $("#cloud-recording-status").val()
     data.storage_duration = $("#cloud-recording-duration").val()
     data.frequency = $("#cloud-recording-frequency").val()
-    data.schedule = JSON.stringify(fullWeekSchedule)
+    data.schedule = JSON.stringify(schedule)
     data.api_id = $("#camera-api-id").val()
     data.api_key = $("#camera-api-key").val()
 
@@ -205,9 +305,14 @@ onSaveCR = ->
 
     onSuccess = (response, status, jqXHR) ->
       $('#api-wait').hide()
-      editRowReference.find('td:nth-child(3)').text(capitalizeFirstLetter(response.cloud_recordings[0].status))
+      $('.cloud-recording-calendar').fullCalendar('destroy')
+      if response.cloud_recordings[0].status == "on-scheduled"
+        editRowReference.find('td:nth-child(3)').text("On Scheduled")
+      else
+        editRowReference.find('td:nth-child(3)').text(capitalizeFirstLetter(response.cloud_recordings[0].status))
       editRowReference.find('td:nth-child(4)').text(setDuration(response.cloud_recordings[0].storage_duration))
       editRowReference.find('td:nth-child(5)').text(response.cloud_recordings[0].frequency)
+      editRowReference.find('td:nth-child(6)').attr('camera-schedule', JSON.stringify(response.cloud_recordings[0].schedule))
       Notification.show("Cloud Recordings have been updated.")
 
     settings =
@@ -231,6 +336,22 @@ setDuration = (value) ->
   else
     value
 
+onModalClose = ->
+  $('#modal-add-cr').on 'hidden.bs.modal', (e) ->
+    $('.cloud-recording-calendar').fullCalendar('destroy')
+
+onSceduleSelect = ->
+  $("#cloud-recording-status").on "change", ->
+    if @value == "on-scheduled"
+      $(".show-schedule").css("display","block")
+      cameraSchedule = JSON.parse(editRowReference.find('td:nth-child(6)').attr('camera-schedule'))
+      initScheduleCalendar()
+      renderEvents()
+    else
+      $('.cloud-recording-calendar').fullCalendar('destroy')
+      schedule = fullWeekSchedule
+      $(".show-schedule").css("display","none")
+
 window.initializSnapshots = ->
   initNotify()
   columnsDropdown()
@@ -239,6 +360,9 @@ window.initializSnapshots = ->
   onSearch()
   onImageHover()
   onEditCR()
+  makeScheduleOpen()
+  onSceduleSelect()
+  onModalClose()
   onSaveCR()
   $(window).resize ->
     adjustHorizontalScroll()

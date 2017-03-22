@@ -395,3 +395,19 @@ a.json-placeholder:hover {
   float: left;
   text-align: center;
 }
+
+.modal-add-cr .modal-body {
+  position: relative;
+  padding: 3px 10px;
+}
+
+$calendar-header: #efefef;
+
+.modal-add-cr .modal-header {
+  border-bottom: 1px solid $calendar-header;
+  padding: 1px;
+}
+
+.cloud-recording-calendar .fc-toolbar {
+  display: none;
+}
