@@ -411,3 +411,15 @@ $calendar-header: #efefef;
 .cloud-recording-calendar .fc-toolbar {
   display: none;
 }
+
+$ovnif-reboot: #e51d1d;
+
+.reboot-btn-onvif {
+  padding: 9px;
+  display: inline-block;
+  background-color: $ovnif-reboot;
+  float: left;
+  color: white;
+  border: none;
+  margin-left: 5px;
+}

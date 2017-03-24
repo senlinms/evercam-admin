@@ -61,7 +61,29 @@ getResponseFromCamera = (data) ->
 
   sendAJAXRequest(settings)
 
+onOnvifReboot = ->
+  $("#rebootOnvif").on "click", ->
+    $("#json-renderer").append loadingGif
+    data = {}
+    data.camera_info = $("#inputCameraId").val()
+    data.service = "device_service"
+    data.operation = "SystemReboot"
+    data.api_url = $("#server-api-url").val()
+    if $("#inputCameraId").val() is "Select Camera"
+      $('.camera-wait').hide()
+      $(".bb-alert")
+        .removeClass("alert-success")
+        .addClass("alert-danger")
+        .text("Camera cannot be empty!")
+        .delay(200)
+        .fadeIn()
+        .delay(4000)
+        .fadeOut()
+    else
+      getResponseFromCamera(data)
+
 window.initializeOnvif = ->
   loadSelects()
   initChosen()
   onOnvifRun()
+  onOnvifReboot()

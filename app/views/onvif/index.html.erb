@@ -89,6 +89,7 @@
           <%= select_tag "CameraID", options_for_select(@set_cameras), class: "form-control", id: "inputCameraId" %>
         </div>
         <button type="button" class="clear-btn-onvif" id="searchOnvif">Search</button>
+        <button type="button" class="reboot-btn-onvif" id="rebootOnvif">Reboot</button>
         <input type="hidden" value="<%= @evercam_server %>" id="server-api-url">
       </div>
     </div>
