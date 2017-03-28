@@ -272,6 +272,7 @@ onEditCR = ->
       initScheduleCalendar()
       renderEvents()
     else
+      schedule = fullWeekSchedule
       $("#cloud-recording-status").val(status.toLowerCase())
       $(".show-schedule").css("display","none")
 
