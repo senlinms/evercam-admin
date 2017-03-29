@@ -10,20 +10,20 @@
           <table class="user-table">
             <tr>
               <td class="col-md-4"><label class="control-label">First Name:</label></td>
-              <td><input data-validation-error-msg="Cannot be blank" type="text" data-validation="length" data-validation-length="min1" id="user_firstname" name="user[firstname]" class="form-control" value="<%= @user.firstname %>"/></td>
+              <td><input data-validation-error-msg="Cannot be blank" type="text" data-validation="length" data-validation-length="min1" id="user_firstname" name="user[firstname]" class="form-control" value="<%= @user.firstname %>" autocomplete="off"/></td>
             </tr>
             <tr>
               <td class="col-md-4"><label class="control-label">Last Name:</label></td>
-              <td><input data-validation-error-msg="Cannot be blank" type="text" data-validation="length" data-validation-length="min1" id="user_lastname" name="user[lastname]" class="form-control" value="<%= @user.lastname %>"/></td>
+              <td><input data-validation-error-msg="Cannot be blank" type="text" data-validation="length" data-validation-length="min1" id="user_lastname" name="user[lastname]" class="form-control" value="<%= @user.lastname %>" autocomplete="off"/></td>
             </tr>
             <tr>
               <td class="col-md-4"><label class="control-label">Email:</label></td>
-              <td><input data-validation="email" type="text" id="user_email" name="user[email]" class="form-control" value="<%= @user.email %>"/></td>
+              <td><input data-validation="email" type="text" id="user_email" name="user[email]" class="form-control" value="<%= @user.email %>" autocomplete="off"/></td>
             </tr>
             <tr>
               <td class="col-md-4"><label class="control-label">Country:</label></td>
               <td>
-                <select id="user_country_id" name="user[country_id]" class="form-control is-required">
+                <select id="user_country_id" name="user[country_id]" class="form-control is-required" autocomplete="off">
                   <% @countries.each do |c| %>
                       <option value="<%= c.id -%>" <% if !@user.country.blank? &&c.name == @user.country.name %>selected="selected"<% end %>>
                         <%= c.name -%>
@@ -35,7 +35,7 @@
             <tr>
               <td class="col-md-4"><label class="control-label">Payment Method:</label></td>
               <td>
-                <select id="user_payment_method" name="user[payment_method]" class="form-control is-required">
+                <select id="user_payment_method" name="user[payment_method]" class="form-control is-required" autocomplete="off">
                   <option value="0" <% if @user.payment_method.eql?(0) %>selected="selected"<% end %>>Stripe</option>
                   <option value="1" <% if @user.payment_method.eql?(1) %>selected="selected"<% end %>>Custom</option>
                 </select>
@@ -43,11 +43,11 @@
             </tr>
             <tr>
               <td class="col-md-4"><label class="control-label">Insight ID:</label></td>
-              <td><input type="text" name="user[insight_id]" class="form-control" value="<%= @user.insight_id %>"/></td>
+              <td><input type="text" name="user[insight_id]" class="form-control" value="<%= @user.insight_id %>" autocomplete="off"/></td>
             </tr>
             <tr>
               <td class="col-md-4"><label class="control-label">Password:</label></td>
-              <td><input type="text" name="user[password]" class="form-control"/></td>
+              <td><input type="text" name="user[password]" class="form-control" autocomplete="off"/></td>
             </tr>
           </table>
         </div>
