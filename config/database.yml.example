@@ -1,9 +1,19 @@
 default: &default
   adapter: postgresql
+  host: localhost
+  port: 5432
+  schema_search_path: public
+  template: template0
   encoding: unicode
   pool: 5
-  username: postgres
-  password: password
+
+evercam_db_development:
+  <<: *default
+  database: evercam_dev
+
+evercam_snapshot_db_development:
+  <<: *default
+  database: evercam_dev
 
 development:
   <<: *default
@@ -13,6 +23,14 @@ test:
   <<: *default
   database: evercam_admin_test
 
+evercam_db_test:
+  <<: *default
+  database: evercam_tst
+
+evercam_snapshot_db_test:
+  <<: *default
+  database: evercam_tst
+
 production:
   <<: *default
   database: <%= ENV['RDS_DB_NAME'] %>
@@ -20,3 +38,19 @@ production:
   password: <%= ENV['RDS_PASSWORD'] %>
   host: <%= ENV['RDS_HOSTNAME'] %>
   port: <%= ENV['RDS_PORT'] %>
+
+evercam_db_production:
+  <<: *default
+  database: <%= ENV['EVERCAM_DB_NAME'] %>
+  username: <%= ENV['EVERCAM_DB_USERNAME'] %>
+  password: <%= ENV['EVERCAM_DB_PASSWORD'] %>
+  host: <%= ENV['EVERCAM_DB_HOSTNAME'] %>
+  port: <%= ENV['EVERCAM_DB_PORT'] %>
+
+evercam_snapshot_db_production:
+  <<: *default
+  database: <%= ENV['EVERCAM_SNAPSHOT_DB_NAME'] %>
+  username: <%= ENV['EVERCAM_SNAPSHOT_DB_USERNAME'] %>
+  password: <%= ENV['EVERCAM_SNAPSHOT_DB_PASSWORD'] %>
+  host: <%= ENV['EVERCAM_SNAPSHOT_DB_HOSTNAME'] %>
+  port: <%= ENV['EVERCAM_SNAPSHOT_DB_PORT'] %>
