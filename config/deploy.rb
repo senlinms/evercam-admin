@@ -18,6 +18,10 @@ set :config_example_suffix, '.example'
 set :config_files, %w{config/database.yml config/secrets.yml}
 set :puma_conf, "#{shared_path}/config/puma.rb"
 
+set :nginx_config_name, 'evercam-admin'
+set :nginx_server_name, 'sadmin.evercam.io'
+set :nginx_use_ssl, true
+
 namespace :deploy do
   before 'check:linked_files', 'config:push'
   before 'check:linked_files', 'puma:config'
