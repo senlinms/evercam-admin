@@ -19,7 +19,7 @@ set :config_files, %w{config/database.yml config/secrets.yml}
 set :puma_conf, "#{shared_path}/config/puma.rb"
 
 set :nginx_config_name, 'evercam-admin'
-set :nginx_server_name, 'sadmin.evercam.io'
+set :nginx_server_name, 'happymin.evercam.io'
 set :nginx_use_ssl, true
 
 namespace :deploy do
