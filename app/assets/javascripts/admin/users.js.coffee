@@ -35,7 +35,7 @@ initializeDataTable = ->
         [ 25, 50, 100, 150 ]
         [ 25, 50, 100, 150 ]
       ]
-      "order": [[ 10, "desc" ]]
+      "order": [[ 11, "desc" ]]
       'pageLength': 60
       'processing': true
       'serverSide': true
@@ -45,6 +45,7 @@ initializeDataTable = ->
         'headers': headers
         'url': '/load_users'
       columns: [
+        {data: "15", "orderable": true, "width": "90px", "render": paymentMethod}
         {data: "0", "orderable": true, "width": "95px" },
         {data: "1", "render": linkUser, "width": "170px" },
         {data: "2", "width": "150px" },
@@ -59,8 +60,7 @@ initializeDataTable = ->
         {data: "11", "width": "170px" },
         {data: "12", "width": "120px", "sClass": "center" },
         {data: "13", "width": "120px", "sClass": "center green" },
-        {data: "14", "width": "120px", "sClass": "center red", "render": removeMinus },
-        {data: "15", "width": "130px", "sClass": "center" , "render": paymentMethod}
+        {data: "14", "width": "120px", "sClass": "center red", "render": removeMinus }
       ],
       drawCallback: ->
         adjustHorizontalScroll()
@@ -95,8 +95,12 @@ searchFilter = ->
     users_table.setAjaxParam 'licVALID2', licVALID2
     users_table.setAjaxParam 'licDEF1', licDEF1
     users_table.setAjaxParam 'licDEF2', licDEF2
+    users_table.setAjaxParam('payment_type', $("#user_payment_type").val())
     users_table.getDataTable().ajax.reload()
-    return
+
+  $('#user_payment_type').on "change", ->
+    users_table.setAjaxParam('payment_type', $("#user_payment_type").val())
+    users_table.getDataTable().ajax.reload()
 
 appendMe = ->
   $("#div-dropdown-checklist").css({"visibility": "visible", "width": "20px", "top": "78px", "float": "right", "right": "22px" })
@@ -119,10 +123,13 @@ totalCameras = (name, type, row) ->
   return row[6] + row[5]
 
 paymentMethod = (name) ->
-  if name is "0"
-    "Stripe"
-  else
-    "Custom"
+  switch name
+    when "0" then "Stripe"
+    when "1" then "Custom"
+    when "2" then "Construction"
+    when "3" then "Gardai"
+    when "4" then "Smart Cities"
+    else "Other"
 
 showTable = ->
   $(window).load ->
@@ -186,6 +193,7 @@ clearFilter = ->
     $("#username").val("")
     $("#fullname").val("")
     $("#email").val("")
+    $("#user_payment_type").val("")
     users_table.clearAjaxParams()
     users_table.getDataTable().ajax.reload()
 

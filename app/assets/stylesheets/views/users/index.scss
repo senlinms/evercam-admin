@@ -67,6 +67,22 @@
   padding: 3px 1px;
 }
 
+.payment-type-divs {
+  width: 232px;
+  float: left;
+  height: auto;
+  overflow: hidden;
+  padding: 3px 1px;
+}
+
+.btn-div {
+  width: 84px;
+  float: left;
+  height: auto;
+  overflow: hidden;
+  padding: 3px 1px;
+}
+
 .first-ins {
   background-color: #EEEEEE;
   width: 164px;
@@ -78,6 +94,15 @@
 
 .small-ins {
   width: 45px;
+  padding: 7px;
+  border: none;
+  margin-left: 5px;
+  float: left;
+  background-color: #EEEEEE;
+}
+
+.medium-ins {
+  width: 95px;
   padding: 7px;
   border: none;
   margin-left: 5px;

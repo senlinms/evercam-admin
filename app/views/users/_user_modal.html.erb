@@ -38,6 +38,9 @@
                 <select id="user_payment_method" name="user[payment_method]" class="form-control is-required" autocomplete="off">
                   <option value="0" <% if @user.payment_method.eql?(0) %>selected="selected"<% end %>>Stripe</option>
                   <option value="1" <% if @user.payment_method.eql?(1) %>selected="selected"<% end %>>Custom</option>
+                  <option value="0" <% if @user.payment_method.eql?(2) %>selected="selected"<% end %>>Construction</option>
+                  <option value="1" <% if @user.payment_method.eql?(3) %>selected="selected"<% end %>>Gardai</option>
+                  <option value="1" <% if @user.payment_method.eql?(4) %>selected="selected"<% end %>>Smart Cities</option>
                 </select>
               </td>
             </tr>

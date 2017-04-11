@@ -13,7 +13,7 @@
       <div class="form-main">
         <div class="main-contain">
           <div class="filter-name">
-            Search :
+            Search
           </div>
           <div class="input-divs">
             <input type="text" class="first-ins" placeholder="Username" id="username" autocomplete="off"/>
@@ -23,21 +23,21 @@
         </div>
         <div class="main-contain licence-space">
           <div class="filter-name">
-            Licence Required :
+            Licence Required
           </div>
           <div class="input-divs-s">
             <input type="text" class="small-ins" placeholder="from" id="licREQ1" autocomplete="off">
             <input type="text" class="small-ins" placeholder="to" id="licREQ2" autocomplete="off">
           </div>
           <div class="filter-second">
-            Licence Valid :
+            Licence Valid
           </div>
           <div class="input-divs-s">
             <input type="text" class="small-ins" placeholder="from" id="licVALID1" autocomplete="off">
             <input type="text" class="small-ins" placeholder="to" id="licVALID2" autocomplete="off">
           </div>
           <div class="filter-second def-ins">
-            Licence Deficient :
+            Licence Deficient
           </div>
           <div class="input-divs-s">
             <input type="text" class="small-ins" placeholder="from" id="licDEF1" autocomplete="off">
@@ -46,12 +46,25 @@
         </div>
         <div class="main-contain licence-space">
           <div class="filter-name">
-            Total Cameras :
+            Total Cameras
           </div>
-          <div class="input-divs">
-            <input type="text" class="small-ins" placeholder="numeric" id="total_cameras" autocomplete="off">
-            <button type="button" class="clear-btn-f" id="filterClear">Clear Filter</button>
+          <div class="input-divs-s">
+            <input type="text" class="medium-ins" placeholder="numeric" id="total_cameras" autocomplete="off">
           </div>
+          <div class="filter-second">
+            Payment Type
+          </div>
+          <div class="payment-type-divs">
+            <select id="user_payment_type" class="first-ins" autocomplete="off">
+              <option value="">All</option>
+              <option value="0">Stripe</option>
+              <option value="1">Custom</option>
+              <option value="2">Construction</option>
+              <option value="3">Gardai</option>
+              <option value="4">Smart Cities</option>
+            </select>
+          </div>
+          <div class="btn-div"><button type="button" class="clear-btn-f" id="filterClear">Clear Filter</button></div>
         </div>
       </div>
     </div>
@@ -61,6 +74,7 @@
         <table class="table table-striped table-bordered table-hover user-list-table" id="users_datatables">
           <thead>
             <tr role="row" class="heading">
+              <th name="order_lic_p_method" class="sorting">Payment Type</th>
               <th name="order_username" class="sorting">Username</th>
               <th name="order_name" class="sorting">Name</th>
               <th name="order_email" class="sorting">Email</th>
@@ -76,7 +90,6 @@
               <th name="order_lic_used" class="sorting">Licence Required</th>
               <th name="order_lic_valid" class="sorting">Licence Valid</th>
               <th name="order_lic_deficient" class="sorting">Licence Deficient</th>
-              <th name="order_lic_p_method" class="sorting">Payment Method</th>
             </tr>
           </thead>
           <tbody>
