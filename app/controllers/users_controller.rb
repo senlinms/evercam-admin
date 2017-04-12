@@ -4,9 +4,9 @@ class UsersController < ApplicationController
   require "intercom"
 
   def index
+    @countries = Country.all
     if params[:q]
       @user = EvercamUser.find_by_email(params[:q]).decorate
-      @countries = Country.all
       render "show", params: { user: @user, countries: @countries }
     end
   end
@@ -31,6 +31,18 @@ class UsersController < ApplicationController
                            error.backtrace.join("\n")
     flash[:message] = "An error occurred updating User details. "\
                           "Please try again and, if this problem persists, contact support."
+  end
+
+  def update_multiple_users
+    update_string = ""
+    if params["payment_type"].present?
+      update_string += ",payment_method=#{params["payment_type"]}"
+    end
+    if params["country"].present?
+      update_string += ",country_id=#{params["country"]}"
+    end
+    EvercamUser.connection.select_all("update users set updated_at=now()#{update_string} where id in (#{params["ids"]})")
+    render json: {success: true}
   end
 
   def load_users

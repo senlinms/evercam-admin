@@ -45,6 +45,7 @@ initializeDataTable = ->
         'headers': headers
         'url': '/load_users'
       columns: [
+        {data: "16", "width": "20px", "sClass": "center", "render": addCheckbox},
         {data: "15", "orderable": true, "width": "90px", "render": paymentMethod}
         {data: "0", "orderable": true, "width": "95px" },
         {data: "1", "render": linkUser, "width": "170px" },
@@ -64,14 +65,18 @@ initializeDataTable = ->
       ],
       drawCallback: ->
         adjustHorizontalScroll()
+        Metronic.init()
       initComplete: ->
-        # execute some code on network or other general error
+        Metronic.init()
 
 columnsDropdown = ->
   $(".users-column").on "click", ->
     column = users_table.getDataTable().column($(this).attr("data-val"))
     column.visible !column.visible()
     adjustHorizontalScroll()
+
+addCheckbox = (name, type, row) ->
+  return "<input type='checkbox' data-val='#{name}'/>"
 
 searchFilter = ->
   $('#username, #email, #fullname, #total_cameras, #licREQ1, #licREQ2, #licVALID1, #licVALID2, #licDEF1, #licDEF2').on "keyup", ->
@@ -97,10 +102,14 @@ searchFilter = ->
     users_table.setAjaxParam 'licDEF2', licDEF2
     users_table.setAjaxParam('payment_type', $("#user_payment_type").val())
     users_table.getDataTable().ajax.reload()
+    $("#chk_select_all").prop("checked", false)
+    $("#uniform-chk_select_all span").removeClass("checked")
 
   $('#user_payment_type').on "change", ->
     users_table.setAjaxParam('payment_type', $("#user_payment_type").val())
     users_table.getDataTable().ajax.reload()
+    $("#chk_select_all").prop("checked", false)
+    $("#uniform-chk_select_all span").removeClass("checked")
 
 appendMe = ->
   $("#div-dropdown-checklist").css({"visibility": "visible", "width": "20px", "top": "78px", "float": "right", "right": "22px" })
@@ -194,6 +203,8 @@ clearFilter = ->
     $("#fullname").val("")
     $("#email").val("")
     $("#user_payment_type").val("")
+    $("#chk_select_all").prop("checked", false)
+    $("#uniform-chk_select_all span").removeClass("checked")
     users_table.clearAjaxParams()
     users_table.getDataTable().ajax.reload()
 
@@ -234,6 +245,72 @@ onIntercomClick = ->
 
     sendAJAXRequest(settings)
 
+multipleSelect = ->
+  $("#chk_select_all").on "click", ->
+    if $(this).is(':checked')
+      $("#users_datatables tbody div.checker span").addClass("checked")
+      $("#users_datatables tbody input[type='checkbox']").prop("checked", true)
+    else
+      $("#users_datatables tbody div.checker span").removeClass("checked")
+      $("#users_datatables tbody input[type='checkbox']").prop("checked", false)
+
+  $("#users_datatables tbody").on "click", "input[type='checkbox']", ->
+    if $("#users_datatables tbody input[type='checkbox']:checked").length is $("#users_datatables tbody tr").length
+      $("#chk_select_all").prop("checked", true)
+      $("#uniform-chk_select_all span").addClass("checked")
+    else
+      $("#chk_select_all").prop("checked", false)
+      $("#uniform-chk_select_all span").removeClass("checked")
+
+  $("#btn-modify").on "click", ->
+    if $("#users_datatables tbody input[type='checkbox']:checked").length is 0
+      $(".bb-alert").removeClass("alert-success").addClass("alert-danger")
+      Notification.show("Please select users you want to modify")
+    else
+      $("#users-modify-modal").modal('show')
+
+  $("#save-users").on "click", ->
+    user_ids = ""
+    $("#users_datatables tbody input[type='checkbox']:checked").each (index, control) ->
+      if user_ids is ""
+        user_ids += "#{$(control).attr("data-val")}"
+      else
+        user_ids += ",#{$(control).attr("data-val")}"
+
+    data = {}
+    data.ids = user_ids
+    data.payment_type = $("#ddl_payment_type").val()
+    data.country = $("#txt_country_id").val()
+
+    onError = (jqXHR, status, error) ->
+      $(".bb-alert").removeClass("alert-success").addClass("alert-danger")
+      Notification.show(jqXHR.text)
+
+    onSuccess = (result, status, jqXHR) ->
+      $(".bb-alert").removeClass("alert-danger").addClass("alert-success")
+      Notification.show("Settings Saved")
+      $("#chk_select_all").prop("checked", false)
+      $("#uniform-chk_select_all span").removeClass("checked")
+      users_table.getDataTable().ajax.reload()
+      $("#users-modify-modal").modal('hide')
+
+    settings =
+      cache: false
+      data: data
+      dataType: 'json'
+      error: onError
+      success: onSuccess
+      contentType: "application/x-www-form-urlencoded"
+      type: "PATCH"
+      url: "/multiple_users/update"
+
+    sendAJAXRequest(settings)
+
+handleModelEvents = ->
+  $("#users-modify-modal").on "hidden.bs.modal", ->
+    $("#ddl_payment_type").val("")
+    $("#txt_country_id").val("")
+
 window.initializeusers = ->
   initializeDataTable()
   columnsDropdown()
@@ -243,5 +320,7 @@ window.initializeusers = ->
   showTable()
   clearFilter()
   onIntercomClick()
+  multipleSelect()
+  handleModelEvents()
   $(window).resize ->
     adjustHorizontalScroll()

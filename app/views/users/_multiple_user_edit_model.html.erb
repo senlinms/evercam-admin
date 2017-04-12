@@ -1,0 +1,48 @@
+<div id="users-modify-modal" class="modal fade">
+  <div class="modal-dialog" style="width:400px;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+        <h3>Modify Users</h3>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <table class="user-table">
+            <tr>
+              <td class="lbl-width">Country:</td>
+              <td>
+                <select id="txt_country_id" class="form-control is-required" autocomplete="off">
+                  <option value="">Select Country</option>
+                  <% @countries.each do |c| %>
+                    <option value="<%= c.id -%>"><%= c.name -%></option>
+                  <% end %>
+                </select>
+              </td>
+            </tr>
+            <tr>
+              <td>Payment Type:</td>
+              <td>
+                <select id="ddl_payment_type" class="form-control is-required" autocomplete="off">
+                  <option value="">Select Payment Type</option>
+                  <option value="0">Stripe</option>
+                  <option value="1">Custom</option>
+                  <option value="2">Construction</option>
+                  <option value="3">Gardai</option>
+                  <option value="4">Smart Cities</option>
+                </select>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+      <fieldset>
+        <div class="modal-footer">
+          <input name="_method" type="hidden" value="put" />
+          <button type="submit" id="save-users" name="save-users" class="push btn btn-primary">Save</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+        </div>
+      </fieldset>
+    </div>
+  </div>
+</div>

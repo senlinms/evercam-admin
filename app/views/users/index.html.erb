@@ -1,5 +1,4 @@
 <img src="<%= image_path 'loading.gif' %>" id="api-wait" style="display:none" />
-<div class="bb-alert alert" style="display: none;"></div>
 <div class="page-content-wrapper">
   <div class="page-content">
     <div class="dropdown-checklist" id="div-dropdown-checklist">
@@ -8,7 +7,7 @@
       </div>
     </div>
     <%= render 'columns_modal' %>
-    <%= render 'filter_modal' %>
+    <%= render 'multiple_user_edit_model' %>
     <div class="row overlapping">
       <div class="form-main">
         <div class="main-contain">
@@ -64,7 +63,10 @@
               <option value="4">Smart Cities</option>
             </select>
           </div>
-          <div class="btn-div"><button type="button" class="clear-btn-f" id="filterClear">Clear Filter</button></div>
+          <div class="btn-div">
+            <button type="button" class="clear-btn-f" id="filterClear">Clear Filter</button>
+            <button class="clear-btn-f" id="btn-modify">Modify</button>
+          </div>
         </div>
       </div>
     </div>
@@ -74,6 +76,7 @@
         <table class="table table-striped table-bordered table-hover user-list-table" id="users_datatables">
           <thead>
             <tr role="row" class="heading">
+              <th><input type="checkbox" id="chk_select_all"></th>
               <th name="order_lic_p_method" class="sorting">Payment Type</th>
               <th name="order_username" class="sorting">Username</th>
               <th name="order_name" class="sorting">Name</th>

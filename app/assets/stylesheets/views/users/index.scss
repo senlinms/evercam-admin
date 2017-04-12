@@ -68,7 +68,7 @@
 }
 
 .payment-type-divs {
-  width: 232px;
+  width: 175px;
   float: left;
   height: auto;
   overflow: hidden;
@@ -76,7 +76,7 @@
 }
 
 .btn-div {
-  width: 84px;
+  width: 146px;
   float: left;
   height: auto;
   overflow: hidden;
@@ -213,4 +213,8 @@ table#datatable_vendor_models {
 
 .edit-admin {
   cursor: pointer;
+}
+
+.lbl-width {
+  width: 100px;
 }

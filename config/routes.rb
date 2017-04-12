@@ -56,6 +56,8 @@ Rails.application.routes.draw do
   delete "/admins/delete" => "admins#destroy"
   patch "/admins/update" => "admins#update"
 
+  patch "/multiple_users/update" => "users#update_multiple_users"
+
   get "/meta_datas" => "meta_datas#index"
   get "/shares" => "camera_shares#index"
   get "/onvif" => "onvif#index"
