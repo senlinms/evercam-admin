@@ -1,5 +1,5 @@
 every 1.day, :at => '12:00 am' do
-  runner "SnapshotReport.add_report", environment: :production
+  runner "EvercamUser.sync_users_tag(68815, 2)", environment: :production, :output => 'log/cron.log'
 end
 
 # every 10.minutes do

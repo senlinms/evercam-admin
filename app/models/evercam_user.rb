@@ -1,4 +1,5 @@
 require "bcrypt"
+require 'intercom'
 
 class EvercamUser < ActiveRecord::Base
   establish_connection "evercam_db_#{Rails.env}".to_sym
@@ -29,5 +30,31 @@ class EvercamUser < ActiveRecord::Base
     if password
       self.password = Password.create(password, cost: 10)
     end
+  end
+
+  def self.sync_users_tag(tag_id, payment_type)
+    intercom = Intercom::Client.new(
+        app_id: ENV["INTERCOM_ID"],
+        api_key: ENV["INTERCOM_KEY"]
+    )
+    users = intercom.users.find(tag_id: tag_id)
+
+    (1..users.pages.total_pages.to_i).each do |page|
+      unless page == 1
+        users = intercom.users.find(tag_id: tag_id, page: page)
+      end
+      users.users.each do |ic_user|
+        db_user = EvercamUser.find_by_email(ic_user["email"])
+        if db_user.present? && !db_user.payment_method.equal?(payment_type)
+          db_user.update_attributes(
+              payment_method: payment_type,
+              updated_at: Time.now
+          )
+          puts "user #{db_user.email} - #{db_user.id}"
+          puts "------------------------------------------------"
+        end
+      end
+    end
+    puts "Task finished"
   end
 end

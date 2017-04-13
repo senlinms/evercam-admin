@@ -30,7 +30,7 @@ class CamerasController < ApplicationController
           camera.user["api_id"],
           camera.user["api_key"],
           check_env,
-          camera.cloud_recording || { "status" => "" } ["status"]
+          camera.cloud_recording || { "status" => "" }["status"]
         ]
       end
       render json: records
