@@ -52,8 +52,8 @@ class UsersController < ApplicationController
 
     sorting1 = "order by u.id #{order_for}"
     sorting2 = ""
-    first_sort = ["0", "1", "2", "3", "4", "5", "6", "7", "9", "10", "11", "12", "13", "14"]
-    second_sort = ["8", "15"]
+    first_sort = ["1", "2", "3", "4", "5", "6", "7", "8", "10", "11", "12", "13", "14", "15"]
+    second_sort = ["9", "16"]
     if first_sort.include? col_for_order
       sorting1 = sorting(col_for_order, order_for)
     end
@@ -170,40 +170,40 @@ class UsersController < ApplicationController
 
   def sorting(col, order)
     case col
-    when "1"
-      "order by u.username #{order}"
-    when "2"
-      "order by u.firstname #{order}"
-    when "3"
-      "order by u.email #{order}"
-    when "4"
-      "order by u.api_id #{order}"
-    when "5"
-      "order by u.api_key #{order}"
-    when "6"
-      "order by cameras_owned #{order}"
-    when "7"
-      "order by camera_shares #{order}"
-    when "8"
-      "order by total_cameras #{order}"
-    when "9"
-      "order by country #{order}"
-    when "10"
-      "order by created_at #{order}"
-    when "13"
-      "order by required_licence #{order}"
-    when "12"
-      "order by last_login_at #{order}"
-    when "14"
-      "order by valid_licence #{order}"
-    when "15"
-      "order by def #{order}"
-    when "0"
-      "order by payment_method #{order}"
-    when "10"
-      "order by u.id desc"
-    else
-      "order by id #{order}"
+      when "1"
+        "order by payment_method #{order}"
+      when "2"
+        "order by u.username #{order}"
+      when "3"
+        "order by u.firstname #{order}"
+      when "4"
+        "order by u.email #{order}"
+      when "5"
+        "order by u.api_id #{order}"
+      when "6"
+        "order by u.api_key #{order}"
+      when "7"
+        "order by cameras_owned #{order}"
+      when "8"
+        "order by camera_shares #{order}"
+      when "9"
+        "order by total_cameras #{order}"
+      when "10"
+        "order by country #{order}"
+      when "11"
+        "order by created_at #{order}"
+      when "13"
+        "order by last_login_at #{order}"
+      when "14"
+        "order by required_licence #{order}"
+      when "15"
+        "order by valid_licence #{order}"
+      when "16"
+        "order by def #{order}"
+      when "11"
+        "order by u.id desc"
+      else
+        "order by id #{order}"
     end
   end
 end
