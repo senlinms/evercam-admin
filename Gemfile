@@ -22,7 +22,7 @@ gem 'sprockets-es6', require: 'sprockets/es6'
 # gem 'fog'
 # gem 'asset_sync'
 gem 'autoprefixer-rails'
-gem 'rake', '11.2.2'
+gem 'rake'
 
 gem 'stripe',
     github: 'stripe/stripe-ruby'
@@ -50,9 +50,9 @@ gem 'jquery-rails'
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 gem 'turbolinks'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-gem 'jbuilder', '~> 2.6.0'
+gem 'jbuilder'
 # bundle exec rake doc:rails generates the API under doc/api.
-gem 'sdoc', '~> 0.4.0', group: :doc
+gem 'sdoc', group: :doc
 
 gem 'geocoder'
 gem 'georuby'
@@ -73,7 +73,7 @@ group :development, :test do
   gem 'spinach-rails'
   gem 'database_cleaner'
   gem 'launchy'
-  gem 'capistrano', '3.5.0'
+  gem 'capistrano'
   gem 'capistrano-rvm'
   gem 'capistrano-nginx'
   gem 'capistrano3-puma'
@@ -88,7 +88,7 @@ group :test do
   gem 'capybara'
   gem 'shoulda-matchers'
   gem 'webmock'
-  gem 'nokogiri', '~> 1.6.8'
+  gem 'nokogiri'
   gem 'vcr'
   gem 'poltergeist'
   gem 'selenium-webdriver'
@@ -105,6 +105,6 @@ gem 'whenever', :require => false
 gem 'aws-sdk-v1'
 gem 'rmega', '~> 0.2.2'
 
-gem 'intercom', "~> 3.5.2"
+gem 'intercom'
 gem "bcrypt"
 gem 'spawnling', '~>2.1'
