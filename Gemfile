@@ -62,7 +62,7 @@ gem 'puma'
 # Use Draper for decorators
 gem 'draper'
 
-gem 'devise','~> 3.5.6'
+gem 'devise'
 gem 'dotenv'
 
 group :development, :test do
