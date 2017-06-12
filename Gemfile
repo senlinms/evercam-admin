@@ -15,7 +15,7 @@ gem 'uglifier', '>= 3.0.0'
 gem 'yui-compressor'
 
 # Use CoffeeScript for .coffee assets and views
-gem 'coffee-rails', '~> 4.2.1'
+gem 'coffee-rails', '~> 4.2.2'
 
 gem 'sprockets'
 gem 'sprockets-es6', require: 'sprockets/es6'
@@ -77,7 +77,7 @@ group :development, :test do
   gem 'capistrano-rvm'
   gem 'capistrano-nginx'
   gem 'capistrano3-puma'
-  gem 'capistrano-rails'
+  gem 'capistrano-rails', '~>1.3.0'
   gem 'capistrano-rails-db'
   gem 'capistrano-rails-console'
   gem 'capistrano-upload-config'
@@ -85,10 +85,10 @@ group :development, :test do
 end
 
 group :test do
-  gem 'capybara'
+  gem 'capybara', '~>2.14.2'
   gem 'shoulda-matchers'
   gem 'webmock'
-  gem 'nokogiri'
+  gem 'nokogiri', '~>1.8.0'
   gem 'vcr'
   gem 'poltergeist'
   gem 'selenium-webdriver'
