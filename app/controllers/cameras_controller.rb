@@ -150,7 +150,6 @@ class CamerasController < ApplicationController
   def delete_camera(ids)
     count = 0
     ids.each do |id|
-      SnapshotReport.where(camera_id: id).destroy_all
       Camera.find(id).destroy
       count += 1
     end
@@ -186,7 +185,6 @@ class CamerasController < ApplicationController
         # ignoring this
       end
     end
-    SnapshotReport.where(camera_id: camera_ids).destroy_all
     Camera.where(id: camera_ids).destroy_all
     render json: success
   end
