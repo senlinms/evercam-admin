@@ -28,14 +28,15 @@ initializeDataTable = ->
       {data: "4", visible: false },
       {data: "5", sWidth: "60px" },
       {data: "6", sWidth: "80px" },
-      {data: "7", sWidth: "50px" },
+      {data: "7", sWidth: "40px" },
       {data: "8", sWidth: "40px" },
       {data: "9", sWidth: "40px" },
       {data: "10", sWidth: "45px" },
       {data: "11", sWidth: "50px" },
       {data: "12", sWidth: "50px" },
-      {data: "13", sWidth: "60px" },
-      {data: "14", sWidth: "40px", sClass: "center" }
+      {data: "13", sWidth: "50px" },
+      {data: "14", sWidth: "60px" },
+      {data: "15", sWidth: "40px", sClass: "center" }
     ],
     iDisplayLength: 500
     columnDefs: [
@@ -50,19 +51,14 @@ initializeDataTable = ->
       $("#nvrs_datatables_wrapper div.row:first").hide()
 
 getStreamInfo = (exid, api_id, api_key) ->
-  #if stream_info["#{exid}"] isnt undefined
-  #  displayValues(exid, stream_info["#{exid}"]) if stream_info["#{exid}"] isnt ""
-  #  return true
   data = {}
 
   onError = (jqXHR, status, error) ->
     false
 
   onSuccess = (result, status, jqXHR) ->
-    stream_info["#{this.camera_id}"] = result.stream_info
     displayValues(this.camera_id, result.stream_info, result.device_info)
 
-  stream_info["#{exid}"] = ""
   settings =
     data: data
     dataType: 'json'
@@ -86,30 +82,9 @@ displayValues = (camera_exid, stream_info, device_info) ->
   tb_row.find('td').eq(7).text(stream_info.bitrate_type)
   tb_row.find('td').eq(8).text(stream_info.video_quality)
   tb_row.find('td').eq(9).text(stream_info.frame_rate)
-  tb_row.find('td').eq(10).text(stream_info.video_encoding)
-  tb_row.find('td').eq(11).text(stream_info.smart_code)
-  #  $("#video_encoding_plus").text("#{info.video_encoding}+")
-
-  #$("#div-#{camera_exid}").html("
-  #  <tbody style='float: left; margin-left: 24px;'>
-  #    <tr>
-  #      <th class='sorting'>Resolution</th>
-  #      <th class='sorting'>Bitrate Type</th>
-  #      <th class='sorting'>Video Quality</th>
-  #      <th class='sorting'>Frame Rate</th>
-  #      <th class='sorting'>Video Encoding</th>
-  #      <th class='sorting'>#{info.video_encoding}+</th>
-  #    </tr>
-  #    <tr>
-  #      <td>#{info.resolution}</td>
-  #      <td>#{info.bitrate_type}</td>
-  #      <td>#{info.video_quality}</td>
-  #      <td>#{info.frame_rate}</td>
-  #      <td>#{info.video_encoding}</td>
-  #      <td>#{info.smart_code}</td>
-  #    </tr>
-  #  </tbody>
-  #")
+  tb_row.find('td').eq(10).text(stream_info.bitrate)
+  tb_row.find('td').eq(11).text(stream_info.video_encoding)
+  tb_row.find('td').eq(12).text(stream_info.smart_code)
 
 window.initializeNvrs = ->
   initializeDataTable()
