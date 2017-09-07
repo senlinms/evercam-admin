@@ -1,0 +1,66 @@
+<!-- BEGIN CONTENT -->
+<div class="page-content-wrapper">
+  <div class="page-content" id="cameras-report">
+
+    <!-- BEGIN PAGE CONTENT-->
+    <div id="cameras-list-row" class="row dt-user-m">
+      <div class="col-md-12 filter-top-cam">
+        <table class="table table-striped table-bordered table-hover" id="nvrs_datatables">
+          <thead>
+          <tr role="row" class="heading">
+            <th name="order_id" class="sorting">ID</th>
+            <th name="order_name" class="sorting">Name</th>
+            <th name="order_exid" class="sorting">exid</th>
+            <th name="order_api_id" class="sorting">API ID</th>
+            <th name="order_api_key" class="sorting">API Key</th>
+
+            <th name="order_model" class="sorting">Model</th>
+            <th name="order_device" class="sorting">Device</th>
+            <th name="order_mac_address" class="sorting">MacAddress</th>
+            <th name="order_firmware" class="sorting">Firmware</th>
+
+            <th name="order_resolution" class="sorting">Resolution</th>
+            <th name="order_bitrate_type" class="sorting">Bitrate Type</th>
+            <th name="order_video_quality" class="sorting">Video Quality</th>
+            <th name="order_frame_rate" class="sorting">FPS</th>
+            <th name="order_video_encoding" class="sorting">Encoding</th>
+            <th name="order_video_encoding_plus" id="video_encoding_plus" class="sorting">+</th>
+          </tr>
+          </thead>
+          <tbody>
+          <% if @cameras.present? %>
+            <% @cameras.each do |camera| %>
+              <tr>
+                <td><%= link_to camera.exid, camera_path(camera) %></td>
+                <td><%= camera.name %></td>
+                <td><%= camera.exid %></td>
+                <td><%= camera.user.api_id %></td>
+                <td><%= camera.user.api_key %></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+            <% end %>
+          <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <!-- END PAGE CONTENT-->
+  </div>
+</div>
+<input type="hidden" value="<%= @evercam_server %>" id="server-api-url">
+<!-- END CONTENT -->
+
+<script>
+  $(document).ready(function () {
+    window.initializeNvrs();
+  });
+</script>

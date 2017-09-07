@@ -1,0 +1,11 @@
+<tr>
+  <td><%= link_to camera.exid, camera_path(camera) %></td>
+  <td><%= camera.name %></td>
+  <td><%= camera.config.deep_fetch('external_host') { '' } %></td>
+  <td><%= camera.config.deep_fetch('external_http_port') { '' } %></td>
+  <td><%= camera.config.deep_fetch('external_rtsp_port') { '' } %></td>
+  <td><%= camera.config.deep_fetch('auth', 'basic', 'username') { '' } %></td>
+  <td><%= camera.config.deep_fetch('auth', 'basic', 'password') { '' } %></td>
+  <td><%= camera.vendor_model_name %></td>
+  <td></td>
+</tr>
