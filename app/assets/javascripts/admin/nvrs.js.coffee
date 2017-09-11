@@ -52,7 +52,6 @@ initializeDataTable = ->
     },
     initComplete: ->
       $("#nvrs_datatables_wrapper div.row:first").hide()
-      setTimeout(resetDataSet, 10000)
 
 getStreamInfo = (exid, api_id, api_key, type) ->
   if info_array["#{exid}"]
@@ -150,10 +149,12 @@ setValues = (data) ->
         data[20] = "<div class='hdd'>#{hdd.property}</div>"
 
 resetDataSet = ->
-  dataSet = nvrs_table.data()
-  $.each dataSet, (index, data) ->
-    setValues(data)
-  nvrs_table.data(dataSet).draw()
+  $("th.sorting").on "click", ->
+    dataSet = nvrs_table.data()
+    $.each dataSet, (index, data) ->
+      setValues(data)
+    nvrs_table.data(dataSet).draw()
 
 window.initializeNvrs = ->
   initializeDataTable()
+  resetDataSet()
