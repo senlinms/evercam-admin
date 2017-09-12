@@ -111,7 +111,7 @@ setValues = (data) ->
   info = info_array["#{camera_exid}"]
   stream_info = info.vh_stream_info
   device_info = info.vh_device_info
-  vh_info = data.vh_info
+  vh_info = info.vh_info
 
   if device_info isnt undefined
     data[5] = device_info.model if device_info.model
