@@ -62,6 +62,7 @@ Rails.application.routes.draw do
   get "/shares" => "camera_shares#index"
   get "/onvif" => "onvif#index"
   get "/nvr" => "nvrs#index"
+  get "/nvr/vh" => "nvrs#vh"
 
   get "/intercom/companies" => "intercom_companies#index"
   post "/intercom/companies" => "intercom_companies#create"
