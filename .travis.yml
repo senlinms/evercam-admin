@@ -1,5 +1,3 @@
-sudo: false
-
 language: ruby
 # install: bundle install --local
 cache: bundler
@@ -36,3 +34,5 @@ env:
 
 branches:
   only: master
+
+dist: precise
