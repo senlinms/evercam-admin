@@ -1,0 +1,81 @@
+<div class="bb-alert alert" style="display: none;"></div>
+<img src="<%= image_path 'loader3.gif' %>" id="ajx-wait" style="display:none" />
+<!-- BEGIN CONTENT -->
+<div class="page-content-wrapper">
+  <div class="page-content" id="snapshots-report">
+    <!-- BEGIN PAGE CONTENT-->
+    <div class="form-horizontal">
+      <div class="form-group">
+        <label for="inputCameraId" class="col-lg-2 control-label">Construction Camera</label>
+        <div class="col-xs-3">
+          <select name="CameraID" id="inputCameraId", class="form-control">
+            <option value="Select Camera"></option>
+            <% @cameras.each do |camera| %>
+              <option value="<%= camera.exid %>" api_id="<%= camera.user.api_id %>" api_key="<%= camera.user.api_key %>">
+                <%= camera.name %>
+              </option>
+            <% end %>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="inputFromDate" class="col-lg-2 control-label">From Date/Time</label>
+        <div class="col-xs-3">
+          <input type="text" class="form-control" id="datetimepicker1" placeholder="Date/Time">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="inputFromDate" class="col-lg-2 control-label">To Date/Time</label>
+        <div class="col-xs-3">
+          <input type="text" class="form-control" id="datetimepicker2" placeholder="Date/Time">
+        </div>
+      </div>
+      <% @intervals = [
+          [ "Select Interval", "" ],
+          [ "All", "0" ],
+          [ "1 Frame Every 1 min", "60" ],
+          [ "1 Frame Every 5 min", "300" ],
+          [ "1 Frame Every 10 min", "600" ],
+          [ "1 Frame Every 15 min", "900" ],
+          [ "1 Frame Every 20 min", "1200" ],
+          [ "1 Frame Every 30 min", "1800" ],
+          [ "1 Frame Every hour", "3600" ],
+          [ "1 Frame Every 2 hours", "7200" ],
+          [ "1 Frame Every 6 hours", "21600" ],
+          [ "1 Frame Every 12 hours", "43200" ],
+          [ "1 Frame Every 24 hours", "86400" ],
+      ]
+      %>
+      <div class="form-group">
+        <label for="inputInterval" class="col-lg-2 control-label">Interval</label>
+        <div class="col-xs-3">
+          <%= select_tag "Interval", options_for_select(@intervals, ["1 Frame Every 10 min", "600"]), class: "form-control", id: "interval" %>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="inputSchedule" class="col-lg-2 control-label">Schedule</label>
+        <div class="col-xs-3">
+          <div id="cloud-recording-calendar-wrap form-control">
+            <div id="cloud-recording-calendar">
+              <span id="cloud-recording-collaps"><span class="glyphicon glyphicon-chevron-down"></span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-lg-10 col-lg-offset-2">
+          <button type="submit" id="set" class="btn btn-primary">Start Extractor</button>
+        </div>
+      </div>
+    </div>
+    <!-- END PAGE CONTENT-->
+  </div>
+</div>
+<!-- END CONTENT -->
+<input type="hidden" value="<%= @evercam_server %>" id="server-api-url">
+
+<script>
+  $(document).ready(function () {
+    window.initializNvrSnapshotExtractor();
+  });
+</script>

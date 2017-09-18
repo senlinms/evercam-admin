@@ -43,6 +43,7 @@
 #= require admin/onvif.js
 #= require admin/nvrs.js
 #= require admin/nvrs_vh.js
+#= require admin/nvr_snapshot_extractor.js
 #= require admin/jquery.datetimepicker.min.js
 #= require admin/chosen.jquery.min.js
 #= require admin/moment.min.js
