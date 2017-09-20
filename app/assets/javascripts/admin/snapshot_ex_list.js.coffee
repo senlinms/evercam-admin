@@ -8,15 +8,16 @@ initializeDataTable = ->
       [25, 50, 100, 200, "All"]
     ]
     columns: [
-      {data: "0", sWidth: "70px", sClass: "center" },
+      {data: "0", sWidth: "40px", sClass: "center" },
       {data: "1", sWidth: "150px" },
-      {data: "2", sWidth: "110px" },
-      {data: "3", sWidth: "110px" },
-      {data: "4", sWidth: "80px", sClass: "center" },
-      {data: "5", sWidth: "80px", sClass: "center", "render": extractorStatus },
-      {data: "6", sWidth: "150px" },
-      {data: "7", sWidth: "200px" },
-      {data: "8", sWidth: "150px" }
+      {data: "2", sWidth: "90px" },
+      {data: "3", sWidth: "90px" },
+      {data: "4", sWidth: "50px", sClass: "center" },
+      {data: "5", sWidth: "50px", sClass: "center", "render": extractorStatus },
+      {data: "6", sWidth: "200px" },
+      {data: "7", sWidth: "40px", "render": extractor_location },
+      {data: "8", sWidth: "150px" },
+      {data: "9", sWidth: "100px" }
     ],
     iDisplayLength: 500
     columnDefs: [
@@ -39,6 +40,12 @@ setMargin = ->
   row = $("#extractor_datatables_wrapper").children().first()
   row.css("margin-bottom", "-11px")
 
+extractor_location = (status) ->
+  if parseInt(status) < 9
+    "Cloud"
+  else
+    "Local"
+
 extractorStatus = (status) ->
   if status is "0"
     "Pending"
@@ -48,6 +55,11 @@ extractorStatus = (status) ->
     "Completed"
   else if status is "3"
     "Failed"
+  else if status is "11"
+    "Processing"
+  else if status is "12"
+    "Completed"
+
 
 window.initializeExtractors = ->
   initializeDataTable()

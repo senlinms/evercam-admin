@@ -1,11 +1,11 @@
 schedule = undefined
 scheduleCalendar = undefined
 fullWeekSchedule =
-  "Monday": ["08:00-17:30"]
-  "Tuesday": ["08:00-17:30"]
-  "Wednesday": ["08:00-17:30"]
-  "Thursday": ["08:00-17:30"]
-  "Friday": ["08:00-17:30"]
+  "Monday": ["08:00-18:00"]
+  "Tuesday": ["08:00-18:00"]
+  "Wednesday": ["08:00-18:00"]
+  "Thursday": ["08:00-18:00"]
+  "Friday": ["08:00-18:00"]
   "Saturday": []
   "Sunday": []
 
@@ -140,6 +140,7 @@ onSearchSET = ->
     data.end_date = moment.utc("#{to_date} 23:59:59", "DD/MM/YYYY HH:mm:ss") / 1000
     data.interval = interval
     data.schedule = schedule
+    data.requester = $("#txtRequester").val()
 
     if camera_id is "Select Camera" || interval is ""
       $(".bb-alert")
@@ -155,11 +156,11 @@ onSearchSET = ->
 
 putMeInDatabase = (camera_id, api_id, api_key, data) ->
 
-  onError = (data) ->
+  onError = (xhrData) ->
     $(".bb-alert")
     .removeClass("alert-success")
     .addClass("alert-danger")
-    .text(data.statusText)
+    .text(xhrData.statusText)
     .delay(200)
     .fadeIn()
     .delay(4000)

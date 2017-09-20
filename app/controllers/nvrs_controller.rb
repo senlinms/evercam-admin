@@ -14,5 +14,6 @@ class NvrsController < ApplicationController
   def snapshot_extractor
     @cameras = Camera.where(owner_id: [13959, 109148, 46]).order("name").decorate
     @evercam_server = evercam_server
+    @user_email = current_user.email
   end
 end
