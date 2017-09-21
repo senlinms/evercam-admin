@@ -11,7 +11,7 @@
 #= require metronic/jquery.flot.categories.min.js
 #= require metronic/jquery.flot.pie.min.js
 #= require metronic/bootstrap-switch.min.js
-#= require metronic/select2.min.js
+#= require select2
 #= require metronic/jquery.dataTables.min.js
 #= require metronic/dataTables.bootstrap.js
 #= require metronic/bootstrap-datepicker.js

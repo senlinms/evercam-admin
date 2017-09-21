@@ -238,6 +238,7 @@ GEM
     rails-assets-ladda (0.8.0)
       rails-assets-spin.js (~> 1.3.0)
     rails-assets-moment (2.11.1)
+    rails-assets-select2 (4.0.3)
     rails-assets-spin.js (1.3.3)
     rails-deprecated_sanitizer (1.0.3)
       activesupport (>= 4.2.0.alpha)
@@ -411,6 +412,7 @@ DEPENDENCIES
   rails-assets-jquery.uniform (~> 2.1.2)!
   rails-assets-ladda (~> 0.8.0)!
   rails-assets-moment (~> 2.8)!
+  rails-assets-select2!
   rake
   rmega (~> 0.2.2)
   rspec

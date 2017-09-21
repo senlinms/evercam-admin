@@ -6,13 +6,19 @@
     <!-- BEGIN PAGE CONTENT-->
     <div class="form-horizontal">
       <div class="form-group">
-        <label for="inputCameraId" class="col-lg-2 control-label">Construction Camera</label>
+        <label class="col-lg-2 control-label">Construction Camera</label>
         <div class="col-xs-3">
           <select name="CameraID" id="inputCameraId", class="form-control">
-            <option value="Select Camera"></option>
+            <option date-val="" value="">Select Camera</option>
             <% @cameras.each do |camera| %>
-              <option value="<%= camera.exid %>" api_id="<%= camera.user.api_id %>" api_key="<%= camera.user.api_key %>">
-                <%= camera.name %>
+              <% css = "onlinec"
+                 thumbnail_url = "https://media.evercam.io/v1/cameras/#{camera.exid}/thumbnail?api_id=#{camera.user.api_id}&api_key=#{camera.user.api_key}"
+                 unless !camera.is_online
+                   css = "offlinec"
+                 end
+              %>
+              <option class="<%= css %>" data-val="<%= thumbnail_url %>" value="<%= camera.exid %>"
+                      api_id="<%= camera.user.api_id %>" api_key="<%= camera.user.api_key %>"><%= camera.name %>
               </option>
             <% end %>
           </select>

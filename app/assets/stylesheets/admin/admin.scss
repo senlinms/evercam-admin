@@ -15,6 +15,7 @@
 //= require metronic/profile.css
 //= require metronic/default.css
 //= require metronic/custom.css
+//= require select2
 //= require views/cameras/cameras.css
 //= require views/snapshot_reports/snapshot_reports.css
 //= require views/snapshot_extractors/snapshot_extractors.css
@@ -740,4 +741,8 @@ ul.columns {
   border-bottom: solid 1px #e7e7e7;
   width: 100%;
   padding: 1px 4px;
+}
+
+.select2-container .select2-selection--single {
+  height: 35px;
 }

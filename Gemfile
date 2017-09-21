@@ -43,6 +43,7 @@ source 'https://rails-assets.org' do
   gem 'rails-assets-jquery.uniform', '~> 2.1.2'
   gem 'rails-assets-ladda', '~> 0.8.0'
   gem 'rails-assets-moment', '~> 2.8'
+  gem 'rails-assets-select2'
 end
 
 # Use jquery as the JavaScript library

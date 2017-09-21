@@ -1,5 +1,6 @@
 schedule = undefined
 scheduleCalendar = undefined
+camera_select = null
 fullWeekSchedule =
   "Monday": ["08:00-18:00"]
   "Tuesday": ["08:00-18:00"]
@@ -188,15 +189,27 @@ putMeInDatabase = (camera_id, api_id, api_key, data) ->
 
   jQuery.ajax(settings)
 
-initChosen = ->
-  $('#inputCameraId').chosen()
+initCameraSelect = ->
+  camera_select = $("#inputCameraId").select2
+    placeholder: 'Select Camera',
+    templateSelection: format,
+    templateResult: format
+
+format = (state) ->
+  is_offline = ""
+  if !state.id
+    return state.text
+  if state.id == '0'
+    return state.text
+  if state.element.className is "onlinec"
+    is_offline = '<i class="red main-sidebar fa fa-chain-broken"></i>'
+  return $("<span><img style='height:30px;margin-bottom:1px;margin-top:1px;width:35px;' src='#{state.element.attributes[1].value}' class='img-flag' />&nbsp;#{state.text}</span>&nbsp;#{is_offline}")
 
 clearForm = ->
-  $(".chosen-single span").text "Select Camera"
+  camera_select.val(null).trigger("change")
   $("#datetimepicker1").val getTodayDate()
   $("#datetimepicker2").val getTodayDate()
   $('#interval option:eq(4)').prop('selected', true)
-  schedule = undefined
 
 window.initializNvrSnapshotExtractor = ->
   initDateTime()
@@ -204,4 +217,4 @@ window.initializNvrSnapshotExtractor = ->
   makeScheduleOpen()
   renderEvents()
   onSearchSET()
-  initChosen()
+  initCameraSelect()
