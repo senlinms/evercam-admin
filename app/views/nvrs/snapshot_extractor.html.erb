@@ -12,7 +12,7 @@
             <option date-val="" value="">Select Camera</option>
             <% @cameras.each do |camera| %>
               <% css = "onlinec"
-                 thumbnail_url = "https://media.evercam.io/v1/cameras/#{camera.exid}/thumbnail?api_id=#{camera.user.api_id}&api_key=#{camera.user.api_key}"
+                 thumbnail_url = "#{@evercam_server}/v1/cameras/#{camera.exid}/thumbnail?api_id=#{camera.user.api_id}&api_key=#{camera.user.api_key}"
                  unless !camera.is_online
                    css = "offlinec"
                  end
