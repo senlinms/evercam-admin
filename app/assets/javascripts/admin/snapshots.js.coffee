@@ -77,9 +77,9 @@ paymentMethod = (name) ->
     "Custom"
 
 colorStatus = (name) ->
-  if name is "t"
+  if name is "t" or name is "true" or name is true
     return "<span style='color: green;'>True</span>"
-  else if name is "f"
+  else if name is "f" or name is "false" or name is false
     return "<span style='color: red;'>False</span>"
 
 onIntercomClick = ->

@@ -5,7 +5,7 @@
 //= require jquery.dcjqaccordion.2.7.js
 //=
 //= require jquery.uniform/jquery.uniform.js
-//= require datetimepicker/jquery.datetimepicker.js
+//= require datetimepicker
 //= require jquery-cookie
 //= require jquery.nicescroll
 //= require jquery-form-validator/form-validator/jquery.form-validator.js
