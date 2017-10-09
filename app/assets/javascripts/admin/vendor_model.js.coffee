@@ -41,9 +41,7 @@ initializeDataTable = ->
         [ 25, 50, 100, 150 ]
       ]
       fnRowCallback: (nRow, aData, iDisplayIndex, iDisplayIndexFull) ->
-        $("td:eq(10)", nRow)
-          .html("<i class='fa fa-trash-o delete-venderm'></i>")
-          .css("text-align": "center")
+        return
       'pageLength': 200
       'ajax':
         'method': 'GET'
@@ -54,16 +52,16 @@ initializeDataTable = ->
         {data: "1", "width": "150px", visible: false},
         {data: "2", "width": "150px" },
         {data: "3", "width": "150px", 'render': editModel },
-        {data: "4", "width": "150px" },
+        {data: "4", "width": "50px", visible: false },
         {data: "5", "width": "150px" },
         {data: "6", "width": "150px" },
         {data: "7", "width": "150px" },
-        {data: "8", "width": "200px" },
+        {data: "8", "width": "150px" },
         {data: "9", "width": "200px" },
-        {data: "10", "width": "70px" },
+        {data: "10", "width": "200px" },
         {data: "11", "width": "70px" },
-        {data: "12", "width": "150px", visible: false },
-        {data: "13", "width": "50px", visible: false, 'render': humanBool },
+        {data: "12", "width": "70px" },
+        {data: "13", "width": "150px", visible: false },
         {data: "14", "width": "50px", visible: false, 'render': humanBool },
         {data: "15", "width": "50px", visible: false, 'render': humanBool },
         {data: "16", "width": "50px", visible: false, 'render': humanBool },
@@ -73,10 +71,10 @@ initializeDataTable = ->
         {data: "20", "width": "50px", visible: false, 'render': humanBool },
         {data: "21", "width": "50px", visible: false, 'render': humanBool },
         {data: "22", "width": "50px", visible: false, 'render': humanBool },
-        {data: "23", "width": "50px", visible: false },
+        {data: "23", "width": "50px", visible: false, 'render': humanBool },
         {data: "24", "width": "50px", visible: false },
-        {data: "25" , "width": "50px" }
-
+        {data: "25", "width": "50px", visible: false },
+        {data: "26", "width": "50px", sClass: "center", 'render': render_action }
       ],
       'order': [ [ 1, 'asc' ] ],
       initComplete: ->
@@ -97,6 +95,9 @@ columnsDropdown = ->
     column = vendor_models_table.getDataTable().column($(this).attr("data-val"))
     column.visible !column.visible()
 
+render_action = (id, type, row) ->
+  return "<i class='fa fa-trash-o delete-venderm' data-val='#{row[1]}'></i>"
+
 humanBool = (id, type, row) ->
   if id
     return 'Yes'
@@ -115,12 +116,12 @@ showLogo = (id, type, row) ->
 
 editModel = (name, type, row) ->
   return "<a style='cursor:pointer;' class='edit-model' val-vendor-id='#{row[0]}' " +
-   "val-model-id='#{row[1]}' val-vendor-name='#{row[2]}' val-model-name='#{row[3]}'  " +
-   "val-jpg='#{row[4]}' val-h264='#{row[5]}' val-mjpg='#{row[6]}' val-mpeg4='#{row[7]}' " +
-   "val-mobile='#{row[8]}' val-lowres='#{row[9]}' val-username='#{row[10]}' val-password='#{row[11]}' " +
-   "val-audio='#{row[12]}' val-poe='#{row[13]}' val-wifi='#{row[14]}' val-onvif='#{row[15]}' val-psia='#{row[16]}' " +
-   "val-ptz='#{row[17]}' val-infrared='#{row[18]}' val-varifocal='#{row[19]}' val-sd_card='#{row[20]}' " +
-   "val-upnp='#{row[21]}' val-audio_io='#{row[22]}' val-shape='#{row[23]}' val-resolution='#{row[24]}'>" +
+   "val-model-id='#{row[1]}' val-vendor-name='#{row[2]}' val-model-name='#{row[3]}' channel-id='#{row[4]}' " +
+   "val-jpg='#{row[5]}' val-h264='#{row[6]}' val-mjpg='#{row[7]}' val-mpeg4='#{row[8]}' " +
+   "val-mobile='#{row[9]}' val-lowres='#{row[10]}' val-username='#{row[11]}' val-password='#{row[12]}' " +
+   "val-audio='#{row[13]}' val-poe='#{row[14]}' val-wifi='#{row[15]}' val-onvif='#{row[16]}' val-psia='#{row[17]}' " +
+   "val-ptz='#{row[18]}' val-infrared='#{row[19]}' val-varifocal='#{row[20]}' val-sd_card='#{row[21]}' " +
+   "val-upnp='#{row[22]}' val-audio_io='#{row[23]}' val-shape='#{row[24]}' val-resolution='#{row[25]}'>" +
    "#{name}</a>"
 
 numberWithCommas = (x) ->
@@ -210,6 +211,7 @@ handleAddNewModel = ->
     data = {}
     data.name = $("#name").val()
     data.vendor_id = $("#vendor").val()
+    data.channel = $("#channel").val()
     data.jpg_url = $("#jpg-url").val() unless $("#jpg-url").val() is ''
     data.mjpg_url = $("#mjpg-url").val() unless $("#mjpg-url").val() is ''
     data.mpeg4_url = $("#mpeg4-url").val() unless $("#mpeg4-url").val() is ''
@@ -269,6 +271,7 @@ onEditModel = ->
     $("#model-id").val($(this).attr("val-model-id"))
     $("#model-id").attr("disabled", true)
     $("#vendor").val($(this).attr("val-vendor-id"))
+    $("#channel").val($(this).attr("channel-id"))
     $("#name").val($(this).attr("val-model-name"))
     $("#jpg-url").val($(this).attr("val-jpg"))
     $("#mjpg-url").val($(this).attr("val-mjpg"))
@@ -297,14 +300,14 @@ onDeleteModel = ->
     $("#deleteModal").modal("show")
     tr = $(this).parents('tr')
     str = tr.find('td:nth-child(2)').html()
-    delete_vender_val = $.map str.split('"'), (substr, i) ->
-      if i % 2 then substr else null
-    $("#delete-vm > #id").text(delete_vender_val[3])
+    delete_vender_val = $(this).attr("data-val")
+    $("#delete-vm > #id").text(delete_vender_val)
+
   $("#deleteModal").on 'click', '#delete-model', ->
-    if $("#model_specified_id").val() == delete_vender_val[3]
+    if $("#model_specified_id").val() == delete_vender_val
       $('#deleteModal').modal('hide')
       venderm = {}
-      venderm.exid = delete_vender_val[3]
+      venderm.exid = delete_vender_val
       token = $('meta[name="csrf-token"]')
       if token.size() > 0
         headers = 'X-CSRF-Token': token.attr('content')

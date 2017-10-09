@@ -30,6 +30,7 @@ class VendorModelsController < ApplicationController
         vendors_models[index].exid,
         vendors_models[index].vendor.name,
         vendors_models[index].name,
+        vendors_models[index].channel,
         vendors_models[index].config.deep_fetch('snapshots', 'jpg') { '' },
         vendors_models[index].config.deep_fetch('snapshots', 'h264') { '' },
         vendors_models[index].config.deep_fetch('snapshots', 'mjpg') { '' },
@@ -80,6 +81,7 @@ class VendorModelsController < ApplicationController
       exid: params[:id],
       name: params[:name],
       vendor: vendor,
+      channel: params['channel'],
       jpg_url: params[:jpg_url],
       mjpg_url: mjpg_url,
       h264_url: h264_url,
@@ -157,6 +159,7 @@ class VendorModelsController < ApplicationController
       vendor_model.update_attributes(
         name: params['name'],
         vendor: vendor,
+        channel: params['channel'],
         jpg_url: params['jpg_url'],
         h264_url: h264_url,
         mjpg_url: mjpg_url,
