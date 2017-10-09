@@ -132,7 +132,7 @@ onSearchSET = ->
     if schedule is undefined
       schedule = JSON.stringify(fullWeekSchedule)
     else
-      schedule
+      schedule = parseCalendar()
     data.camera_id = camera_id
     data.from_date = from_date
     data.to_date = to_date
@@ -164,6 +164,10 @@ putMeInDatabase = (data) ->
 
   onSuccess = (data) ->
     clearForm()
+    $('#cloud-recording-calendar').fullCalendar('destroy')
+    initScheduleCalendar()
+    makeScheduleOpen()
+    renderEvents()
     $(".bb-alert")
       .removeClass("alert-danger")
       .addClass("alert-success")
