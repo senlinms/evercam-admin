@@ -86,7 +86,7 @@ group :development, :test do
 end
 
 group :test do
-  gem 'capybara', '~>2.15.1'
+  gem 'capybara', '~>2.15.4'
   gem 'shoulda-matchers'
   gem 'webmock'
   gem 'nokogiri', '~>1.8.1'
