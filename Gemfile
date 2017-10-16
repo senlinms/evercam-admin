@@ -106,6 +106,6 @@ gem 'whenever', :require => false
 gem 'aws-sdk-v1'
 gem 'rmega', '~> 0.2.2'
 
-gem 'intercom'
+gem 'intercom', '3.5.19'
 gem "bcrypt"
 gem 'spawnling', '~>2.1'
