@@ -23,6 +23,6 @@ class Spinach::Features::IndexCameras < Spinach::FeatureSteps
   end
 
   def camera
-    @camera ||= FactoryGirl.create :camera, exid: 'foobar'
+    @camera ||= FactoryBot.create :camera, exid: 'foobar'
   end
 end

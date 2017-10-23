@@ -41,10 +41,10 @@ class Spinach::Features::IndexUsers < Spinach::FeatureSteps
   end
 
   def user
-    @user ||= FactoryGirl.create(:user, firstname: 'Peter', lastname: 'Dirty')
+    @user ||= FactoryBot.create(:user, firstname: 'Peter', lastname: 'Dirty')
   end
 
   def camera
-    @camera ||= FactoryGirl.create :camera, user: user
+    @camera ||= FactoryBot.create :camera, user: user
   end
 end

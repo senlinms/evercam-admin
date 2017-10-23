@@ -35,10 +35,10 @@ class Spinach::Features::Dashboard < Spinach::FeatureSteps
   end
 
   def user
-    @user ||= FactoryGirl.create(:user, firstname: 'Pietia', lastname: 'Newman', email: 'newman@go2.pl')
+    @user ||= FactoryBot.create(:user, firstname: 'Pietia', lastname: 'Newman', email: 'newman@go2.pl')
   end
 
   def camera
-    @camera ||= FactoryGirl.create :camera, exid: 'fooid', name: 'fooname', user: user
+    @camera ||= FactoryBot.create :camera, exid: 'fooid', name: 'fooname', user: user
   end
 end

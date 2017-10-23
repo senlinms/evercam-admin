@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :camera do
     sequence(:exid) { |n| "exid#{n}" }
     sequence(:name) { |n| "name#{n}" }

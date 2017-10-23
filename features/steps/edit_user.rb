@@ -38,6 +38,6 @@ class Spinach::Features::EditUser < Spinach::FeatureSteps
   end
 
   def user
-    @user ||= FactoryGirl.create(:user, firstname: 'Peter', lastname: 'Dirty')
+    @user ||= FactoryBot.create(:user, firstname: 'Peter', lastname: 'Dirty')
   end
 end

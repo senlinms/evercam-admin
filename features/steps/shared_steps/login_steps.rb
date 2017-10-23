@@ -14,7 +14,7 @@ module SharedSteps
     end
 
     def admin
-      @admin ||= FactoryGirl.create(:user, is_admin: true, password: 'password')
+      @admin ||= FactoryBot.create(:user, is_admin: true, password: 'password')
     end
   end
 end
