@@ -19,8 +19,6 @@ gem 'coffee-rails', '~> 4.2.2'
 
 gem 'sprockets'
 gem 'sprockets-es6', require: 'sprockets/es6'
-# gem 'fog'
-# gem 'asset_sync'
 gem 'autoprefixer-rails'
 gem 'rake'
 
@@ -68,7 +66,7 @@ gem 'dotenv'
 
 group :development, :test do
   gem 'pry'
-  gem 'factory_girl_rails', require: false
+  gem 'factory_bot_rails', require: false
   gem 'rspec-rails'
   gem 'rspec'
   gem 'spinach-rails'

@@ -3,7 +3,7 @@ require './config/environment'
 
 require 'rspec'
 require 'rspec-rails'
-require 'factory_girl'
+require 'factory_bot'
 require 'pry'
 require 'database_cleaner'
 
