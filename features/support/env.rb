@@ -10,7 +10,7 @@ require 'database_cleaner'
 require 'webmock'
 include WebMock::API
 
-FactoryGirl.find_definitions
+FactoryBot.find_definitions
 # WebMock.disable_net_connect!(:allow_localhost => true)
 
 DatabaseCleaner.strategy = :truncation
