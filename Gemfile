@@ -26,7 +26,7 @@ gem 'stripe',
     github: 'stripe/stripe-ruby'
 gem 'stripe_event'
 
-source 'https://rails-assets.org' do
+source 'http://insecure.rails-assets.org' do
   gem 'rails-assets-bootstrap', '~> 3.3.1'
   gem 'rails-assets-bootstrap-datepicker', '~> 1.3.1'
   gem 'rails-assets-bootstrap-tabdrop', '~> 1.0.0'
