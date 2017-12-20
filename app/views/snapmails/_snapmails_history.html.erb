@@ -1,0 +1,10 @@
+<% if @snapmails_history.present? %>
+  <% @snapmails_history.each do |snapmail| %>
+    <tr>
+      <td><%= Time.at(snapmail.created_at) %></td>
+      <td><%= snapmail.recipients %></td>
+      <td><%= snapmail.subject %></td>
+      <td>email</td>
+    </tr>
+  <% end %>
+<% end %>

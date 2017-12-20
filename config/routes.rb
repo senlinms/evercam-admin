@@ -38,6 +38,7 @@ Rails.application.routes.draw do
   get '/kpi' => 'dashboard#kpi'
   get '/no_access' => 'home#no_access'
   get "/cloud_recordings" => "snapshots#cloud_recordings"
+  get "/snapmails_history" => "snapmails#history"
 
   get "/licences/pending_reason" => "licence_reports#pending_reason"
   resources :licence_reports, path: "licences"
