@@ -1,4 +1,6 @@
 <!-- BEGIN CONTENT -->
+<div class="bb-alert alert" style="display: none;"></div>
+<img src="<%= image_path 'loader3.gif' %>" id="ajx-wait" style="display:none" />
 <div class="page-content-wrapper">
   <div class="page-content" id="cameras-report">
     <div class="row overlop-margin">
@@ -22,7 +24,6 @@
             </tr>
           </thead>
           <tbody>
-            <%=  render "snapmails_history" %>
           </tbody>
         </table>
       </div>

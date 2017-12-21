@@ -9,8 +9,8 @@ sendAJAXRequest = (settings) ->
   xhrRequestChangeMonth = jQuery.ajax(settings)
 
 initializeDataTable = ->
-  snapmails_history = $("#snapmails_history_datatables").DataTable
-    aaSorting: [1, "asc"]
+  snapmails_history = $("#snapmails_history_datatables").dataTable
+    aaSorting: [0, "desc"]
     aLengthMenu: [
       [25, 50, 100, 200, -1]
       [25, 50, 100, 200, "All"]
@@ -42,8 +42,61 @@ setMargin = ->
   row = $("#snapmails_history_datatables_wrapper").children().first()
   row.css("margin-bottom", "-11px")
 
+initDatePicker = ->
+  html = "<div class='col-md-6 col-sm-12'><label style='margin-left: 45px;'><input type='text' id='datetimepicker' class='form-control 
+    input-small input-inline' placeholder='DateTime'></label></div>"
+  $("#snapmails_history_datatables_wrapper > .row:first-child").prepend(html)
+  $('#datetimepicker').datetimepicker
+    timepicker: false
+    format: 'Y/m/d'
+    onSelectDate: ->
+      ajaxCall($('#datetimepicker').val())
+
+getYesterdaysDate = ->
+  date = new Date
+  date.setDate (date.getDate() - 1)
+  date.getFullYear() + '/' + (date.getMonth() + 1) + '/' + date.getDate()
+
+ajaxCall = (date) ->
+  data = {}
+  data.date = date
+  $('#ajx-wait').show()
+  $.ajax
+      url: '/get_history_data'
+      data: data
+      type: 'get'
+      success: (data) ->
+        $('#ajx-wait').hide()
+        if typeof data == "object"
+          snapmails_history.fnClearTable()
+          snapmails_history.fnAddData(data)
+        else
+          snapmails_history.fnClearTable()
+          $(".bb-alert")
+            .addClass("alert-danger")
+            .text("There are no records for that date!")
+            .delay(200)
+            .fadeIn()
+            .delay(4000)
+            .fadeOut()
+      error: (xhr, status, error) ->
+        $(".bb-alert")
+            .addClass("alert-danger")
+            .text(xhr.responseText)
+            .delay(200)
+            .fadeIn()
+            .delay(4000)
+            .fadeOut()
+
+onPageLoad = ->
+  $(window).load ->
+    $('#datetimepicker').val getYesterdaysDate()
+    ajaxCall(getYesterdaysDate())
+
 window.initializeSnapmailHistory = ->
   initializeDataTable()
   columnsDropdown()
   setMargin()
+  initDatePicker()
+  onPageLoad()
   console.log "hello"
