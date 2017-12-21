@@ -1,4 +1,26 @@
 <!-- BEGIN CONTENT -->
+
+<div id="add-action" class="modal fade">
+  <div class="vertical-alignment-helper">
+    <div class="modal-dialog vertical-align-center" style="width:95%;">
+      <div class="modal-content">
+        <div class="modal-header">
+          <div class="caption"><h2>Snapmail</h2></div>
+        </div>
+        <div class="modal-body">
+          <div id="loading-popup"><img src="<%= image_path 'loader3.gif' %>"></div>
+          <div id="dat"></div>         
+        </div>
+        <fieldset>
+          <div class="modal-footer">
+            <button type="button" id="close-dialog" class="btn btn-default pull-right btn-space" data-dismiss="modal">Cancel</button>
+          </div>
+        </fieldset>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="bb-alert alert" style="display: none;"></div>
 <img src="<%= image_path 'loader3.gif' %>" id="ajx-wait" style="display:none" />
 <div class="page-content-wrapper">

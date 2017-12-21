@@ -19,7 +19,7 @@ initializeDataTable = ->
       {data: "0", sWidth: "100px" },
       {data: "1", sWidth: "100px" },
       {data: "2", sWidth: "100px" },
-      {data: "3", sWidth: "100px" }
+      {data: "3", sWidth: "100px", "render": linkEmail }
     ],
     iDisplayLength: 500
     columnDefs: [
@@ -51,6 +51,41 @@ initDatePicker = ->
     format: 'Y/m/d'
     onSelectDate: ->
       ajaxCall($('#datetimepicker').val())
+
+linkEmail = (name, type, row) ->
+  return "<a id='show-email-template' href='#' data-id='#{name}'> Template </a>"
+
+showEmailTemplate = ->
+  $("#snapmails_history_datatables").on "click", "#show-email-template", ->
+    console.log $(this).data("id");
+    getEmailTemplate($(this).data("id"));
+
+getEmailTemplate = (id) ->
+  data = {}
+  data.id = id
+  $.ajax
+      url: '/get_email_temaplate'
+      data: data
+      dataType: 'html'
+      type: 'get'
+      success: (data) ->
+        console.log data
+        $('#ajx-wait').hide()
+        $(".bb-alert")
+          .addClass("alert-danger")
+          .text("There are no records for that date!")
+          .delay(200)
+          .fadeIn()
+          .delay(4000)
+          .fadeOut()
+      error: (xhr, status, error) ->
+        $(".bb-alert")
+            .addClass("alert-danger")
+            .text(xhr.responseText)
+            .delay(200)
+            .fadeIn()
+            .delay(4000)
+            .fadeOut()
 
 getYesterdaysDate = ->
   date = new Date
@@ -99,4 +134,5 @@ window.initializeSnapmailHistory = ->
   setMargin()
   initDatePicker()
   onPageLoad()
+  showEmailTemplate()
   console.log "hello"
