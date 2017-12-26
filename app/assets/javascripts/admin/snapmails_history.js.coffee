@@ -69,7 +69,7 @@ getEmailTemplate = (id) ->
       dataType: 'html'
       type: 'get'
       success: (data) ->
-        decoded = $('<div/>').html(data).text();
+        decoded = $('<div/>').html(data).text()
         $("#snapmail-template").html(decoded)
         $('#add-action').modal('show')
       error: (xhr, status, error) ->
