@@ -57,8 +57,8 @@ linkEmail = (name, type, row) ->
 
 showEmailTemplate = ->
   $("#snapmails_history_datatables").on "click", "#show-email-template", ->
-    console.log $(this).data("id");
-    getEmailTemplate($(this).data("id"));
+    console.log $(this).data("id")
+    getEmailTemplate($(this).data("id"))
 
 getEmailTemplate = (id) ->
   data = {}
@@ -69,15 +69,9 @@ getEmailTemplate = (id) ->
       dataType: 'html'
       type: 'get'
       success: (data) ->
-        console.log data
-        $('#ajx-wait').hide()
-        $(".bb-alert")
-          .addClass("alert-danger")
-          .text("There are no records for that date!")
-          .delay(200)
-          .fadeIn()
-          .delay(4000)
-          .fadeOut()
+        decoded = $('<div/>').html(data).text();
+        $("#snapmail-template").html(decoded)
+        $('#add-action').modal('show')
       error: (xhr, status, error) ->
         $(".bb-alert")
             .addClass("alert-danger")
@@ -86,6 +80,10 @@ getEmailTemplate = (id) ->
             .fadeIn()
             .delay(4000)
             .fadeOut()
+
+closeModalSnapmail = ->
+  $("#close-dialog-snapmail").on "click", ->
+    $("#snapmail-template").html("")
 
 getYesterdaysDate = ->
   date = new Date
@@ -135,4 +133,5 @@ window.initializeSnapmailHistory = ->
   initDatePicker()
   onPageLoad()
   showEmailTemplate()
+  closeModalSnapmail()
   console.log "hello"

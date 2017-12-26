@@ -4,7 +4,7 @@ class SnapmailsController < ApplicationController
   end
 
   def get_email_temaplate
-    return SnapmailsHistory.find(params[:id]).body
+    render html: SnapmailsHistory.find(params[:id]).body
   end
 
   def get_history_data
