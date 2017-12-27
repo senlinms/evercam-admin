@@ -23,6 +23,14 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def filer_url
+    if Rails.env.development?
+      "http://localhost:8888"
+    else
+      ENV["FILER_URL"]
+    end
+  end
+
   def evercam_server
     if Rails.env.development?
       "http://localhost:4000"

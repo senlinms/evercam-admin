@@ -4,7 +4,12 @@ class SnapmailsController < ApplicationController
   end
 
   def get_email_temaplate
-    render html: SnapmailsHistory.find(params[:id]).body
+    snapmail = SnapmailsHistory.find(params[:id])
+    render json: {
+      body: snapmail.body,
+      timestamp: snapmail.timestamp,
+      filer_url: filer_url
+    }
   end
 
   def get_history_data
@@ -15,7 +20,7 @@ class SnapmailsController < ApplicationController
     records = []
     @reports.each do |report|
       records[records.length] = [
-        report.inserted_at.strftime("%A, %d %b %Y %l:%M %p"),
+        DateTime.strptime(report.timestamp, "%s").strftime("%A, %d %b %Y %l:%M %p"),
         report.recipients,
         report.subject,
         report.id
