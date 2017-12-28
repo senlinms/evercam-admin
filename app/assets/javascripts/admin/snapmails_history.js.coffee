@@ -57,7 +57,6 @@ linkEmail = (name, type, row) ->
 
 showEmailTemplate = ->
   $("#snapmails_history_datatables").on "click", "#show-email-template", ->
-    console.log $(this).data("id")
     getEmailTemplate($(this).data("id"))
 
 getEmailTemplate = (id) ->
@@ -103,36 +102,27 @@ getYesterdaysDate = ->
   date.setDate (date.getDate() - 1)
   date.getFullYear() + '/' + (date.getMonth() + 1) + '/' + date.getDate()
 
+initNotify = ->
+  Notification.init(".show-notifications")
+
 ajaxCall = (date) ->
   data = {}
   data.date = date
   $('#ajx-wait').show()
   $.ajax
-      url: '/get_history_data'
-      data: data
-      type: 'get'
-      success: (data) ->
-        $('#ajx-wait').hide()
-        if typeof data == "object"
-          snapmails_history.fnClearTable()
-          snapmails_history.fnAddData(data)
-        else
-          snapmails_history.fnClearTable()
-          $(".bb-alert")
-            .addClass("alert-danger")
-            .text("There are no records for that date!")
-            .delay(200)
-            .fadeIn()
-            .delay(4000)
-            .fadeOut()
-      error: (xhr, status, error) ->
-        $(".bb-alert")
-            .addClass("alert-danger")
-            .text(xhr.responseText)
-            .delay(200)
-            .fadeIn()
-            .delay(4000)
-            .fadeOut()
+    url: '/get_history_data'
+    data: data
+    type: 'get'
+    success: (data) ->
+      $('#ajx-wait').hide()
+      if typeof data == "object"
+        snapmails_history.fnClearTable()
+        snapmails_history.fnAddData(data)
+      else
+        snapmails_history.fnClearTable()
+        Notification.show("There are no records for that date.")
+    error: (xhr, status, error) ->
+      Notification.show(xhr.responseText)
 
 onPageLoad = ->
   $(window).load ->
@@ -141,10 +131,10 @@ onPageLoad = ->
 
 window.initializeSnapmailHistory = ->
   initializeDataTable()
+  initNotify()
   columnsDropdown()
   setMargin()
   initDatePicker()
   onPageLoad()
   showEmailTemplate()
   closeModalSnapmail()
-  console.log "hello"
