@@ -132,12 +132,13 @@ totalCameras = (name, type, row) ->
   return row[6] + row[5]
 
 paymentMethod = (name) ->
+  console.log name
   switch name
-    when "0" then "Stripe"
-    when "1" then "Custom"
-    when "2" then "Construction"
-    when "3" then "Gardai"
-    when "4" then "Smart Cities"
+    when 0 then "Stripe"
+    when 1 then "Custom"
+    when 2 then "Construction"
+    when 3 then "Gardai"
+    when 4 then "Smart Cities"
     else "Other"
 
 showTable = ->
