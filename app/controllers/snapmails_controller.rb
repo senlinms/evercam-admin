@@ -1,4 +1,5 @@
 class SnapmailsController < ApplicationController
+  require "nokogiri"
 
   def history   
   end
@@ -13,15 +14,14 @@ class SnapmailsController < ApplicationController
   end
 
   def get_history_data
-    if params[:date]
-      date = params[:date]
-    end
-    @reports = SnapmailLogs.where("DATE(inserted_at) = ?", date).order('inserted_at desc')
+    @reports = SnapmailLogs.where("DATE(inserted_at) >= ? and DATE(inserted_at) <= ?", params[:fromDate], params[:toDate]).order('inserted_at desc')
     records = []
     @reports.each do |report|
       records[records.length] = [
         DateTime.strptime(report.image_timestamp, "%s").strftime("%A, %d %b %Y %l:%M %p"),
         report.recipients,
+        body(report.body),
+        "",
         report.subject,
         report.id
       ]
@@ -29,5 +29,14 @@ class SnapmailsController < ApplicationController
     if !records.blank?
       render json: records
     end
+  end
+
+  def body(html)
+    doc = Nokogiri::HTML(html)
+    image_nodes = doc.css(".last-snapmail-snapshot")
+    image_nodes.each do |image|
+      image['src'] = ""
+    end
+    doc.to_html
   end
 end
