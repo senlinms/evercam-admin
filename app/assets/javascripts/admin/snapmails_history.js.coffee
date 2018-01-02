@@ -61,8 +61,8 @@ setMargin = ->
   row.css("margin-bottom", "-11px")
 
 initDatePicker = ->
-  html = "<div class='col-md-6 col-sm-12'><label style='margin-left: 45px;'>From Date: <input type='text' id='datetimepicker' class='form-control 
-    input-small input-inline' placeholder='DateTime'></label><label style='margin-left: 10px;'>To Date: <input type='text' id='datetimepicker1' class='form-control 
+  html = "<div class='col-md-6 col-sm-12'><label style='margin-left: 45px;'>From Date: <input type='text' id='datetimepicker' class='form-control
+    input-small input-inline' placeholder='DateTime'></label><label style='margin-left: 10px;'>To Date: <input type='text' id='datetimepicker1' class='form-control
     input-small input-inline' placeholder='DateTime'></label></div>"
   $("#snapmails_history_datatables_wrapper > .row:first-child").prepend(html)
   $('#datetimepicker').datetimepicker
