@@ -53,8 +53,8 @@ initializeDataTable = ->
         {data: "3", "width": "70px", visible: false },
         {data: "4", "width": "215px", visible: false },
         {data: "5", "width": "120px", "render": cameraLink, "sClass": "center" },
-        {data: "6", "width": "120px", "sClass": "center", "render": removeMinus },
-        {data: "7", "width": "120px", "sClass": "center", "render": removeMinus },
+        {data: "6", "width": "120px", "sClass": "center" },
+        {data: "7", "width": "120px", "sClass": "center" },
         {data: "8", "width": "110px", "sClass": "center" },
         {data: "9", "width": "170px", "sType": "uk_datetime" },
         {data: "10", "width": "170px", visible: false },
@@ -132,7 +132,6 @@ totalCameras = (name, type, row) ->
   return row[6] + row[5]
 
 paymentMethod = (name) ->
-  console.log name
   switch name
     when 0 then "Stripe"
     when 1 then "Custom"
