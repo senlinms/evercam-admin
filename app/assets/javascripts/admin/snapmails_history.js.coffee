@@ -133,24 +133,27 @@ initNotify = ->
   Notification.init(".show-notifications")
 
 ajaxCall = (fromDate, toDate) ->
-  data = {}
-  data.fromDate = fromDate
-  data.toDate = toDate
-  $('#ajx-wait').show()
-  $.ajax
-    url: '/get_history_data'
-    data: data
-    type: 'get'
-    success: (data) ->
-      $('#ajx-wait').hide()
-      if typeof data == "object"
-        snapmails_history.fnClearTable()
-        snapmails_history.fnAddData(data)
-      else
-        snapmails_history.fnClearTable()
-        Notification.show("There are no records for that period.")
-    error: (xhr, status, error) ->
-      Notification.show(xhr.responseText)
+  if fromDate > toDate
+    Notification.show("From Date cannot be greater than To Date.")
+  else
+    data = {}
+    data.fromDate = fromDate
+    data.toDate = toDate
+    $('#ajx-wait').show()
+    $.ajax
+      url: '/get_history_data'
+      data: data
+      type: 'get'
+      success: (data) ->
+        $('#ajx-wait').hide()
+        if typeof data == "object"
+          snapmails_history.fnClearTable()
+          snapmails_history.fnAddData(data)
+        else
+          snapmails_history.fnClearTable()
+          Notification.show("There are no records for that period.")
+      error: (xhr, status, error) ->
+        Notification.show(xhr.responseText)
 
 onPageLoad = ->
   $(window).load ->
