@@ -49,7 +49,6 @@ compareStatus = (name) ->
     "Completed"
   else
     "Failed"
-    
 
 setMargin = ->
   row = $("#compares_datatables_wrapper").children().first()
