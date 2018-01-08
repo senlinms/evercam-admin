@@ -56,7 +56,7 @@ setMargin = ->
 
 copyEmbedCode = ->
   $("#compares_datatables").on "click", ".copy-embed-code", ->
-    data = $(this).closest('td').prev('td').text();
+    data = $(this).closest('td').prev('td').text()
     $temp = $('<textarea>')
     $('body').append $temp
     $temp.val(data).select()
@@ -65,7 +65,7 @@ copyEmbedCode = ->
 
 downloadLinks = (name) ->
   names = name.split("|")
-  "<a href='https://media.evercam.io/v1/cameras/#{names[1]}/compares/#{names[0]}.gif' download='https://media.evercam.io/v1/cameras/#{name[0]}/compares/#{name[1]}.gif'><i class='fa fa-download'></i> GIF</a> | 
+  "<a href='https://media.evercam.io/v1/cameras/#{names[1]}/compares/#{names[0]}.gif' download='https://media.evercam.io/v1/cameras/#{name[0]}/compares/#{name[1]}.gif'><i class='fa fa-download'></i> GIF</a> |
     <a href='https://media.evercam.io/v1/cameras/#{names[1]}/compares/#{names[0]}.mp4' download='https://media.evercam.io/v1/cameras/#{name[0]}/compares/#{name[1]}.mp4'><i class='fa fa-download'></i> MP4</a>"
 
 window.initializeCompares = ->
