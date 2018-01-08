@@ -41,6 +41,7 @@ Rails.application.routes.draw do
   get "/snapmails_history" => "snapmails#history"
   get "/get_history_data" => "snapmails#get_history_data"
   get "/get_email_temaplate" => "snapmails#get_email_temaplate"
+  get "/compares" => "compares#index"
 
   get "/licences/pending_reason" => "licence_reports#pending_reason"
   resources :licence_reports, path: "licences"
