@@ -1,0 +1,26 @@
+<% if @compares.present? %>
+  <% @compares.each do |compare| %>
+    <tr>
+      <td><%= compare.inserted_at.strftime('%a, %d %b %Y') %></td>
+      <td>
+        <% if compare.camera.present? %>
+          <%= compare.camera.name %>
+        <% else %>
+          Camera doesn't not exist.
+        <% end %>
+      </td>
+      <td>
+        <% if compare.user.present? %>
+          <%= compare.user.firstname %> <%= compare.user.lastname %>
+        <% else %>
+          User doesn't not exist.
+        <% end %>
+      </td>
+      <td><%= compare.status %></td>
+      <td><%= compare.name %></td>
+      <td class="code-to-copy"><%= compare.embed_code %></td>
+      <td class="copy-embed-code"><span class="fa fa-files-o"></span></td>
+      <td><%= compare.exid %>|<%= compare.camera.exid %></td>
+    </tr>
+  <% end %>
+<% end %>

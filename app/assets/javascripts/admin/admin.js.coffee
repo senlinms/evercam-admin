@@ -38,6 +38,7 @@
 #= require admin/timelapse_report.js
 #= require admin/meta_datas.js
 #= require admin/snapmails_history.js
+#= require admin/compares.js
 #= require admin/intercom.js
 #= require admin/camera_shares.js
 #= require admin/jquery.json-viewer.js
