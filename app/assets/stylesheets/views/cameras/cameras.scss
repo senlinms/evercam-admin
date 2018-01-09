@@ -428,6 +428,8 @@ $ovnif-reboot: #e51d1d;
   background: #F5F5F5;
 }
 
-#show-email-template, .copy-embed-code {
+#show-email-template,
+.copy-embed-code,
+.delete-compare {
   cursor: pointer;
 }

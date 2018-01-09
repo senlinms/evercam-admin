@@ -10,20 +10,21 @@ sendAJAXRequest = (settings) ->
 
 initializeDataTable = ->
   compares = $("#compares_datatables").DataTable
-    aaSorting: [0, "desc"]
+    aaSorting: [1, "desc"]
     aLengthMenu: [
       [25, 50, 100, 200, -1]
       [25, 50, 100, 200, "All"]
     ]
     columns: [
-      {data: "0", sWidth: "150px" },
-      {data: "1", sWidth: "150px" },
+      {data: "0", sWidth: "30px", sClass: "center" },
+      {data: "1", sWidth: "120px" },
       {data: "2", sWidth: "150px" },
-      {data: "3", sWidth: "50px", sClass: "center", "render": compareStatus },
-      {data: "4", sWidth: "100px" },
-      {data: "5", sWidth: "150px", sClass: "hide" },
-      {data: "6", sWidth: "75px", sClass: "center" },
-      {data: "7", sWidth: "75px", "render": downloadLinks, sClass: "center" }
+      {data: "3", sWidth: "150px" },
+      {data: "4", sWidth: "150px" },
+      {data: "5", sWidth: "100px", sClass: "center", "render": compareStatus },
+      {data: "6", sWidth: "150px", sClass: "hide" },
+      {data: "7", sWidth: "75px", sClass: "center" },
+      {data: "8", sWidth: "85px", "render": downloadLinks, sClass: "center" }
     ],
     iDisplayLength: 500
     columnDefs: [
@@ -62,14 +63,38 @@ copyEmbedCode = ->
     $temp.val(data).select()
     document.execCommand 'copy'
     $temp.remove()
+    Notification.show("Embed Code has been Copied.")
+
+deleteCompare = ->
+  $("#compares_datatables").on "click", ".delete-compare", ->
+    $('#ajx-wait').show()
+    that = $(this)
+    data = {}
+    data.id = $(this).data("id")
+    $.ajax
+      url: '/delete_compare'
+      data: data
+      dataType: 'json'
+      type: 'DELETE'
+      success: ->
+        $('#ajx-wait').hide()
+        that.parent("tr:first").remove()
+        Notification.show("Compare has been deleted.")
+      error: (xhr, status, error) ->
+        Notification.show(xhr.responseText)
 
 downloadLinks = (name) ->
   names = name.split("|")
   "<a href='https://media.evercam.io/v1/cameras/#{names[1]}/compares/#{names[0]}.gif' download='https://media.evercam.io/v1/cameras/#{name[0]}/compares/#{name[1]}.gif'><i class='fa fa-download'></i> GIF</a> |
     <a href='https://media.evercam.io/v1/cameras/#{names[1]}/compares/#{names[0]}.mp4' download='https://media.evercam.io/v1/cameras/#{name[0]}/compares/#{name[1]}.mp4'><i class='fa fa-download'></i> MP4</a>"
 
+initNotify = ->
+  Notification.init(".show-notifications")
+
 window.initializeCompares = ->
   initializeDataTable()
   columnsDropdown()
   copyEmbedCode()
   setMargin()
+  initNotify
+  deleteCompare()
