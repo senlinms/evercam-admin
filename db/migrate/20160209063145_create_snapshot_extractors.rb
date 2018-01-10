@@ -1,4 +1,4 @@
-class CreateSnapshotExtractors < ActiveRecord::Migration
+class CreateSnapshotExtractors < ActiveRecord::Migration[4.2]
   def change
     create_table :snapshot_extractors do |t|
 
