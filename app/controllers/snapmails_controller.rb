@@ -1,6 +1,10 @@
 class SnapmailsController < ApplicationController
   require "nokogiri"
 
+  def index
+    @snapmails = Snapmail.all
+  end
+
   def history   
   end
 
