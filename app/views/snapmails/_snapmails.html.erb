@@ -1,0 +1,19 @@
+<% if @snapmails.present? %>
+  <% @snapmails.each do |snapmail| %>
+    <tr>
+      <td><%= snapmail.inserted_at.strftime('%a, %d %b %Y') %></td>
+      <td><%= snapmail.subject %></td>
+      <td>
+        <% snapmail.snapmail_cameras.each do |snapmail_c| %>
+          <a href="<%= check_env %>/v1/cameras/<%= snapmail_c.camera.exid %>?api_id=<%= snapmail.user.api_id %>&api_key=<%= snapmail.user.api_key %>" title="" target="_blank"><%= snapmail_c.camera.name %></a>
+        <% end %>
+      </td>
+      <td><%= snapmail.user.firstname %> <%= snapmail.user.lastname %></td>
+      <td><%= snapmail.recipients %></td>
+      <td><%= snapmail.notify_days %></td>
+      <td><%= snapmail.notify_time %></td>
+      <td><%= snapmail.timezone %></td>
+      <td><%= snapmail.is_paused %></td>
+    </tr>
+  <% end %>
+<% end %>
