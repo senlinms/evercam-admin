@@ -33,11 +33,11 @@ evercam_snapshot_db_test:
 
 production:
   <<: *default
-  database: <%= ENV['RDS_DB_NAME'] %>
-  username: <%= ENV['RDS_USERNAME'] %>
-  password: <%= ENV['RDS_PASSWORD'] %>
-  host: <%= ENV['RDS_HOSTNAME'] %>
-  port: <%= ENV['RDS_PORT'] %>
+  database: <%= ENV['EVERCAM_DB_NAME'] %>
+  username: <%= ENV['EVERCAM_DB_USERNAME'] %>
+  password: <%= ENV['EVERCAM_DB_PASSWORD'] %>
+  host: <%= ENV['EVERCAM_DB_HOSTNAME'] %>
+  port: <%= ENV['EVERCAM_DB_PORT'] %>
 
 evercam_db_production:
   <<: *default
