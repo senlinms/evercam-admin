@@ -1,6 +1,6 @@
 class CreateUsers < ActiveRecord::Migration[4.2]
   def change
-    create_table :users do |t|
+    create_table :admins do |t|
       t.string :firstname, null: false
       t.string :lastname, null: false
       t.string :username, null: false

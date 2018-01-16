@@ -17,7 +17,7 @@ evercam_snapshot_db_development:
 
 development:
   <<: *default
-  database: evercam_admin_development
+  database: evercam_dev
 
 test:
   <<: *default
