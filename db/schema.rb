@@ -65,7 +65,6 @@ ActiveRecord::Schema.define(version: 20171009070501) do
     t.string "firstname", null: false
     t.string "lastname", null: false
     t.string "username", null: false
-    t.string "password", null: false
     t.integer "country_id"
     t.datetime "confirmed_at"
     t.string "email", null: false
@@ -77,7 +76,18 @@ ActiveRecord::Schema.define(version: 20171009070501) do
     t.string "stripe_customer_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.integer "sign_in_count", default: 0, null: false
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.inet "current_sign_in_ip"
+    t.inet "last_sign_in_ip"
     t.index ["country_id"], name: "index_admins_on_country_id"
+    t.index ["email"], name: "index_admins_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_admins_on_reset_password_token", unique: true
   end
 
   create_table "apps", id: :serial, force: :cascade do |t|
@@ -288,11 +298,6 @@ ActiveRecord::Schema.define(version: 20171009070501) do
     t.text "requestor"
   end
 
-  create_table "snapshot_reports", id: :serial, force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "spatial_ref_sys", primary_key: "srid", id: :integer, default: nil, force: :cascade do |t|
     t.string "auth_name", limit: 256
     t.integer "auth_srid"
@@ -341,6 +346,7 @@ ActiveRecord::Schema.define(version: 20171009070501) do
     t.text "firstname", null: false
     t.text "lastname", null: false
     t.text "username", null: false
+    t.text "password", null: false
     t.integer "country_id"
     t.datetime "confirmed_at"
     t.text "email", null: false
@@ -355,19 +361,8 @@ ActiveRecord::Schema.define(version: 20171009070501) do
     t.text "vat_number"
     t.integer "payment_method", default: 0
     t.text "insight_id"
-    t.string "encrypted_password", default: "", null: false
-    t.string "reset_password_token"
-    t.datetime "reset_password_sent_at"
-    t.datetime "remember_created_at"
-    t.integer "sign_in_count", default: 0, null: false
-    t.datetime "current_sign_in_at"
-    t.datetime "last_sign_in_at"
-    t.inet "current_sign_in_ip"
-    t.inet "last_sign_in_ip"
     t.index ["country_id"], name: "ix_users_country_id"
-    t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["email"], name: "user_email_unique_index", unique: true
-    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["username"], name: "user_username_unique_index", unique: true
   end
 
