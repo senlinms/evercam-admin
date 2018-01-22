@@ -151,7 +151,7 @@ ActiveRecord::Schema.define(version: 20171009070501) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.text "message"
-    t.index ["camera_id", "email", "status"], name: "camera_share_requests_camera_id_email_status_index", unique: true, where: "(status = (-1))"
+    t.index ["camera_id", "email", "status"], name: "camera_share_requests_camera_id_email_status_index", unique: true, where: "(status = '-1'::integer)"
     t.index ["camera_id", "email"], name: "camera_share_requests_camera_id_email_index"
     t.index ["key"], name: "camera_share_requests_key_index", unique: true
   end
