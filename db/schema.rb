@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171009070501) do
+ActiveRecord::Schema.define(version: 20180122051210) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -36,7 +36,6 @@ ActiveRecord::Schema.define(version: 20171009070501) do
   create_table "access_tokens", id: :integer, default: -> { "nextval('sq_access_tokens'::regclass)" }, force: :cascade do |t|
     t.datetime "created_at", default: -> { "now()" }, null: false
     t.datetime "updated_at", default: -> { "now()" }, null: false
-    t.datetime "expires_at"
     t.boolean "is_revoked", null: false
     t.integer "user_id"
     t.integer "client_id"
@@ -110,6 +109,7 @@ ActiveRecord::Schema.define(version: 20171009070501) do
     t.boolean "embed_time"
     t.boolean "public"
     t.integer "frames", default: 0
+    t.string "url", limit: 255
   end
 
   create_table "billing", id: :serial, force: :cascade do |t|
@@ -151,7 +151,7 @@ ActiveRecord::Schema.define(version: 20171009070501) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.text "message"
-    t.index ["camera_id", "email", "status"], name: "camera_share_requests_camera_id_email_status_index", unique: true, where: "(status = '-1'::integer)"
+    t.index ["camera_id", "email", "status"], name: "camera_share_requests_camera_id_email_status_index", unique: true, where: "(status = (-1))"
     t.index ["camera_id", "email"], name: "camera_share_requests_camera_id_email_index"
     t.index ["key"], name: "camera_share_requests_key_index", unique: true
   end
@@ -197,10 +197,10 @@ ActiveRecord::Schema.define(version: 20171009070501) do
     t.datetime "before_date", null: false
     t.datetime "after_date", null: false
     t.string "embed_code", limit: 255, null: false
+    t.boolean "create_animation", default: false
     t.integer "camera_id", null: false
     t.datetime "inserted_at", null: false
     t.datetime "updated_at", null: false
-    t.boolean "create_animation", default: false
     t.integer "status", default: 0, null: false
     t.integer "requested_by", null: false
     t.index ["exid"], name: "compare_exid_unique_index", unique: true
@@ -267,6 +267,15 @@ ActiveRecord::Schema.define(version: 20171009070501) do
     t.datetime "inserted_at", null: false
     t.datetime "updated_at", null: false
     t.index ["snapmail_id", "camera_id"], name: "snapemail_camera_id_unique_index", unique: true
+  end
+
+  create_table "snapmail_logs", id: :serial, force: :cascade do |t|
+    t.text "recipients"
+    t.text "subject"
+    t.text "body"
+    t.text "image_timestamp"
+    t.datetime "inserted_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "snapmails", id: :serial, force: :cascade do |t|
@@ -354,9 +363,7 @@ ActiveRecord::Schema.define(version: 20171009070501) do
     t.datetime "token_expires_at"
     t.text "api_id"
     t.text "api_key"
-    t.boolean "is_admin", default: false, null: false
     t.text "stripe_customer_id"
-    t.text "billing_id"
     t.datetime "last_login_at"
     t.text "vat_number"
     t.integer "payment_method", default: 0
@@ -364,29 +371,6 @@ ActiveRecord::Schema.define(version: 20171009070501) do
     t.index ["country_id"], name: "ix_users_country_id"
     t.index ["email"], name: "user_email_unique_index", unique: true
     t.index ["username"], name: "user_username_unique_index", unique: true
-  end
-
-  create_table "users_old", id: :integer, default: nil, force: :cascade do |t|
-    t.datetime "created_at", default: -> { "now()" }, null: false
-    t.datetime "updated_at", default: -> { "now()" }, null: false
-    t.text "firstname", null: false
-    t.text "lastname", null: false
-    t.text "username", null: false
-    t.text "password", null: false
-    t.integer "country_id"
-    t.datetime "confirmed_at"
-    t.text "email", null: false
-    t.text "reset_token"
-    t.datetime "token_expires_at"
-    t.text "api_id"
-    t.text "api_key"
-    t.boolean "is_admin", default: false, null: false
-    t.text "stripe_customer_id"
-    t.text "billing_id"
-    t.datetime "last_login_at"
-    t.text "vat_number"
-    t.integer "payment_method", default: 0
-    t.text "insight_id"
   end
 
   create_table "vendor_models", id: :integer, default: -> { "nextval('sq_firmwares'::regclass)" }, force: :cascade do |t|
