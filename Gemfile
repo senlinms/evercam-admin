@@ -87,7 +87,7 @@ group :test do
   gem 'capybara'
   gem 'shoulda-matchers'
   gem 'webmock'
-  gem 'nokogiri', '~>1.8.1'
+  gem 'nokogiri', '~>1.8.2'
   gem 'vcr'
   gem 'poltergeist'
   gem 'selenium-webdriver'
