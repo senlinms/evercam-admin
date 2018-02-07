@@ -403,6 +403,7 @@ DEPENDENCIES
   draper
   evercam!
   factory_bot_rails
+  ffi (~> 1.9, >= 1.9.21)
   geocoder
   georuby
   intercom
