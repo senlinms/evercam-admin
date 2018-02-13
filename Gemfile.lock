@@ -64,7 +64,7 @@ GEM
     airbrussh (1.3.0)
       sshkit (>= 1.6.1, != 1.7.0)
     arel (8.0.0)
-    autoprefixer-rails (7.2.5)
+    autoprefixer-rails (8.0.0)
       execjs
     aws-sdk-v1 (1.67.0)
       json (~> 1.4)
@@ -361,7 +361,7 @@ GEM
       ethon (>= 0.9.0)
     tzinfo (1.2.5)
       thread_safe (~> 0.1)
-    uglifier (4.1.5)
+    uglifier (4.1.6)
       execjs (>= 0.3.0, < 3)
     vcr (4.0.0)
     warden (1.2.7)
