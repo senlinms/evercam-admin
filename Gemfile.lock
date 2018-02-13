@@ -64,7 +64,7 @@ GEM
     airbrussh (1.3.0)
       sshkit (>= 1.6.1, != 1.7.0)
     arel (8.0.0)
-    autoprefixer-rails (7.2.5)
+    autoprefixer-rails (8.0.0)
       execjs
     aws-sdk-v1 (1.67.0)
       json (~> 1.4)
@@ -157,7 +157,7 @@ GEM
       multipart-post (>= 1.2, < 3)
     faraday_middleware (0.12.2)
       faraday (>= 0.7.4, < 1.0)
-    ffi (1.9.21)
+    ffi (1.9.18)
     geocoder (1.4.5)
     georuby (2.5.2)
     gherkin-ruby (0.3.2)
@@ -361,7 +361,7 @@ GEM
       ethon (>= 0.9.0)
     tzinfo (1.2.5)
       thread_safe (~> 0.1)
-    uglifier (4.1.5)
+    uglifier (4.1.6)
       execjs (>= 0.3.0, < 3)
     vcr (4.0.0)
     warden (1.2.7)
@@ -403,6 +403,7 @@ DEPENDENCIES
   draper
   evercam!
   factory_bot_rails
+  ffi (= 1.9.18)
   geocoder
   georuby
   intercom
