@@ -20,19 +20,20 @@ class CamerasController < ApplicationController
           camera["id"],
           camera["exid"],
           camera["name"],
-          camera.user["firstname"],
-          camera.user["lastname"],
+          camera.user ? camera.user["firstname"] : "Deleted",
+          camera.user ? camera.user["lastname"] : "User",
           camera.camera_shares.count,
           camera["is_online"],
           camera["created_at"],
           camera["is_public"],
-          camera.user["id"],
-          camera.user["api_id"],
-          camera.user["api_key"],
+          camera.user ? camera.user["id"] : "",
+          camera.user ? camera.user["api_id"] : "",
+          camera.user ? camera.user["api_key"] : "",
           check_env,
           camera.cloud_recording || { "status" => "" }["status"]
         ]
       end
+
       render json: records
     elsif params[:super_cam_id] && params[:super_cam_owner_id] && params[:camera_ids] && params[:owner_ids]
       merge_camera(params[:super_cam_id], params[:super_cam_owner_id], params[:camera_ids], params[:owner_ids])
