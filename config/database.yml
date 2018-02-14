@@ -5,6 +5,7 @@ default: &default
   schema_search_path: public
   template: template0
   encoding: unicode
+  username: postgres
   pool: 5
 
 evercam_db_development:
