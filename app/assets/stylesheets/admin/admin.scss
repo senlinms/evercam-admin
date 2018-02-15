@@ -652,6 +652,15 @@ ul.columns {
   float: left;
 }
 
+.month-select {
+  background-color: $input-color;
+  width: 150px;
+  padding: 7px;
+  margin-left: 5px;
+  border: none;
+  float: left;
+}
+
 .inputs-divs {
   width: 656px;
   float: left;
