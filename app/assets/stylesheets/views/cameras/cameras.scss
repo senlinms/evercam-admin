@@ -396,6 +396,44 @@ a.json-placeholder:hover {
   text-align: center;
 }
 
+.form-camera-cleanup-report {
+  width: 100%;
+  overflow: hidden;
+  height: auto;
+  float: left;
+  text-align: center;
+
+  .camera-cleanup-filter-container{
+    height: auto;
+    overflow: hidden;
+  }
+
+  .camera-inputs {
+    width: auto;
+  }
+}
+
+#camera_cleanup_datatables_processing {
+  color: #3D3D3D;
+  font-size: 16px;
+  left: 0;
+  margin: auto;
+  position: absolute;
+  right: 0;
+  text-align: center;
+  top: 7%;
+
+  img {
+    width: 100px;
+    height: auto;
+  }
+}
+
+.width-420 {
+  width: 420px;
+  border-radius: 6px !important;
+}
+
 .modal-add-cr .modal-body {
   position: relative;
   padding: 3px 10px;

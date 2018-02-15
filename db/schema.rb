@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180122051210) do
+ActiveRecord::Schema.define(version: 20180130103936) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -110,6 +110,7 @@ ActiveRecord::Schema.define(version: 20180122051210) do
     t.boolean "public"
     t.integer "frames", default: 0
     t.string "url", limit: 255
+    t.string "file_name", limit: 255
   end
 
   create_table "billing", id: :serial, force: :cascade do |t|
@@ -151,7 +152,7 @@ ActiveRecord::Schema.define(version: 20180122051210) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.text "message"
-    t.index ["camera_id", "email", "status"], name: "camera_share_requests_camera_id_email_status_index", unique: true, where: "(status = (-1))"
+    t.index ["camera_id", "email", "status"], name: "camera_share_requests_camera_id_email_status_index", unique: true, where: "(status = '-1'::integer)"
     t.index ["camera_id", "email"], name: "camera_share_requests_camera_id_email_index"
     t.index ["key"], name: "camera_share_requests_key_index", unique: true
   end
