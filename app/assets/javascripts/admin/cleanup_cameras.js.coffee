@@ -45,19 +45,21 @@ initializeDataTable = ->
       columns: [
         {data: "16", "width": "20px", "sClass": "center", "render": addCheckbox},
         {data: "0", "width": "175px", "orderable": true, "sType": "uk_datetime" },
-        {data: "1", "width": "117px", "orderable": true, "render": linkCamera },
-        {data: "2", "width": "150px", "render": linkOwner },
-        {data: "3", "width": "125px" },
-        {data: "4", "width": "70px", "sClass": "center" },
-        {data: "5", "width": "90px" },
-        {data: "6", "width": "70px" },
-        {data: "7", "width": "75px", visible: false},
-        {data: "8", "width": "135px" },
-        {data: "9", "width": "100px" },
-        {data: "10", "width": "60px", "render": colStatus, "sClass": "center" },
-        {data: "11", "width": "60px", "render": colStatus, "sClass": "center" },
-        {data: "12", "width": "75px" },
-        {data: "13", "width": "130px" }
+        {data: "1", "width": "175px", "orderable": true, "sType": "uk_datetime" }, # new field
+        {data: "2", "width": "117px", "orderable": true, "render": linkCamera },
+        {data: "3", "width": "150px", "render": linkOwner },
+        {data: "4", "width": "150px",}, # new field email
+        {data: "5", "width": "125px" },
+        {data: "6", "width": "70px", "sClass": "center" },
+        {data: "7", "width": "90px" },
+        {data: "8", "width": "70px" },
+        {data: "9", "width": "75px", visible: false},
+        {data: "10", "width": "100px" },
+        {data: "11", "width": "100px" },
+        {data: "12", "width": "60px", "render": colStatus, "sClass": "center" },
+        {data: "13", "width": "60px", "render": colStatus, "sClass": "center" },
+        {data: "14", "width": "65px" },
+        {data: "15", "width": "65px" }
       ],
       drawCallback: ->
         adjustHorizontalScroll()
@@ -66,17 +68,18 @@ initializeDataTable = ->
         Metronic.init()
 
 addCheckbox = (id, type, row) ->
-  return "<input type='checkbox' data-val-id='#{row[1]}' data-val-api-id='#{row[16]}' data-val-api_key='#{row[17]}'/>"
+  return "<input type='checkbox' data-val-id='#{row[2]}' data-val-api-id='#{row[18]}' data-val-api_key='#{row[19]}'/>"
 
 searchFilter = ->
   $("#select_months").on "change", ->
     do_filter()
-  $("#camera-id, #owner, #camera-name, #camera-ip, #username, #password").on "keyup", ->
+  $("#camera-id, #owner, #camera-name, #camera-ip, #username, #password, #email").on "keyup", ->
     do_filter()
 
 do_filter = ->
   camera_exid = $("#camera-id").val()
   camera_owner = $("#owner").val().replace("'","''")
+  owner_email = $("#email").val()
   camera_name = $("#camera-name").val().replace("'","''")
   camera_ip = $("#camera-ip").val()
   username = $("#username").val()
@@ -90,6 +93,7 @@ do_filter = ->
   camera_cleanup_table.setAjaxParam 'username', username
   camera_cleanup_table.setAjaxParam 'password', password
   camera_cleanup_table.setAjaxParam 'months', months
+  camera_cleanup_table.setAjaxParam 'email', owner_email
   camera_cleanup_table.getDataTable().ajax.reload()
 
 columnsDropdown = ->
@@ -126,10 +130,10 @@ multipleSelect = ->
 
   $("#delete-cameras").on "click", ->
     $("#camera_cleanup_datatables tbody input[type='checkbox']:checked").each (index, control) ->
-      row = $(this).parents('tr')
       camera_id = $(control).attr("data-val-id")
       api_id = $(control).attr("data-val-api-id")
       api_key = $(control).attr("data-val-api_key")
+      row = $(this).parents('tr')
 
       onError = (jqXHR, status, error) ->
         $(".bb-alert").removeClass("alert-success").addClass("alert-danger")
@@ -179,10 +183,10 @@ colStatus = (name) ->
     return "<span style='color: red;'>False</span>"
 
 linkCamera = (name, type, row) ->
-  return "<a href='/cameras/#{row[17]}'>#{row[1]}</a>"
+  return "<a href='/cameras/#{row[16]}'>#{row[2]}</a>"
 
 linkOwner = (name, type, row) ->
-  url = "#{row[20]}/v1/cameras/#{row[1]}?api_id=#{row[18]}&api_key=#{row[19]}"
+  url = "#{row[20]}/v1/cameras/#{row[2]}?api_id=#{row[18]}&api_key=#{row[19]}"
   return "<div class='link-user'>" +
     "<a class='pull-left' href='/users/#{row[18]}'>#{name}</a>" +
     "<a class='pull-right' href= #{url} target='_blank'>" +
