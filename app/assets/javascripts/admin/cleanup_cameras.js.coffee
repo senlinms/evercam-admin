@@ -189,7 +189,7 @@ linkCamera = (name, type, row) ->
 linkOwner = (name, type, row) ->
   url = "#{row[20]}/v1/cameras/#{row[2]}?api_id=#{row[18]}&api_key=#{row[19]}"
   return "<div class='link-user'>" +
-    "<a class='pull-left' href='/users/#{row[18]}'>#{name}</a>" +
+    "<a class='pull-left' href='/users/#{row[16]}'>#{name}</a>" +
     "<a class='pull-right' href= #{url} target='_blank'>" +
     "<i class='fa fa-external-link'></i></a></div>"
 
