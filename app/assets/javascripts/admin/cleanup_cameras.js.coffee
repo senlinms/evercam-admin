@@ -73,6 +73,7 @@ addCheckbox = (id, type, row) ->
 searchFilter = ->
   $("#select_months").on "change", ->
     do_filter()
+
   $("#camera-id, #owner, #camera-name, #camera-ip, #username, #password, #email").on "keyup", ->
     do_filter()
 
