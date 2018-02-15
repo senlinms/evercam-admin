@@ -12,7 +12,7 @@ class CamerasController < ApplicationController
   def cleanup_cameras
     col_for_order = params[:order]["0"]["column"]
     order_for = params[:order]["0"]["dir"]
-    last_months_offline = " and (c.is_online = false and c.last_online_at <= '#{Time.now - 60.month}')"
+    last_months_offline = " and (c.is_online = false and c.last_online_at <= '#{Time.now - 12.month}')"
 
     if params[:camera_exid].present?
       camera_exid = " and lower(c.exid) like lower('%#{params[:camera_exid]}%')"
