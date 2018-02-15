@@ -23,6 +23,9 @@ class CamerasController < ApplicationController
     if params[:camera_owner].present?
       camera_owner = " and lower(fullname) like lower('%#{params[:camera_owner]}%')"
     end
+    if params[:email].present?
+      owner_email = " and lower(owner_email) like lower('%#{params[:email]}%')"
+    end
     if params[:camera_ip].present?
       camera_ip = " and lower(c.config->>'external_host') like lower('%#{params[:camera_ip]}%')"
     end
@@ -37,7 +40,7 @@ class CamerasController < ApplicationController
     end
 
     cameras = Camera.connection.select_all("select * from (
-                select c.*,u.firstname || ' ' || u.lastname as fullname, u as user, u.id as user_id, u.api_id, u.api_key,
+                select c.*,u.firstname || ' ' || u.lastname as fullname, u.email as owner_email, u as user, u.id as user_id, u.api_id, u.api_key,
                 v.name as vendor_name, vm.name as vendor_model_name, cr.status as cloud_recording_status,
                 cr.frequency as cloud_recording_frequency, cr.storage_duration as cloud_recording_storage_duration,
                 (select count(id) as total from camera_shares cs where c.id=cs.camera_id) as total_share from cameras c
@@ -46,7 +49,7 @@ class CamerasController < ApplicationController
                 left JOIN vendors v on vm.vendor_id = v.id
                 left JOIN cloud_recordings cr on c.id = cr.camera_id
                 ) c where c.owner_id not in (78, 7011, 6120, 116066, 13959, 109148) and (cloud_recording_storage_duration <> -1 or cloud_recording_storage_duration is null)
-                #{last_months_offline}#{camera_exid}#{camera_name}#{camera_owner}#{camera_ip}#{camera_username}#{camera_password}
+                #{last_months_offline}#{camera_exid}#{camera_name}#{camera_owner}#{owner_email}#{camera_ip}#{camera_username}#{camera_password}
                 #{cleanup_sorting(col_for_order, order_for)}")
     total_records = cameras.count
     display_length = params[:length].to_i
@@ -60,9 +63,11 @@ class CamerasController < ApplicationController
     (display_start..index_end).each do |index|
       if cameras[index].present? && cameras[index]["user"].present?
         records[:data][records[:data].count] = [
-          cameras[index]["created_at"] ? DateTime.parse(cameras[index]["created_at"]).strftime("%A, %d %b %Y %l:%M %p") : "",
+          cameras[index]["created_at"] ? DateTime.parse(cameras[index]["created_at"]).strftime("%a, %d %b %Y %l:%M %p") : "",
+          cameras[index]["last_online_at"] ? DateTime.parse(cameras[index]["created_at"]).strftime("%a, %d %b %Y %l:%M %p") : "",
           cameras[index]["exid"],
           cameras[index]["fullname"],
+          cameras[index]["owner_email"],
           cameras[index]["name"],
           cameras[index]["total_share"],
           JSON.parse(cameras[index]["config"]).deep_fetch("external_host") { "" },
@@ -329,30 +334,34 @@ class CamerasController < ApplicationController
   def cleanup_sorting(col, order)
     case col
     when "2"
-      "order by c.exid #{order}"
+      "order by c.last_online_at #{order}"
     when "3"
-      "order by fullname #{order}"
+      "order by c.exid #{order}"
     when "4"
-      "order by c.name #{order}"
+      "order by fullname #{order}"
     when "5"
-      "order by total_share #{order}"
+      "order by owner_email #{order}"
     when "6"
-      "order by c.config->> 'external_host' #{order}"
+      "order by c.name #{order}"
     when "7"
-      "order by c.config->> 'external_http_port' #{order}"
+      "order by total_share #{order}"
     when "8"
-      "order by c.config->> 'external_rtsp_port' #{order}"
+      "order by c.config->> 'external_host' #{order}"
     when "9"
-      "order by c.config-> 'auth'-> 'basic'->> 'username' #{order}"
+      "order by c.config->> 'external_http_port' #{order}"
     when "10"
-      "order by c.config-> 'auth'-> 'basic'->> 'password' #{order}"
+      "order by c.config->> 'external_rtsp_port' #{order}"
     when "11"
-      "order by c.is_public #{order}"
+      "order by c.config-> 'auth'-> 'basic'->> 'username' #{order}"
     when "12"
-      "order by c.is_online #{order}"
+      "order by c.config-> 'auth'-> 'basic'->> 'password' #{order}"
     when "13"
-      "order by cloud_recording_storage_duration #{order}"
+      "order by c.is_public #{order}"
     when "14"
+      "order by c.is_online #{order}"
+    when "15"
+      "order by cloud_recording_storage_duration #{order}"
+    when "16"
       "order by cloud_recording_status #{order}"
     when "1"
       "order by c.created_at #{order}"
