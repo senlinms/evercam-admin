@@ -6,7 +6,8 @@ class CameraShareRequestDecorator < Draper::Decorator
            :rights,
            :message,
            :created_at,
-           :update_at
+           :update_at,
+           :id
 
   def user_status
     if object.status.equal?(CameraShareRequest::PENDING)

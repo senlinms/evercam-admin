@@ -8,6 +8,7 @@ initializeDataTable = ->
       [25, 50, 100, 200, "All"]
     ]
     columns: [
+      {data: "7", "width": "20px", "sClass": "center", "render": addCheckbox},
       {data: "0", sWidth: "150px" },
       {data: "1", sWidth: "100px" },
       {data: "2", sWidth: "110px" },
@@ -25,6 +26,7 @@ initializeDataTable = ->
       "sSearch": "Filter:"
     },
     initComplete: ->
+      Metronic.init()
       $("#shares-list-row").removeClass('hide')
       $("#shares_datatables_length label").hide()
 
@@ -32,6 +34,9 @@ columnsDropdown = ->
   $(".share-requests-column").on "click", ->
     column = shares_table.column($(this).attr("data-val"))
     column.visible !column.visible()
+
+addCheckbox = (id, type, row) ->
+  return "<input type='checkbox' data-val-id='#{row[7]}'/>"
 
 appendMe = ->
   $("#div-dropdown-checklist").css({'visibility': 'visible', "width": "20px", "left": "-8px", "top": "0px"})
@@ -46,12 +51,20 @@ statusFilter = ->
     else
       status = $(this).attr("data-val")
     shares_table
-      .column(5)
+      .column(6)
       .search( status )
       .draw()
 
+loadPendingOnly = ->
+  shares_table
+    .column(6)
+    .search( "pending" )
+    .draw()
+  Metronic.init()
+
 window.initializeShareRequests = ->
   initializeDataTable()
+  loadPendingOnly()
   columnsDropdown()
   statusFilter()
   appendMe()
