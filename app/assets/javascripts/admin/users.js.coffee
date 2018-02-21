@@ -76,14 +76,16 @@ columnsDropdown = ->
     adjustHorizontalScroll()
 
 addCheckbox = (name, type, row) ->
-  return "<input type='checkbox' data-val='#{name}'/>"
+  return "<input type='checkbox' data-val='#{name}' data-val-username='#{row[0]}' data-val-api-id='#{row[3]}' data-val-api_key='#{row[4]}'/>"
 
 searchFilter = ->
-  $('#username, #email, #fullname, #total_cameras, #licREQ1, #licREQ2, #licVALID1, #licVALID2, #licDEF1, #licDEF2').on "keyup", ->
+  $('#username, #email, #fullname, #total_cameras, #owned_cameras, #shared_cameras, #licREQ1, #licREQ2, #licVALID1, #licVALID2, #licDEF1, #licDEF2').on "keyup", ->
     username = $("#username").val().replace("'","''")
     fullname = $("#fullname").val().replace("'","''")
     email = $("#email").val().replace("'","''")
     total_cameras = $("#total_cameras").val()
+    cameras_owned = $("#owned_cameras").val()
+    camera_shares = $("#shared_cameras").val()
     licREQ1 = $("#licREQ1").val()
     licREQ2 = $("#licREQ2").val()
     licVALID1 = $("#licVALID1").val()
@@ -94,6 +96,8 @@ searchFilter = ->
     users_table.setAjaxParam 'fullname', fullname
     users_table.setAjaxParam 'email', email
     users_table.setAjaxParam 'total_cameras', total_cameras
+    users_table.setAjaxParam 'cameras_owned', cameras_owned
+    users_table.setAjaxParam 'camera_shares', camera_shares
     users_table.setAjaxParam 'licREQ1', licREQ1
     users_table.setAjaxParam 'licREQ2', licREQ2
     users_table.setAjaxParam 'licVALID1', licVALID1
@@ -110,6 +114,22 @@ searchFilter = ->
     users_table.getDataTable().ajax.reload()
     $("#chk_select_all").prop("checked", false)
     $("#uniform-chk_select_all span").removeClass("checked")
+
+  $('#created_at_12').on "click", ->
+    if $(".licence-space input[type='checkbox']:checked").length is 0
+      users_table.setAjaxParam('created_at_12', 0)
+      users_table.getDataTable().ajax.reload()
+    else
+      users_table.setAjaxParam('created_at_12', 12)
+      users_table.getDataTable().ajax.reload()
+
+  $('#last_login_at_12').on "click", ->
+    if $(".licence-space input[type='checkbox']:checked").length is 0
+      users_table.setAjaxParam('last_login_at_12', 0)
+      users_table.getDataTable().ajax.reload()
+    else
+      users_table.setAjaxParam('last_login_at_12', 12)
+      users_table.getDataTable().ajax.reload()
 
 appendMe = ->
   $("#div-dropdown-checklist").css({"visibility": "visible", "width": "20px", "top": "78px", "float": "right", "right": "22px" })
@@ -171,6 +191,16 @@ validateDigit = ->
     if !intRegex.test(value2)
       $('#total_cameras').val("")
       return
+  $('#owned_cameras').on "keyup", ->
+    value2 = $('#owned_cameras').val().replace(/^\s\s*/, '').replace(/\s\s*$/, '')
+    if !intRegex.test(value2)
+      $('#owned_cameras').val("")
+      return
+  $('#shared_cameras').on "keyup", ->
+    value2 = $('#shared_cameras').val().replace(/^\s\s*/, '').replace(/\s\s*$/, '')
+    if !intRegex.test(value2)
+      $('#shared_cameras').val("")
+      return
   $('#licDEF1').on "keyup", ->
     value2 = $('#licDEF1').val().replace(/^\s\s*/, '').replace(/\s\s*$/, '')
     if !intRegex.test(value2)
@@ -205,6 +235,8 @@ clearFilter = ->
     $("#user_payment_type").val("")
     $("#chk_select_all").prop("checked", false)
     $("#uniform-chk_select_all span").removeClass("checked")
+    $("#owned_cameras").val("")
+    $("#shared_cameras").val("")
     users_table.clearAjaxParams()
     users_table.getDataTable().ajax.reload()
 
@@ -306,6 +338,64 @@ multipleSelect = ->
 
     sendAJAXRequest(settings)
 
+onDeleteUser = ->
+  $("#btn-delete").on "click", ->
+    if $("#users_datatables tbody input[type='checkbox']:checked").length is 0
+      $(".bb-alert").removeClass("alert-success").addClass("alert-danger")
+      Notification.show("Please select users you want to delete.")
+    else if ownACamera() == true
+      Notification.show("You cannot delete a user with one Camera.")
+    else
+      total_users = $("#users_datatables tbody input[type='checkbox']:checked").length
+      $("#total_users").text(total_users)
+      $("#deleteModal").modal('show')
+
+  $("#delete-users").on "click", ->
+    $("#users_datatables tbody input[type='checkbox']:checked").each (index, control) ->
+      username = $(control).attr("data-val-username")
+      api_id = $(control).attr("data-val-api-id")
+      api_key = $(control).attr("data-val-api_key")
+      row = $(this).parents('tr')
+
+      onError = (jqXHR, status, error) ->
+        $(".bb-alert").removeClass("alert-success").addClass("alert-danger")
+        $("#uniform-chk_select_all span").removeClass("checked")
+        false
+
+      onSuccess = (result, status, jqXHR) ->
+        $(".bb-alert").removeClass("alert-danger").addClass("alert-success")
+        $("#chk_select_all").prop("checked", false)
+        $("#uniform-chk_select_all span").removeClass("checked")
+        row.remove()
+
+      settings =
+        cache: false
+        data: {}
+        dataType: 'json'
+        error: onError
+        success: onSuccess
+        contentType: "application/x-www-form-urlencoded"
+        type: "DELETE"
+        url: "#{$('#txt_api_url').val()}/v1/users/#{username}?api_id=#{api_id}&api_key=#{api_key}"
+
+      jQuery.ajax(settings)
+
+    $("#deleteModal").modal('hide')
+    Notification.show("User(s) delete request sends to evercam server and will be complete soon.")
+
+ownACamera = ->
+  owned_camera = []
+  $("#users_datatables tbody input[type='checkbox']:checked").each (index, control) ->
+    if $(control).parents('tr').find('td:nth-child(6)').text() < 1
+      #do nothing
+    else
+      owned_camera.push 1
+
+  if owned_camera.length >= 1
+    true
+  else
+    false
+
 handleModelEvents = ->
   $("#users-modify-modal").on "hidden.bs.modal", ->
     $("#ddl_payment_type").val("")
@@ -322,5 +412,6 @@ window.initializeusers = ->
   onIntercomClick()
   multipleSelect()
   handleModelEvents()
+  onDeleteUser()
   $(window).resize ->
     adjustHorizontalScroll()
