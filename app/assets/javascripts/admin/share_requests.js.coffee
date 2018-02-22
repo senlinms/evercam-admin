@@ -2,6 +2,8 @@ shares_table = undefined
 
 initializeDataTable = ->
   shares_table = $("#shares_datatables").DataTable
+    'fnDrawCallback': ->
+      Metronic.init()
     aaSorting: [2, "asc"]
     aLengthMenu: [
       [25, 50, 100, 200, -1]
@@ -25,10 +27,14 @@ initializeDataTable = ->
     "oLanguage": {
       "sSearch": "Filter:"
     },
+    "search": {
+      "regex": true
+    },
     initComplete: ->
       Metronic.init()
       $("#shares-list-row").removeClass('hide')
-      $("#shares_datatables_length label").hide()
+      $("#shares_datatables_length").hide()
+      $("#shares_datatables_filter").css({"margin-right": "45px", "margin-top": "-37px"})
 
 columnsDropdown = ->
   $(".share-requests-column").on "click", ->
@@ -39,7 +45,7 @@ addCheckbox = (id, type, row) ->
   return "<input type='checkbox' data-val-id='#{row[7]}'/>"
 
 appendMe = ->
-  $("#div-dropdown-checklist").css({'visibility': 'visible', "width": "20px", "left": "-8px", "top": "0px"})
+  $("#div-dropdown-checklist").css({'visibility': 'visible', "width": "20px", "margin-left": "1603px", "top": "0px"})
   row = $("#shares_datatables_wrapper").children().first()
   row.css("margin-bottom", "-11px")
   $("#shares-list-row").css("margin-top","-34px")
@@ -55,16 +61,25 @@ statusFilter = ->
       .search( status )
       .draw()
 
+statusCheckBox = ->
+  $("input[name=status-used], input[name=status-cancelled], input[name=status-pending]").on "click", ->
+    whatsSelected = []
+    $.each $(".form-merge-report input[type='checkbox']:checked"), ->
+      if $(this).is(':checked')
+        whatsSelected.push '(?=.*' + $(this).attr('data-val') + ')'
+    if whatsSelected.length > 0
+      $('#shares_datatables').DataTable().search(whatsSelected.join('|'), true, false, true).draw()
+    else
+      $('#shares_datatables').DataTable().search(" ", false, true, false).draw()
+
 loadPendingOnly = ->
-  shares_table
-    .column(6)
-    .search( "pending" )
-    .draw()
+  shares_table.column(6).search( "pending" ).draw()
   Metronic.init()
 
 window.initializeShareRequests = ->
   initializeDataTable()
-  loadPendingOnly()
   columnsDropdown()
+  statusCheckBox()
   statusFilter()
   appendMe()
+  loadPendingOnly()

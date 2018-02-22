@@ -2,9 +2,34 @@
 <div class="page-content-wrapper">
   <div class="page-content">
     <div class="dropdown-checklist" id="div-dropdown-checklist">
-      <button type="button" class="clear-btn-f" id="delete-share-request">Delete</button>
       <div href="#" class="btn btn-default grey" data-toggle="modal" data-target="#toggle-datatable-columns">
         <i class="fa fa-columns"></i>
+      </div>
+    </div>
+    <div class="row overlapping" style="width: 300px;margin-top: -34px;">
+      <div class="form-merge-report">
+        <div class="main-contains">
+          <div class="filter-naming">
+            Status :
+          </div>
+          <div class="inputs-divs">
+            <div style="width: 85px; float: left;">
+              <input type="checkbox" name="status-used" class="first-inps" data-val="used" id="status-used">
+              <label style="margin-top: 4px;">Used</label>
+            </div>
+            <div style="width: 92px; float: left;">
+              <input type="checkbox" name="status-cancelled" class="first-inps" id="status-used" data-val="cancelled">
+              <label style="margin-top: 4px;">Cancelled</label>
+            </div>
+            <div style="width: 114px; float: left;">
+              <input type="checkbox" name="status-pending" class="first-inps" id="status-used" data-val="pending" checked>
+              <label style="margin-top: 4px;">Pending Only</label>
+            </div>
+            <div style="width: 114px; float: left;">
+              <button class="clear-btn-f" id="btn-delete">Delete</button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
     <%= render 'columns_modal' %>
