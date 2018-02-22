@@ -79,13 +79,15 @@ addCheckbox = (name, type, row) ->
   return "<input type='checkbox' data-val='#{name}' data-val-username='#{row[0]}' data-val-api-id='#{row[3]}' data-val-api_key='#{row[4]}'/>"
 
 searchFilter = ->
-  $('#username, #email, #fullname, #total_cameras, #owned_cameras, #shared_cameras, #licREQ1, #licREQ2, #licVALID1, #licVALID2, #licDEF1, #licDEF2').on "keyup", ->
+  $('#username, #email, #fullname, #total_cameras, #owned_cameras, #shared_cameras, #created_at_date, #last_login_at_date, #licREQ1, #licREQ2, #licVALID1, #licVALID2, #licDEF1, #licDEF2').on "keyup", ->
     username = $("#username").val().replace("'","''")
     fullname = $("#fullname").val().replace("'","''")
     email = $("#email").val().replace("'","''")
     total_cameras = $("#total_cameras").val()
     cameras_owned = $("#owned_cameras").val()
     camera_shares = $("#shared_cameras").val()
+    created_at_date = $("#created_at_date").val()
+    last_login_at_date = $("#last_login_at_date").val()
     licREQ1 = $("#licREQ1").val()
     licREQ2 = $("#licREQ2").val()
     licVALID1 = $("#licVALID1").val()
@@ -98,6 +100,8 @@ searchFilter = ->
     users_table.setAjaxParam 'total_cameras', total_cameras
     users_table.setAjaxParam 'cameras_owned', cameras_owned
     users_table.setAjaxParam 'camera_shares', camera_shares
+    users_table.setAjaxParam 'created_at_date', created_at_date
+    users_table.setAjaxParam 'last_login_at_date', last_login_at_date
     users_table.setAjaxParam 'licREQ1', licREQ1
     users_table.setAjaxParam 'licREQ2', licREQ2
     users_table.setAjaxParam 'licVALID1', licVALID1
@@ -115,24 +119,8 @@ searchFilter = ->
     $("#chk_select_all").prop("checked", false)
     $("#uniform-chk_select_all span").removeClass("checked")
 
-  $('#created_at_12').on "click", ->
-    if $(".licence-space input[type='checkbox']:checked").length is 0
-      users_table.setAjaxParam('created_at_12', 0)
-      users_table.getDataTable().ajax.reload()
-    else
-      users_table.setAjaxParam('created_at_12', 12)
-      users_table.getDataTable().ajax.reload()
-
-  $('#last_login_at_12').on "click", ->
-    if $(".licence-space input[type='checkbox']:checked").length is 0
-      users_table.setAjaxParam('last_login_at_12', 0)
-      users_table.getDataTable().ajax.reload()
-    else
-      users_table.setAjaxParam('last_login_at_12', 12)
-      users_table.getDataTable().ajax.reload()
-
 appendMe = ->
-  $("#div-dropdown-checklist").css({"visibility": "visible", "width": "20px", "top": "78px", "float": "right", "right": "22px" })
+  $("#div-dropdown-checklist").css({"visibility": "visible", "width": "20px", "top": "173px", "float": "right", "right": "22px" })
   $(".dataTables_info").css("display", "none")
   $(".dataTables_length > label").css("display", "none")
   $("#users_datatables_paginate > .pagination-panel").css("display", "none")
@@ -163,6 +151,15 @@ paymentMethod = (name) ->
 showTable = ->
   $(window).load ->
     $('#user-list-row').removeClass 'hide'
+    $('#owned_cameras').val("1")
+    $('#shared_cameras').val("1")
+    $('#created_at_date').val("12")
+    $('#last_login_at_date').val("12")
+    users_table.setAjaxParam 'cameras_owned', 1
+    users_table.setAjaxParam 'camera_shares', 1
+    users_table.setAjaxParam 'created_at_date', 12
+    users_table.setAjaxParam 'last_login_at_date', 12
+    users_table.getDataTable().ajax.reload()
 
 validateDigit = ->
   intRegex = /^\d+$/
@@ -201,6 +198,16 @@ validateDigit = ->
     if !intRegex.test(value2)
       $('#shared_cameras').val("")
       return
+  $('#created_at_date').on "keyup", ->
+    value2 = $('#created_at_date').val().replace(/^\s\s*/, '').replace(/\s\s*$/, '')
+    if !intRegex.test(value2)
+      $('#created_at_date').val("")
+      return
+  $('#last_login_at_date').on "keyup", ->
+    value2 = $('#last_login_at_date').val().replace(/^\s\s*/, '').replace(/\s\s*$/, '')
+    if !intRegex.test(value2)
+      $('#last_login_at_date').val("")
+      return
   $('#licDEF1').on "keyup", ->
     value2 = $('#licDEF1').val().replace(/^\s\s*/, '').replace(/\s\s*$/, '')
     if !intRegex.test(value2)
@@ -237,6 +244,8 @@ clearFilter = ->
     $("#uniform-chk_select_all span").removeClass("checked")
     $("#owned_cameras").val("")
     $("#shared_cameras").val("")
+    $("#last_login_at_date").val("")
+    $("#created_at_date").val("")
     users_table.clearAjaxParams()
     users_table.getDataTable().ajax.reload()
 
