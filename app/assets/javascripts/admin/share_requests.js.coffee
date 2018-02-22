@@ -102,7 +102,11 @@ onDeleteShareRequest = ->
   $("#delete-share-requests").on "click", ->
     share_ids = ""
     $("#shares_datatables tbody input[type='checkbox']:checked").each (index, control) ->
-      $(control).parents('tr').remove()
+      # $(control).parents('tr').remove()
+      shares_table
+          .row( $(this).parents('tr') )
+          .remove()
+          .draw()
       if share_ids is ""
         share_ids += "#{$(control).attr("data-val-id")}"
       else
