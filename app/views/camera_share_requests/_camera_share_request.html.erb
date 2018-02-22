@@ -1,4 +1,5 @@
 <tr>
+  <td><%= camera_share_request.id %></td>
   <td><%= camera_share_request.email %></td>
   <td><%= link_to camera_share_request.camera.name, camera_path(camera_share_request.camera) %></td>
   <td><%= link_to camera_share_request.user.fullname, user_path(camera_share_request.user) %></td>

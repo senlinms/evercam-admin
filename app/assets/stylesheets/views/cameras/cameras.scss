@@ -471,3 +471,10 @@ $ovnif-reboot: #e51d1d;
 .delete-compare {
   cursor: pointer;
 }
+
+#uniform-status-used,
+#uniform-status-pending,
+#uniform-status-cancelled
+ {
+  margin-top: -3px;
+}
