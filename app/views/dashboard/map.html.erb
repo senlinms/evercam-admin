@@ -13,31 +13,60 @@
   </div>
 </div>
 <!-- END CONTENT -->
+<style>
+
+table {
+  max-width: 300px;
+}
+
+table th {
+  font-size: 12px;
+  vertical-align: middle;
+  padding-right: 0px;
+}
+
+table td {
+  font-size: 11px;
+  padding-right: 0px;
+}
+
+.gm-style .gm-style-iw {
+  padding-left: 10px;
+}
+
+.gm-style .map-thumbnail-img {
+  max-width: 300px;
+  padding-top: 20px;
+}
+
+.page-container .page-content-wrapper .table {
+  margin: 0px;
+}
+</style>
 
 <script src="//maps.googleapis.com/maps/api/js?v=3.11&sensor=false" type="text/javascript"></script>
 
 <script type="text/javascript">
   $(document).ready(function () {
-
+  var prev_infowindow = false;
   // execute
   (function () {
     // map options
     var options = {
-      zoom: 2,
-      center: new google.maps.LatLng(25, 10), // centered US
       mapTypeId: google.maps.MapTypeId.TERRAIN,
       mapTypeControl: false
     };
 
     // init map
     var map = new google.maps.Map(document.getElementById('map_canvas'), options);
+    bounds = new google.maps.LatLngBounds()
     var iconBase;
     // set multiple marker
     <% @cameras.each do |camera| %>
       <% if camera.vendor_exid == "other" || camera.vendor_exid.nil? %>
         <% logo_url = "" %>
       <% else %>
-        <% logo_url = "<img width='80' src='http://evercam-public-assets.s3.amazonaws.com/#{camera.vendor_exid}/logo.jpg' />" %>
+        <% logo_url = "<img width='60' src='http://evercam-public-assets.s3.amazonaws.com/#{camera.vendor_exid}/logo.jpg' />" %>
       <% end %>
 
       <% if camera.is_online == false %>
@@ -46,30 +75,33 @@
         iconBase = ''
       <% end %>
       <% if camera.is_public == "No" %>
-        <% thumbnail = "<img height='140' src='https://media.evercam.io/v1/cameras/#{camera.exid}/thumbnail?api_id=#{camera.user.api_id}&api_key=#{camera.user.api_key}' />" %>
+        <% thumbnail = "<img class='map-thumbnail-img' src='https://media.evercam.io/v1/cameras/#{camera.exid}/thumbnail?api_id=#{camera.user.api_id}&api_key=#{camera.user.api_key}' />" %>
       <% else %>
-        <% thumbnail = "<img height='140' src='https://media.evercam.io/v1/cameras/#{camera.exid}/thumbnail?' />" %>
+        <% thumbnail = "<img class='map-thumbnail-img' src='https://media.evercam.io/v1/cameras/#{camera.exid}/thumbnail?' />" %>
       <% end %>
       // init markers
       var marker = new google.maps.Marker({
         position: new google.maps.LatLng(<%=  Geocoding.as_point(camera.location).y %>, <%=  Geocoding.as_point(camera.location).x %>),
         map: map,
         icon: iconBase,
-        title: 'Click Me '
+        title: '<%= camera.name %>'
       });
-
+      bounds.extend(marker.getPosition());
       // process multiple info windows
       (function (marker) {
         // add click event
         google.maps.event.addListener(marker, 'click', function () {
           infowindow = new google.maps.InfoWindow({
-            content: 
-            '<table class="table table-striped">\
+            content:
+            '<table class="table order-column">\
               <tbody>\
+              <tr>\
+                <%= thumbnail.tr("'", '"').html_safe %>\
+              </tr>\
                 <tr>\
                   <th></th>\
-                  <td><%= thumbnail.tr("'", '"').html_safe %><br/><br/>\
-                    <div class="center">\
+                  <td>\
+                    <div>\
                       <strong >\
                         <%= camera.name %> \
                         <a href="https://dash.evercam.io/v1/cameras/<%= camera.exid %>/live?api_id=<%= camera.user.api_id %>&api_key=<%= camera.user.api_key %>" target="_blank">\
@@ -102,11 +134,22 @@
               </tbody>\
             </table>'
           });
-
+          if (prev_infowindow) {
+            prev_infowindow.close();
+          }
+          prev_infowindow = infowindow;
           infowindow.open(map, marker);
         });
       })(marker);
       <% end %>
+      map.setCenter(bounds.getCenter());
+      google.maps.event.addListenerOnce(map, 'bounds_changed', function(event) {
+        this.setZoom(map.getZoom());
+        if (this.getZoom() > 15) {
+          return this.setZoom(15);
+        }
+      });
+      map.fitBounds(bounds);
     })();
   });
 </script>
