@@ -1,4 +1,12 @@
 shares_table = undefined
+sendAJAXRequest = (settings) ->
+  token = $('meta[name="csrf-token"]')
+  if token.size() > 0
+    headers =
+      "X-CSRF-Token": token.attr("content")
+    settings.headers = headers
+  xhrRequestChangeMonth = jQuery.ajax(settings)
+  true
 
 initializeDataTable = ->
   shares_table = $("#shares_datatables").DataTable
@@ -6,8 +14,8 @@ initializeDataTable = ->
       Metronic.init()
     aaSorting: [2, "asc"]
     aLengthMenu: [
-      [25, 50, 100, 200, -1]
-      [25, 50, 100, 200, "All"]
+      [50, 100, 500, -1]
+      [50, 100, 500, "All"]
     ]
     columns: [
       {data: "7", "width": "20px", "sClass": "center", "render": addCheckbox},
@@ -27,13 +35,10 @@ initializeDataTable = ->
     "oLanguage": {
       "sSearch": "Filter:"
     },
-    "search": {
-      "regex": true
-    },
     initComplete: ->
       Metronic.init()
       $("#shares-list-row").removeClass('hide')
-      $("#shares_datatables_length").hide()
+      $("#shares_datatables_length").css("margin-top", "-36px")
       $("#shares_datatables_filter").css({"margin-right": "45px", "margin-top": "-37px"})
 
 columnsDropdown = ->
@@ -73,8 +78,61 @@ statusCheckBox = ->
       $('#shares_datatables').DataTable().search(" ", false, true, false).draw()
 
 loadPendingOnly = ->
-  shares_table.column(6).search( "pending" ).draw()
+  $('#shares_datatables').DataTable().search("(?=.*pending)", true, false, true).draw()
   Metronic.init()
+
+onDeleteShareRequest = ->
+  $("#chk_select_all").on "click", ->
+    if $(this).is(':checked')
+      $("#shares_datatables tbody div.checker span").addClass("checked")
+      $("#shares_datatables tbody input[type='checkbox']").prop("checked", true)
+    else
+      $("#shares_datatables tbody div.checker span").removeClass("checked")
+      $("#shares_datatables tbody input[type='checkbox']").prop("checked", false)
+
+  $("#btn-delete").on "click", ->
+    if $("#shares_datatables tbody input[type='checkbox']:checked").length is 0
+      $(".bb-alert").removeClass("alert-success").addClass("alert-danger")
+      Notification.show("Please select share requests you want to delete.")
+    else
+      total_requests = $("#shares_datatables tbody input[type='checkbox']:checked").length
+      $("#total_requests").text(total_requests)
+      $("#deleteModal").modal('show')
+
+  $("#delete-share-requests").on "click", ->
+    share_ids = ""
+    $("#shares_datatables tbody input[type='checkbox']:checked").each (index, control) ->
+      $(control).parents('tr').remove()
+      if share_ids is ""
+        share_ids += "#{$(control).attr("data-val-id")}"
+      else
+        share_ids += ",#{$(control).attr("data-val-id")}"
+
+    data = {}
+    data.ids = share_ids
+
+    onError = (jqXHR, status, error) ->
+      $(".bb-alert").removeClass("alert-success").addClass("alert-danger")
+      Notification.show(jqXHR.text)
+
+    onSuccess = (result, status, jqXHR) ->
+      $(".bb-alert").removeClass("alert-danger").addClass("alert-success")
+      Notification.show("Share requests Deleted.")
+      $("#chk_select_all").prop("checked", false)
+      $("#uniform-chk_select_all span").removeClass("checked")
+      $("#deleteModal").modal('hide')
+
+    settings =
+      cache: false
+      data: data
+      dataType: 'json'
+      error: onError
+      success: onSuccess
+      contentType: "application/x-www-form-urlencoded"
+      type: "DELETE"
+      url: "/multiple_share_requests/delete"
+
+    sendAJAXRequest(settings)
 
 window.initializeShareRequests = ->
   initializeDataTable()
@@ -83,3 +141,4 @@ window.initializeShareRequests = ->
   statusFilter()
   appendMe()
   loadPendingOnly()
+  onDeleteShareRequest()

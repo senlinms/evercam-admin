@@ -65,6 +65,7 @@ Rails.application.routes.draw do
   patch "/admins/update" => "admins#update"
 
   patch "/multiple_users/update" => "users#update_multiple_users"
+  delete "/multiple_share_requests/delete" => "camera_share_requests#delete"
 
   get "/meta_datas" => "meta_datas#index"
   get "/shares" => "camera_shares#index"
