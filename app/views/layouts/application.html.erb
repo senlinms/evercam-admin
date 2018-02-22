@@ -5,7 +5,7 @@
   <%= csrf_meta_tags %>
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Evercam Admin</title>
+  <title><%= yield(:title) %></title>
   <% unless Rails.env.test? %>
     <%= stylesheet_link_tag "admin/admin", media: "all" %>
   <% end %>

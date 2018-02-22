@@ -4,6 +4,7 @@ class UsersController < ApplicationController
   require "intercom"
 
   def index
+    @api_url = evercam_server
     @countries = Country.all
     if params[:q]
       @user = EvercamUser.find_by_email(params[:q]).decorate
@@ -74,9 +75,21 @@ class UsersController < ApplicationController
     if params[:payment_type].present?
       condition += " and u.payment_method=#{params[:payment_type].to_i}"
     end
+    if params[:created_at_12].present? && params[:created_at_12] == "12"
+      condition += " and u.created_at < date_trunc('month', CURRENT_DATE) - INTERVAL '1 year'"
+    end
+    if params[:last_login_at_12].present? && params[:last_login_at_12] == "12"
+      condition += " and u.last_login_at < date_trunc('month', CURRENT_DATE) - INTERVAL '1 year'"
+    end
 
     if params[:total_cameras].present?
       condition2 = "where (cameras_owned + camera_shares) = #{params[:total_cameras]}"
+    elsif params[:camera_shares].present? && params[:cameras_owned].present?
+      condition2 = "where cameras_owned = #{params[:cameras_owned]} and camera_shares = #{params[:camera_shares]}"
+    elsif params[:camera_shares].present?
+      condition2 = "where camera_shares = #{params[:camera_shares]}"
+    elsif params[:cameras_owned].present?
+      condition2 = "where cameras_owned = #{params[:cameras_owned]}"
     elsif params[:licREQ1].present? && params[:licREQ2].present?
       condition2 = "where required_licence > #{params[:licREQ1]} and required_licence < #{params[:licREQ2]}"
     elsif params[:licVALID1].present? && params[:licVALID2].present?

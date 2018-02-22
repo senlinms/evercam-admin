@@ -1,3 +1,4 @@
+<%= content_for(:title, "Camera Cleanup") %>
 <!-- BEGIN CONTENT -->
 <div class="page-content-wrapper">
   <div class="page-content" id="cameras-report">
@@ -19,7 +20,8 @@
               <input type="text" class="first-inps" placeholder="Password" id="password" autocomplete="off">
               
               <select id="select_months" class="month-select">
-                <option selected="selected" value="12">Offline last 12 months</option>
+                <option value="3">Last online 3 months</option>
+                <option selected="selected" value="12">Last online 12 months</option>
                 <option value="24">Last online 24 months</option>
                 <option value="36">Last online 36 months</option>
                 <option value="48">Last online 48 months</option>
