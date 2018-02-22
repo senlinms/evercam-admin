@@ -38,6 +38,9 @@ initializeDataTable = ->
     "search": {
       "regex": true
     },
+    "search": {
+      "caseInsensitive": false
+    },
     initComplete: ->
       Metronic.init()
       $("#shares-list-row").removeClass('hide')
@@ -74,14 +77,14 @@ statusCheckBox = ->
     whatsSelected = []
     $.each $(".form-merge-report input[type='checkbox']:checked"), ->
       if $(this).is(':checked')
-        whatsSelected.push '(?=.*' + $(this).attr('data-val') + ')'
+        whatsSelected.push $(this).attr('data-val')
     if whatsSelected.length > 0
       $('#shares_datatables').DataTable().search(whatsSelected.join('|'), true, false, true).draw()
     else
       $('#shares_datatables').DataTable().search(" ", false, true, false).draw()
 
 loadPendingOnly = ->
-  $('#shares_datatables').DataTable().search("(?=.*pending)", true, false, true).draw()
+  $('#shares_datatables').DataTable().search("pending", true, false, true).draw()
   Metronic.init()
 
 onDeleteShareRequest = ->
