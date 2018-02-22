@@ -35,6 +35,9 @@ initializeDataTable = ->
     "oLanguage": {
       "sSearch": "Filter:"
     },
+    "search": {
+      "regex": true
+    },
     initComplete: ->
       Metronic.init()
       $("#shares-list-row").removeClass('hide')
@@ -102,7 +105,6 @@ onDeleteShareRequest = ->
   $("#delete-share-requests").on "click", ->
     share_ids = ""
     $("#shares_datatables tbody input[type='checkbox']:checked").each (index, control) ->
-      # $(control).parents('tr').remove()
       shares_table
           .row( $(this).parents('tr') )
           .remove()
