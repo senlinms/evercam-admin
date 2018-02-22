@@ -148,19 +148,6 @@ paymentMethod = (name) ->
     when 4 then "Smart Cities"
     else "Other"
 
-showTable = ->
-  $(window).load ->
-    $('#user-list-row').removeClass 'hide'
-    $('#owned_cameras').val("1")
-    $('#shared_cameras').val("1")
-    $('#created_at_date').val("12")
-    $('#last_login_at_date').val("12")
-    users_table.setAjaxParam 'cameras_owned', 1
-    users_table.setAjaxParam 'camera_shares', 1
-    users_table.setAjaxParam 'created_at_date', 12
-    users_table.setAjaxParam 'last_login_at_date', 12
-    users_table.getDataTable().ajax.reload()
-
 validateDigit = ->
   intRegex = /^\d+$/
   $('#licREQ1').on "keyup", ->
@@ -416,7 +403,6 @@ window.initializeusers = ->
   appendMe()
   validateDigit()
   searchFilter()
-  showTable()
   clearFilter()
   onIntercomClick()
   multipleSelect()
