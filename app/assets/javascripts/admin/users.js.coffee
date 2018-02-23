@@ -120,7 +120,7 @@ searchFilter = ->
     $("#uniform-chk_select_all span").removeClass("checked")
 
 appendMe = ->
-  $("#div-dropdown-checklist").css({"visibility": "visible", "width": "20px", "top": "173px", "float": "right", "right": "22px" })
+  $("#div-dropdown-checklist").css({"visibility": "visible", "width": "20px", "top": "155px", "float": "right", "right": "22px" })
   $(".dataTables_info").css("display", "none")
   $(".dataTables_length > label").css("display", "none")
   $("#users_datatables_paginate > .pagination-panel").css("display", "none")
