@@ -44,8 +44,8 @@ initializeDataTable = ->
     initComplete: ->
       Metronic.init()
       $("#shares-list-row").removeClass('hide')
-      $("#shares_datatables_length").css("margin-top", "-36px")
-      $("#shares_datatables_filter").css({"margin-right": "45px", "margin-top": "-37px"})
+      $("#shares_datatables_length").css({"margin-top": "-36px", "margin-left": "44px"})
+      $("#shares_datatables_filter").css({"margin-right": "1px", "margin-top": "-37px"})
 
 columnsDropdown = ->
   $(".share-requests-column").on "click", ->
@@ -56,7 +56,7 @@ addCheckbox = (id, type, row) ->
   return "<input type='checkbox' data-val-id='#{row[7]}'/>"
 
 appendMe = ->
-  $("#div-dropdown-checklist").css({'visibility': 'visible', "width": "20px", "margin-left": "1603px", "top": "0px"})
+  $("#div-dropdown-checklist").css({'visibility': 'visible', "width": "20px", "left": "-9px", "top": "0px"})
   row = $("#shares_datatables_wrapper").children().first()
   row.css("margin-bottom", "-11px")
   $("#shares-list-row").css("margin-top","-34px")
