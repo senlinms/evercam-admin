@@ -11,6 +11,8 @@ sendAJAXRequest = (settings) ->
 initializeDataTable = ->
   shares_table = $("#shares_datatables").DataTable
     'fnDrawCallback': ->
+      length = $("#shares_datatables_length")
+      $("#shares_datatables_wrapper div.row:last > .col-md-5").append(length)
       Metronic.init()
     aaSorting: [2, "asc"]
     aLengthMenu: [
@@ -41,10 +43,12 @@ initializeDataTable = ->
     "search": {
       "caseInsensitive": false
     },
+    "info": false,
     initComplete: ->
       Metronic.init()
+      length = $("#shares_datatables_length")
+      $("#shares_datatables_wrapper div.row:last > .col-md-5").append(length)
       $("#shares-list-row").removeClass('hide')
-      $("#shares_datatables_length").css({"margin-top": "-36px", "margin-left": "44px"})
       $("#shares_datatables_filter").css({"margin-right": "1px", "margin-top": "-37px"})
 
 columnsDropdown = ->
@@ -56,7 +60,7 @@ addCheckbox = (id, type, row) ->
   return "<input type='checkbox' data-val-id='#{row[7]}'/>"
 
 appendMe = ->
-  $("#div-dropdown-checklist").css({'visibility': 'visible', "width": "20px", "left": "-9px", "top": "0px"})
+  $("#div-dropdown-checklist").css({'visibility': 'visible', "width": "20px", "left": "-8px", "top": "0px"})
   row = $("#shares_datatables_wrapper").children().first()
   row.css("margin-bottom", "-11px")
   $("#shares-list-row").css("margin-top","-34px")
