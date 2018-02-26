@@ -49,7 +49,7 @@
               <td>
                 <div class='link-user'>
                   <a class='pull-left' href='/users/<%= user.id %>'><%= user.fullname %></a>
-                  <a class='pull-right u-dash' href='<%= check_env %>/v1/cameras?api_id=<%= user.api_id %>&api_key=<%= user.api_key %>' target='_blank'><i class='fa fa-external-link'></i></a>
+                  <a class='pull-right u-dash' href='<%= check_env %>/v1/cameras?api_id=<%= user.api_id %>&api_key=<%= user.api_key %>' target='_blank'><i class='fa fa-external-link-alt'></i></a>
                 </div>
               </td>
               <td><%= user.country.name if user.country.present? %></td>
@@ -79,8 +79,8 @@
                 <% end %>
               </td>
               <td><%= user.payment_method == 1 ? "Custom" : "Stripe" %></td>
-              <td><i licence-type="custom" subscription-id="<%= custom_licence.id %>" class="fa fa-trash-o delete-licence"></i></td>
-              <td><i id="update-id" update-id="<%= custom_licence.id %>" class="fa fa-pencil-square-o edit-licence"></i></td>
+              <td><i licence-type="custom" subscription-id="<%= custom_licence.id %>" class="far fa-trash-alt delete-licence"></i></td>
+              <td><i id="update-id" update-id="<%= custom_licence.id %>" class="fa fa-edit edit-licence"></i></td>
             </tr>
             <% end %>
           <% @customers.each do |customer| %>
@@ -99,7 +99,7 @@
                   <% if user.present? %>
                     <div class='link-user'>
                       <a class='pull-left' href='/users/<%= user.id %>'><%= user.fullname %></a>
-                      <a class='pull-right u-dash' href='<%= check_env %>/v1/cameras?api_id=<%= user.api_id %>&api_key=<%= user.api_key %>' target='_blank'><i class='fa fa-external-link'></i></a>
+                      <a class='pull-right u-dash' href='<%= check_env %>/v1/cameras?api_id=<%= user.api_id %>&api_key=<%= user.api_key %>' target='_blank'><i class='fa fa-external-link-alt'></i></a>
                     </div>
                   <% end %>
                 </td>
@@ -146,7 +146,7 @@
                   <% end %>
                 </td>
                 <td></td>
-                <td><i licence-type="stripe" customer-id="<%= customer.id %>" subscription-id="<%= licence.id %>" class="fa fa-trash-o delete-licence"></i></td>
+                <td><i licence-type="stripe" customer-id="<%= customer.id %>" subscription-id="<%= licence.id %>" class="far fa-trash-alt delete-licence"></i></td>
                 <td></td>
               </tr>
             <% end %>

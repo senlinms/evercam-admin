@@ -179,7 +179,7 @@ addNewRow = (data) ->
   tr +=  "<td>"
   tr +=    "<div class='link-user'>"
   tr +=      "<a class='pull-left' href='/users/#{data.user_id}'>#{data.user.firstname} #{data.user.lastname}</a>"
-  tr +=      "<a class='pull-right u-dash' href='#{check_env}/v1/cameras?api_id=#{data.user.api_id}&api_key=#{data.user.api_key}' target='_blank'><i class='fa fa-external-link'></i></a>"
+  tr +=      "<a class='pull-right u-dash' href='#{check_env}/v1/cameras?api_id=#{data.user.api_id}&api_key=#{data.user.api_key}' target='_blank'><i class='fa fa-external-link-alt'></i></a>"
   tr +=    "</div>"
   tr +=  "</td>"
   tr +=  "<td></td><td>#{data.description}</td>"
@@ -194,8 +194,8 @@ addNewRow = (data) ->
   tr +=  "<td class='center'>No</td>"
   tr +=  "<td class='center'>#{paidStatus()}</td>"
   tr +=  "<td class='center'>#{paymentMethod(data.user.payment_method)}</td>"
-  tr +=  "<td class='center'><i licence-type='custom' subscription-id='#{data.id}' class='fa fa-trash-o delete-licence'></i></td>"
-  tr +=  "<td class='center'><i id='update-id' update-id='#{data.id}' class='fa fa-pencil-square-o edit-licence'></i></td>"
+  tr +=  "<td class='center'><i licence-type='custom' subscription-id='#{data.id}' class='far fa-trash-alt delete-licence'></i></td>"
+  tr +=  "<td class='center'><i id='update-id' update-id='#{data.id}' class='fa fa-edit edit-licence'></i></td>"
   tr += "</tr>"
   row = $("#licences_datatables > tbody > tr:first")
   row.before tr

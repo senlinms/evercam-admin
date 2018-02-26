@@ -119,8 +119,8 @@ addNewRow = (admin) ->
     "0",
     "",
     "#{admin.is_admin}",
-    "<i admin-id='#{admin.id}' firstname='#{admin.firstname}' lastname='#{admin.lastname}' class='fa fa-pencil-square-o edit-admin'></i>",
-    "<i admin-id='#{admin.id}' class='fa fa-trash-o delete-admin'></i>"
+    "<i admin-id='#{admin.id}' firstname='#{admin.firstname}' lastname='#{admin.lastname}' class='fa fa-edit edit-admin'></i>",
+    "<i admin-id='#{admin.id}' class='far fa-trash-alt delete-admin'></i>"
   ]).draw()
 
 formatDate = (date) ->

@@ -96,7 +96,7 @@ columnsDropdown = ->
     column.visible !column.visible()
 
 render_action = (id, type, row) ->
-  return "<i class='fa fa-trash-o delete-venderm' data-val='#{row[1]}'></i>"
+  return "<i class='far fa-trash-alt delete-venderm' data-val='#{row[1]}'></i>"
 
 humanBool = (id, type, row) ->
   if id

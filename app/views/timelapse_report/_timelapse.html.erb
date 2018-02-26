@@ -10,8 +10,8 @@
       <% if user.present? %>
         <div class='link-user'>
           <a href="http://timelapse.evercam.io/login.html?id=<%= user.username %>&api_id=<%= user.api_id %>&api_key=<%= user.api_key %>" target="_blank" class="pull-left"><%= user.fullname %></a>
-          <a class='pull-right u-dash' href='<%= check_env %>/v1/cameras/<%= timelapse["camera_id"] %>?api_id=<%= user.api_id %>&api_key=<%= user.api_key %>' target='_blank'><i class='fa fa-external-link'></i></a>
-          <a tooltip='Intercom Conversation' class='pull-right open-intercom' data-username="<%= user.username %>"><i class='fa fa-comment-o'></i></a>
+          <a class='pull-right u-dash' href='<%= check_env %>/v1/cameras/<%= timelapse["camera_id"] %>?api_id=<%= user.api_id %>&api_key=<%= user.api_key %>' target='_blank'><i class='fa fa-external-link-alt'></i></a>
+          <a tooltip='Intercom Conversation' class='pull-right open-intercom' data-username="<%= user.username %>"><i class='far fa-comment'></i></a>
         </div>
       <% else %>
         <div> User does not exist </div>

@@ -12,7 +12,7 @@
         <td>
           <div class='link-user'>
             <a class='pull-left' href='/users/<%= archive.requested_by %>'><%= archive.user.fullname %></a>
-            <a class='pull-right u-dash' href='<%= check_env %>/v1/cameras/<%= archive.camera.present? ? archive.camera.exid : "" %>/archives?api_id=<%= archive.user.api_id %>&api_key=<%= archive.user.api_key %>' target='_blank'><i class='fa fa-external-link'></i></a>
+            <a class='pull-right u-dash' href='<%= check_env %>/v1/cameras/<%= archive.camera.present? ? archive.camera.exid : "" %>/archives?api_id=<%= archive.user.api_id %>&api_key=<%= archive.user.api_key %>' target='_blank'><i class='fa fa-external-link-alt'></i></a>
           </div>
         </td>
       <% else %>

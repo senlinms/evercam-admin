@@ -78,7 +78,7 @@ onCameraAction = ->
                         <td class="center">' + colorMe(cam[6]) + '</td>
                         <td class="col-md-342">
                           <a class="pull-left" href="/users/'+ cam[9] + '">' + cam[3] + ' ' + cam[4] + '</a>
-                          <a class="pull-right" href="'+ cam[12] + '/v1/cameras/'+ cam[1] + '?api_id='+ cam[10] + '&api_key='+ cam[11] + '" target="_blank"><i class="fa fa-external-link"></i></a>
+                          <a class="pull-right" href="'+ cam[12] + '/v1/cameras/'+ cam[1] + '?api_id='+ cam[10] + '&api_key='+ cam[11] + '" target="_blank"><i class="fa fa-external-link-alt"></i></a>
                         </td>
                         <td class="center">' + colorMe(cam[8]) + '</td>
                         <td class="center">' + crStatus(cam[13]) + '</td>

@@ -129,8 +129,8 @@ appendMe = ->
 linkUser = (name, type, row) ->
   return "<div class='link-user'>
             <a class='pull-left' href='/users/#{row[16]}'>#{name}</a>
-            <a class='pull-right u-dash' href='#{row[17]}/v1/cameras?api_id=#{row[3]}&api_key=#{row[4]}' target='_blank'><i class='fa fa-external-link'></i></a>
-            <a tooltip='Intercom Conversation' class='pull-right open-intercom' data-username=#{row[0]}><i class='fa fa-comment-o'></i></a>
+            <a class='pull-right u-dash' href='#{row[17]}/v1/cameras?api_id=#{row[3]}&api_key=#{row[4]}' target='_blank'><i class='fa fa-external-link-alt'></i></a>
+            <a tooltip='Intercom Conversation' class='pull-right open-intercom' data-username=#{row[0]}><i class='far fa-comment'></i></a>
           </div>"
 
 cameraLink = (name, type, row) ->

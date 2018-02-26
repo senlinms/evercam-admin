@@ -115,7 +115,7 @@ linkOwner = (name, type, row) ->
   return "<div class='link-user'>" +
     "<a class='pull-left' href='/users/#{row[18]}'>#{name}</a>" +
     "<a class='pull-right' href= #{url} target='_blank'>" +
-    "<i class='fa fa-external-link'></i></a></div>"
+    "<i class='fa fa-external-link-alt'></i></a></div>"
 
 showTable = ->
   $(window).load ->

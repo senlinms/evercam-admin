@@ -79,7 +79,7 @@ linkSharer = (name, type, row) ->
   return "<div class='link-user'>" +
     "<a class='pull-left' href='/users/#{row[10]}'>#{name}</a>" +
     "<a class='pull-right' href= #{url} target='_blank'>" +
-    "<i class='fa fa-external-link'></i></a></div>"
+    "<i class='fa fa-external-link-alt'></i></a></div>"
 
 linkSharee = (name, type, row) ->
   if name is null
@@ -88,7 +88,7 @@ linkSharee = (name, type, row) ->
   return "<div class='link-user'>" +
     "<a class='pull-left' href='/users/#{row[11]}'>#{name}</a>" +
     "<a class='pull-right' href= #{url} target='_blank'>" +
-    "<i class='fa fa-external-link'></i></a></div>"
+    "<i class='fa fa-external-link-alt'></i></a></div>"
 
 clearFilter = ->
   $("#filterClear").on "click", ->
