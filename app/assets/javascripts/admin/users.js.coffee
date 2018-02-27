@@ -32,8 +32,8 @@ initializeDataTable = ->
       'bAutoWidth': false
       'bStateSave': false
       'lengthMenu': [
-        [ 25, 50, 100, 150 ]
-        [ 25, 50, 100, 150 ]
+        [ 50, 100, 500 ]
+        [ 50, 100, 500 ]
       ]
       "order": [[ 11, "desc" ]]
       'pageLength': 60
@@ -65,8 +65,10 @@ initializeDataTable = ->
       ],
       drawCallback: ->
         adjustHorizontalScroll()
+        $("#users_datatables_length").css("display", "none")
         Metronic.init()
       initComplete: ->
+        $("#users_datatables_length").css("display", "none")
         Metronic.init()
 
 columnsDropdown = ->
@@ -122,8 +124,9 @@ searchFilter = ->
 appendMe = ->
   $("#div-dropdown-checklist").css({"visibility": "visible", "width": "20px", "top": "155px", "float": "right", "right": "22px" })
   $(".dataTables_info").css("display", "none")
-  $(".dataTables_length > label").css("display", "none")
+  $(".dataTables_length > label").css({"margin-top": "-28px", "margin-left": "185px"})
   $("#users_datatables_paginate > .pagination-panel").css("display", "none")
+  $("#users_datatables_length").css("display", "none")
   $(".paging_bootstrap_extended").css("float","none")
 
 linkUser = (name, type, row) ->
