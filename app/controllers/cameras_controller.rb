@@ -135,7 +135,7 @@ class CamerasController < ApplicationController
     col_for_order = params[:order]["0"]["column"]
     order_for = params[:order]["0"]["dir"]
     if params[:is_recording].present?
-      camera_exid = " and lower(is_recording) like lower('%#{params[:is_recording]}%')"
+      is_recording = " and lower(is_recording) like lower('%#{params[:is_recording]}%')"
     end
     if params[:camera_exid].present?
       camera_exid = " and lower(c.exid) like lower('%#{params[:camera_exid]}%')"
@@ -171,7 +171,7 @@ class CamerasController < ApplicationController
                 left JOIN vendors v on vm.vendor_id = v.id
                 left JOIN cloud_recordings cr on c.id = cr.camera_id
                 ) c where 1=1
-                #{camera_exid}#{camera_name}#{camera_owner}#{camera_ip}#{camera_model}#{camera_vendor}#{camera_username}#{camera_password}
+                #{camera_exid}#{is_recording}#{camera_name}#{camera_owner}#{camera_ip}#{camera_model}#{camera_vendor}#{camera_username}#{camera_password}
                 #{sorting(col_for_order, order_for)}")
     total_records = cameras.count
     display_length = params[:length].to_i
