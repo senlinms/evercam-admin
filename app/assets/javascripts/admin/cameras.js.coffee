@@ -59,7 +59,8 @@ initializeDataTable = ->
         {data: "13", "width": "130px" },
         {data: "14", "width": "60px", "render": colStatus, "sClass": "center" },
         {data: "15", "width": "60px", "render": colStatus, "sClass": "center" },
-        {data: "16", visible: false, "width": "75px" }
+        {data: "16", "width": "110px", "sClass": "center" },
+        {data: "17", visible: false, "width": "75px" }
       ],
       drawCallback: ->
         adjustHorizontalScroll()
@@ -67,7 +68,7 @@ initializeDataTable = ->
         # execute some code on network or other general error
 
 searchFilter = ->
-  $("#camera-id, #owner, #camera-name, #camera-ip, #username, #password, #model, #vendor").on "keyup", ->
+  $("#camera-id, #owner, #camera-name, #camera-ip, #username, #password, #model, #vendor, #cr_status").on "keyup", ->
     camera_exid = $("#camera-id").val()
     camera_owner = $("#owner").val().replace("'","''")
     camera_name = $("#camera-name").val().replace("'","''")
@@ -76,6 +77,7 @@ searchFilter = ->
     password = $("#password").val()
     model = $("#model").val()
     vendor = $("#vendor").val()
+    cr_status = $("#cr_status").val()
 
     cameras_table.setAjaxParam 'camera_exid', camera_exid
     cameras_table.setAjaxParam 'camera_owner', camera_owner
@@ -85,6 +87,7 @@ searchFilter = ->
     cameras_table.setAjaxParam 'password', password
     cameras_table.setAjaxParam 'model', model
     cameras_table.setAjaxParam 'vendor', vendor
+    cameras_table.setAjaxParam 'is_recording', cr_status
     cameras_table.getDataTable().ajax.reload()
     return
 
@@ -108,12 +111,12 @@ colStatus = (name) ->
     return "<span style='color: red;'>False</span>"
 
 linkCamera = (name, type, row) ->
-  return "<a href='/cameras/#{row[17]}'>#{row[1]}</a>"
+  return "<a href='/cameras/#{row[18]}'>#{row[1]}</a>"
 
 linkOwner = (name, type, row) ->
-  url = "#{row[21]}/v1/cameras/#{row[1]}?api_id=#{row[19]}&api_key=#{row[20]}"
+  url = "#{row[22]}/v1/cameras/#{row[1]}?api_id=#{row[20]}&api_key=#{row[21]}"
   return "<div class='link-user'>" +
-    "<a class='pull-left' href='/users/#{row[18]}'>#{name}</a>" +
+    "<a class='pull-left' href='/users/#{row[19]}'>#{name}</a>" +
     "<a class='pull-right' href= #{url} target='_blank'>" +
     "<i class='fa fa-external-link-alt'></i></a></div>"
 
