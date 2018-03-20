@@ -134,6 +134,9 @@ class CamerasController < ApplicationController
   def load_cameras
     col_for_order = params[:order]["0"]["column"]
     order_for = params[:order]["0"]["dir"]
+    if params[:is_recording].present?
+      camera_exid = " and lower(is_recording) like lower('%#{params[:is_recording]}%')"
+    end
     if params[:camera_exid].present?
       camera_exid = " and lower(c.exid) like lower('%#{params[:camera_exid]}%')"
     end
@@ -161,11 +164,12 @@ class CamerasController < ApplicationController
 
     cameras = Camera.connection.select_all("select * from (
                 select c.*,u.firstname || ' ' || u.lastname as fullname, u as user, u.id as user_id, u.api_id, u.api_key,
-                v.name as vendor_name,vm.name as vendor_model_name,
+                v.name as vendor_name,vm.name as vendor_model_name, cr.status as is_recording,
                 (select count(id) as total from camera_shares cs where c.id=cs.camera_id) as total_share from cameras c
                 inner JOIN users u on c.owner_id = u.id
                 left JOIN vendor_models vm on c.model_id = vm.id
                 left JOIN vendors v on vm.vendor_id = v.id
+                left JOIN cloud_recordings cr on c.id = cr.camera_id
                 ) c where 1=1
                 #{camera_exid}#{camera_name}#{camera_owner}#{camera_ip}#{camera_model}#{camera_vendor}#{camera_username}#{camera_password}
                 #{sorting(col_for_order, order_for)}")
@@ -197,6 +201,7 @@ class CamerasController < ApplicationController
           cameras[index]["timezone"],
           cameras[index]["is_public"],
           cameras[index]["is_online"],
+          cameras[index]["is_recording"],
           cameras[index]["last_poll_date"] ? DateTime.parse(cameras[index]["last_poll_date"]).strftime("%A, %d %b %Y %l:%M %p") : "",
           cameras[index]["id"],
           cameras[index]["user_id"],
@@ -324,6 +329,10 @@ class CamerasController < ApplicationController
       "order by c.is_public #{order}"
     when "15"
       "order by c.is_online #{order}"
+    when "16"
+      "order by is_recording #{order}"
+    when "17"
+      "order by c.last_poll_date #{order}"
     when "0"
       "order by c.created_at #{order}"
     else
