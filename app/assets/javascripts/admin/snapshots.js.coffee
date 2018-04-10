@@ -139,6 +139,11 @@ onSearch = ->
       .column(5)
       .search( @value )
       .draw()
+  $("#interval").on 'keyup change', ->
+    snapshots_table
+      .column(6)
+      .search( @value )
+      .draw()
   $("#online").on 'keyup change', ->
     snapshots_table
       .column(9)
