@@ -43,18 +43,6 @@
 
             <div class="row text-center">
               <div class="col-sm-3">
-                <%= f.label :username %>
-              </div>
-              <div class="col-sm-9 form-group<%= field_errors.include?("username") ? " has-error" : "" %>">
-                <%= f.text_field :username, value: params.fetch('user', {})[:username], class: "form-control", "required" => "", "data-validation" => "custom", "data-validation-regexp" => '^[a-z]+[\w-]+$', "data-validation-error-msg" => "Only lower case letters, numbers, dashes & underscores allowed." %>
-                <% if field_errors.include?("username") %>
-                    <span class="help-block arrow_box form-error text-left"><%= field_errors["username"] %></span>
-                <% end %>
-              </div>
-            </div>
-
-            <div class="row text-center">
-              <div class="col-sm-3">
                 <%= f.label :email, 'Email' %>
               </div>
               <div class="col-sm-9 form-group<%= field_errors.include?("email") ? " has-error" : "" %>">
