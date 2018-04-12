@@ -57,7 +57,7 @@
     </td>
     <% 11.downto(0) do |i| %>
       <td>
-        <%= EvercamUser.created_months_ago(i).count %>
+        <%= User.created_months_ago(i).count %>
       </td>
     <% end %>
   </tr>
@@ -67,7 +67,7 @@
     </td>
     <% 11.downto(0) do |i| %>
       <td>
-        <%= EvercamUser.where(created_at: EvercamUser.select(:created_at).order(:created_at).first.created_at..i.months.ago.end_of_month).count %>
+        <%= User.where(created_at: User.select(:created_at).order(:created_at).first.created_at..i.months.ago.end_of_month).count %>
       </td>
     <% end %>
   </tr>

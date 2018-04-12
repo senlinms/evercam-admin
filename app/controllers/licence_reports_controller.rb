@@ -6,7 +6,7 @@ class LicenceReportsController < ApplicationController
     begin
       @customers = Stripe::Customer.all(limit: 200)
       @custom_licences = Licence.where(cancel_licence: false, subscription_id: nil).all
-      @users = EvercamUser.all
+      @users = User.all
       if ENV["UPDATE_STRIPE_LICENCES"].eql?("yes")
         add_stripe_licence
       end
@@ -144,7 +144,7 @@ class LicenceReportsController < ApplicationController
       licences = customer.subscriptions.data
       licences.each do |licence|
         unless Licence.where(cancel_licence: false, subscription_id: licence.id).count > 0
-          user = EvercamUser.where(stripe_customer_id: customer.id).includes(:country).first
+          user = User.where(stripe_customer_id: customer.id).includes(:country).first
           storage = ""
           case licence.plan["id"]
           when "24-hours-recording", "24-hours-recording-annual"

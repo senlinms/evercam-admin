@@ -1,6 +1,6 @@
 class AdminsController < ApplicationController
   def index
-    @admins = User.all
+    @admins = User.where('is_admin = ?', true).all
   end
 
   def create

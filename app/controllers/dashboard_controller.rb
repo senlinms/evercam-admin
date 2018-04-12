@@ -2,10 +2,11 @@ class DashboardController < ApplicationController
   before_action :authorize_admin
 
   def index
-    @users = EvercamUser.all
+    @users = User.all
     @cameras = Camera.all
     @new_users = @users.where('created_at >= ?', 1.month.ago).decorate
     @new_cameras = @cameras.where('created_at >= ?', 1.month.ago).decorate
+    pry
     @countries = Country.all.to_ary
   end
 
@@ -55,8 +56,8 @@ class DashboardController < ApplicationController
         end
         new_paid_cameras.push(Camera.new_paid_cameras(i).count)
         total_paid_cameras.push(Camera.total_paid_cameras(i).count)
-        new_users.push(EvercamUser.created_months_ago(i).count)
-        total_users.push(EvercamUser.where(created_at: EvercamUser.select(:created_at).order(:created_at).first.created_at..i.months.ago.end_of_month).count)
+        new_users.push(User.created_months_ago(i).count)
+        total_users.push(User.where(created_at: User.select(:created_at).order(:created_at).first.created_at..i.months.ago.end_of_month).count)
       end
       render json: [date: date, new_cameras: new_cameras, total_cameras: total_cameras,
                     new_paid_cameras: new_paid_cameras, total_paid_cameras: total_paid_cameras,

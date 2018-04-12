@@ -85,7 +85,7 @@
 
     var new_user_data = [
     <% 11.downto(0) do |i| %>
-    ['<%= i.months.ago.strftime("%B %Y") %>', <%= EvercamUser.where(created_at: i.months.ago.beginning_of_month..i.months.ago.end_of_month).count %>],
+    ['<%= i.months.ago.strftime("%B %Y") %>', <%= User.where(created_at: i.months.ago.beginning_of_month..i.months.ago.end_of_month).count %>],
     <% end %>
     ];
 
@@ -129,8 +129,8 @@
     ];
 
     var users_multiple_cameras = [
-    { label: "Users with 1 Camera", data: <%= EvercamUser.joins(:cameras).group("users.id").having("count(cameras.id) = ?",1).length %>},
-    { label: "Users with >1 Camera",  data: <%= EvercamUser.joins(:cameras).group("users.id").having("count(cameras.id) > ?",1).length %>},
+    { label: "Users with 1 Camera", data: <%= User.joins(:cameras).group("users.id").having("count(cameras.id) = ?",1).length %>},
+    { label: "Users with >1 Camera",  data: <%= User.joins(:cameras).group("users.id").having("count(cameras.id) > ?",1).length %>},
     ];
 
     $.plot('#cameras_online', online_cameras, {
@@ -190,7 +190,7 @@
       ];
       var users = [
       <% 11.downto(0) do |i| %>
-      ['<%= i.months.ago.strftime("%B %Y") %>', <%= EvercamUser.where(created_at: User.select(:created_at).order(:created_at).first.created_at..i.months.ago.end_of_month).count %>],
+      ['<%= i.months.ago.strftime("%B %Y") %>', <%= User.where(created_at: User.select(:created_at).order(:created_at).first.created_at..i.months.ago.end_of_month).count %>],
       <% end %>
       ];
 

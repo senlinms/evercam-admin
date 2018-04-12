@@ -1,7 +1,7 @@
 class Camera < ActiveRecord::Base
   establish_connection "evercam_db_#{Rails.env}".to_sym
 
-  belongs_to :user, :foreign_key => 'owner_id', :class_name => 'EvercamUser'
+  belongs_to :user, :foreign_key => 'owner_id', :class_name => 'User'
   belongs_to :vendor_model, :foreign_key => 'model_id', :class_name => 'VendorModel'
   has_many :camera_shares, dependent: :delete_all
   has_many :snapshot_report, foreign_key: "camera_id", class_name: "SnapshotReport"

@@ -3,5 +3,5 @@ class MetaData < ActiveRecord::Base
 
   self.table_name = "meta_datas"
   belongs_to :camera
-  belongs_to :user, :foreign_key => 'user_id', :class_name => 'EvercamUser'
+  belongs_to :user, :foreign_key => 'user_id', :class_name => 'User'
 end
