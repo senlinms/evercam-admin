@@ -12,7 +12,6 @@
       <td><%= admin.last_sign_in_ip.present? ? admin.last_sign_in_ip : "" %></td>
       <td><%= admin.is_admin %></td>
       <td><i admin-id="<%= admin.id %>" firstname="<%= admin.firstname %>" lastname="<%= admin.lastname %>" class="fa fa-edit edit-admin"></i></td>
-      <td><i admin-id="<%= admin.id %>" class="far fa-trash-alt delete-admin"></i></td>
     </tr>
   <% end %>
 <% end %>

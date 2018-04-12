@@ -1,29 +1,3 @@
-# class User < ActiveRecord::Base
-#   establish_connection "evercam_db_#{Rails.env}".to_sym
-
-#   self.table_name = "admins"
-#   # Include default devise modules. Others available are:
-#   # :confirmable, :lockable, :timeoutable and :omniauthable
-#   devise :database_authenticatable, :registerable,
-#          :recoverable, :rememberable, :trackable, :validatable
-
-#   belongs_to :country
-
-#   validates :firstname, presence: true
-#   validates :lastname, presence: true
-#   validates :username, presence: true
-#   validates :encrypted_password, presence: true
-
-#   def fullname
-#     "#{firstname} #{lastname}"
-#   end
-
-#   def self.created_months_ago(number)
-#     given_date = number.months.ago
-#     User.where(created_at: given_date.beginning_of_month..given_date.end_of_month)
-#   end
-# end
-
 require "bcrypt"
 require 'intercom'
 
@@ -34,7 +8,7 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   include BCrypt
-  before_save :create_hashed_password, if: :password_changed?
+  before_save :add_missing_fields
 
   belongs_to :country
   has_many :cameras, :foreign_key => 'owner_id', :class_name => 'Camera'
@@ -54,10 +28,11 @@ class User < ActiveRecord::Base
     User.where(created_at: given_date.beginning_of_month..given_date.end_of_month)
   end
 
-  def create_hashed_password
-    if password
-      self.password = Password.create(password, cost: 10)
-    end
+  def add_missing_fields
+    self["api_id"] = SecureRandom.hex(4)
+    self["api_key"] = SecureRandom.hex
+    self["password"] = self.encrypted_password
+    self["username"] = self.email
   end
 
   def self.sync_users_tag(tag_id, payment_type)
