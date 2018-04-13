@@ -371,6 +371,7 @@ ActiveRecord::Schema.define(version: 20180411104000) do
     t.datetime "last_sign_in_at"
     t.inet "current_sign_in_ip"
     t.inet "last_sign_in_ip"
+    t.string "encrypted_password", default: ""
     t.index ["country_id"], name: "ix_users_country_id"
     t.index ["email"], name: "user_email_unique_index", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
