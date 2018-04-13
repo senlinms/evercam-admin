@@ -25,6 +25,7 @@ RSpec.configure do |config|
 
   config.include Capybara::DSL
   config.include FactoryBot::Syntax::Methods
+  config.include Devise::Test::ControllerHelpers, type: :controller
 
   config.before(:suite) do
     DatabaseCleaner.clean_with(:truncation)
@@ -43,6 +44,7 @@ RSpec.configure do |config|
   end
 
 end
+
 
 Shoulda::Matchers.configure do |config|
   config.integrate do |with|

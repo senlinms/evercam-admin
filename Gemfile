@@ -70,6 +70,7 @@ group :development, :test do
   gem 'factory_bot_rails', require: false
   gem 'rspec-rails'
   gem 'rspec'
+  gem 'rails-controller-testing'
   gem 'spinach-rails'
   gem 'database_cleaner'
   gem 'launchy'
