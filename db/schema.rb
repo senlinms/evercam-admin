@@ -17,6 +17,62 @@ ActiveRecord::Schema.define(version: 20180411104000) do
   enable_extension "pg_stat_statements"
   enable_extension "postgis"
 
+  create_table "users", id: :serial, force: :cascade do |t|
+    t.datetime "created_at", default: -> { "now()" }, null: false
+    t.datetime "updated_at", default: -> { "now()" }, null: false
+    t.text "firstname", null: false
+    t.text "lastname", null: false
+    t.text "username", null: false
+    t.text "password", null: false
+    t.integer "country_id"
+    t.datetime "confirmed_at"
+    t.text "email", null: false
+    t.text "reset_token"
+    t.datetime "token_expires_at"
+    t.text "api_id"
+    t.text "api_key"
+    t.boolean "is_admin", default: false, null: false
+    t.text "stripe_customer_id"
+    t.text "billing_id"
+    t.datetime "last_login_at"
+    t.text "vat_number"
+    t.integer "payment_method", default: 0
+    t.text "insight_id"
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.integer "sign_in_count", default: 0, null: false
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.inet "current_sign_in_ip"
+    t.inet "last_sign_in_ip"
+    t.string "encrypted_password", default: ""
+    t.index ["country_id"], name: "ix_users_country_id"
+    t.index ["email"], name: "user_email_unique_index", unique: true
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+    t.index ["username"], name: "user_username_unique_index", unique: true
+  end
+
+  create_table "cameras", id: :serial, force: :cascade do |t|
+    t.datetime "created_at", default: -> { "now()" }, null: false
+    t.datetime "updated_at", default: -> { "now()" }, null: false
+    t.text "exid", null: false
+    t.integer "owner_id", null: false
+    t.boolean "is_public", null: false
+    t.json "config", null: false
+    t.text "name", null: false
+    t.datetime "last_polled_at"
+    t.boolean "is_online"
+    t.text "timezone"
+    t.datetime "last_online_at"
+    t.integer "location"
+    t.macaddr "mac_address"
+    t.integer "model_id"
+    t.boolean "discoverable"
+    t.text "preview"
+    t.text "thumbnail_url"
+  end
+  
   create_table "access_rights", id: :serial, force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -340,62 +396,6 @@ ActiveRecord::Schema.define(version: 20180411104000) do
     t.integer "user_id", null: false
     t.json "extra"
     t.index ["exid"], name: "timelapse_exid_unique_index", unique: true
-  end
-
-  create_table "users", id: :serial, force: :cascade do |t|
-    t.datetime "created_at", default: -> { "now()" }, null: false
-    t.datetime "updated_at", default: -> { "now()" }, null: false
-    t.text "firstname", null: false
-    t.text "lastname", null: false
-    t.text "username", null: false
-    t.text "password", null: false
-    t.integer "country_id"
-    t.datetime "confirmed_at"
-    t.text "email", null: false
-    t.text "reset_token"
-    t.datetime "token_expires_at"
-    t.text "api_id"
-    t.text "api_key"
-    t.boolean "is_admin", default: false, null: false
-    t.text "stripe_customer_id"
-    t.text "billing_id"
-    t.datetime "last_login_at"
-    t.text "vat_number"
-    t.integer "payment_method", default: 0
-    t.text "insight_id"
-    t.string "reset_password_token"
-    t.datetime "reset_password_sent_at"
-    t.datetime "remember_created_at"
-    t.integer "sign_in_count", default: 0, null: false
-    t.datetime "current_sign_in_at"
-    t.datetime "last_sign_in_at"
-    t.inet "current_sign_in_ip"
-    t.inet "last_sign_in_ip"
-    t.string "encrypted_password", default: ""
-    t.index ["country_id"], name: "ix_users_country_id"
-    t.index ["email"], name: "user_email_unique_index", unique: true
-    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
-    t.index ["username"], name: "user_username_unique_index", unique: true
-  end
-
-  create_table "cameras", id: :serial, force: :cascade do |t|
-    t.datetime "created_at", default: -> { "now()" }, null: false
-    t.datetime "updated_at", default: -> { "now()" }, null: false
-    t.text "exid", null: false
-    t.integer "owner_id", null: false
-    t.boolean "is_public", null: false
-    t.json "config", null: false
-    t.text "name", null: false
-    t.datetime "last_polled_at"
-    t.boolean "is_online"
-    t.text "timezone"
-    t.datetime "last_online_at"
-    t.integer "location"
-    t.macaddr "mac_address"
-    t.integer "model_id"
-    t.boolean "discoverable"
-    t.text "preview"
-    t.text "thumbnail_url"
   end
 
   create_table "users_old", id: :integer, default: nil, force: :cascade do |t|
