@@ -2,7 +2,7 @@ FactoryBot.define do
   factory :camera_share do
     association :camera
     association :user
-    association :sharer
+    # association :sharer, class_name: "User"
     kind 'public'
 
     factory :public_camera_share do

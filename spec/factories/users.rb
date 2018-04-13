@@ -11,10 +11,6 @@ FactoryBot.define do
     email
     sequence(:api_id) {|n| SecureRandom.hex(10)}
     sequence(:api_key) {|n| SecureRandom.hex(16)}
-    # is_admin false
-    # country do
-    #     country = Country.where(iso3166_a2: 'ie').first
-    #     country || create(:ireland)
-    # end
+    
   end
 end

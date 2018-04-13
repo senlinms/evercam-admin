@@ -7,7 +7,7 @@ class UsersController < ApplicationController
     @api_url = evercam_server
     @countries = Country.all
     if params[:q]
-      @user = EvercamUser.find_by_email(params[:q]).decorate
+      @user = User.find_by_email(params[:q]).decorate
       render "show", params: { user: @user, countries: @countries }
     end
   end
@@ -42,7 +42,7 @@ class UsersController < ApplicationController
     if params["country"].present?
       update_string += ",country_id=#{params["country"]}"
     end
-    EvercamUser.connection.select_all("update users set updated_at=now()#{update_string} where id in (#{params["ids"]})")
+    User.connection.select_all("update users set updated_at=now()#{update_string} where id in (#{params["ids"]})")
     render json: {success: true}
   end
 
@@ -111,7 +111,7 @@ class UsersController < ApplicationController
     else
       condition2 = ""
     end
-    users = EvercamUser.connection.select_all("select *, #{case_value} def, (cameras_owned + camera_shares) total_cameras from (
+    users = User.connection.select_all("select *, #{case_value} def, (cameras_owned + camera_shares) total_cameras from (
                  select *, (select count(cr.id) from cloud_recordings cr left join cameras c on c.owner_id=u.id where c.id=cr.camera_id and cr.status <>'off' and cr.storage_duration <> 1) required_licence,
                  (select SUM(l.total_cameras) from licences l left join users uu on l.user_id=uu.id where uu.id=u.id and cancel_licence=false) valid_licence,
                  (select count(*) from cameras cc left join users uuu on cc.owner_id=uuu.id where uuu.id=u.id) cameras_owned,
@@ -178,7 +178,7 @@ class UsersController < ApplicationController
   end
 
   def set_user
-    @user ||= EvercamUser.find(params[:id])
+    @user ||= User.find(params[:id])
   end
 
   def sorting(col, order)

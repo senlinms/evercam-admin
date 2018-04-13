@@ -20,7 +20,7 @@ class IntercomCompaniesController < ApplicationController
   end
 
   def add_users(company)
-    users = EvercamUser.connection.select_all("select * from users where email like '%@#{company.company_id}'")
+    users = User.connection.select_all("select * from users where email like '%@#{company.company_id}'")
 
     Spawnling.new do
       intercom = connect_intercom

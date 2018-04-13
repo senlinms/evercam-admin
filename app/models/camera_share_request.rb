@@ -7,6 +7,6 @@ class CameraShareRequest < ActiveRecord::Base
   USED                      = 1
   ALL_STATUSES              = [USED, CANCELLED, PENDING]
 
-  belongs_to :user, :foreign_key => 'user_id', :class_name => 'EvercamUser'
+  belongs_to :user, :foreign_key => 'user_id', :class_name => 'User'
   belongs_to :camera
 end

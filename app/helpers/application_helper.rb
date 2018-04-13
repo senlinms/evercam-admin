@@ -9,7 +9,7 @@ module ApplicationHelper
   end
 
   def get_user(stripe_customer_id)
-    user = EvercamUser.where(stripe_customer_id: stripe_customer_id).includes(:country).first
+    user = User.where(stripe_customer_id: stripe_customer_id).includes(:country).first
     user
   end
 

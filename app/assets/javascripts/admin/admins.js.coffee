@@ -29,7 +29,6 @@ initializeDataTable = ->
       {data: "8", sWidth: "100px" },
       {data: "9", sWidth: "80px", sClass: "center", "render": humanizeStatus },
       {data: "10", sWidth: "65px", sClass: "center" }
-      {data: "11", sWidth: "65px", sClass: "center" }
     ],
     iDisplayLength: 500
     columnDefs: [

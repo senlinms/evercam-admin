@@ -1,6 +1,6 @@
 <% if @timelapses.present? %>
   <% @timelapses.each do |timelapse| %>
-    <% user = EvercamUser.where(username: timelapse["user_id"]).first %>
+    <% user = User.where(username: timelapse["user_id"]).first %>
     <tr>
       <td><%= timelapse["id"] %></td>
       <td><%= timelapse["access_token"] %></td>

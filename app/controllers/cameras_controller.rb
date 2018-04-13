@@ -260,7 +260,7 @@ class CamerasController < ApplicationController
         end
       end
     end
-    super_user = EvercamUser.find(super_cam_owner_id)
+    super_user = User.find(super_cam_owner_id)
     super_cam_exid = Camera.find(super_cam_id).exid
     super_owner_api_id = super_user.api_id
     super_owner_api_key =  super_user.api_key
@@ -268,7 +268,7 @@ class CamerasController < ApplicationController
     rights = "Snapshot,View,Edit,List"
     api = get_evercam_api(super_owner_api_id, super_owner_api_key)
     owner_ids.each do |owner_id|
-      share_with_email = [EvercamUser.find(owner_id).email]
+      share_with_email = [User.find(owner_id).email]
       begin
         api.share_camera(super_cam_exid, share_with_email, rights, body)
         success += 1

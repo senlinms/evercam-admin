@@ -1,7 +1,7 @@
 require "bcrypt"
 require 'intercom'
 
-class EvercamUser < ActiveRecord::Base
+class EvercamUsers < ActiveRecord::Base
   establish_connection "evercam_db_#{Rails.env}".to_sym
 
   include BCrypt
@@ -23,7 +23,7 @@ class EvercamUser < ActiveRecord::Base
 
   def self.created_months_ago(number)
     given_date = number.months.ago
-    EvercamUser.where(created_at: given_date.beginning_of_month..given_date.end_of_month)
+    User.where(created_at: given_date.beginning_of_month..given_date.end_of_month)
   end
 
   def create_hashed_password
@@ -33,10 +33,7 @@ class EvercamUser < ActiveRecord::Base
   end
 
   def self.sync_users_tag(tag_id, payment_type)
-    intercom = Intercom::Client.new(
-        app_id: ENV["INTERCOM_ID"],
-        api_key: ENV["INTERCOM_KEY"]
-    )
+    intercom = Intercom::Client.new(token: ENV["INTERCOM_KEY"])
     users = intercom.users.find(tag_id: tag_id)
 
     (1..users.pages.total_pages.to_i).each do |page|
@@ -44,7 +41,7 @@ class EvercamUser < ActiveRecord::Base
         users = intercom.users.find(tag_id: tag_id, page: page)
       end
       users.users.each do |ic_user|
-        db_user = EvercamUser.find_by_email(ic_user["email"])
+        db_user = User.find_by_email(ic_user["email"])
         if db_user.present? && !db_user.payment_method.equal?(payment_type)
           db_user.update_attributes(
               payment_method: payment_type,
