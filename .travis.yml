@@ -36,4 +36,4 @@ env:
 branches:
   only: master
 
-dist: trusty
+dist: precise
