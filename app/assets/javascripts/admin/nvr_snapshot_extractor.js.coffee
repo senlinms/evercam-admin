@@ -131,7 +131,9 @@ onSearchSET = ->
     from_date = $("#datetimepicker1").val()
     to_date = $("#datetimepicker2").val()
     interval = $("#interval").val()
-    mp4 = $("#mp4").val()
+    mp4 = $("#mp4_to_dbx").val()
+    jpegs = $("#jpegs_to_dbx").val()
+    inject_to_cr = $("#inject_to_cr").val()
     if schedule is undefined
       schedule = JSON.stringify(fullWeekSchedule)
     else
@@ -143,6 +145,8 @@ onSearchSET = ->
     data.interval = interval
     data.schedule = schedule
     data.mp4 = mp4
+    data.jpegs = jpegs
+    data.inject_to_cr = inject_to_cr
     data.requester = $("#txtRequester").val()
 
     if camera_id is "Select Camera" || interval is ""
