@@ -33,7 +33,7 @@ ActiveRecord::Schema.define(version: 20180411104000) do
     t.index ["token_id"], name: "access_rights_token_id_index"
   end
 
-  create_table "access_tokens", id: :integer, default: -> { "nextval('sq_access_tokens'::regclass)" }, force: :cascade do |t|
+  create_table "access_tokens", id: :serial, force: :cascade do |t|
     t.datetime "created_at", default: -> { "now()" }, null: false
     t.datetime "updated_at", default: -> { "now()" }, null: false
     t.datetime "expires_at"
@@ -98,7 +98,7 @@ ActiveRecord::Schema.define(version: 20180411104000) do
     t.boolean "watermark", default: false, null: false
   end
 
-  create_table "archives", id: :integer, default: -> { "nextval('archive_id_seq'::regclass)" }, force: :cascade do |t|
+  create_table "archives", id: :serial, force: :cascade do |t|
     t.integer "camera_id", null: false
     t.text "exid", null: false
     t.text "title", null: false
@@ -174,7 +174,7 @@ ActiveRecord::Schema.define(version: 20180411104000) do
 # Could not dump table "cameras" because of following StandardError
 #   Unknown type 'geography(Point,4326)' for column 'location'
 
-  create_table "clients", id: :integer, default: -> { "nextval('sq_clients'::regclass)" }, force: :cascade do |t|
+  create_table "clients", id: :serial, force: :cascade do |t|
     t.datetime "created_at", default: -> { "now()" }, null: false
     t.datetime "updated_at", default: -> { "now()" }, null: false
     t.text "api_id", null: false
@@ -208,7 +208,7 @@ ActiveRecord::Schema.define(version: 20180411104000) do
     t.index ["exid"], name: "compare_exid_unique_index", unique: true
   end
 
-  create_table "countries", id: :integer, default: -> { "nextval('sq_countries'::regclass)" }, force: :cascade do |t|
+  create_table "countries", id: :serial, force: :cascade do |t|
     t.datetime "created_at", default: -> { "now()" }, null: false
     t.datetime "updated_at", default: -> { "now()" }, null: false
     t.text "iso3166_a2", null: false
@@ -300,12 +300,12 @@ ActiveRecord::Schema.define(version: 20180411104000) do
     t.text "requestor"
   end
 
-  create_table "spatial_ref_sys", primary_key: "srid", id: :integer, default: nil, force: :cascade do |t|
-    t.string "auth_name", limit: 256
-    t.integer "auth_srid"
-    t.string "srtext", limit: 2048
-    t.string "proj4text", limit: 2048
-  end
+  # create_table "spatial_ref_sys", primary_key: "srid", id: :integer, default: nil, force: :cascade do |t|
+  #   t.string "auth_name", limit: 256
+  #   t.integer "auth_srid"
+  #   t.string "srtext", limit: 2048
+  #   t.string "proj4text", limit: 2048
+  # end
 
   create_table "timelapse_recordings", id: :serial, force: :cascade do |t|
     t.integer "camera_id", null: false
@@ -342,7 +342,7 @@ ActiveRecord::Schema.define(version: 20180411104000) do
     t.index ["exid"], name: "timelapse_exid_unique_index", unique: true
   end
 
-  create_table "users", id: :integer, default: -> { "nextval('sq_users'::regclass)" }, force: :cascade do |t|
+  create_table "users", id: :serial, force: :cascade do |t|
     t.datetime "created_at", default: -> { "now()" }, null: false
     t.datetime "updated_at", default: -> { "now()" }, null: false
     t.text "firstname", null: false
@@ -378,6 +378,26 @@ ActiveRecord::Schema.define(version: 20180411104000) do
     t.index ["username"], name: "user_username_unique_index", unique: true
   end
 
+  create_table "cameras", id: :serial, force: :cascade do |t|
+    t.datetime "created_at", default: -> { "now()" }, null: false
+    t.datetime "updated_at", default: -> { "now()" }, null: false
+    t.text "exid", null: false
+    t.integer "owner_id", null: false
+    t.boolean "is_public", null: false
+    t.json "config", null: false
+    t.text "name", null: false
+    t.datetime "last_polled_at"
+    t.boolean "is_online"
+    t.text "timezone"
+    t.datetime "last_online_at"
+    t.integer "location"
+    t.macaddr "mac_address"
+    t.integer "model_id"
+    t.boolean "discoverable"
+    t.text "preview"
+    t.text "thumbnail_url"
+  end
+
   create_table "users_old", id: :integer, default: nil, force: :cascade do |t|
     t.datetime "created_at", default: -> { "now()" }, null: false
     t.datetime "updated_at", default: -> { "now()" }, null: false
@@ -401,7 +421,7 @@ ActiveRecord::Schema.define(version: 20180411104000) do
     t.text "insight_id"
   end
 
-  create_table "vendor_models", id: :integer, default: -> { "nextval('sq_firmwares'::regclass)" }, force: :cascade do |t|
+  create_table "vendor_models", id: :serial, force: :cascade do |t|
     t.datetime "created_at", default: -> { "now()" }, null: false
     t.datetime "updated_at", default: -> { "now()" }, null: false
     t.integer "vendor_id", null: false
@@ -433,7 +453,7 @@ ActiveRecord::Schema.define(version: 20180411104000) do
     t.index ["vendor_id"], name: "ix_firmwares_vendor_id"
   end
 
-  create_table "vendors", id: :integer, default: -> { "nextval('sq_vendors'::regclass)" }, force: :cascade do |t|
+  create_table "vendors", id: :serial, force: :cascade do |t|
     t.datetime "created_at", default: -> { "now()" }, null: false
     t.datetime "updated_at", default: -> { "now()" }, null: false
     t.text "exid", null: false
