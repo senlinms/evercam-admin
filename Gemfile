@@ -3,7 +3,7 @@ source 'https://rubygems.org'
 fail 'Ruby version must be greater than 2.0' unless RUBY_VERSION.to_f > 2.0
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 5.1.6'
+gem 'rails'
 
 # Use postgresql as the database for Active Record
 gem 'pg'
