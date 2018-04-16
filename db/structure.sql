@@ -452,7 +452,7 @@ CREATE TABLE cameras (
     is_online boolean,
     timezone text,
     last_online_at timestamp with time zone DEFAULT now(),
-    location geography(Point,4326),
+    location integer,
     mac_address macaddr,
     model_id integer,
     discoverable boolean DEFAULT false NOT NULL,
