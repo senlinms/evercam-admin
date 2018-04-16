@@ -23,8 +23,58 @@ initDateTime = ->
   $('#datetimepicker1,#datetimepicker2').datetimepicker
     format: 'd/m/Y'
     timepicker: false
+    onSelectDate: ->
+      isRecordingInCloud($('#datetimepicker1').val(), $('#datetimepicker2').val())
 
   $('#datetimepicker1,#datetimepicker2').val getTodayDate()
+
+isRecordingInCloud = (start_date, end_date) ->
+  camera_id = $("#inputCameraId").val()
+  api_id = $("#inputCameraId").find('option:selected').attr("api_id")
+  api_key = $("#inputCameraId").find('option:selected').attr("api_key")
+
+  from_date = moment.utc("#{start_date} 00:00:00", "DD/MM/YYYY HH:mm:ss") / 1000
+  to_date = moment.utc("#{end_date} 23:59:59", "DD/MM/YYYY HH:mm:ss") / 1000
+
+  data = {}
+
+  onError = (xhrData) ->
+    $(".bb-alert")
+    .removeClass("alert-success")
+    .addClass("alert-danger")
+    $("#inject_to_cr").prop('disabled', 'disabled');
+    .text(xhrData.statusText)
+    .delay(200)
+    .fadeIn()
+    .delay(4000)
+    .fadeOut()
+
+  onSuccess = (data) ->
+    console.log data.snapshots.length
+    if data.snapshots.length > 10
+      $(".bb-alert")
+      .removeClass("alert-danger")
+      .addClass("alert-success")
+      .text("#{data.snapshots.length} jpegs are available on Cloud Recording for this Camera. You cannot inject NVR recordings to Cloud.")
+      .delay(200)
+      .fadeIn()
+      .delay(4000)
+      .fadeOut()
+      $("#inject_to_cr").prop('disabled', 'disabled')
+    else
+       $("#inject_to_cr").prop('disabled', false)
+
+  settings =
+    error: onError
+    success: onSuccess
+    cache: false
+    data: data
+    dataType: "json"
+    type: "GET"
+    url: "#{$("#server-api-url").val()}/v1/cameras/#{camera_id}/recordings/snapshots?api_id=#{api_id}&api_key=#{api_key}&from=#{from_date}&to=#{to_date}&limit=3600&page=1"
+
+  jQuery.ajax(settings)
+
 
 getTodayDate = ->
   date = new Date
@@ -134,6 +184,7 @@ onSearchSET = ->
     mp4 = $("#mp4_to_dbx").val()
     jpegs = $("#jpegs_to_dbx").val()
     inject_to_cr = $("#inject_to_cr").val()
+
     if schedule is undefined
       schedule = JSON.stringify(fullWeekSchedule)
     else
