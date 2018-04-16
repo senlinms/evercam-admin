@@ -6,7 +6,6 @@ class DashboardController < ApplicationController
     @cameras = Camera.all
     @new_users = @users.where('created_at >= ?', 1.month.ago).decorate
     @new_cameras = @cameras.where('created_at >= ?', 1.month.ago).decorate
-    pry
     @countries = Country.all.to_ary
   end
 
