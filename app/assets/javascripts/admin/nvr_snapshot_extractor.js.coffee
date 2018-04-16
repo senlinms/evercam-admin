@@ -180,8 +180,8 @@ onSearchSET = ->
     from_date = $("#datetimepicker1").val()
     to_date = $("#datetimepicker2").val()
     interval = $("#interval").val()
-    mp4 = $("#mp4_to_dbx").val()
-    jpegs = $("#jpegs_to_dbx").val()
+    create_mp4 = $("#create_mp4").val()
+    jpegs_to_dropbox = $("#jpegs_to_dropbox").val()
     inject_to_cr = $("#inject_to_cr").val()
 
     if schedule is undefined
@@ -194,8 +194,8 @@ onSearchSET = ->
     data.end_date = moment.utc("#{to_date} 23:59:59", "DD/MM/YYYY HH:mm:ss") / 1000
     data.interval = interval
     data.schedule = schedule
-    data.mp4 = mp4
-    data.jpegs = jpegs
+    data.create_mp4 = create_mp4
+    data.jpegs_to_dropbox = jpegs_to_dropbox
     data.inject_to_cr = inject_to_cr
     data.requester = $("#txtRequester").val()
 
@@ -208,7 +208,7 @@ onSearchSET = ->
       .fadeIn()
       .delay(4000)
       .fadeOut()
-    else if mp4 == "false" && jpegs == "false" && inject_to_cr == "false"
+    else if create_mp4 == "false" && jpegs_to_dropbox == "false" && inject_to_cr == "false"
       $(".bb-alert")
         .removeClass("alert-success")
         .addClass("alert-danger")
