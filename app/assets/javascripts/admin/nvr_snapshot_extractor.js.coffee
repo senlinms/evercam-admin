@@ -39,10 +39,10 @@ isRecordingInCloud = (start_date, end_date) ->
   data = {}
 
   onError = (xhrData) ->
+    $("#inject_to_cr").prop('disabled', 'disabled')
     $(".bb-alert")
     .removeClass("alert-success")
     .addClass("alert-danger")
-    $("#inject_to_cr").prop('disabled', 'disabled');
     .text(xhrData.statusText)
     .delay(200)
     .fadeIn()
@@ -50,7 +50,6 @@ isRecordingInCloud = (start_date, end_date) ->
     .fadeOut()
 
   onSuccess = (data) ->
-    console.log data.snapshots.length
     if data.snapshots.length > 10
       $(".bb-alert")
       .removeClass("alert-danger")
@@ -62,7 +61,7 @@ isRecordingInCloud = (start_date, end_date) ->
       .fadeOut()
       $("#inject_to_cr").prop('disabled', 'disabled')
     else
-       $("#inject_to_cr").prop('disabled', false)
+      $("#inject_to_cr").prop('disabled', false)
 
   settings =
     error: onError
@@ -200,7 +199,7 @@ onSearchSET = ->
     data.inject_to_cr = inject_to_cr
     data.requester = $("#txtRequester").val()
 
-    if camera_id is "Select Camera" || interval is ""
+    if camera_id is "" || interval is ""
       $(".bb-alert")
       .removeClass("alert-success")
       .addClass("alert-danger")
@@ -209,6 +208,15 @@ onSearchSET = ->
       .fadeIn()
       .delay(4000)
       .fadeOut()
+    else if mp4 == "false" && jpegs == "false" && inject_to_cr == "false"
+      $(".bb-alert")
+        .removeClass("alert-success")
+        .addClass("alert-danger")
+        .text("Please select an option for extraction!")
+        .delay(200)
+        .fadeIn()
+        .delay(4000)
+        .fadeOut()
     else
       putMeInDatabase(camera_id, api_id, api_key, data)
 
