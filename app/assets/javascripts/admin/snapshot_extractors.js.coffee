@@ -129,7 +129,7 @@ onSearchSET = ->
     from_date = $("#datetimepicker1").val()
     to_date = $("#datetimepicker2").val()
     interval = $("#interval").val()
-    mp4 = $("#mp4").val()
+    create_mp4 = $("#create_mp4").val()
     if schedule is undefined
       schedule = JSON.stringify(fullWeekSchedule)
     else
@@ -139,7 +139,7 @@ onSearchSET = ->
     data.to_date = to_date
     data.interval = interval
     data.schedule = schedule
-    data.mp4 = mp4
+    data.create_mp4 = create_mp4
     if camera_id is "Select Camera" || interval is ""
       $(".bb-alert")
         .removeClass("alert-success")
