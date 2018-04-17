@@ -60,7 +60,9 @@ Rails.application.routes.draw do
   get "/timelapse" => "timelapse_report#index"
   get "/snapshot_extractors_list" => "snapshot_extractors#list"
   get "/admins" => "admins#index"
+  get "/admins/auto_complete" => "admins#auto_complete"
   post "/admins/new" => "admins#create"
+  patch "/admins/make_admin" => "admins#make_admin"
   delete "/admins/delete" => "admins#destroy"
   patch "/admins/update" => "admins#update"
 

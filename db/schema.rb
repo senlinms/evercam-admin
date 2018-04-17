@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_04_11_104000) do
+ActiveRecord::Schema.define(version: 2018_04_16_121600) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
@@ -61,35 +61,6 @@ ActiveRecord::Schema.define(version: 2018_04_11_104000) do
     t.text "invoice_item_id", null: false
   end
 
-  create_table "admins", id: :serial, force: :cascade do |t|
-    t.string "firstname", null: false
-    t.string "lastname", null: false
-    t.string "username", null: false
-    t.integer "country_id"
-    t.datetime "confirmed_at"
-    t.string "email", null: false
-    t.string "reset_token"
-    t.datetime "token_expires_at"
-    t.string "api_id"
-    t.string "api_key"
-    t.boolean "is_admin", default: false, null: false
-    t.string "stripe_customer_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "encrypted_password", default: "", null: false
-    t.string "reset_password_token"
-    t.datetime "reset_password_sent_at"
-    t.datetime "remember_created_at"
-    t.integer "sign_in_count", default: 0, null: false
-    t.datetime "current_sign_in_at"
-    t.datetime "last_sign_in_at"
-    t.inet "current_sign_in_ip"
-    t.inet "last_sign_in_ip"
-    t.index ["country_id"], name: "index_admins_on_country_id"
-    t.index ["email"], name: "index_admins_on_email", unique: true
-    t.index ["reset_password_token"], name: "index_admins_on_reset_password_token", unique: true
-  end
-
   create_table "apps", id: :serial, force: :cascade do |t|
     t.integer "camera_id", null: false
     t.boolean "local_recording", default: false, null: false
@@ -111,6 +82,7 @@ ActiveRecord::Schema.define(version: 2018_04_11_104000) do
     t.boolean "public"
     t.integer "frames", default: 0
     t.string "url", limit: 255
+    t.string "file_name", limit: 255
   end
 
   create_table "billing", id: :serial, force: :cascade do |t|
@@ -297,6 +269,9 @@ ActiveRecord::Schema.define(version: 2018_04_11_104000) do
     t.datetime "created_at", null: false
     t.datetime "updated_at"
     t.text "requestor"
+    t.boolean "mp4", default: false
+    t.boolean "jpegs", default: false
+    t.boolean "inject_to_cr", default: false
   end
 
   create_table "spatial_ref_sys", primary_key: "srid", id: :integer, default: nil, force: :cascade do |t|
@@ -449,7 +424,6 @@ ActiveRecord::Schema.define(version: 2018_04_11_104000) do
     t.datetime "updated_at", null: false
   end
 
-  add_foreign_key "admins", "countries"
   add_foreign_key "compares", "cameras", name: "compares_camera_id_fkey"
   add_foreign_key "compares", "users", column: "requested_by", name: "compares_requested_by_fkey"
   add_foreign_key "licences", "users", name: "licences_user_id_fkey"

@@ -157,12 +157,68 @@ deleteAdmin = ->
 
 editAdmin = ->
   $("#admin_datatables").on "click", ".edit-admin", ->
-    $("#modal-add-admin").modal("show")
-    editRowReference = $(this)
-    editRow = $(this).parents('tr')
-    firstname = $(this).attr("firstname")
-    lastname = $(this).attr("lastname")
-    setModelUpdate(admin_table.row( editRow ).data(), firstname, lastname)
+    $(".bb-alert").removeClass("alert-info").addClass("alert-danger")
+    user_row = $(this).parents('tr')
+    user_id = $(this).attr("admin-id")
+    data = {}
+    data.id = user_id
+    data.is_admin = false
+
+    onError = (jqXHR, status, error) ->
+      Notification.show(jqXHR.responseText)
+
+    onSuccess = (result, status, jqXHR) ->
+      $(".bb-alert").removeClass("alert-danger").addClass("alert-info")
+      user_row.remove()
+      Notification.show("Admin's data has been udpated.")
+
+    settings =
+      cache: false
+      data: data
+      dataType: 'json'
+      error: onError
+      success: onSuccess
+      contentType: "application/x-www-form-urlencoded"
+      type: "patch"
+      url: "/admins/update"
+
+    sendAJAXRequest(settings)
+
+make_admin = ->
+  $("#make-admin").on "click", ->
+    user_email = $("#user_email").val()
+    $(".bb-alert").removeClass("alert-info").addClass("alert-danger")
+    if user_email is ""
+      Notification.show("Please enter user email.")
+      return false
+
+    data = {}
+    data.email = user_email
+
+    onError = (jqXHR, status, error) ->
+      Notification.show(jqXHR.responseText)
+
+    onSuccess = (result, status, jqXHR) ->
+      $(".bb-alert").removeClass("alert-danger").addClass("alert-info")
+      $("#modal-make-admin").modal("hide")
+      Notification.show("Admin's data has been udpated.")
+      addNewRow(result)
+
+    settings =
+      cache: false
+      data: data
+      dataType: 'json'
+      error: onError
+      success: onSuccess
+      contentType: "application/x-www-form-urlencoded"
+      type: "patch"
+      url: "/admins/make_admin"
+
+    sendAJAXRequest(settings)
+
+closeForm = ->
+  $('#modal-make-admin').on 'hidden.bs.modal', ->
+    clearForm()
 
 setModelUpdate = (values, firstname, lastname) ->
   $("#save-admin").hide()
@@ -231,3 +287,5 @@ window.initializeAdmins = ->
   editAdmin()
   updateAdmin()
   deleteAdmin()
+  make_admin()
+  closeForm()

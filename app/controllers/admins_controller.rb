@@ -21,14 +21,38 @@ class AdminsController < ApplicationController
     end
   end
 
+  def make_admin
+    begin
+      admin = User.find_by(email: params[:email])
+      if admin.nil?
+        render json: "Email '#{params[:email]}' does not exist.", status: :unprocessable_entity  
+      else
+        admin.is_admin = true
+        admin.save
+        render json: admin.to_json
+      end
+    rescue => error
+      render json: error.message, status: :unprocessable_entity
+    end
+  end
+
+  def auto_complete
+    begin
+      admin = User.find_by(email: params[:email])
+      render json: admin.to_json
+    rescue => error
+      render json: error.message, status: :unprocessable_entity
+    end
+  end
+
   def update
     @admin = User.find(params[:id])
 
-    @admin.firstname = params[:firstname]
-    @admin.lastname = params[:lastname]
-    @admin.username = params[:username]
-    @admin.email = params[:email]
-    @admin.is_admin = params[:is_admin]
+    @admin.firstname = params[:firstname] if params[:firstname]
+    @admin.lastname = params[:lastname] if params[:lastname]
+    @admin.username = params[:username] if params[:username]
+    @admin.email = params[:email] if params[:email]
+    @admin.is_admin = params[:is_admin] if params[:is_admin]
     if params[:password]
       @admin.password = params[:password]
       @admin.password_confirmation = params[:password]

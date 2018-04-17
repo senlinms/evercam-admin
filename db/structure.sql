@@ -19,8 +19,8 @@ SET default_with_oids = false;
 
 CREATE TABLE access_rights (
     id integer NOT NULL,
-    created_at timestamp with time zone NOT NULL,
-    updated_at timestamp with time zone NOT NULL,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL,
     token_id integer NOT NULL,
     "right" text NOT NULL,
     camera_id integer,
@@ -52,10 +52,28 @@ ALTER SEQUENCE access_rights_id_seq OWNED BY access_rights.id;
 
 
 --
--- Name: sq_access_tokens; Type: SEQUENCE; Schema: public; Owner: -
+-- Name: access_tokens; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE sq_access_tokens
+CREATE TABLE access_tokens (
+    id integer NOT NULL,
+    created_at timestamp without time zone DEFAULT now() NOT NULL,
+    updated_at timestamp without time zone DEFAULT now() NOT NULL,
+    expires_at timestamp without time zone,
+    is_revoked boolean NOT NULL,
+    user_id integer,
+    client_id integer,
+    request text NOT NULL,
+    refresh text,
+    grantor_id integer
+);
+
+
+--
+-- Name: access_tokens_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE access_tokens_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -64,20 +82,29 @@ CREATE SEQUENCE sq_access_tokens
 
 
 --
--- Name: access_tokens; Type: TABLE; Schema: public; Owner: -
+-- Name: access_tokens_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-CREATE TABLE access_tokens (
-    id integer DEFAULT nextval('sq_access_tokens'::regclass) NOT NULL,
-    created_at timestamp with time zone DEFAULT now() NOT NULL,
-    updated_at timestamp with time zone DEFAULT now() NOT NULL,
-    expires_at timestamp with time zone,
-    is_revoked boolean NOT NULL,
-    user_id integer,
-    client_id integer,
-    request text NOT NULL,
-    refresh text,
-    grantor_id integer
+ALTER SEQUENCE access_tokens_id_seq OWNED BY access_tokens.id;
+
+
+--
+-- Name: add_ons; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE add_ons (
+    id integer NOT NULL,
+    user_id integer NOT NULL,
+    add_ons_name text NOT NULL,
+    period text NOT NULL,
+    add_ons_start_date timestamp without time zone NOT NULL,
+    add_ons_end_date timestamp without time zone NOT NULL,
+    status boolean NOT NULL,
+    price double precision NOT NULL,
+    created_at timestamp without time zone DEFAULT now() NOT NULL,
+    updated_at timestamp without time zone DEFAULT now() NOT NULL,
+    exid text NOT NULL,
+    invoice_item_id text NOT NULL
 );
 
 
@@ -94,74 +121,10 @@ CREATE SEQUENCE add_ons_id_seq
 
 
 --
--- Name: add_ons; Type: TABLE; Schema: public; Owner: -
+-- Name: add_ons_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-CREATE TABLE add_ons (
-    id integer DEFAULT nextval('add_ons_id_seq'::regclass) NOT NULL,
-    user_id integer NOT NULL,
-    add_ons_name text NOT NULL,
-    period text NOT NULL,
-    add_ons_start_date timestamp with time zone NOT NULL,
-    add_ons_end_date timestamp with time zone NOT NULL,
-    status boolean NOT NULL,
-    price double precision NOT NULL,
-    created_at timestamp with time zone DEFAULT now() NOT NULL,
-    updated_at timestamp with time zone DEFAULT now() NOT NULL,
-    exid text NOT NULL,
-    invoice_item_id text NOT NULL
-);
-
-
---
--- Name: admins; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE admins (
-    id integer NOT NULL,
-    firstname character varying NOT NULL,
-    lastname character varying NOT NULL,
-    username character varying NOT NULL,
-    country_id integer,
-    confirmed_at timestamp without time zone,
-    email character varying NOT NULL,
-    reset_token character varying,
-    token_expires_at timestamp without time zone,
-    api_id character varying,
-    api_key character varying,
-    is_admin boolean DEFAULT false NOT NULL,
-    stripe_customer_id character varying,
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL,
-    encrypted_password character varying DEFAULT ''::character varying NOT NULL,
-    reset_password_token character varying,
-    reset_password_sent_at timestamp without time zone,
-    remember_created_at timestamp without time zone,
-    sign_in_count integer DEFAULT 0 NOT NULL,
-    current_sign_in_at timestamp without time zone,
-    last_sign_in_at timestamp without time zone,
-    current_sign_in_ip inet,
-    last_sign_in_ip inet
-);
-
-
---
--- Name: admins_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE admins_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: admins_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE admins_id_seq OWNED BY admins.id;
+ALTER SEQUENCE add_ons_id_seq OWNED BY add_ons.id;
 
 
 --
@@ -218,10 +181,10 @@ CREATE TABLE archives (
     camera_id integer NOT NULL,
     exid text NOT NULL,
     title text NOT NULL,
-    from_date timestamp with time zone NOT NULL,
-    to_date timestamp with time zone NOT NULL,
+    from_date timestamp without time zone NOT NULL,
+    to_date timestamp without time zone NOT NULL,
     status integer NOT NULL,
-    created_at timestamp with time zone DEFAULT now() NOT NULL,
+    created_at timestamp without time zone DEFAULT now() NOT NULL,
     requested_by integer NOT NULL,
     embed_time boolean,
     public boolean,
@@ -232,10 +195,10 @@ CREATE TABLE archives (
 
 
 --
--- Name: archive_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+-- Name: archives_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE archive_id_seq
+CREATE SEQUENCE archives_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -244,10 +207,10 @@ CREATE SEQUENCE archive_id_seq
 
 
 --
--- Name: archive_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+-- Name: archives_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE archive_id_seq OWNED BY archives.id;
+ALTER SEQUENCE archives_id_seq OWNED BY archives.id;
 
 
 --
@@ -259,8 +222,8 @@ CREATE TABLE billing (
     user_id integer NOT NULL,
     timelapse integer,
     snapmail integer,
-    created_at timestamp with time zone DEFAULT now() NOT NULL,
-    updated_at timestamp with time zone DEFAULT now() NOT NULL
+    created_at timestamp without time zone DEFAULT now() NOT NULL,
+    updated_at timestamp without time zone DEFAULT now() NOT NULL
 );
 
 
@@ -292,7 +255,7 @@ CREATE TABLE camera_activities (
     camera_id integer NOT NULL,
     access_token_id integer,
     action text NOT NULL,
-    done_at timestamp with time zone NOT NULL,
+    done_at timestamp without time zone NOT NULL,
     ip inet,
     extra json,
     camera_exid text,
@@ -363,8 +326,8 @@ CREATE TABLE camera_share_requests (
     email character varying(250) NOT NULL,
     status integer NOT NULL,
     rights character varying(1000) NOT NULL,
-    created_at timestamp with time zone NOT NULL,
-    updated_at timestamp with time zone NOT NULL,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL,
     message text
 );
 
@@ -398,8 +361,8 @@ CREATE TABLE camera_shares (
     user_id integer NOT NULL,
     sharer_id integer,
     kind character varying(50) NOT NULL,
-    created_at timestamp with time zone NOT NULL,
-    updated_at timestamp with time zone NOT NULL,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL,
     message text
 );
 
@@ -424,54 +387,48 @@ ALTER SEQUENCE camera_shares_id_seq OWNED BY camera_shares.id;
 
 
 --
--- Name: sq_streams; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE sq_streams
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
 -- Name: cameras; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE cameras (
-    id integer DEFAULT nextval('sq_streams'::regclass) NOT NULL,
-    created_at timestamp with time zone DEFAULT now() NOT NULL,
-    updated_at timestamp with time zone DEFAULT now() NOT NULL,
+    id integer NOT NULL,
+    created_at timestamp without time zone DEFAULT now() NOT NULL,
+    updated_at timestamp without time zone DEFAULT now() NOT NULL,
     exid text NOT NULL,
     owner_id integer NOT NULL,
     is_public boolean NOT NULL,
     config json NOT NULL,
     name text NOT NULL,
-    last_polled_at timestamp with time zone DEFAULT now(),
+    last_polled_at timestamp without time zone,
     is_online boolean,
     timezone text,
-    last_online_at timestamp with time zone DEFAULT now(),
+    last_online_at timestamp without time zone,
     location integer,
     mac_address macaddr,
     model_id integer,
-    discoverable boolean DEFAULT false NOT NULL,
-    thumbnail_url text,
-    is_online_email_owner_notification boolean DEFAULT false NOT NULL,
-    alert_emails text
+    discoverable boolean,
+    preview text,
+    thumbnail_url text
 );
 
 
 --
--- Name: sq_clients; Type: SEQUENCE; Schema: public; Owner: -
+-- Name: cameras_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE sq_clients
+CREATE SEQUENCE cameras_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
     CACHE 1;
+
+
+--
+-- Name: cameras_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE cameras_id_seq OWNED BY cameras.id;
 
 
 --
@@ -479,15 +436,34 @@ CREATE SEQUENCE sq_clients
 --
 
 CREATE TABLE clients (
-    id integer DEFAULT nextval('sq_clients'::regclass) NOT NULL,
-    created_at timestamp with time zone DEFAULT now() NOT NULL,
-    updated_at timestamp with time zone DEFAULT now() NOT NULL,
+    id integer NOT NULL,
+    created_at timestamp without time zone DEFAULT now() NOT NULL,
+    updated_at timestamp without time zone DEFAULT now() NOT NULL,
     api_id text NOT NULL,
     callback_uris text[],
     api_key text,
     name text,
     settings text
 );
+
+
+--
+-- Name: clients_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE clients_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: clients_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE clients_id_seq OWNED BY clients.id;
 
 
 --
@@ -524,23 +500,11 @@ ALTER SEQUENCE cloud_recordings_id_seq OWNED BY cloud_recordings.id;
 
 
 --
--- Name: compares_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE compares_id_seq
-    START WITH 35
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
 -- Name: compares; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE compares (
-    id integer DEFAULT nextval('compares_id_seq'::regclass) NOT NULL,
+    id integer NOT NULL,
     exid character varying(255) NOT NULL,
     name character varying(255) NOT NULL,
     before_date timestamp without time zone NOT NULL,
@@ -556,10 +520,10 @@ CREATE TABLE compares (
 
 
 --
--- Name: sq_countries; Type: SEQUENCE; Schema: public; Owner: -
+-- Name: compares_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE sq_countries
+CREATE SEQUENCE compares_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -568,16 +532,42 @@ CREATE SEQUENCE sq_countries
 
 
 --
+-- Name: compares_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE compares_id_seq OWNED BY compares.id;
+
+
+--
 -- Name: countries; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE countries (
-    id integer DEFAULT nextval('sq_countries'::regclass) NOT NULL,
-    created_at timestamp with time zone DEFAULT now() NOT NULL,
-    updated_at timestamp with time zone DEFAULT now() NOT NULL,
+    id integer NOT NULL,
+    created_at timestamp without time zone DEFAULT now() NOT NULL,
+    updated_at timestamp without time zone DEFAULT now() NOT NULL,
     iso3166_a2 text NOT NULL,
     name text NOT NULL
 );
+
+
+--
+-- Name: countries_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE countries_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: countries_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE countries_id_seq OWNED BY countries.id;
 
 
 --
@@ -594,13 +584,13 @@ CREATE TABLE licences (
     paid boolean DEFAULT false NOT NULL,
     vat boolean DEFAULT false NOT NULL,
     vat_number integer,
-    start_date timestamp with time zone NOT NULL,
-    end_date timestamp with time zone NOT NULL,
-    created_at timestamp with time zone NOT NULL,
+    start_date timestamp without time zone NOT NULL,
+    end_date timestamp without time zone NOT NULL,
+    created_at timestamp without time zone NOT NULL,
     cancel_licence boolean DEFAULT false NOT NULL,
     subscription_id text,
     auto_renew boolean DEFAULT false NOT NULL,
-    auto_renew_at timestamp with time zone
+    auto_renew_at timestamp without time zone
 );
 
 
@@ -707,8 +697,7 @@ ALTER SEQUENCE motion_detections_id_seq OWNED BY motion_detections.id;
 --
 
 CREATE TABLE schema_migrations (
-    version bigint NOT NULL,
-    inserted_at timestamp without time zone
+    version character varying NOT NULL
 );
 
 
@@ -791,14 +780,14 @@ ALTER SEQUENCE snapmails_id_seq OWNED BY snapmails.id;
 CREATE TABLE snapshot_extractors (
     id integer NOT NULL,
     camera_id integer NOT NULL,
-    from_date timestamp with time zone NOT NULL,
-    to_date timestamp with time zone NOT NULL,
+    from_date timestamp without time zone NOT NULL,
+    to_date timestamp without time zone NOT NULL,
     "interval" integer NOT NULL,
     schedule json NOT NULL,
     status integer DEFAULT 0 NOT NULL,
     notes text,
-    created_at timestamp with time zone NOT NULL,
-    updated_at timestamp with time zone,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone,
     requestor text
 );
 
@@ -820,66 +809,6 @@ CREATE SEQUENCE snapshot_extractors_id_seq
 --
 
 ALTER SEQUENCE snapshot_extractors_id_seq OWNED BY snapshot_extractors.id;
-
-
---
--- Name: sq_access_tokens_streams_rights; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE sq_access_tokens_streams_rights
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: sq_devices; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE sq_devices
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: sq_firmwares; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE sq_firmwares
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: sq_users; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE sq_users
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: sq_vendors; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE sq_vendors
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
 
 
 --
@@ -971,15 +900,15 @@ ALTER SEQUENCE timelapses_id_seq OWNED BY timelapses.id;
 --
 
 CREATE TABLE users (
-    id integer DEFAULT nextval('sq_users'::regclass) NOT NULL,
-    created_at timestamp with time zone DEFAULT now() NOT NULL,
-    updated_at timestamp with time zone DEFAULT now() NOT NULL,
+    id integer NOT NULL,
+    created_at timestamp without time zone DEFAULT now() NOT NULL,
+    updated_at timestamp without time zone DEFAULT now() NOT NULL,
     firstname text NOT NULL,
     lastname text NOT NULL,
     username text NOT NULL,
     password text NOT NULL,
     country_id integer,
-    confirmed_at timestamp with time zone,
+    confirmed_at timestamp without time zone,
     email text NOT NULL,
     reset_token text,
     token_expires_at timestamp without time zone,
@@ -988,7 +917,7 @@ CREATE TABLE users (
     is_admin boolean DEFAULT false NOT NULL,
     stripe_customer_id text,
     billing_id text,
-    last_login_at timestamp with time zone,
+    last_login_at timestamp without time zone,
     vat_number text,
     payment_method integer DEFAULT 0,
     insight_id text,
@@ -1005,19 +934,38 @@ CREATE TABLE users (
 
 
 --
+-- Name: users_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE users_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: users_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE users_id_seq OWNED BY users.id;
+
+
+--
 -- Name: users_old; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE users_old (
     id integer NOT NULL,
-    created_at timestamp with time zone DEFAULT now() NOT NULL,
-    updated_at timestamp with time zone DEFAULT now() NOT NULL,
+    created_at timestamp without time zone DEFAULT now() NOT NULL,
+    updated_at timestamp without time zone DEFAULT now() NOT NULL,
     firstname text NOT NULL,
     lastname text NOT NULL,
     username text NOT NULL,
     password text NOT NULL,
     country_id integer,
-    confirmed_at timestamp with time zone,
+    confirmed_at timestamp without time zone,
     email text NOT NULL,
     reset_token text,
     token_expires_at timestamp without time zone,
@@ -1026,7 +974,7 @@ CREATE TABLE users_old (
     is_admin boolean DEFAULT false NOT NULL,
     stripe_customer_id text,
     billing_id text,
-    last_login_at timestamp with time zone,
+    last_login_at timestamp without time zone,
     vat_number text,
     payment_method integer DEFAULT 0,
     insight_id text
@@ -1038,9 +986,9 @@ CREATE TABLE users_old (
 --
 
 CREATE TABLE vendor_models (
-    id integer DEFAULT nextval('sq_firmwares'::regclass) NOT NULL,
-    created_at timestamp with time zone DEFAULT now() NOT NULL,
-    updated_at timestamp with time zone DEFAULT now() NOT NULL,
+    id integer NOT NULL,
+    created_at timestamp without time zone DEFAULT now() NOT NULL,
+    updated_at timestamp without time zone DEFAULT now() NOT NULL,
     vendor_id integer NOT NULL,
     name text NOT NULL,
     config json NOT NULL,
@@ -1071,17 +1019,55 @@ CREATE TABLE vendor_models (
 
 
 --
+-- Name: vendor_models_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE vendor_models_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: vendor_models_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE vendor_models_id_seq OWNED BY vendor_models.id;
+
+
+--
 -- Name: vendors; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE vendors (
-    id integer DEFAULT nextval('sq_vendors'::regclass) NOT NULL,
-    created_at timestamp with time zone DEFAULT now() NOT NULL,
-    updated_at timestamp with time zone DEFAULT now() NOT NULL,
+    id integer NOT NULL,
+    created_at timestamp without time zone DEFAULT now() NOT NULL,
+    updated_at timestamp without time zone DEFAULT now() NOT NULL,
     exid text NOT NULL,
     known_macs text[] NOT NULL,
     name text NOT NULL
 );
+
+
+--
+-- Name: vendors_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE vendors_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: vendors_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE vendors_id_seq OWNED BY vendors.id;
 
 
 --
@@ -1094,8 +1080,8 @@ CREATE TABLE webhooks (
     user_id integer NOT NULL,
     url text NOT NULL,
     exid text,
-    created_at timestamp with time zone NOT NULL,
-    updated_at timestamp with time zone NOT NULL
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
 );
 
 
@@ -1126,10 +1112,17 @@ ALTER TABLE ONLY access_rights ALTER COLUMN id SET DEFAULT nextval('access_right
 
 
 --
--- Name: admins id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: access_tokens id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY admins ALTER COLUMN id SET DEFAULT nextval('admins_id_seq'::regclass);
+ALTER TABLE ONLY access_tokens ALTER COLUMN id SET DEFAULT nextval('access_tokens_id_seq'::regclass);
+
+
+--
+-- Name: add_ons id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY add_ons ALTER COLUMN id SET DEFAULT nextval('add_ons_id_seq'::regclass);
 
 
 --
@@ -1143,7 +1136,7 @@ ALTER TABLE ONLY apps ALTER COLUMN id SET DEFAULT nextval('apps_id_seq'::regclas
 -- Name: archives id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY archives ALTER COLUMN id SET DEFAULT nextval('archive_id_seq'::regclass);
+ALTER TABLE ONLY archives ALTER COLUMN id SET DEFAULT nextval('archives_id_seq'::regclass);
 
 
 --
@@ -1182,10 +1175,38 @@ ALTER TABLE ONLY camera_shares ALTER COLUMN id SET DEFAULT nextval('camera_share
 
 
 --
+-- Name: cameras id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY cameras ALTER COLUMN id SET DEFAULT nextval('cameras_id_seq'::regclass);
+
+
+--
+-- Name: clients id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY clients ALTER COLUMN id SET DEFAULT nextval('clients_id_seq'::regclass);
+
+
+--
 -- Name: cloud_recordings id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY cloud_recordings ALTER COLUMN id SET DEFAULT nextval('cloud_recordings_id_seq'::regclass);
+
+
+--
+-- Name: compares id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY compares ALTER COLUMN id SET DEFAULT nextval('compares_id_seq'::regclass);
+
+
+--
+-- Name: countries id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY countries ALTER COLUMN id SET DEFAULT nextval('countries_id_seq'::regclass);
 
 
 --
@@ -1245,6 +1266,27 @@ ALTER TABLE ONLY timelapses ALTER COLUMN id SET DEFAULT nextval('timelapses_id_s
 
 
 --
+-- Name: users id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY users ALTER COLUMN id SET DEFAULT nextval('users_id_seq'::regclass);
+
+
+--
+-- Name: vendor_models id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY vendor_models ALTER COLUMN id SET DEFAULT nextval('vendor_models_id_seq'::regclass);
+
+
+--
+-- Name: vendors id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY vendors ALTER COLUMN id SET DEFAULT nextval('vendors_id_seq'::regclass);
+
+
+--
 -- Name: webhooks id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -1260,19 +1302,19 @@ ALTER TABLE ONLY access_rights
 
 
 --
+-- Name: access_tokens access_tokens_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY access_tokens
+    ADD CONSTRAINT access_tokens_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: add_ons add_ons_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY add_ons
     ADD CONSTRAINT add_ons_pkey PRIMARY KEY (id);
-
-
---
--- Name: admins admins_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY admins
-    ADD CONSTRAINT admins_pkey PRIMARY KEY (id);
 
 
 --
@@ -1332,6 +1374,22 @@ ALTER TABLE ONLY camera_shares
 
 
 --
+-- Name: cameras cameras_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY cameras
+    ADD CONSTRAINT cameras_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: clients clients_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY clients
+    ADD CONSTRAINT clients_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: cloud_recordings cloud_recordings_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1345,6 +1403,14 @@ ALTER TABLE ONLY cloud_recordings
 
 ALTER TABLE ONLY compares
     ADD CONSTRAINT compares_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: countries countries_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY countries
+    ADD CONSTRAINT countries_pkey PRIMARY KEY (id);
 
 
 --
@@ -1369,70 +1435,6 @@ ALTER TABLE ONLY meta_datas
 
 ALTER TABLE ONLY motion_detections
     ADD CONSTRAINT motion_detections_pkey PRIMARY KEY (id);
-
-
---
--- Name: access_tokens pk_access_tokens; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY access_tokens
-    ADD CONSTRAINT pk_access_tokens PRIMARY KEY (id);
-
-
---
--- Name: clients pk_clients; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY clients
-    ADD CONSTRAINT pk_clients PRIMARY KEY (id);
-
-
---
--- Name: countries pk_countries; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY countries
-    ADD CONSTRAINT pk_countries PRIMARY KEY (id);
-
-
---
--- Name: vendor_models pk_firmwares; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY vendor_models
-    ADD CONSTRAINT pk_firmwares PRIMARY KEY (id);
-
-
---
--- Name: cameras pk_streams; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY cameras
-    ADD CONSTRAINT pk_streams PRIMARY KEY (id);
-
-
---
--- Name: users pk_users; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY users
-    ADD CONSTRAINT pk_users PRIMARY KEY (id);
-
-
---
--- Name: users_old pk_users_old; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY users_old
-    ADD CONSTRAINT pk_users_old PRIMARY KEY (id);
-
-
---
--- Name: vendors pk_vendors; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY vendors
-    ADD CONSTRAINT pk_vendors PRIMARY KEY (id);
 
 
 --
@@ -1481,6 +1483,38 @@ ALTER TABLE ONLY timelapse_recordings
 
 ALTER TABLE ONLY timelapses
     ADD CONSTRAINT timelapses_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: users_old users_old_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY users_old
+    ADD CONSTRAINT users_old_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: users users_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY users
+    ADD CONSTRAINT users_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: vendor_models vendor_models_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY vendor_models
+    ADD CONSTRAINT vendor_models_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: vendors vendors_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY vendors
+    ADD CONSTRAINT vendors_pkey PRIMARY KEY (id);
 
 
 --
@@ -1569,20 +1603,6 @@ CREATE INDEX camera_shares_user_id_index ON public.camera_shares USING btree (us
 
 
 --
--- Name: cameras_exid_index; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE UNIQUE INDEX cameras_exid_index ON public.cameras USING btree (exid);
-
-
---
--- Name: cameras_mac_address_index; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX cameras_mac_address_index ON public.cameras USING btree (mac_address);
-
-
---
 -- Name: cloud_recordings_camera_id_index; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1611,27 +1631,6 @@ CREATE UNIQUE INDEX exid_unique_index ON public.snapmails USING btree (exid);
 
 
 --
--- Name: index_admins_on_country_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_admins_on_country_id ON public.admins USING btree (country_id);
-
-
---
--- Name: index_admins_on_email; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE UNIQUE INDEX index_admins_on_email ON public.admins USING btree (email);
-
-
---
--- Name: index_admins_on_reset_password_token; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE UNIQUE INDEX index_admins_on_reset_password_token ON public.admins USING btree (reset_password_token);
-
-
---
 -- Name: index_users_on_reset_password_token; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1657,13 +1656,6 @@ CREATE INDEX ix_access_tokens_grantor_id ON public.access_tokens USING btree (us
 --
 
 CREATE INDEX ix_firmwares_vendor_id ON public.vendor_models USING btree (vendor_id);
-
-
---
--- Name: ix_streams_owner_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX ix_streams_owner_id ON public.cameras USING btree (owner_id);
 
 
 --
@@ -1715,14 +1707,6 @@ ALTER TABLE ONLY compares
 
 ALTER TABLE ONLY compares
     ADD CONSTRAINT compares_requested_by_fkey FOREIGN KEY (requested_by) REFERENCES users(id);
-
-
---
--- Name: admins fk_rails_d63dcfc649; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY admins
-    ADD CONSTRAINT fk_rails_d63dcfc649 FOREIGN KEY (country_id) REFERENCES countries(id);
 
 
 --
@@ -1812,27 +1796,10 @@ ALTER TABLE ONLY timelapses
 SET search_path TO public;
 
 INSERT INTO "schema_migrations" (version) VALUES
-(20150622102645),
-(20150629144629),
-(20150629183319),
-(20160616160229),
-(20160712101523),
-(20160720125939),
-(20160727112052),
-(20160830055709),
-(20161202114834),
-(20161202115000),
-(20161213162000),
-(20161219130300),
-(20161221070146),
-(20161221070226),
-(20170103162400),
-(20170112110000),
-(20170213140200),
-(20170222114100),
-(20170414141100),
-(20170419105000),
-(20171009070501),
-(20180411104000);
+('20150622102645'),
+('20150629144629'),
+('20150629183319'),
+('20180411104000'),
+('20180416121600');
 
 
