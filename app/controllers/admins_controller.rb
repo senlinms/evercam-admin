@@ -25,11 +25,15 @@ class AdminsController < ApplicationController
     begin
       admin = User.find_by(email: params[:email])
       if admin.nil?
-        render json: "Email '#{params[:email]}' does not exist.", status: :unprocessable_entity  
+        render json: "Email '#{params[:email]}' does not exist.", status: :unprocessable_entity
       else
-        admin.is_admin = true
-        admin.save
-        render json: admin.to_json
+        if admin.is_admin == true
+          render json: "User role already changed to admin.", status: :unprocessable_entity
+        else
+          admin.is_admin = true
+          admin.save
+          render json: admin.to_json
+        end
       end
     rescue => error
       render json: error.message, status: :unprocessable_entity

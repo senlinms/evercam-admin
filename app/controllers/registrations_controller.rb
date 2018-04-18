@@ -14,6 +14,8 @@ class RegistrationsController < Devise::RegistrationsController
 
   def signup_without_sign_in
     build_resource(sign_up_params)
+    resource["api_id"] = SecureRandom.hex(4)
+    resource["api_key"] = SecureRandom.hex
 
     resource.save
     yield resource if block_given?

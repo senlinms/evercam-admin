@@ -105,6 +105,7 @@ clearForm = ->
   $("#email").val("")
   $("#password").val("")
   $("#is_admin").val("true")
+  $("#user_email").val("")
 
 addNewRow = (admin) ->
   admin_table.row.add([

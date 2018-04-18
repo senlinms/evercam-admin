@@ -29,8 +29,6 @@ class User < ActiveRecord::Base
   end
 
   def add_missing_fields
-    self["api_id"] = SecureRandom.hex(4)
-    self["api_key"] = SecureRandom.hex
     self["password"] = self.encrypted_password
     self["username"] = self.email
   end
