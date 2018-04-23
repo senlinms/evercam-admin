@@ -82,7 +82,6 @@ ActiveRecord::Schema.define(version: 2018_04_16_121600) do
     t.boolean "public"
     t.integer "frames", default: 0
     t.string "url", limit: 255
-    t.string "file_name", limit: 255
   end
 
   create_table "billing", id: :serial, force: :cascade do |t|
@@ -269,9 +268,6 @@ ActiveRecord::Schema.define(version: 2018_04_16_121600) do
     t.datetime "created_at", null: false
     t.datetime "updated_at"
     t.text "requestor"
-    t.boolean "mp4", default: false
-    t.boolean "jpegs", default: false
-    t.boolean "inject_to_cr", default: false
   end
 
   create_table "spatial_ref_sys", primary_key: "srid", id: :integer, default: nil, force: :cascade do |t|
@@ -330,7 +326,7 @@ ActiveRecord::Schema.define(version: 2018_04_16_121600) do
     t.datetime "token_expires_at"
     t.text "api_id"
     t.text "api_key"
-    t.boolean "is_admin", default: false, null: false
+    t.boolean "is_admin", default: true, null: false
     t.text "stripe_customer_id"
     t.text "billing_id"
     t.datetime "last_login_at"
