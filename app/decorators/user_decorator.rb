@@ -11,7 +11,9 @@ class UserDecorator < Draper::Decorator
            :created_at,
            :camera_shares,
            :api_id,
-           :api_key
+           :api_key,
+           :payment_method,
+           :insight_id
 
   def is_admin
     h.human_boolean(object.is_admin?)
