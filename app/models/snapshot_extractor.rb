@@ -2,6 +2,12 @@ class SnapshotExtractor < ActiveRecord::Base
 	establish_connection "evercam_db_#{Rails.env}".to_sym
 
 	belongs_to :camera
+  validates :from_date, presence: true
+  validates :to_date, presence: true
+  validates :schedule, presence: true
+  validates :requestor, presence: true
+  validates :interval, presence: true
+
 	require "rmega"
 	require "aws-sdk-v1"
 	require "open-uri"

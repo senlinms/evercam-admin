@@ -12,7 +12,6 @@ RSpec.describe ArchivesController, type: :controller do
   context 'with auth' do
     describe 'GET #index' do
       it "renders the :index" do
-        
         get :index
         expect(response.status).to eq(302)
       end
