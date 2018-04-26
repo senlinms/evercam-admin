@@ -90,20 +90,7 @@ getEmailTemplate = (id) ->
       dataType: 'json'
       type: 'get'
       success: (data) ->
-
         $div = $(data.body)
-        timestamp = new Date(data.timestamp * 1000)
-
-        year = moment.utc(timestamp).format("YYYY")
-        month = moment.utc(timestamp).format("MM")
-        day = moment.utc(timestamp).format("DD")
-        hour = moment.utc(timestamp).format("HH")
-        minutes = moment.utc(timestamp).format("mm")
-        seconds = moment.utc(timestamp).format("ss")
-
-        $div.find(".last-snapmail-snapshot").map ->
-          $(this).attr('src', "#{data.filer_url}/#{$(this).attr('id')}/snapshots/snapmail/#{year}/#{month}/#{day}/#{hour}/#{minutes}_#{seconds}_000.jpg")
-
         $("#snapmail-template").html($div)
         $('#add-action').modal('show')
       error: (xhr, status, error) ->

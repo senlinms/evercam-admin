@@ -11,9 +11,7 @@ class SnapmailsController < ApplicationController
   def get_email_temaplate
     snapmail = SnapmailLogs.find(params[:id])
     render json: {
-      body: snapmail.body,
-      timestamp: snapmail.image_timestamp,
-      filer_url: filer_url
+      body: set_jpeg_src(snapmail.body, snapmail.image_timestamp),
     }
   end
 
@@ -42,5 +40,29 @@ class SnapmailsController < ApplicationController
       image['src'] = ""
     end
     doc.to_html
+  end
+
+  def set_jpeg_src(body, timestamp)
+    doc = Nokogiri::HTML(body)
+    image_nodes = doc.css(".last-snapmail-snapshot")
+    camera_id = image_nodes.first['id']
+    image_nodes.first['src'] = get_s3_pre_auth_url(timestamp, camera_id)
+    doc.to_html
+  end
+
+  def get_s3_pre_auth_url(timestamp, camera_id)
+    bucket = get_s3_bucket()
+    jpeg_path = DateTime.strptime(timestamp, "%s").strftime("%Y/%m/%d/%H/%M_%S_000")
+    bucket.objects["#{camera_id}/snapmails/#{jpeg_path}.jpg"].url_for(:get, {expires: 1.years.from_now, secure: true}).to_s
+  end
+
+  def get_s3_bucket
+    access_key_id = "#{ENV['AWS_ACCESS_KEY']}"
+    secret_access_key = "#{ENV['AWS_SECRET_KEY']}"
+    s3 = AWS::S3.new(
+      access_key_id: access_key_id,
+      secret_access_key: secret_access_key,
+    )
+    s3.buckets["evercam-camera-assets"]
   end
 end
