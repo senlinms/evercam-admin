@@ -58,10 +58,13 @@
       <div class="form-group">
         <label for="inputSchedule" class="col-lg-2 control-label">Schedule</label>
         <div class="col-xs-3">
-          <div id="cloud-recording-calendar-wrap form-control">
-            <div id="cloud-recording-calendar">
-              <span id="cloud-recording-collaps"><span class="glyphicon glyphicon-chevron-down"></span></span>
-            </div>
+          <select name="schedule" class="form-control" id="_schedule">
+            <option value="full_week">Full Week</option>
+            <option value="working_hours" selected="selected">Working Hours</option>
+            <option value="random_hours">Random Selection</option>
+          </select>
+          <div class="cloud-recording-calendar" style="margin-top: 10px;">
+            <span id="cloud-recording-collaps"><span class="glyphicon glyphicon-chevron-down"></span></span>
           </div>
         </div>
       </div>

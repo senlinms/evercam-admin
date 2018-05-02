@@ -1,13 +1,23 @@
 schedule = undefined
 scheduleCalendar = undefined
-fullWeekSchedule =
-  "Monday": ["08:00-17:30"]
-  "Tuesday": ["08:00-17:30"]
-  "Wednesday": ["08:00-17:30"]
-  "Thursday": ["08:00-17:30"]
-  "Friday": ["08:00-17:30"]
+workingHours =
+  "Monday": ["08:00-18:00"]
+  "Tuesday": ["08:00-18:00"]
+  "Wednesday": ["08:00-18:00"]
+  "Thursday": ["08:00-18:00"]
+  "Friday": ["08:00-18:00"]
   "Saturday": []
   "Sunday": []
+
+fullWeekSchedule =
+  "Monday": ["00:00-23:59"]
+  "Tuesday": ["00:00-23:59"]
+  "Wednesday": ["00:00-23:59"]
+  "Thursday": ["00:00-23:59"]
+  "Friday": ["00:00-23:59"]
+  "Saturday": ["00:00-23:59"]
+  "Sunday": ["00:00-23:59"]
+
 data = {}
 
 sendAJAXRequest = (settings) ->
@@ -32,7 +42,7 @@ getTodayDate = ->
   date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear()
 
 initScheduleCalendar = ->
-  scheduleCalendar = $('#cloud-recording-calendar').fullCalendar
+  scheduleCalendar = $('.cloud-recording-calendar').fullCalendar
     axisFormat: 'HH'
     allDaySlot: false
     columnFormat: 'ddd'
@@ -60,7 +70,6 @@ initScheduleCalendar = ->
       right: ''
     height: 'auto'
     select: (start, end) ->
-      # TODO: select whole day range when allDaySlot is selected
       eventData =
         start: start
         end: end
@@ -104,10 +113,10 @@ updateScheduleFromCalendar = ->
   schedule
 
 makeScheduleOpen = ->
-  $('#cloud-recording-calendar').addClass 'open'
+  $('.cloud-recording-calendar').addClass 'open'
 
 parseCalendar = ->
-  events = $('#cloud-recording-calendar').fullCalendar('clientEvents')
+  events = $('.cloud-recording-calendar').fullCalendar('clientEvents')
   schedule =
     'Monday': []
     'Tuesday': []
@@ -118,10 +127,18 @@ parseCalendar = ->
     'Sunday': []
   _.forEach events, (event) ->
     startTime = "#{moment(event.start).get('hours')}:#{moment(event.start).get('minutes')}"
-    endTime = "#{moment(event.end).get('hours')}:#{moment(event.end).get('minutes')}"
+    endingTime = "#{moment(event.end).get('hours')}:#{moment(event.end).get('minutes')}"
+    endTime = if endingTime == "0:0" then "23:59" else endingTime
     day = moment(event.start).format('dddd')
     schedule[day] = schedule[day].concat("#{startTime}-#{endTime}")
   schedule
+
+onSelectiveEvents = ->
+  $("#_schedule").on "change", ->
+    if $(this).val() == "random_hours"
+      initScheduleCalendar()
+    else
+      $('.cloud-recording-calendar').fullCalendar('destroy')
 
 onSearchSET = ->
   $("#set").on "click", ->
@@ -130,8 +147,10 @@ onSearchSET = ->
     to_date = $("#datetimepicker2").val()
     interval = $("#interval").val()
     create_mp4 = $("#create_mp4").val()
-    if schedule is undefined
-      schedule = JSON.stringify(fullWeekSchedule)
+    if $("#_schedule").val() == "full_week"
+      schedule = fullWeekSchedule
+    else if $("#_schedule").val() == "working_hours"
+      schedule = workingHours
     else
       schedule = parseCalendar()
     data.camera_id = camera_id
@@ -166,10 +185,8 @@ putMeInDatabase = (data) ->
 
   onSuccess = (data) ->
     clearForm()
-    $('#cloud-recording-calendar').fullCalendar('destroy')
-    initScheduleCalendar()
+    $('.cloud-recording-calendar').fullCalendar('destroy')
     makeScheduleOpen()
-    renderEvents()
     $(".bb-alert")
       .removeClass("alert-danger")
       .addClass("alert-success")
@@ -198,12 +215,12 @@ clearForm = ->
   $("#datetimepicker1").val getTodayDate()
   $("#datetimepicker2").val getTodayDate()
   $('#interval option:eq(4)').prop('selected', true)
+  $('#_schedule option:eq(1)').prop('selected', true)
   schedule = undefined
 
 window.initializSnapshotExtractors = ->
   initDateTime()
-  initScheduleCalendar()
+  onSelectiveEvents()
   makeScheduleOpen()
-  renderEvents()
   onSearchSET()
   initChosen()

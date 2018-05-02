@@ -1,7 +1,7 @@
 schedule = undefined
 scheduleCalendar = undefined
 camera_select = null
-fullWeekSchedule =
+workingHours =
   "Monday": ["08:00-18:00"]
   "Tuesday": ["08:00-18:00"]
   "Wednesday": ["08:00-18:00"]
@@ -9,6 +9,15 @@ fullWeekSchedule =
   "Friday": ["08:00-18:00"]
   "Saturday": []
   "Sunday": []
+
+fullWeekSchedule =
+  "Monday": ["00:00-23:59"]
+  "Tuesday": ["00:00-23:59"]
+  "Wednesday": ["00:00-23:59"]
+  "Thursday": ["00:00-23:59"]
+  "Friday": ["00:00-23:59"]
+  "Saturday": ["00:00-23:59"]
+  "Sunday": ["00:00-23:59"]
 
 sendAJAXRequest = (settings) ->
   token = $('meta[name="csrf-token"]')
@@ -81,7 +90,7 @@ getTodayDate = ->
   date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear()
 
 initScheduleCalendar = ->
-  scheduleCalendar = $('#cloud-recording-calendar').fullCalendar
+  scheduleCalendar = $('.cloud-recording-calendar').fullCalendar
     axisFormat: 'HH'
     allDaySlot: false
     columnFormat: 'ddd'
@@ -137,6 +146,13 @@ renderEvents = ->
         scheduleCalendar.fullCalendar('renderEvent', event, true)
   schedule = JSON.stringify(parseCalendar())
 
+onSelectiveEvents = ->
+  $("#_schedule").on "change", ->
+    if $(this).val() == "random_hours"
+      initScheduleCalendar()
+    else
+      $('.cloud-recording-calendar').fullCalendar('destroy')
+
 currentCalendarWeek = ->
   calendarWeek = {}
   weekStart = scheduleCalendar.fullCalendar('getView').start
@@ -153,10 +169,10 @@ updateScheduleFromCalendar = ->
   schedule
 
 makeScheduleOpen = ->
-  $('#cloud-recording-calendar').addClass 'open'
+  $('.cloud-recording-calendar').addClass 'open'
 
 parseCalendar = ->
-  events = $('#cloud-recording-calendar').fullCalendar('clientEvents')
+  events = $('.cloud-recording-calendar').fullCalendar('clientEvents')
   schedule =
     'Monday': []
     'Tuesday': []
@@ -167,7 +183,8 @@ parseCalendar = ->
     'Sunday': []
   _.forEach events, (event) ->
     startTime = "#{moment(event.start).get('hours')}:#{moment(event.start).get('minutes')}"
-    endTime = "#{moment(event.end).get('hours')}:#{moment(event.end).get('minutes')}"
+    endingTime = "#{moment(event.end).get('hours')}:#{moment(event.end).get('minutes')}"
+    endTime = if endingTime == "0:0" then "23:59" else endingTime
     day = moment(event.start).format('dddd')
     schedule[day] = schedule[day].concat("#{startTime}-#{endTime}")
   schedule
@@ -184,10 +201,12 @@ onSearchSET = ->
     jpegs_to_dropbox = $("#jpegs_to_dropbox").val()
     inject_to_cr = $("#inject_to_cr").val()
 
-    if schedule is undefined
-      schedule = JSON.stringify(fullWeekSchedule)
+    if $("#_schedule").val() == "full_week"
+      schedule = fullWeekSchedule
+    else if $("#_schedule").val() == "working_hours"
+      schedule = workingHours
     else
-      schedule
+      schedule = parseCalendar()
 
     data = {}
     data.start_date = moment.utc("#{from_date} 00:00:00", "DD/MM/YYYY HH:mm:ss") / 1000
@@ -278,8 +297,7 @@ clearForm = ->
 
 window.initializNvrSnapshotExtractor = ->
   initDateTime()
-  initScheduleCalendar()
   makeScheduleOpen()
-  renderEvents()
+  onSelectiveEvents()
   onSearchSET()
   initCameraSelect()
