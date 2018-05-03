@@ -13,7 +13,8 @@ class UserDecorator < Draper::Decorator
            :api_id,
            :api_key,
            :payment_method,
-           :insight_id
+           :insight_id,
+           :referral_url
 
   def is_admin
     h.human_boolean(object.is_admin?)
