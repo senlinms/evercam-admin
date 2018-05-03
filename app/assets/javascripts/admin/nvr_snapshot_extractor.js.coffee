@@ -202,11 +202,11 @@ onSearchSET = ->
     inject_to_cr = $("#inject_to_cr").val()
 
     if $("#_schedule").val() == "full_week"
-      schedule = fullWeekSchedule
+      schedule = JSON.stringify(fullWeekSchedule)
     else if $("#_schedule").val() == "working_hours"
-      schedule = workingHours
+      schedule = JSON.stringify(workingHours)
     else
-      schedule = parseCalendar()
+      schedule = JSON.stringify(parseCalendar())
 
     data = {}
     data.start_date = moment.utc("#{from_date} 00:00:00", "DD/MM/YYYY HH:mm:ss") / 1000
@@ -252,6 +252,7 @@ putMeInDatabase = (camera_id, api_id, api_key, data) ->
     .fadeOut()
 
   onSuccess = (data) ->
+    $('.cloud-recording-calendar').fullCalendar('destroy')
     clearForm()
     $(".bb-alert")
     .removeClass("alert-danger")
@@ -294,6 +295,7 @@ clearForm = ->
   $("#datetimepicker1").val getTodayDate()
   $("#datetimepicker2").val getTodayDate()
   $('#interval option:eq(4)').prop('selected', true)
+  $('#_schedule option:eq(1)').prop('selected', true)
 
 window.initializNvrSnapshotExtractor = ->
   initDateTime()
