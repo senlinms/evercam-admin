@@ -148,7 +148,8 @@ class UsersController < ApplicationController
         users[index]["def"],
         users[index]["payment_method"],
         users[index]["id"],
-        check_env
+        check_env,
+        users[index]["referral_url"]
       ]
     end
     @pageload = false

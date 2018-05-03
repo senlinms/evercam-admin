@@ -61,7 +61,8 @@ initializeDataTable = ->
         {data: "11", "width": "170px" },
         {data: "12", "width": "120px", "sClass": "center" },
         {data: "13", "width": "120px", "sClass": "center green" },
-        {data: "14", "width": "120px", "sClass": "center red", "render": removeMinus }
+        {data: "14", "width": "120px", "sClass": "center red", "render": removeMinus },
+        {data: "18", "width": "120px", }
       ],
       drawCallback: ->
         adjustHorizontalScroll()
