@@ -39,6 +39,7 @@
 #= require admin/timelapse_report.js
 #= require admin/meta_datas.js
 #= require admin/snapmails_history.js
+#= require admin/delete_jpegs.js
 #= require admin/snapmails.js
 #= require admin/compares.js
 #= require admin/intercom.js
