@@ -16,12 +16,22 @@ showImageCount = ->
         $("#td-has-snapshot").css("display", "block")
         $("#td-has-snapshot").text("Start date cannot be greater than end date.")
         $("#delete_jpegs_button").prop('disabled', 'disabled')
+      else if outOfHourRange(getDatePart(startUrl), getDatePart(endUrl)) is true
+        $("#td-has-snapshot").css("display", "block")
+        $("#td-has-snapshot").text("You can only delete within an hour range.")
+        $("#delete_jpegs_button").prop('disabled', 'disabled')
       else
         countJpegs(startUrl, endUrl)
     else
       $("#td-has-snapshot").css("display", "block")
       $("#td-has-snapshot").text("Please enter valid URLs.")
       $("#delete_jpegs_button").prop('disabled', 'disabled')
+
+outOfHourRange = (start, end) ->
+  if moment(start).get("hour") == moment(end).get("hour")
+    false
+  else
+    true
 
 onDeleteJpegs = ->
   $("#delete_jpegs_button").on "click", ->
@@ -122,7 +132,14 @@ countJpegs = (startUrl, endUrl) ->
 is_valid_url = (url) ->
   /^(http(s)?:\/\/)?(www\.)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/.test url
 
+onModalClose = ->
+  $('#archive-modal').on 'hidden.bs.modal', ->
+    $("#start-url").val("")
+    $("#end-url").val("")
+    $("#delete_jpegs_button").prop('disabled', 'disabled')
+
 window.initializeDeletJpegs = ->
   showImageCount()
   loadPopUp()
   onDeleteJpegs()
+  onModalClose()
