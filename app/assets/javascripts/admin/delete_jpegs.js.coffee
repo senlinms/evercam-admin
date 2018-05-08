@@ -7,7 +7,7 @@ getDatePart = (url) ->
   url.substr(url.lastIndexOf('/') + 1)
 
 showImageCount = ->
-  $("#start-url, #end-url").on "keyup", ->
+  $("#start-url, #end-url").on "change", ->
     startUrl = $("#start-url").val()
     endUrl = $("#end-url").val()
     if is_valid_url(startUrl) && is_valid_url(endUrl)
