@@ -91,7 +91,8 @@ class CamerasController < ApplicationController
   end
 
   def show
-    @camera = Camera.find(params[:id]).decorate
+    @camera = Camera.includes(:user).find(params[:id]).decorate
+    @evercam_server = evercam_server
   end
 
   def merge
