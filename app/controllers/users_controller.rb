@@ -81,6 +81,12 @@ class UsersController < ApplicationController
     if params[:last_login_at_date].present?
       condition += " and u.last_login_at < date_trunc('month', CURRENT_DATE) - INTERVAL '#{params[:last_login_at_date].to_i / 12.0} year'"
     end
+    if params[:last_login_at_boolean].present? && params[:last_login_at_boolean] == "true"
+      condition += " and u.last_login_at is not null"
+    end
+    if params[:last_login_at_boolean].present? && params[:last_login_at_boolean] == "false"
+      condition += " and u.last_login_at is null"
+    end
 
     if params[:total_cameras].present?
       condition2 = "where (cameras_owned + camera_shares) = #{params[:total_cameras]}"
