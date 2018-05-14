@@ -32,8 +32,8 @@ initializeDataTable = ->
       'bAutoWidth': false
       'bStateSave': false
       'lengthMenu': [
-        [ 50, 100, 500 ]
-        [ 50, 100, 500 ]
+        [ 50, 100, 500, 1000]
+        [ 50, 100, 500, 1000]
       ]
       "order": [[ 11, "desc" ]]
       'pageLength': 60
