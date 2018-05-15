@@ -112,12 +112,18 @@ searchFilter = ->
     users_table.setAjaxParam 'licDEF1', licDEF1
     users_table.setAjaxParam 'licDEF2', licDEF2
     users_table.setAjaxParam('payment_type', $("#user_payment_type").val())
+    users_table.setAjaxParam('last_login_at_boolean', $("#last_login_at_boolean").val())
+    users_table.setAjaxParam('include_erc', $("#include_erc").val())
     users_table.getDataTable().ajax.reload()
     $("#chk_select_all").prop("checked", false)
     $("#uniform-chk_select_all span").removeClass("checked")
 
   $("#last_login_at_boolean").on "change", ->
     users_table.setAjaxParam('last_login_at_boolean', $("#last_login_at_boolean").val())
+    users_table.getDataTable().ajax.reload()
+
+  $("#include_erc").on "change", ->
+    users_table.setAjaxParam('include_erc', $("#include_erc").val())
     users_table.getDataTable().ajax.reload()
 
   $('#user_payment_type').on "change", ->
@@ -127,7 +133,7 @@ searchFilter = ->
     $("#uniform-chk_select_all span").removeClass("checked")
 
 appendMe = ->
-  $("#div-dropdown-checklist").css({"visibility": "visible", "width": "20px", "top": "155px", "float": "right", "right": "22px" })
+  $("#div-dropdown-checklist").css({"visibility": "visible", "width": "20px", "top": "194px", "float": "right", "right": "22px" })
   $(".dataTables_info").css("display", "none")
   $(".dataTables_length > label").css({"margin-top": "-28px", "margin-left": "185px"})
   $("#users_datatables_paginate > .pagination-panel").css("display", "none")

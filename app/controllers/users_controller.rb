@@ -90,6 +90,18 @@ class UsersController < ApplicationController
 
     if params[:total_cameras].present?
       condition2 = "where (cameras_owned + camera_shares) = #{params[:total_cameras]}"
+    elsif params[:cameras_owned].present? && params[:camera_shares].present? && params[:include_erc].present? && params[:include_erc] == "true"
+      condition2 = "where cameras_owned < #{params[:cameras_owned]} and camera_shares < #{params[:camera_shares]} and share_id > 0"
+    elsif params[:cameras_owned].present? && params[:camera_shares].present? && params[:include_erc].present? && params[:include_erc] == "false"
+      condition2 = "where cameras_owned < #{params[:cameras_owned]} and camera_shares < #{params[:camera_shares]} and share_id = 0"
+    elsif params[:camera_shares].present? && params[:include_erc].present? && params[:include_erc] == "false"
+      condition2 = "where camera_shares < #{params[:camera_shares]} and share_id = 0"
+    elsif params[:camera_shares].present? && params[:include_erc].present? && params[:include_erc] == "true"
+      condition2 = "where camera_shares < #{params[:camera_shares]} and share_id > 0"
+    elsif params[:cameras_owned].present? && params[:include_erc].present? && params[:include_erc] == "false"
+      condition2 = "where cameras_owned < #{params[:cameras_owned]} and share_id = 0"
+    elsif params[:cameras_owned].present? && params[:include_erc].present? && params[:include_erc] == "true"
+      condition2 = "where cameras_owned < #{params[:cameras_owned]} and share_id > 0"
     elsif params[:camera_shares].present? && params[:cameras_owned].present?
       condition2 = "where cameras_owned < #{params[:cameras_owned]} and camera_shares < #{params[:camera_shares]}"
     elsif params[:camera_shares].present?
@@ -114,6 +126,10 @@ class UsersController < ApplicationController
       condition2 = "where required_licence > #{params[:licREQ1]}"
     elsif params[:licREQ2].present?
       condition2 = "where required_licence < #{params[:licREQ2]}"
+    elsif params[:include_erc].present? && params[:include_erc] == "false"
+      condition2 = "where share_id = 0"
+    elsif params[:include_erc].present? && params[:include_erc] == "true"
+      condition2 = "where share_id > 0"
     else
       condition2 = ""
     end
@@ -122,7 +138,8 @@ class UsersController < ApplicationController
                  (select SUM(l.total_cameras) from licences l left join users uu on l.user_id=uu.id where uu.id=u.id and cancel_licence=false) valid_licence,
                  (select count(*) from cameras cc left join users uuu on cc.owner_id=uuu.id where uuu.id=u.id) cameras_owned,
                  (select count(*) from camera_shares cs left join users uuuu on cs.user_id=uuuu.id where uuuu.id = u.id) camera_shares,
-                 (select name from countries ct left join users uuuuu on ct.id=uuuuu.country_id where uuuuu.id=u.id) country
+                 (select name from countries ct left join users uuuuu on ct.id=uuuuu.country_id where uuuuu.id=u.id) country,
+                 (select count(cs1.id) from camera_shares cs1 where cs1.user_id=u.id and cs1.camera_id = 279) share_id
                  from users u #{condition} #{sorting1}
                 ) t #{condition2} #{sorting2}")
     total_records = users.count
