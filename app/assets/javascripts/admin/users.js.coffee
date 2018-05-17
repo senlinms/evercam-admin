@@ -35,7 +35,7 @@ initializeDataTable = ->
         [ 50, 100, 500, 1000]
         [ 50, 100, 500, 1000]
       ]
-      "order": [[ 11, "desc" ]]
+      "order": [[ 12, "desc" ]]
       'pageLength': 60
       'processing': true
       'serverSide': true
