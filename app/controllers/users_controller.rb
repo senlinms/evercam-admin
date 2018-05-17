@@ -53,8 +53,8 @@ class UsersController < ApplicationController
 
     sorting1 = "order by u.id #{order_for}"
     sorting2 = ""
-    first_sort = ["1", "2", "3", "4", "5", "6", "7", "8", "10", "11", "12", "13", "14", "15"]
-    second_sort = ["9", "16"]
+    first_sort = ["1", "2", "3", "4", "5", "6", "7", "8", "10", "11", "12", "13", "14", "15", "18"]
+    second_sort = ["9", "16", "19", "17"]
     if first_sort.include? col_for_order
       sorting1 = sorting(col_for_order, order_for)
     end
@@ -143,6 +143,7 @@ class UsersController < ApplicationController
                  (select SUM(l.total_cameras) from licences l left join users uu on l.user_id=uu.id where uu.id=u.id and cancel_licence=false) valid_licence,
                  (select count(*) from cameras cc left join users uuu on cc.owner_id=uuu.id where uuu.id=u.id) cameras_owned,
                  (select count(*) from camera_shares cs left join users uuuu on cs.user_id=uuuu.id where uuuu.id = u.id) camera_shares,
+                 (select count(*) from snapmails sm left join users suser on sm.user_id=suser.id where suser.id = u.id) snapmail_count,
                  (select name from countries ct left join users uuuuu on ct.id=uuuuu.country_id where uuuuu.id=u.id) country,
                  (select count(cs1.id) from camera_shares cs1 where cs1.user_id=u.id and cs1.camera_id = 279) share_id
                  from users u #{condition} #{sorting1}
@@ -177,7 +178,8 @@ class UsersController < ApplicationController
         users[index]["payment_method"],
         users[index]["id"],
         check_env,
-        users[index]["referral_url"]
+        users[index]["referral_url"],
+        users[index]["snapmail_count"]
       ]
     end
     @pageload = false
@@ -231,17 +233,21 @@ class UsersController < ApplicationController
       when "9"
         "order by total_cameras #{order}"
       when "10"
-        "order by country #{order}"
+        "order by snapmail_count #{order}"
       when "11"
+        "order by country #{order}"
+      when "12"
         "order by created_at #{order}"
-      when "13"
-        "order by last_login_at #{order}"
       when "14"
-        "order by required_licence #{order}"
+        "order by last_login_at #{order}"
       when "15"
-        "order by valid_licence #{order}"
+        "order by required_licence #{order}"
       when "16"
+        "order by valid_licence #{order}"
+      when "17"
         "order by def #{order}"
+      when "18"
+        "order by referral_url #{order}"
       when "11"
         "order by u.id desc"
       else

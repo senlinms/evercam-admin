@@ -55,6 +55,7 @@ initializeDataTable = ->
         {data: "5", "width": "120px", "render": cameraLink, "sClass": "center" },
         {data: "6", "width": "120px", "sClass": "center" },
         {data: "7", "width": "120px", "sClass": "center" },
+        {data: "19", "width": "100px", "sClass": "center"}
         {data: "8", "width": "110px", "sClass": "center" },
         {data: "9", "width": "170px", "sType": "uk_datetime" },
         {data: "10", "width": "170px", visible: false },
