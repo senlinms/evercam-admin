@@ -389,11 +389,15 @@ a.json-placeholder:hover {
 }
 
 .form-camera-report {
-  width: 900px;
+  width: 90%;
   overflow: hidden;
   height: auto;
   float: left;
   text-align: center;
+
+  .camera-inputs {
+    width: auto;
+  }
 }
 
 .form-camera-cleanup-report {

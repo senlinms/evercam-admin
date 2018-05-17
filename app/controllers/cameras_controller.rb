@@ -3,6 +3,7 @@ class CamerasController < ApplicationController
   require 'evercam'
 
   def index
+    @api_url = evercam_server
   end
 
   def cleanup
@@ -186,7 +187,7 @@ class CamerasController < ApplicationController
     (display_start..index_end).each do |index|
       if cameras[index].present? && cameras[index]["user"].present?
         records[:data][records[:data].count] = [
-          cameras[index]["created_at"] ? DateTime.parse(cameras[index]["created_at"]).strftime("%A, %d %b %Y %l:%M %p") : "",
+          cameras[index]["created_at"] ? DateTime.parse(cameras[index]["created_at"]).strftime("%a, %d %b %Y %l:%M %p") : "",
           cameras[index]["exid"],
           cameras[index]["fullname"],
           cameras[index]["name"],
@@ -300,39 +301,39 @@ class CamerasController < ApplicationController
 
   def sorting(col, order)
     case col
-    when "1"
-      "order by c.exid #{order}"
     when "2"
-      "order by fullname #{order}"
+      "order by c.exid #{order}"
     when "3"
-      "order by c.name #{order}"
+      "order by fullname #{order}"
     when "4"
-      "order by total_share #{order}"
+      "order by c.name #{order}"
     when "5"
-      "order by c.config->> 'external_host' #{order}"
+      "order by total_share #{order}"
     when "6"
-      "order by c.config->> 'external_http_port' #{order}"
+      "order by c.config->> 'external_host' #{order}"
     when "7"
-      "order by c.config->> 'external_rtsp_port' #{order}"
+      "order by c.config->> 'external_http_port' #{order}"
     when "8"
-      "order by c.config-> 'auth'-> 'basic'->> 'username' #{order}"
+      "order by c.config->> 'external_rtsp_port' #{order}"
     when "9"
-      "order by c.config-> 'auth'-> 'basic'->> 'password' #{order}"
+      "order by c.config-> 'auth'-> 'basic'->> 'username' #{order}"
     when "10"
-      "order by c.mac_address #{order}"
+      "order by c.config-> 'auth'-> 'basic'->> 'password' #{order}"
     when "11"
-      "order by vendor_model_name #{order}"
+      "order by c.mac_address #{order}"
     when "12"
-      "order by vendor_name #{order}"
+      "order by vendor_model_name #{order}"
     when "13"
-      "order by c.timezone #{order}"
+      "order by vendor_name #{order}"
     when "14"
-      "order by c.is_public #{order}"
+      "order by c.timezone #{order}"
     when "15"
-      "order by c.is_online #{order}"
+      "order by c.is_public #{order}"
     when "16"
-      "order by is_recording #{order}"
+      "order by c.is_online #{order}"
     when "17"
+      "order by is_recording #{order}"
+    when "18"
       "order by c.last_poll_date #{order}"
     when "0"
       "order by c.created_at #{order}"
