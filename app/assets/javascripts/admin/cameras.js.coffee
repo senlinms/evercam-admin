@@ -31,8 +31,8 @@ initializeDataTable = ->
     dataTable:
       'bStateSave': false
       'lengthMenu': [
-        [ 25, 50, 100, 150 ]
-        [ 25, 50, 100, 150 ]
+        [ 50, 100, 500, 1000 ]
+        [ 50, 100, 500, 1000 ]
       ]
       'pageLength': 50
       "order": [[ 0, "desc" ]]
@@ -45,8 +45,10 @@ initializeDataTable = ->
       columns: [
         {data: "18", "width": "20px", "sClass": "center", "render": addCheckbox},
         {data: "0", "width": "175px", "orderable": true, "sType": "uk_datetime" },
+        {data: "23", "width": "175px", "orderable": true, "sType": "uk_datetime" },
         {data: "1", "width": "117px", "orderable": true, "render": linkCamera },
         {data: "2", "width": "150px", "render": linkOwner },
+        {data: "24", "width": "150px",},
         {data: "3", "width": "125px" },
         {data: "4", "width": "70px", "sClass": "center" },
         {data: "5", "width": "90px" },
@@ -60,6 +62,7 @@ initializeDataTable = ->
         {data: "13", "width": "130px" },
         {data: "14", "width": "60px", "render": colStatus, "sClass": "center" },
         {data: "15", "width": "60px", "render": colStatus, "sClass": "center" },
+        {data: "25", "width": "65px" },
         {data: "16", "width": "110px", "sClass": "center" },
         {data: "17", visible: false, "width": "75px" }
       ],
@@ -176,9 +179,9 @@ multipleSelect = ->
 appendMe = ->
   $("#div-dropdown-checklist").css({"visibility": "visible", "width": "20px", "top": "1px", "float": "right", "right": "22px" })
   $(".dataTables_info").css("display", "none")
-  $(".dataTables_length > label").css("display", "none")
+  $("#cameras_datatables_length").remove()
   $("#cameras_datatables_paginate > .pagination-panel").css("display", "none")
-  $(".paging_bootstrap_extended").css("float","none")
+  $(".paging_bootstrap_extended").css({"float": "left", "margin": "0 5px"})
 
 colStatus = (name) ->
   if name is "t" || name is true
