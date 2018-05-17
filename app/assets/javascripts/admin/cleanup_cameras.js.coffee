@@ -63,12 +63,26 @@ initializeDataTable = ->
       ],
       drawCallback: ->
         adjustHorizontalScroll()
-        Metronic.init()
+        attachCheckBoxRange()
       initComplete: ->
-        Metronic.init()
+        attachCheckBoxRange()
+
+attachCheckBoxRange = ->
+  $chkboxes = $('.chkbox')
+  lastChecked = null
+  $chkboxes.click (e) ->
+    if !lastChecked
+      lastChecked = this
+      return
+    if e.shiftKey
+      start = $chkboxes.index(this)
+      end = $chkboxes.index(lastChecked)
+      $chkboxes.slice(Math.min(start, end), Math.max(start, end) + 1).prop 'checked', lastChecked.checked
+    lastChecked = this
+    return
 
 addCheckbox = (id, type, row) ->
-  return "<input type='checkbox' data-val-id='#{row[2]}' data-val-api-id='#{row[18]}' data-val-api_key='#{row[19]}'/>"
+  return "<input class='chkbox' type='checkbox' data-val-id='#{row[2]}' data-val-api-id='#{row[18]}' data-val-api_key='#{row[19]}'/>"
 
 searchFilter = ->
   $("#select_months").on "change", ->
