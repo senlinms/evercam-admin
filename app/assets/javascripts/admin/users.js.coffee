@@ -67,10 +67,12 @@ initializeDataTable = ->
       drawCallback: ->
         adjustHorizontalScroll()
         $("#users_datatables_length").css("display", "none")
-        Metronic.init()
+        # Metronic.init()
+        attachCheckBoxRange()
       initComplete: ->
         $("#users_datatables_length").css("display", "none")
-        Metronic.init()
+        # Metronic.init()
+        attachCheckBoxRange()
 
 columnsDropdown = ->
   $(".users-column").on "click", ->
@@ -79,7 +81,21 @@ columnsDropdown = ->
     adjustHorizontalScroll()
 
 addCheckbox = (name, type, row) ->
-  return "<input type='checkbox' data-val='#{name}' data-val-username='#{row[0]}' data-val-api-id='#{row[3]}' data-val-api_key='#{row[4]}'/>"
+  return "<input class='chkbox' type='checkbox' data-val='#{name}' data-val-username='#{row[0]}' data-val-api-id='#{row[3]}' data-val-api_key='#{row[4]}'/>"
+
+attachCheckBoxRange = ->
+  $chkboxes = $('.chkbox')
+  lastChecked = null
+  $chkboxes.click (e) ->
+    if !lastChecked
+      lastChecked = this
+      return
+    if e.shiftKey
+      start = $chkboxes.index(this)
+      end = $chkboxes.index(lastChecked)
+      $chkboxes.slice(Math.min(start, end), Math.max(start, end) + 1).prop 'checked', lastChecked.checked
+    lastChecked = this
+    return
 
 searchFilter = ->
   $('#username, #email, #fullname, #total_cameras, #owned_cameras, #shared_cameras, #created_at_date, #last_login_at_date, #licREQ1, #licREQ2, #licVALID1, #licVALID2, #licDEF1, #licDEF2').on "keyup", ->
