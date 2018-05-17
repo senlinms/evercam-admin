@@ -165,7 +165,7 @@ class CamerasController < ApplicationController
     end
 
     cameras = Camera.connection.select_all("select * from (
-                select c.*,u.firstname || ' ' || u.lastname as fullname, u.email as owner_email, u as user, u.id as user_id, u.api_id, u.api_key,
+                select c.*,u.firstname || ' ' || u.lastname as fullname, u.email as owner_email, u.payment_method, u as user, u.id as user_id, u.api_id, u.api_key,
                 v.name as vendor_name,vm.name as vendor_model_name, cr.status as is_recording, cr.storage_duration as cloud_recording_storage_duration,
                 (select count(id) as total from camera_shares cs where c.id=cs.camera_id) as total_share from cameras c
                 inner JOIN users u on c.owner_id = u.id
@@ -212,7 +212,8 @@ class CamerasController < ApplicationController
           check_env,
           cameras[index]["last_online_at"] ? DateTime.parse(cameras[index]["last_online_at"]).strftime("%a, %d %b %Y %l:%M %p") : "",
           cameras[index]["owner_email"],
-          cameras[index]["cloud_recording_storage_duration"]
+          cameras[index]["cloud_recording_storage_duration"],
+          cameras[index]["payment_method"]
         ]
       end
     end
@@ -313,36 +314,38 @@ class CamerasController < ApplicationController
     when "5"
       "order by owner_email #{order}"
     when "6"
-      "order by c.name #{order}"
+      "order by payment_method #{order}"
     when "7"
-      "order by total_share #{order}"
+      "order by c.name #{order}"
     when "8"
-      "order by c.config->> 'external_host' #{order}"
+      "order by total_share #{order}"
     when "9"
-      "order by c.config->> 'external_http_port' #{order}"
+      "order by c.config->> 'external_host' #{order}"
     when "10"
-      "order by c.config->> 'external_rtsp_port' #{order}"
+      "order by c.config->> 'external_http_port' #{order}"
     when "11"
-      "order by c.config-> 'auth'-> 'basic'->> 'username' #{order}"
+      "order by c.config->> 'external_rtsp_port' #{order}"
     when "12"
-      "order by c.config-> 'auth'-> 'basic'->> 'password' #{order}"
+      "order by c.config-> 'auth'-> 'basic'->> 'username' #{order}"
     when "13"
-      "order by c.mac_address #{order}"
+      "order by c.config-> 'auth'-> 'basic'->> 'password' #{order}"
     when "14"
-      "order by vendor_model_name #{order}"
+      "order by c.mac_address #{order}"
     when "15"
-      "order by vendor_name #{order}"
+      "order by vendor_model_name #{order}"
     when "16"
-      "order by c.timezone #{order}"
+      "order by vendor_name #{order}"
     when "17"
-      "order by c.is_public #{order}"
+      "order by c.timezone #{order}"
     when "18"
-      "order by c.is_online #{order}"
+      "order by c.is_public #{order}"
     when "19"
-      "order by cloud_recording_storage_duration #{order}"
+      "order by c.is_online #{order}"
     when "20"
-      "order by is_recording #{order}"
+      "order by cloud_recording_storage_duration #{order}"
     when "21"
+      "order by is_recording #{order}"
+    when "22"
       "order by c.last_poll_date #{order}"
     when "0"
       "order by c.created_at #{order}"

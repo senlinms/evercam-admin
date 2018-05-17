@@ -49,6 +49,7 @@ initializeDataTable = ->
         {data: "1", "width": "117px", "orderable": true, "render": linkCamera },
         {data: "2", "width": "150px", "render": linkOwner },
         {data: "24", "width": "150px",},
+        {data: "26", "orderable": true, "width": "90px", "render": paymentMethod}
         {data: "3", "width": "125px" },
         {data: "4", "width": "70px", "sClass": "center" },
         {data: "5", "width": "90px" },
@@ -182,6 +183,15 @@ appendMe = ->
   $("#cameras_datatables_length").remove()
   $("#cameras_datatables_paginate > .pagination-panel").css("display", "none")
   $(".paging_bootstrap_extended").css({"float": "left", "margin": "0 5px"})
+
+paymentMethod = (name) ->
+  switch name
+    when 0 then "Stripe"
+    when 1 then "Custom"
+    when 2 then "Construction"
+    when 3 then "Gardai"
+    when 4 then "Smart Cities"
+    else "Unknown"
 
 colStatus = (name) ->
   if name is "t" || name is true
