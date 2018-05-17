@@ -87,6 +87,9 @@ class UsersController < ApplicationController
     if params[:last_login_at_boolean].present? && params[:last_login_at_boolean] == "false"
       condition += " and u.last_login_at is null"
     end
+    if params[:last_login_at_boolean].present? && params[:last_login_at_boolean] == "whatever"
+      condition += ""
+    end
 
     if params[:total_cameras].present?
       condition2 = "where (cameras_owned + camera_shares) = #{params[:total_cameras]}"
@@ -130,6 +133,8 @@ class UsersController < ApplicationController
       condition2 = "where share_id = 0"
     elsif params[:include_erc].present? && params[:include_erc] == "true"
       condition2 = "where share_id > 0"
+    elsif params[:include_erc].present? && params[:include_erc] == "whatever"
+      condition2 = ""
     else
       condition2 = ""
     end
