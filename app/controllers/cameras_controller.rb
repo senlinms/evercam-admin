@@ -256,6 +256,16 @@ class CamerasController < ApplicationController
   def merge_camera(super_cam_id, super_cam_owner_id, camera_ids, owner_ids)
     success = 0
     camera_ids.each do |camera_id|
+      snapmails_for_merge_camera = SnapmailCamera.where("camera_id = ?", camera_id)
+      snapmails_for_merge_camera.each do |snapmail_camera|
+        begin
+          snapmail_camera.update_attributes(camera_id: super_cam_id)
+          success += 1
+        rescue
+          # ignoring
+        end
+      end
+
       going_to_merge_camera_share = CameraShare.where("camera_id = ?", camera_id)
       going_to_merge_camera_share.each do |share|
         begin
