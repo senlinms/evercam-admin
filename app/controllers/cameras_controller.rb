@@ -64,7 +64,7 @@ class CamerasController < ApplicationController
       if cameras[index].present? && cameras[index]["user"].present?
         records[:data][records[:data].count] = [
           cameras[index]["created_at"] ? DateTime.parse(cameras[index]["created_at"]).strftime("%a, %d %b %Y %l:%M %p") : "",
-          cameras[index]["last_online_at"] ? DateTime.parse(cameras[index]["created_at"]).strftime("%a, %d %b %Y %l:%M %p") : "",
+          cameras[index]["last_online_at"] ? DateTime.parse(cameras[index]["last_online_at"]).strftime("%a, %d %b %Y %l:%M %p") : "",
           cameras[index]["exid"],
           cameras[index]["fullname"],
           cameras[index]["owner_email"],
