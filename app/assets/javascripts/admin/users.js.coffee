@@ -177,7 +177,7 @@ paymentMethod = (name) ->
     when 2 then "Construction"
     when 3 then "Gardai"
     when 4 then "Smart Cities"
-    else "Other"
+    else "Unknown"
 
 validateDigit = ->
   intRegex = /^\d+$/
