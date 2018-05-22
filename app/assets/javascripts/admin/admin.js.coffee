@@ -24,7 +24,6 @@
 #= require admin/vendor_model.js
 #= require admin/vendor.js
 #= require admin/cameras.js
-#= require admin/cleanup_cameras.js
 #= require admin/snapshots.js
 #= require admin/users.js
 #= require admin/share_requests.js

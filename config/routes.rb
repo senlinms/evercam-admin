@@ -54,7 +54,6 @@ Rails.application.routes.draw do
   post "/licences/auto-renewal" => "licence_reports#auto_renewal"
   get "/load_users" => "users#load_users"
   get "/load_cameras" => "cameras#load_cameras"
-  get "/cleanup_cameras" => "cameras#cleanup_cameras"
   get "/load_camera_shares" => "camera_shares#load_camera_shares"
   get "/intercom/user" => "users#get_intercom"
   get "/timelapse" => "timelapse_report#index"
