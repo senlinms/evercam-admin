@@ -30,9 +30,8 @@ sendAJAXRequest = (settings) ->
 
 initDateTime = ->
   $('#datetimepicker1,#datetimepicker2').datetimepicker
-    format: 'd/m/Y'
-    timepicker: false
-    onSelectDate: ->
+    format: 'd/m/Y H:m:s'
+    onClose: (date) ->
       isRecordingInCloud($('#datetimepicker1').val(), $('#datetimepicker2').val())
 
   $('#datetimepicker1,#datetimepicker2').val getTodayDate()
@@ -85,9 +84,10 @@ isRecordingInCloud = (start_date, end_date) ->
 
 
 getTodayDate = ->
+  # date should be like that 29/05/2018 03:05:00
   date = new Date
   date.setDate date.getDate()
-  date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear()
+  date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear() + ' ' + date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds()
 
 initScheduleCalendar = ->
   scheduleCalendar = $('.cloud-recording-calendar').fullCalendar
