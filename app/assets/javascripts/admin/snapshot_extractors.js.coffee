@@ -31,15 +31,14 @@ sendAJAXRequest = (settings) ->
 
 initDateTime = ->
   $('#datetimepicker1,#datetimepicker2').datetimepicker
-    format: 'd/m/Y'
-    timepicker: false
+    format: 'd/m/Y H:m:s'
 
   $('#datetimepicker1,#datetimepicker2').val getTodayDate()
 
 getTodayDate = ->
   date = new Date
   date.setDate date.getDate()
-  date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear()
+  date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear() + ' ' + date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds()
 
 initScheduleCalendar = ->
   scheduleCalendar = $('.cloud-recording-calendar').fullCalendar

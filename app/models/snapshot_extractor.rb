@@ -1,5 +1,6 @@
 class SnapshotExtractor < ActiveRecord::Base
 	establish_connection "evercam_db_#{Rails.env}".to_sym
+  self.skip_time_zone_conversion_for_attributes = [:from_date, :to_date]
 
 	belongs_to :camera
   validates :from_date, presence: true
