@@ -75,6 +75,7 @@ Rails.application.routes.draw do
   get "/nvr" => "nvrs#index"
   get "/nvr/vh" => "nvrs#vh"
   get "/nvr/snapshot_extractor" => "nvrs#snapshot_extractor"
+  get "/check_rtsp_port" => "nvrs#check_rtsp_port"
 
   get "/intercom/companies" => "intercom_companies#index"
   post "/intercom/companies" => "intercom_companies#create"

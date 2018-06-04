@@ -16,4 +16,13 @@ class NvrsController < ApplicationController
     @evercam_server = evercam_server
     @user_email = current_user.email
   end
+
+  def check_rtsp_port
+    if Camera.where(exid: params[:camera_exid]).first.config["external_rtsp_port"] == ""
+      rtsp_port = 0
+    else
+      rtsp_port = 1
+    end
+    render json: rtsp_port
+  end
 end

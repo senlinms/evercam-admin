@@ -297,9 +297,50 @@ clearForm = ->
   $('#interval option:eq(4)').prop('selected', true)
   $('#_schedule option:eq(1)').prop('selected', true)
 
+checkRTSPort = ->
+  $('#inputCameraId').on 'change', ->
+    camera_exid = $("#inputCameraId").val()
+    data = {}
+    data.camera_exid = camera_exid
+
+    onError = (xhrData) ->
+      $(".bb-alert")
+      .removeClass("alert-success")
+      .addClass("alert-danger")
+      .text(xhrData.statusText)
+      .delay(200)
+      .fadeIn()
+      .delay(4000)
+      .fadeOut()
+
+    onSuccess = (data) ->
+      if data is 0
+        $(".bb-alert")
+        .removeClass("alert-success")
+        .addClass("alert-danger")
+        .text("Please add a Valid RTSP Port for Camera!")
+        .delay(200)
+        .fadeIn()
+        .delay(4000)
+        .fadeOut()
+      else
+        # Ignore it
+
+    settings =
+      error: onError
+      success: onSuccess
+      cache: false
+      data: data
+      dataType: "json"
+      type: "GET"
+      url: "/check_rtsp_port"
+
+    jQuery.ajax(settings)
+
 window.initializNvrSnapshotExtractor = ->
   initDateTime()
   makeScheduleOpen()
   onSelectiveEvents()
   onSearchSET()
   initCameraSelect()
+  checkRTSPort()
