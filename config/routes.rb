@@ -79,4 +79,6 @@ Rails.application.routes.draw do
 
   get "/intercom/companies" => "intercom_companies#index"
   post "/intercom/companies" => "intercom_companies#create"
+
+  get 'v1/cameras' => 'api#camera_by_contact'
 end
