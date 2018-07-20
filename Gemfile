@@ -64,6 +64,7 @@ gem 'draper'
 
 gem 'devise'
 gem 'dotenv'
+gem 'rack-cors'
 
 group :development, :test do
   gem 'pry'
