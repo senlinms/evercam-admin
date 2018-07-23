@@ -68,7 +68,7 @@ GEM
     airbrussh (1.3.0)
       sshkit (>= 1.6.1, != 1.7.0)
     arel (9.0.0)
-    autoprefixer-rails (8.6.5)
+    autoprefixer-rails (9.0.0)
       execjs
     aws-sdk-v1 (1.67.0)
       json (~> 1.4)
@@ -312,7 +312,7 @@ GEM
     sass-listen (4.0.0)
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
-    sass-rails (5.0.6)
+    sass-rails (5.0.7)
       railties (>= 4.0.0, < 6)
       sass (~> 3.1)
       sprockets (>= 2.8, < 4.0)
@@ -392,7 +392,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  autoprefixer-rails (= 8.6.5)
+  autoprefixer-rails
   aws-sdk-v1
   bcrypt
   capistrano
@@ -446,7 +446,7 @@ DEPENDENCIES
   rmega (~> 0.2.2)
   rspec
   rspec-rails
-  sass-rails (= 5.0.6)
+  sass-rails
   sdoc
   selenium-webdriver
   shoulda-matchers
