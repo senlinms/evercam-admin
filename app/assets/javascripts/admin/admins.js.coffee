@@ -119,8 +119,8 @@ addNewRow = (admin) ->
     "0",
     "",
     "#{admin.is_admin}",
-    "<i admin-id='#{admin.id}' firstname='#{admin.firstname}' lastname='#{admin.lastname}' class='fa fa-edit edit-admin'></i>",
-    "<i admin-id='#{admin.id}' class='far fa-trash-alt delete-admin'></i>"
+    "<i admin-id='#{admin.id}' firstname='#{admin.firstname}' lastname='#{admin.lastname}' class='fa fa-times edit-admin'></i>",
+    "<i admin-id='#{admin.id}' class='far fa-remove-alt delete-admin'></i>"
   ]).draw()
 
 formatDate = (date) ->
@@ -159,31 +159,35 @@ deleteAdmin = ->
 editAdmin = ->
   $("#admin_datatables").on "click", ".edit-admin", ->
     $(".bb-alert").removeClass("alert-info").addClass("alert-danger")
-    user_row = $(this).parents('tr')
-    user_id = $(this).attr("admin-id")
-    data = {}
-    data.id = user_id
-    data.is_admin = false
+    result = confirm("Are you sure to remove this admin?")
+    if result is false
+      return
+    else
+      user_row = $(this).parents('tr')
+      user_id = $(this).attr("admin-id")
+      data = {}
+      data.id = user_id
+      data.is_admin = false
 
-    onError = (jqXHR, status, error) ->
-      Notification.show(jqXHR.responseText)
+      onError = (jqXHR, status, error) ->
+        Notification.show(jqXHR.responseText)
 
-    onSuccess = (result, status, jqXHR) ->
-      $(".bb-alert").removeClass("alert-danger").addClass("alert-info")
-      user_row.remove()
-      Notification.show("Admin's data has been udpated.")
+      onSuccess = (result, status, jqXHR) ->
+        $(".bb-alert").removeClass("alert-danger").addClass("alert-info")
+        user_row.remove()
+        Notification.show("User's data has been udpated.")
 
-    settings =
-      cache: false
-      data: data
-      dataType: 'json'
-      error: onError
-      success: onSuccess
-      contentType: "application/x-www-form-urlencoded"
-      type: "patch"
-      url: "/admins/update"
+      settings =
+        cache: false
+        data: data
+        dataType: 'json'
+        error: onError
+        success: onSuccess
+        contentType: "application/x-www-form-urlencoded"
+        type: "patch"
+        url: "/admins/update"
 
-    sendAJAXRequest(settings)
+      sendAJAXRequest(settings)
 
 make_admin = ->
   $("#make-admin").on "click", ->
