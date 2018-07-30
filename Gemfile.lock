@@ -9,9 +9,9 @@ GIT
 
 GIT
   remote: git://github.com/stripe/stripe-ruby.git
-  revision: 7c9492b37d74c459d5c6cba24e2467000e5fd38a
+  revision: 4916eadafa6bd0e9da7d7bc2d11981b1aa8daa54
   specs:
-    stripe (3.17.2)
+    stripe (3.19.0)
       faraday (~> 0.10)
 
 GEM
@@ -370,7 +370,7 @@ GEM
       ethon (>= 0.9.0)
     tzinfo (1.2.5)
       thread_safe (~> 0.1)
-    uglifier (4.1.16)
+    uglifier (4.1.17)
       execjs (>= 0.3.0, < 3)
     vcr (4.0.0)
     warden (1.2.7)
