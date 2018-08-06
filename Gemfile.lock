@@ -9,9 +9,9 @@ GIT
 
 GIT
   remote: git://github.com/stripe/stripe-ruby.git
-  revision: 4916eadafa6bd0e9da7d7bc2d11981b1aa8daa54
+  revision: 24143ab7d7a65f5b8e58f55c64c14200ead50720
   specs:
-    stripe (3.19.0)
+    stripe (3.21.0)
       faraday (~> 0.10)
 
 GEM
@@ -162,7 +162,7 @@ GEM
     faraday_middleware (0.12.2)
       faraday (>= 0.7.4, < 1.0)
     ffi (1.9.25)
-    geocoder (1.4.9)
+    geocoder (1.5.0)
     georuby (2.5.2)
     gherkin-ruby (0.3.2)
     globalid (0.4.1)
@@ -288,7 +288,7 @@ GEM
       rspec-core (~> 3.7.0)
       rspec-expectations (~> 3.7.0)
       rspec-mocks (~> 3.7.0)
-    rspec-core (3.7.0)
+    rspec-core (3.7.1)
       rspec-support (~> 3.7.0)
     rspec-expectations (3.7.0)
       diff-lcs (>= 1.2.0, < 2.0)
@@ -304,7 +304,7 @@ GEM
       rspec-expectations (~> 3.7.0)
       rspec-mocks (~> 3.7.0)
       rspec-support (~> 3.7.0)
-    rspec-support (3.7.0)
+    rspec-support (3.7.1)
     rubyzip (1.2.1)
     safe_yaml (1.0.4)
     sass (3.5.7)
@@ -320,7 +320,7 @@ GEM
       tilt (>= 1.1, < 3)
     sdoc (1.0.0)
       rdoc (>= 5.0)
-    selenium-webdriver (3.13.1)
+    selenium-webdriver (3.14.0)
       childprocess (~> 0.5)
       rubyzip (~> 1.2)
     shoulda-matchers (3.1.2)
