@@ -10,9 +10,9 @@ gem 'pg'
 gem 'ffi'
 
 # Use SCSS for stylesheets
-gem 'sass-rails', '~> 5.0.6'
+gem 'sass-rails'
 # Use Uglifier as compressor for JavaScript assets
-gem 'uglifier', '>= 3.0.0'
+gem 'uglifier'
 gem 'yui-compressor'
 
 # Use CoffeeScript for .coffee assets and views
@@ -20,7 +20,7 @@ gem 'coffee-rails', '~> 4.2.2'
 
 gem 'sprockets'
 gem 'sprockets-es6', require: 'sprockets/es6'
-gem 'autoprefixer-rails'
+gem 'autoprefixer-rails', '8.6.5'
 gem 'rake'
 
 gem 'stripe',

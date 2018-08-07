@@ -38,7 +38,10 @@ initDateTime = ->
 getTodayDate = ->
   date = new Date
   date.setDate date.getDate()
-  date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear() + ' ' + date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds()
+  hours = ("0" + date.getHours()).slice(-2)
+  minutes = ("0" + date.getMinutes()).slice(-2)
+  seconds = ("0" + date.getSeconds()).slice(-2)
+  date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear() + ' ' + hours + ':' + minutes + ':' + seconds
 
 initScheduleCalendar = ->
   scheduleCalendar = $('.cloud-recording-calendar').fullCalendar
