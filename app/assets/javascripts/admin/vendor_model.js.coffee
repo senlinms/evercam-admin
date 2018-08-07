@@ -274,12 +274,12 @@ onEditModel = ->
     $("#channel").val($(this).attr("channel-id"))
     $("#name").val($(this).attr("val-model-name"))
     $("#jpg-url").val($(this).attr("val-jpg"))
-    $("#mjpg-url").val($(this).attr("val-mjpg"))
-    $("#mpeg4-url").val($(this).attr("val-mpeg4"))
-    $("#mobile-url").val($(this).attr("val-mobile"))
-    $("#h264-url").val($(this).attr("val-h264"))
+    $("#mjpg-url").val($(this).attr("val-mjpg")) unless $(this).attr("val-mjpg") is 'null'
+    $("#mpeg4-url").val($(this).attr("val-mpeg4")) unless $(this).attr("val-mpeg4") is 'null'
+    $("#mobile-url").val($(this).attr("val-mobile")) unless $(this).attr("val-mobile") is 'null'
+    $("#h264-url").val($(this).attr("val-h264")) unless $(this).attr("val-h264") is 'null'
     $("#audio-url").val($(this).attr("val-audio")) unless $(this).attr("val-audio") is 'null'
-    $("#lowres-url").val($(this).attr("val-lowres"))
+    $("#lowres-url").val($(this).attr("val-lowres")) unless $(this).attr("val-lowres") is 'null'
     $("#default-username").val($(this).attr("val-username"))
     $("#default-password").val($(this).attr("val-password"))
     $("#resolution").val($(this).attr("val-resolution")) unless $(this).attr("val-resolution") is 'null'

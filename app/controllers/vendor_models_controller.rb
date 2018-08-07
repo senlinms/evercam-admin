@@ -31,15 +31,16 @@ class VendorModelsController < ApplicationController
         vendors_models[index].vendor.name,
         vendors_models[index].name,
         vendors_models[index].channel,
-        vendors_models[index].config.deep_fetch('snapshots', 'jpg') { '' },
-        vendors_models[index].config.deep_fetch('snapshots', 'h264') { '' },
-        vendors_models[index].config.deep_fetch('snapshots', 'mjpg') { '' },
-        vendors_models[index].config.deep_fetch('snapshots', 'mpeg4') { '' },
-        vendors_models[index].config.deep_fetch('snapshots', 'mobile') { '' },
-        vendors_models[index].config.deep_fetch('snapshots', 'lowres') { '' },
-        vendors_models[index].config.deep_fetch('auth', 'basic', 'username') { '' },
-        vendors_models[index].config.deep_fetch('auth', 'basic', 'password') { '' },
+        vendors_models[index].jpg_url,
+        vendors_models[index].h264_url,
+        vendors_models[index].mjpg_url,
 
+        vendors_models[index].mpeg4_url,
+        vendors_models[index].mobile_url,
+        vendors_models[index].lowres_url,
+
+        vendors_models[index].username,
+        vendors_models[index].password,
         vendors_models[index].audio_url,
         vendors_models[index].poe,
         vendors_models[index].wifi,
@@ -67,24 +68,17 @@ class VendorModelsController < ApplicationController
 
   def create
     vendor = Vendor.find_by_exid(params[:vendor_id])
-    if params[:h264_url]
-      h264_url = params[:h264_url]
-    else
-      h264_url = ""
-    end
-    if params[:mjpg_url]
-      mjpg_url = params[:mjpg_url]
-    else
-      mjpg_url = ""
-    end
     vendor_model = VendorModel.new(
       exid: params[:id],
       name: params[:name],
       vendor: vendor,
       channel: params['channel'],
       jpg_url: params[:jpg_url],
-      mjpg_url: mjpg_url,
-      h264_url: h264_url,
+      mjpg_url: get_url(params[:mjpg_url]),
+      h264_url: get_url(params[:h264_url]),
+      mpeg4_url: get_url(params[:mpeg4_url]),
+      mobile_url: get_url(params[:mobile_url]),
+      lowres_url: get_url(params[:lowres_url]),
       audio_url: params['audio_url'],
       poe: params['poe'],
       wifi: params['wifi'],
@@ -102,20 +96,6 @@ class VendorModelsController < ApplicationController
       config: {}
     )
 
-    [:jpg, :mjpg, :mpeg4, :mobile, :h264, :lowres].each do |resource|
-      url_name = "#{resource}_url"
-      unless params[url_name].blank?
-        if vendor_model.config.has_key?('snapshots')
-          vendor_model.config['snapshots'].merge!({resource => params[url_name]})
-        else
-          vendor_model.config.merge!({'snapshots' => { resource => params[url_name]}})
-        end
-      end
-    end
-    if params[:default_username] or params[:default_password]
-      vendor_model.config.merge!({'auth' => {'basic' => {'username' => params[:default_username], 'password' => params[:default_password] }}})
-    end
-
     respond_to do |format|
       if vendor_model.save
         format.html { redirect_to vendor_models_path, notice: 'Model successfully created' }
@@ -130,39 +110,19 @@ class VendorModelsController < ApplicationController
   def update
     saved = false
     begin
-      config = {}
-      [:jpg, :mjpg, :mpeg4, :mobile, :h264, :lowres].each do |resource|
-        url_name = "#{resource}_url"
-        unless params[url_name].blank?
-          if config.has_key?('snapshots')
-            config['snapshots'].merge!({resource => params[url_name]})
-          else
-            config.merge!({'snapshots' => { resource => params[url_name]}})
-          end
-        end
-      end
-      if params[:default_username] or params[:default_password]
-        config.merge!({'auth' => {'basic' => {'username' => params[:default_username], 'password' => params[:default_password] }}})
-      end
       vendor = Vendor.find_by_exid(params[:vendor_id])
       vendor_model = VendorModel.find_by_exid(params[:id])
-      if params["h264_url"]
-        h264_url = params["h264_url"]
-      else
-        h264_url = ""
-      end
-      if params["mjpg_url"]
-        mjpg_url = params["mjpg_url"]
-      else
-        mjpg_url = ""
-      end
+      
       vendor_model.update_attributes(
         name: params['name'],
         vendor: vendor,
         channel: params['channel'],
         jpg_url: params['jpg_url'],
-        h264_url: h264_url,
-        mjpg_url: mjpg_url,
+        h264_url: get_url(params[:h264_url]),
+        mjpg_url: get_url(params[:mjpg_url]),
+        mpeg4_url: get_url(params[:mpeg4_url]),
+        mobile_url: get_url(params[:mobile_url]),
+        lowres_url: get_url(params[:lowres_url]),
         audio_url: params['audio_url'],
         poe: params['poe'],
         wifi: params['wifi'],
@@ -176,8 +136,7 @@ class VendorModelsController < ApplicationController
         upnp: params['upnp'],
         resolution: params['resolution'],
         username: params[:default_username],
-        password: params[:default_password],
-        config: config
+        password: params[:default_password]
       )
 
       message = 'Model updated successfully'
@@ -210,6 +169,14 @@ class VendorModelsController < ApplicationController
   end
 
   private
+
+  def get_url(url)
+    if url
+      url
+    else
+      ""
+    end
+  end
 
   def sorting(col, order)
     case col

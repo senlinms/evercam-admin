@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_04_20_054301) do
+ActiveRecord::Schema.define(version: 2018_08_07_101800) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
@@ -242,15 +242,6 @@ ActiveRecord::Schema.define(version: 2018_04_20_054301) do
     t.index ["snapmail_id", "camera_id"], name: "snapemail_camera_id_unique_index", unique: true
   end
 
-  create_table "snapmail_logs", id: :serial, force: :cascade do |t|
-    t.text "recipients"
-    t.text "subject"
-    t.text "body"
-    t.text "image_timestamp"
-    t.datetime "inserted_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "snapmails", id: :serial, force: :cascade do |t|
     t.string "exid", limit: 255, null: false
     t.text "subject", null: false
@@ -278,9 +269,9 @@ ActiveRecord::Schema.define(version: 2018_04_20_054301) do
     t.datetime "created_at", null: false
     t.datetime "updated_at"
     t.text "requestor"
-    t.boolean "mp4", default: false
-    t.boolean "jpegs", default: false
     t.boolean "inject_to_cr", default: false
+    t.boolean "create_mp4", default: false
+    t.boolean "jpegs_to_dropbox", default: false
   end
 
   create_table "spatial_ref_sys", primary_key: "srid", id: :integer, default: nil, force: :cascade do |t|
@@ -356,6 +347,7 @@ ActiveRecord::Schema.define(version: 2018_04_20_054301) do
     t.inet "current_sign_in_ip"
     t.inet "last_sign_in_ip"
     t.string "telegram_username", limit: 255
+    t.string "referral_url", limit: 255
     t.index ["country_id"], name: "ix_users_country_id"
     t.index ["email"], name: "user_email_unique_index", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
@@ -393,8 +385,8 @@ ActiveRecord::Schema.define(version: 2018_04_20_054301) do
     t.json "config", null: false
     t.text "exid", default: "", null: false
     t.text "jpg_url", default: "", null: false
-    t.text "h264_url", default: "", null: false
-    t.text "mjpg_url", default: "", null: false
+    t.text "h264_url", default: ""
+    t.text "mjpg_url", default: ""
     t.text "shape", default: ""
     t.text "resolution", default: ""
     t.text "official_url", default: ""
@@ -414,6 +406,9 @@ ActiveRecord::Schema.define(version: 2018_04_20_054301) do
     t.text "username"
     t.text "password"
     t.integer "channel"
+    t.string "mpeg4_url", default: ""
+    t.string "mobile_url", default: ""
+    t.string "lowres_url", default: ""
     t.index ["vendor_id"], name: "ix_firmwares_vendor_id"
   end
 
