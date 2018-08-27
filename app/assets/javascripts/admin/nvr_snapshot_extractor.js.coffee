@@ -247,11 +247,11 @@ onSearchSET = ->
 
 putMeInDatabase = (camera_id, api_id, api_key, data) ->
 
-  onError = (xhrData) ->
+  onError = (data) ->
     $(".bb-alert")
     .removeClass("alert-success")
     .addClass("alert-danger")
-    .text(xhrData.statusText)
+    .text(data.responseJSON.message)
     .delay(200)
     .fadeIn()
     .delay(4000)
