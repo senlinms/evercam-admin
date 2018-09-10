@@ -93,7 +93,6 @@ class VendorModelsController < ApplicationController
       resolution: params['resolution'],
       username: params[:default_username],
       password: params[:default_password],
-      config: {}
     )
 
     respond_to do |format|
@@ -187,21 +186,21 @@ class VendorModelsController < ApplicationController
     when "3"
       "vendor_models.name #{order}"
     when "4"
-      "vendor_models.config-> 'snapshots'->> 'jpg' #{order}"
+      "vendor_models.jpg_url #{order}"
     when "5"
-      "vendor_models.config-> 'snapshots'->> 'h264' #{order}"
+      "vendor_models.h264_url #{order}"
     when "6"
-      "vendor_models.config-> 'snapshots'->> 'mjpg' #{order}"
+      "vendor_models.mjpg_url #{order}"
     when "7"
-      "vendor_models.config-> 'snapshots'->> 'mpeg4' #{order}"
+      "vendor_models.mpeg4_url #{order}"
     when "8"
-      "vendor_models.config-> 'snapshots'->> 'mobile' #{order}"
+      "vendor_models.mobile_url #{order}"
     when "9"
-      "vendor_models.config-> 'snapshots'->> 'lowers' #{order}"
+      "vendor_models.lowres_url #{order}"
     when "10"
-      "vendor_models.config-> 'auth'-> 'basic'->> 'username' #{order}"
+      "vendor_models.username #{order}"
     when "11"
-      "vendor_models.config-> 'auth'-> 'basic'->> 'password' #{order}"
+      "vendor_models.password #{order}"
     when "12"
       "vendor_models.audio_url #{order}"
     when "13"
