@@ -9,9 +9,9 @@ GIT
 
 GIT
   remote: git://github.com/stripe/stripe-ruby.git
-  revision: 0b4802cdeaf129c60723426da2bcb9c6adde4a1a
+  revision: 9bc6ae85a560b660c468d591d8629809c6770a79
   specs:
-    stripe (3.26.1)
+    stripe (3.28.0)
       faraday (~> 0.10)
 
 GEM
@@ -157,7 +157,7 @@ GEM
     factory_bot_rails (4.11.1)
       factory_bot (~> 4.11.1)
       railties (>= 3.0.0)
-    faraday (0.15.2)
+    faraday (0.15.3)
       multipart-post (>= 1.2, < 3)
     faraday_middleware (0.12.2)
       faraday (>= 0.7.4, < 1.0)
